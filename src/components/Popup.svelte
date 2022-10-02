@@ -71,7 +71,7 @@
 
     #banner {
         width: 100%;
-        height: 250px;
+        height: 20vh;
 
         background-color: rgba(0, 0, 0, 0.3);
         background-blend-mode: darken;

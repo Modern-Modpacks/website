@@ -34,7 +34,7 @@
 
         {
             "title": "E-Mail",
-            "url": "mailto:modernmodpacks@gmail.com",
+            "url": "mailto:info@modernmodpacks.site",
             "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMTIuNzEzbC0xMS45ODUtOS43MTNoMjMuOTcxbC0xMS45ODYgOS43MTN6bS01LjQyNS0xLjgyMmwtNi41NzUtNS4zMjl2MTIuNTAxbDYuNTc1LTcuMTcyem0xMC44NSAwbDYuNTc1IDcuMTcydi0xMi41MDFsLTYuNTc1IDUuMzI5em0tMS41NTcgMS4yNjFsLTMuODY4IDMuMTM1LTMuODY4LTMuMTM1LTguMTEgOC44NDhoMjMuOTU2bC04LjExLTguODQ4eiIvPjwvc3ZnPg=="
         }
     ] // Social links
@@ -216,7 +216,7 @@
         gap: 15px;
     }
     #difficulty > div > div {
-        height: 80vh;
+        height: 60vh;
         width: auto;
 
         padding: 0;
@@ -235,7 +235,6 @@
         display: grid;
         grid-template-rows: repeat(9, 1fr);
         column-gap: 5px;
-        row-gap: 6vh;
     }
     #icons > img {
         width: 30px;
@@ -262,6 +261,20 @@
     }
     #socials > a:hover img {
         filter: brightness(0) invert(.5);
+    }
+
+    @media (max-width: 850px) {
+        p {
+            font-size: 1em;
+        }
+
+        #modpacks {
+            grid-template-columns: repeat(4, 50px);
+        }
+
+        #difficulty {
+            flex-direction: column;
+        }
     }
 </style>
 
@@ -297,7 +310,7 @@
             <b>A: The chat reporting feature is a deal breaker for us. We won't ever update past 1.19</b>
 
             Q: Why not 1.18.2?
-            <b>1.18 is not optimized as much as 1.16.5, even with performance mods.</b>
+            <b>A: 1.18 is not optimized as much as 1.16.5, even with performance mods.</b>
 
             Q: Why not 1.12.2?
             <b>A: 1.12.2 was released back in 2017 and has lived long enough to be replaced with something more new,
@@ -316,10 +329,10 @@
             Q: How can I help?
             <b>A: If you want to help us make modpacks you can open an issue/pr on our
                GitHub, or if you REALLY want to help us, contact G_cat#2267 on discord
-               and become a member of Modern Modpacks!</b>
+               or send us an email and become a member of Modern Modpacks!</b>
 
-            Q: Fabric?
-            <b>Maybe someday. But we're only forge for now.</b>
+            Q: Fabric/Quilt?
+            <b>A: Maybe someday. But we're only forge for now.</b>
         </p>
     </div>
 
@@ -354,7 +367,7 @@
         
             <b>4 (Professional)</b> - These modpacks are somewhat hard to understand, but once you get how they work, you can get through them pretty easily. Divine Journey 1/2 would be the best comparison here.
 
-            <b>5 (Extreme)</b> - The hardest difficulty of modpacks. If you like a challenge, try one of these. RLCraft and Gregtech: New Horizons are the examples of difficulty 5.
+            <b>5 (Extreme)</b> - The hardest difficulty of modpacks. If you like a challenge, try one of these. RLCraft and Gregtech: New Horizons are some of the examples of difficulty 5.
         </p>
     </div>
 

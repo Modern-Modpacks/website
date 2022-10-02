@@ -30,7 +30,6 @@
     }
 
     #wrap {
-        display: flex;
         flex-direction: column;
     }
     #logo {
@@ -38,6 +37,11 @@
         border-radius: 10%;
 
         background-size: cover;
+    }
+    @media (max-width: 850px) {
+        #logo {
+            height: 50px;
+        }
     }
 </style>
 
