@@ -278,18 +278,6 @@
     }
 </style>
 
-<svelte:head>
-    <title>Modern Modpacks</title>
-
-    <link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/112729506?s=200&v=4" type="image/x-icon">
-
-    <meta property="og:title" content="Modern Modpacks" />
-    <meta property="og:description" content="Making 1.16.5 expert modpacks circa 2022." />
-    <meta property="og:url" content="https://www.modernmodpacks.site" />
-    <meta property="og:image" content="https://avatars.githubusercontent.com/u/112729506?s=200&v=4" />
-    <meta content="#000000" data-react-helmet="true" name="theme-color" />
-</svelte:head>
-
 <main>
     <div id="banner">
         <img src="https://avatars.githubusercontent.com/u/112729506?s=200&v=4" alt="logo" id="logo" draggable="false">
