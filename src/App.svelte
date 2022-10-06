@@ -40,12 +40,13 @@
     ] // Social links
     let splash = null // Banner splash
     let popups = {} // Popup open functions
+    let popup = window.location.pathname.slice(1) // Get opened popup
 
     // On page load
     onMount(() => {
-        if (window.scrollY==0 && localStorage.getItem("popup")==null) { // If window is not scrolled by y, play the starting animation
-            document.body.id = "noscroll" 
-            setTimeout(() => {document.body.id = ""}, 2000);
+        if (window.scrollY==0 && !Object.keys(popups).includes(popup)) { // If window is not scrolled by y or there's no valid popup, play the starting animation
+            document.body.id = "noscroll" // Disable scroll
+            setTimeout(() => {document.body.id = ""}, 2000); // Enable scroll in 2 seconds
             
             // And pick a new splash
             if (localStorage.getItem("splash")!=null)
@@ -58,7 +59,7 @@
             }
             splash = localStorage.getItem("splash") // Set splash to previous splash
 
-            localStorage.getItem("popup")!=null && popups[localStorage.getItem("popup")](true)
+            Object.keys(popups).includes(popup) && popups[popup](true) // Open popup
         }
 
         if (splash==null) { // If it's the first time you visit the website, set splash to "Welcome!"
@@ -291,7 +292,7 @@
 
     <div id="modpacks">
         {#each modpacklist as modpack}
-            <Modpack modpack={modpack[1]} index={modpack[0]} bind:click={popups[modpack[1].name]}/>
+            <Modpack modpack={modpack[1]} index={modpack[0]} bind:click={popups[modpack[1].abbr]}/>
         {/each}
     </div>
 
@@ -320,11 +321,6 @@
             Q: How many modpacks will there be?
             <b>A: We plan on making 16 modpacks, each with their own theme and challenge.
                Each modpack is based on a single minecraft dye color, so that's why there are 16 of them!</b>
-        
-            Q: How can I help?
-            <b>A: If you want to help us make modpacks you can open an issue/pr on our
-               GitHub, or if you REALLY want to help us, contact G_cat#2267 on discord
-               or send us an email and become a member of Modern Modpacks!</b>
 
             Q: Fabric/Quilt?
             <b>A: Maybe someday. But we're only forge for now.</b>
@@ -345,7 +341,7 @@
             <div id="icons">
                 {#each modpacklist as pack}
                     {#if pack[1].name!=null}
-                        <img on:click={() => {popups[pack[1].name]()}} title={pack[1].name} style="grid-row: {10 - Math.round((pack[1].difficulty-.5)*2)};" src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/icons/{("0" + (pack[0]+1)).slice(-2)}{pack[1].color}_{pack[1].abbr}.png" alt="icon">
+                        <img on:click={() => {popups[pack[1].abbr]()}} title={pack[1].name} style="grid-row: {10 - Math.round((pack[1].difficulty-.5)*2)};" src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/icons/{("0" + (pack[0]+1)).slice(-2)}{pack[1].color}_{pack[1].abbr}.png" alt="{pack[1].name}">
                     {/if}
                 {/each}
             </div>
@@ -363,6 +359,28 @@
             <b>4 (Professional)</b> - These modpacks are somewhat hard to understand, but once you get how they work, you can get through them pretty easily. Divine Journey 1/2 would be the best comparison here.
 
             <b>5 (Extreme)</b> - The hardest difficulty of modpacks. If you like a challenge, try one of these. RLCraft and Gregtech: New Horizons are some of the examples of difficulty 5.
+        </p>
+    </div>
+
+    <div>
+        <h1>How can I help?</h1>
+        <p>
+            <b>There are a couple of ways.</b>
+            
+            Firstly you can open a pull request or an issue on our github (linked down below).
+
+            If you are willing to spend more time on this project, you can also become a member of Modern Modpacks.
+            Right now we are searching for:
+            - Pixel artists
+            - KubeJS coders
+            - Quest creators
+            If you fit in one of those groups, or belive you can also help in a different way, contact G_cat#2267
+            on discord, or info@modernmodpacks.site through email.
+            <b>REMEMBER THO</b>, membership is NOT employment. This is a voluntary thing 
+            and you WON'T be paid anything.
+
+            And lastly, you can just tell other people about our project! We want people to know about us, and 
+            simply by sharing this website with others you can help us a ton!
         </p>
     </div>
 

@@ -1,23 +1,33 @@
 <script>
     // External vars
-    export let modpack
+    export let modpack // Modpack info
 
     // Vars
-    let active
-    let noanim = false
+    let active // If the popup is active
+    let noanim = false // If the animation is disabled
 
     // Funcs
     export function activate(disableanim=false) { // Activate popup (external)
-        document.body.id = "noscroll"
-        if(disableanim) {noanim=true}
-        active=true
-        localStorage.setItem("popup", modpack.name)
+        document.body.id = "noscroll" // Disable scroll
+        if(disableanim) {noanim=true} // Disable animation if disableanim is passed
+        
+        // Set the pathname to the modpack abbr
+        let newlocation = new URL(window.location) // Make a new URL
+        newlocation.pathname = "/" + modpack.abbr // Set pathname
+        history.pushState({}, "", newlocation) // Push new URL to history
+
+        active=true // Set if popup active to true
     }
     function disable() { // Deactivate popup
-        document.body.id = ""
-        noanim=false
-        active=false
-        localStorage.removeItem("popup")
+        document.body.id = "" // Enable scroll
+        noanim=false // Enable animation
+        
+        // Unset the pathname
+        let newlocation = new URL(window.location) // Make a new URL
+        newlocation.pathname = "/" // Set pathname to /
+        history.pushState({}, "", newlocation) // Push new URL to history
+
+        active=false // Set if popup active to false
     }
 </script>
 
@@ -153,8 +163,6 @@
         color: white;
     }
     #download > img {
-        width: 1.5em;
-
         filter: brightness(0) invert(0);
         transition: filter .2s;
     }
@@ -168,7 +176,7 @@
     #source {
         color: white;
 
-        margin-top: 5px;
+        margin-top: 20px;
         padding-inline: 50px;
     }
     #source > img {
@@ -178,9 +186,15 @@
         text-decoration: underline;
         text-decoration-color: transparent;
         transition: text-decoration-color .2s;
+
+        margin-block: 0;
     }
     #source:hover h2 {
         text-decoration-color: white;
+    }
+
+    #download > img, #source > img {
+        width: 1.25em;
     }
 </style>
 
@@ -201,6 +215,11 @@
             <a id="download" href={modpack.links.cf}>
                 <img src="https://gist.githubusercontent.com/thecodewarrior/110057b210551c4ecf2c9be6d58ff824/raw/38748511ca1eb5677f009092fb3fcd71cc76cdf0/logo.svg" alt="curseforge">
                 <h1>Download</h1>
+            </a>
+
+            <a id="source" href={modpack.links.gh + "/modlist.md"}>
+                <img src="data:image/svg+xml;base64,PHN2ZyBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMjEgNGMwLS40NzgtLjM3OS0xLTEtMWgtMTZjLS42MiAwLTEgLjUxOS0xIDF2MTZjMCAuNjIxLjUyIDEgMSAxaDE2Yy40NzggMCAxLS4zNzkgMS0xem0tNCAxMS4yNWMwIC40MTQtLjMzNi43NS0uNzUuNzVoLTguNWMtLjQxNCAwLS43NS0uMzM2LS43NS0uNzVzLjMzNi0uNzUuNzUtLjc1aDguNWMuNDE0IDAgLjc1LjMzNi43NS43NXptMC0zLjI0OGMwIC40MTQtLjMzNi43NS0uNzUuNzVoLTguNWMtLjQxNCAwLS43NS0uMzM2LS43NS0uNzVzLjMzNi0uNzUuNzUtLjc1aDguNWMuNDE0IDAgLjc1LjMzNi43NS43NXptMC0zLjI1MmMwIC40MTQtLjMzNi43NS0uNzUuNzVoLTguNWMtLjQxNCAwLS43NS0uMzM2LS43NS0uNzVzLjMzNi0uNzUuNzUtLjc1aDguNWMuNDE0IDAgLjc1LjMzNi43NS43NXoiIGZpbGwtcnVsZT0ibm9uemVybyIvPjwvc3ZnPg==" alt="modlist">
+                <h2>Modlist</h2>
             </a>
 
             <a id="source" href={modpack.links.gh}>

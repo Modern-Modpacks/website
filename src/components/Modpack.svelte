@@ -1,15 +1,15 @@
 <script>
     // Imports
-    import Popup from "./Popup.svelte";
+    import Popup from "./Popup.svelte"; // Popup
 
     // External vars
-    export let modpack
-    export let index
-    export let click
+    export let modpack // Modpack info
+    export let index // Modpack index
+    export let click // Click action
 
     // Consts and vars
-    const discovered = modpack.name!=null
-    let inverted = true
+    const discovered = modpack.name!=null // If modpack is discovered (available)
+    let inverted = true // Inverted for anim
 </script>
 
 <style>
