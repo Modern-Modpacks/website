@@ -374,6 +374,7 @@
             - Pixel artists
             - KubeJS coders
             - Quest creators
+            - Translators 
             If you fit in one of those groups, or belive you can also help in a different way, contact G_cat#2267
             on discord, or info@modernmodpacks.site through email.
             <b>REMEMBER THO</b>, membership is NOT employment. This is a voluntary thing 
