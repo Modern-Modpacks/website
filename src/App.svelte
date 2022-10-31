@@ -40,7 +40,7 @@
     ] // Social links
     let splash = null // Banner splash
     let popups = {} // Popup open functions
-    let popup = window.location.pathname.slice(1) // Get opened popup
+    let popup = window.location.hash.replace("#", "") // Get opened popup
 
     // On page load
     onMount(() => {

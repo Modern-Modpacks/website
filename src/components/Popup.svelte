@@ -11,10 +11,7 @@
         document.body.id = "noscroll" // Disable scroll
         if(disableanim) {noanim=true} // Disable animation if disableanim is passed
         
-        // Set the pathname to the modpack abbr
-        let newlocation = new URL(window.location) // Make a new URL
-        newlocation.pathname = "/" + modpack.abbr // Set pathname
-        history.pushState({}, "", newlocation) // Push new URL to history
+        window.location.hash = modpack.abbr // Set hash to modpack's abbr
 
         active=true // Set if popup active to true
     }
@@ -22,10 +19,7 @@
         document.body.id = "" // Enable scroll
         noanim=false // Enable animation
         
-        // Unset the pathname
-        let newlocation = new URL(window.location) // Make a new URL
-        newlocation.pathname = "/" // Set pathname to /
-        history.pushState({}, "", newlocation) // Push new URL to history
+        window.location.hash = "" // Reset hash
 
         active=false // Set if popup active to false
     }
