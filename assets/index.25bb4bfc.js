@@ -29,9 +29,9 @@ const Je=function(){const t=document.createElement("link").relList;if(t&&t.suppo
 
             <b class="svelte-14uz4m3">2 (Casual)</b> - If you&#39;re a beginner, start with these modpacks. Easy to understand but not as lightweight as Vanila+ modpacks. Think of something like Create: Above &amp; Beyond.
 
-            <b class="svelte-14uz4m3">3 (Harder)</b>  A typical expert experience. Enigmatica 2 Expert is the most well-known modpack that we can use as an example.
+            <b class="svelte-14uz4m3">3 (Harder)</b> - A typical expert experience. Enigmatica 2 Expert is the most well-known modpack that we can use as an example.
         
-            <b class="svelte-14uz4m3">4 (Professional)</b> - These modpacks are somewhat hard to understand, but once you get how they work, you can get through them pretty easily. Divine Journey 2 and Enigmatica 6 Expert are both somewhere here.
+            <b class="svelte-14uz4m3">4 (Professional)</b> - These modpacks are somewhat hard to understand, but once you get how they work, they&#39;ll provide a ton of enjoyment. Divine Journey 2 and Enigmatica 6 Expert are both somewhere here.
 
             <b class="svelte-14uz4m3">5 (Extreme)</b> - The hardest difficulty of modpacks. If you like a challenge, try one of these. RLCraft and funny greg horizons packs are located here.`,C=p(),U=M("div"),U.innerHTML=`<h1 class="svelte-14uz4m3">How can I help?</h1> 
         <p class="svelte-14uz4m3"><b class="svelte-14uz4m3">There are a couple of ways.</b>
