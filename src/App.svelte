@@ -356,15 +356,15 @@
         <p>
             <b>Difficulty</b> does NOT mean how tedious and un-fun the modpack is, all it means is how much previous modded experience you should have to play the modpack and not get confused.
         
-            <b>1 (Vanila+)</b> - Easy vanila+ modpack, the only experience you need to have is playing basic minecraft. FTB Chocolate and other vanila+ packs would be rated like this.
+            <b>1 (Vanila+)</b> - Easy vanila+ modpack, the only experience you need to have is playing basic minecraft. All of the "THIS IS WHAT MINECRAFT SHOULD'VE BEEN" modpacks fit into this category.
 
-            <b>2 (Casual)</b> - If you're a beginner, start with these modpacks. Easy to understand but not as lightweight as Vanila+ modpacks. Create: Above and Beyond is a modpack that comes to mind.
+            <b>2 (Casual)</b> - If you're a beginner, start with these modpacks. Easy to understand but not as lightweight as Vanila+ modpacks. Think of something like Create: Above & Beyond.
 
-            <b>3 (Harder)</b> - A typical expert experience. Something like Enigmatica 6/2 Expert and Not Too Complicated 1/2 would qualify as this. 
+            <b>3 (Harder)</b>  A typical expert experience. Enigmatica 2 Expert is the most well-known modpack that we can use as an example.
         
-            <b>4 (Professional)</b> - These modpacks are somewhat hard to understand, but once you get how they work, you can get through them pretty easily. Divine Journey 1/2 would be the best comparison here.
+            <b>4 (Professional)</b> - These modpacks are somewhat hard to understand, but once you get how they work, you can get through them pretty easily. Divine Journey 2 and Enigmatica 6 Expert are both somewhere here.
 
-            <b>5 (Extreme)</b> - The hardest difficulty of modpacks. If you like a challenge, try one of these. RLCraft and Gregtech: New Horizons are some of the examples of difficulty 5.
+            <b>5 (Extreme)</b> - The hardest difficulty of modpacks. If you like a challenge, try one of these. RLCraft and funny greg horizons packs are located here.
         </p>
     </div>
 
@@ -380,7 +380,8 @@
             - Pixel artists
             - KubeJS coders
             - Quest creators
-            - Translators 
+            - Translators
+            - PR managers
             If you fit in one of those groups, or belive you can also help in a different way, contact G_cat#2267
             on discord, or info@modernmodpacks.site through email.
             <b>REMEMBER THO</b>, membership is NOT employment. This is a voluntary thing 
