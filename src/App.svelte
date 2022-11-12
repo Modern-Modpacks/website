@@ -360,9 +360,9 @@
 
             <b>2 (Casual)</b> - If you're a beginner, start with these modpacks. Easy to understand but not as lightweight as Vanila+ modpacks. Think of something like Create: Above & Beyond.
 
-            <b>3 (Harder)</b>  A typical expert experience. Enigmatica 2 Expert is the most well-known modpack that we can use as an example.
+            <b>3 (Harder)</b> - A typical expert experience. Enigmatica 2 Expert is the most well-known modpack that we can use as an example.
         
-            <b>4 (Professional)</b> - These modpacks are somewhat hard to understand, but once you get how they work, you can get through them pretty easily. Divine Journey 2 and Enigmatica 6 Expert are both somewhere here.
+            <b>4 (Professional)</b> - These modpacks are somewhat hard to understand, but once you get how they work, they'll provide a ton of enjoyment. Divine Journey 2 and Enigmatica 6 Expert are both somewhere here.
 
             <b>5 (Extreme)</b> - The hardest difficulty of modpacks. If you like a challenge, try one of these. RLCraft and funny greg horizons packs are located here.
         </p>
