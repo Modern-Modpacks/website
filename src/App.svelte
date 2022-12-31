@@ -362,6 +362,7 @@
     }
     #hellish > a > img {
         height: 100%;
+        image-rendering: pixelated;
 
         margin-left: 0;
 
