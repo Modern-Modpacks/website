@@ -1,0 +1,338 @@
+[
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "red",
+        
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "orange",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+        
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "yellow",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+        
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "green",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+        
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "lime",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "lightblue",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "cyan",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "blue",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "purple",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "magenta",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "pink",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "gray",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "lightgray",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "white",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "black",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    },
+    {
+        "name": null,
+        "abbr": null,
+        "difficulty": null,
+
+        "color": "brown",
+
+        "ram": {
+            "minimum": null,
+            "recommended": null
+        },
+                
+        "assets": {
+            "banner": null
+        },
+
+        "links": {
+            "cf": null,
+            "gh": null
+        }
+    }
+]
