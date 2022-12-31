@@ -596,7 +596,7 @@
             <div id="icons">
                 {#each modpacklist as pack}
                     {#if pack[1].name!=null}
-                        <img on:click={() => {popups[pack[1].abbr]()}} title={pack[1].name} style="grid-row: {10 - Math.round((pack[1].difficulty-.5)*2)};" src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/icons/{("0" + (pack[0]+1)).slice(-2)}{pack[1].color}_{pack[1].abbr}.png" alt="{pack[1].name}">
+                        <img on:click={() => {popups[pack[1].abbr]()}} title={pack[1].name} style={pack[1].difficulty!=null ? `grid-row: ${10 - Math.round((pack[1].difficulty-.5)*2)};` : null} src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/icons/{("0" + (pack[0]+1)).slice(-2)}{pack[1].color}_{pack[1].abbr}.png" alt="{pack[1].name}">
                     {/if}
                 {/each}
             </div>
