@@ -2,10 +2,22 @@
     // Imports
     import { onMount } from "svelte"
     import Modpack from "./components/Modpack.svelte"
-    import splashes from "./json/splashes.json"
     import modpacks from "./json/modpacks.json"
+    import mods from "./json/mods.json"
+    import contributors from "./json/contributors.json"
+
+    // Lang stuff
+    const langs = {}
+    const langfiles =  import.meta.glob("./lang/*", {eager: true})
+    for(const langname in langfiles)
+        langs[langname.split("/").at(-1).replace(".json", "")] = langfiles[langname] // Get all langs
+    
+    let locale = navigator.language
+    // locale = "en-US" // Un-comment for debuging purposes
+    const lang = {...langs["en-US"], ...langs[locale]} // Get locale lang + english
 
     // Consts and vars
+    const random = (min, max) => Math.floor(Math.random() * (max-min) + min)
     const modpacklist = Array.from(modpacks.entries()) // Enum modpacks
     const links = [
         {
@@ -44,6 +56,31 @@
             "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMTIuNzEzbC0xMS45ODUtOS43MTNoMjMuOTcxbC0xMS45ODYgOS43MTN6bS01LjQyNS0xLjgyMmwtNi41NzUtNS4zMjl2MTIuNTAxbDYuNTc1LTcuMTcyem0xMC44NSAwbDYuNTc1IDcuMTcydi0xMi41MDFsLTYuNTc1IDUuMzI5em0tMS41NTcgMS4yNjFsLTMuODY4IDMuMTM1LTMuODY4LTMuMTM1LTguMTEgOC44NDhoMjMuOTU2bC04LjExLTguODQ4eiIvPjwvc3ZnPg=="
         }
     ] // Social links
+
+    // Modpack related-stuff
+    const banners = [] // Banner images
+    const potatoes = [] // Packs that require 4GBs of RAM or less
+    modpacks.forEach(pack => {
+        if (pack.name!=null) {
+            banners.push(pack.assets.banner)
+            pack.ram.minimum <= 4 ? potatoes.push(pack) : null
+        }
+    })
+    let randomcontrib = contributors[random(0, contributors.length)]
+    setInterval(() => {
+        const fgchildren = document.getElementById("fg").children
+        for (const c of fgchildren) {c.classList.add("animate-fg")} // Add sliding animation
+
+        setTimeout(() => {
+            const contriblist = contributors.length>1 ? contributors.filter(c => c.name!=randomcontrib.name) : contributors
+            randomcontrib = contriblist[random(0, contriblist.length)]
+            setTimeout(() => {
+                for (const c of fgchildren) {c.classList.remove("animate-fg")} // Remove sliding animation
+            }, 1000)
+        }, 1000)
+    }, 10000)
+
+    // Page-reload related stuff
     let splash = null // Banner splash
     let popups = {} // Popup open functions
     let popup = window.location.hash.replace("#", "") // Get opened popup
@@ -56,7 +93,7 @@
             
             // And pick a new splash
             if (localStorage.getItem("splash")!=null)
-                splash = splashes[Math.floor(Math.random() * splashes.length)]
+                splash = lang.splashes[random(0, lang.splashes.length)]
         }
         else { // Else
             document.getElementById("banner").style.animation = "none" // Stop the starting animation
@@ -68,8 +105,8 @@
             Object.keys(popups).includes(popup) && popups[popup](true) // Open popup
         }
 
-        if (splash==null) { // If it's the first time you visit the website, set splash to "Welcome!"
-            splash = "Welcome!"
+        if (splash==null) { // If it's the first time you visit the website, set splash to welcome_splash
+            splash = lang.welcome_splash
         }
 
         localStorage.setItem("splash", splash) // Store splash in local storage
@@ -83,6 +120,7 @@
         font-family: "Reem Kufi Fun", monospace, sans-serif;
         color: white;
         text-align: center;
+        font-weight: 300;
     }
 
     :global(body)::-webkit-scrollbar {
@@ -91,6 +129,8 @@
 
     :global(body) {
         overflow-x: hidden;
+
+        background-color: black;
     }
     :global(#noscroll) {
         overflow-y: hidden;
@@ -126,6 +166,30 @@
             opacity: 1;
         }
     }
+    @keyframes float {
+        from {
+            margin-top: -15px;
+        }
+        to {
+            margin-top: 15px;
+        }
+    }
+    @keyframes scroll {
+        from {
+            transform: translateY(0%);
+        }
+        to {
+            transform: translateY(100%);
+        }
+    }
+    @keyframes slide {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-100vw);
+        }
+    }
 
     div {
         width: 100vw;
@@ -140,36 +204,54 @@
     }
     h1 {
         margin: 0;
+        font-size: 3em;
+    }
+    h1, h2 {
+        font-weight: 700;
     }
     h4 {
-        background-color: black;
-        margin: 0;
+        position: absolute;
+        
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-bottom: 0;
+        margin-inline: auto;
 
-        color: black;
-        font-size: 0.5em;
+        color: #0f0f0f;
+        font-size: .7em;
 
         cursor: default;
     }
     p {
         white-space: pre-line;
 
-        font-size: 1.25em;
+        font-size: 1.5em;
+    }
+    :global(b) {
+        font-weight: 600;
+    }
+
+    .bigicon {
+        height: 15vw;
     }
 
     #banner {
         height: 50vh;
 
-        background-image: url("https://raw.githubusercontent.com/Modern-Modpacks/assets/main/banner.png");
         background-size: cover;
         background-blend-mode: darken;
+        background-position: center;
 
         animation: bg_color 1.5s, shrink .5s 2s both;
         animation-iteration-count: 1;
         background-color: rgba(0, 0, 0, 0.5);
     }
     #logo {
-        width: 200px;
+        width: 25vh;
         height: auto;
+        image-rendering: pixelated;
+
         border-radius: 10%;
 
         animation: opacity .5s both;
@@ -182,6 +264,9 @@
         animation-delay: 1.5s;
 
         font-weight: bold;
+
+        background-color: black;
+        color: white;
     }
     #banner > h2 {
         margin-top: 0;
@@ -202,28 +287,24 @@
         align-items: start;
     }
 
-    #difficulty {
+    .inline {
         flex-direction: row;
-        justify-content: space-evenly;
-
-        padding-top: 0;
+        justify-content: space-around;
     }
-    #difficulty > * {
-        flex-grow: 1;
-        flex-basis: 0;
-
+    .inline > * {
         margin-inline: 25px;
     }
-    #difficulty > p {
-        font-size: 1.15em;
+    .backwards {
+        flex-direction: row-reverse;
     }
-
+    
     #difficulty > div {
         flex-direction: row;
         gap: 15px;
+        width: 60vw;
     }
     #difficulty > div > div {
-        height: 60vh;
+        height: 75vh;
         width: auto;
 
         padding: 0;
@@ -241,7 +322,9 @@
     #icons {
         display: grid;
         grid-template-rows: repeat(9, 1fr);
+
         column-gap: 5px;
+        row-gap: 7%;
     }
     #icons > img {
         width: 30px;
@@ -249,11 +332,150 @@
         cursor: pointer;
     }
 
+    #potatoes {
+        width: auto;
+
+        flex-direction: column;
+    }
+    #potatoes > div {
+        width: 100%;
+        padding-block: 0;
+
+        flex-direction: row;
+        column-gap: 20px;
+
+        cursor: pointer;
+    }
+    #potatoes > div > img {
+        height: 50px;
+        border-radius: 5px;
+    }
+
+    #hellish {
+        padding: 0;
+    }
+    #hellish > a {
+        height: 42vh;
+
+        margin-left: 0;
+        margin-right: auto;
+    }
+    #hellish > a > img {
+        height: 100%;
+
+        margin-left: 0;
+
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+    }
+    :global(#hellish a) {
+        text-decoration: none;
+        color: white;
+    }
+    #hellish > div {
+        width: auto;
+        padding: 0;
+    }
+    #hellish > div > div {
+        width: 30vw;
+        
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2vw;
+    }
+    #hellish > div > div img {
+        height: 50px;
+        border-radius: 5px;
+    }
+
+    #contributors {
+        position: relative;
+
+        height: 50vh;
+        overflow: hidden;
+
+        padding-block: 0;
+
+        flex-wrap: wrap;
+    }
+    #contributors > #bg {
+        position: absolute;
+
+        height: 100%;
+
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(10vw, 1fr));
+        grid-auto-rows: 1fr;
+
+        align-content: center;
+    }
+    #contributors > #bg > img {
+        object-fit: cover;
+        width: 100%;
+        max-height: 100%;
+
+        animation: scroll 10s infinite linear;
+    }
+    #contributors > #fg {
+        width: 60vw;
+        height: 100%;
+
+        z-index: 1;
+        padding-left: 20px;
+
+        align-self: flex-start;
+        align-items: flex-start;
+
+        background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    }
+    #contributors > #fg > img {
+        height: 250px;
+        border-radius: 50px;
+    }
+    #contributors > #fg > h2 {
+        margin-bottom: 0;
+    }
+    #contributors > #fg > p {
+        width: 30vw;
+        text-align: start;
+
+        margin-block: 10px;
+    }
+    #contributors > #fg > a > img {
+        filter: invert(1);
+    }
+    :global(.animate-fg) {
+        animation: slide 1s alternate infinite;
+    }
+    #contributors > #fgtext {
+        z-index: 1;
+        width: 40vw;
+        height: 100%;
+
+        margin-right: 0;
+        margin-left: auto;
+        margin-block: 0;
+
+        align-items: flex-end;
+
+        background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    }
+    #contributors > #fgtext > p {
+        width: 70%;
+        margin-right: 10%;
+
+        font-size: 1.15em;
+    }
+
+    h1, #socials {
+        background-color: #0f0f0f;
+    }
     #socials {
         flex-direction: row;
+        align-items: center;
         gap: 20px;
 
-        padding-top: 0;
+        padding-block: 20px;
     }
     #socials > a {
         height: 35px;
@@ -272,75 +494,102 @@
 
     @media (max-width: 850px) {
         p {
-            font-size: 1em;
+            font-size: 1.2em;
+        }
+
+        .bigicon {
+            height: 45vw;
+        }
+
+        .inline {
+            flex-direction: column;
         }
 
         #modpacks {
             grid-template-columns: repeat(4, 50px);
         }
 
-        #difficulty {
-            flex-direction: column;
+        #difficulty > div > div {
+            height: 50vh;
+        }
+
+        #potatoes > div > img {
+            height: 50px;
+        }
+
+        #hellish > a {
+            margin-left: auto;
+            margin-top: 25px;
+
+            height: auto;
+        }
+        #hellish > a > img {
+            border-radius: 20px;
+        }
+        #hellish p {
+            margin-bottom: 0;
+        }
+
+        #contributors {
+            height: 80vh;
+            flex-direction: row;
+        }
+        #contributors > #bg {
+            grid-template-columns: repeat(auto-fill, minmax(15vw, 1fr));
+        }
+        #contributors > #fg, #contributors > #fgtext {
+            width: 100%;
+            height: 50%;
+
+            background: rgba(0, 0, 0, .5);
+        }
+        #contributors > #fg {
+            padding: 0;
+            padding-top: 15px;
+
+            align-items: center;
+        }
+        #contributors > #fg > img {
+            height: 200px;
+        }
+        #contributors > #fg > p {
+            text-align: center;
+            width: 50%;
+        }
+        :global(.animate-fg) {
+            animation: none;
+        }
+        #contributors > #fgtext {
+            padding-top: 0;
+        }
+        #contributors > #fgtext > p {
+            font-size: 1em;
+
+            margin-inline: auto;
         }
     }
 </style>
 
 <main>
-    <div id="banner">
+    <div id="banner" style="background-image: url({banners[random(0, banners.length)]});">
         <img src="https://avatars.githubusercontent.com/u/112729506?s=200&v=4" alt="logo" id="logo" draggable="false">
         <h1>Modern Modpacks</h1>
         <h2>{splash}</h2>
     </div>
     
-    <div>
-        <h1>Modern Modpacks makes expert modpacks for 1.16.5</h1>
-    </div>
-
+    <h1>{lang.headings.modpacks}</h1>
     <div id="modpacks">
         {#each modpacklist as modpack}
-            <Modpack modpack={modpack[1]} index={modpack[0]} bind:click={popups[modpack[1].abbr]}/>
+            <Modpack modpack={modpack[1]} index={modpack[0]} lang={lang} bind:click={popups[modpack[1].abbr]}/>
         {/each}
     </div>
 
-    <div>
-        <h1>Q&A</h1>
-        <p>
-            Q: Why not the latest version?
-            <b>A: We belive that people should stop hopping from version to version and stick to one LTS release.</b>
-            
-            Q: Why not 1.19.2?
-            <b>A: The chat reporting feature is a deal breaker for us. We won't ever update past 1.19</b>
-
-            Q: Why not 1.18.2?
-            <b>A: 1.18 is not optimized as much as 1.16.5, even with performance mods.</b>
-
-            Q: Why not 1.12.2?
-            <b>A: 1.12.2 was released back in 2017 and has lived long enough to be replaced with something more new,
-            like 1.16.5 which was released in 2020!</b>
-
-            Q: Why not 1.7.10?
-            <b>A: bruh.</b>
-
-            Q: Why expert and not kitchen sinks?
-            <b>A: While kitchen sinks can be fun in their own way, experts are in many cases more fun to play.</b>
-
-            Q: How many modpacks will there be?
-            <b>A: We plan on making 16 modpacks, each with their own theme and challenge.
-               Each modpack is based on a single minecraft dye color, so that's why there are 16 of them!</b>
-
-            Q: Fabric/Quilt?
-            <b>A: Maybe someday. But we're only forge for now.</b>
-        </p>
-    </div>
-
-    <div>
-        <h1>Difficulty</h1>
-    </div>
-    <div id="difficulty">
+    <h1>{lang.headings.difficulty}</h1>
+    <div id="difficulty" class="inline">
         <div>
             <div>
                 {#each Array.from(Array(5).keys()).reverse() as i}
-                    <h2>{i+1} ({["Vanila+", "Casual", "Harder", "Professional", "Extreme"][i]})</h2>
+                    <h2>{i+1} ({["Vanila+", "Casual", "Expert", "Professional", "Gregic"][i]})</h2>
                 {/each}
             </div>
             <div id="scale"/>
@@ -354,42 +603,71 @@
         </div>
 
         <p>
-            <b>Difficulty</b> does NOT mean how tedious and un-fun the modpack is, all it means is how much previous modded experience you should have to play the modpack and not get confused.
-        
-            <b>1 (Vanila+)</b> - Easy vanila+ modpack, the only experience you need to have is playing basic minecraft. All of the "THIS IS WHAT MINECRAFT SHOULD'VE BEEN" modpacks fit into this category.
-
-            <b>2 (Casual)</b> - If you're a beginner, start with these modpacks. Easy to understand but not as lightweight as Vanila+ modpacks. Think of something like Create: Above & Beyond.
-
-            <b>3 (Harder)</b> - A typical expert experience. Enigmatica 2 Expert is the most well-known modpack that we can use as an example.
-        
-            <b>4 (Professional)</b> - These modpacks are somewhat hard to understand, but once you get how they work, they'll provide a ton of enjoyment. Divine Journey 2 and Enigmatica 6 Expert are both somewhere here.
-
-            <b>5 (Extreme)</b> - The hardest difficulty of modpacks. If you like a challenge, try one of these. RLCraft and funny greg horizons packs are located here.
+            {@html lang.description.difficulty.join("\n\n")}
         </p>
     </div>
 
-    <div>
-        <h1>How can I help?</h1>
-        <p>
-            <b>There are a couple of ways.</b>
-            
-            Firstly you can open a pull request or an issue on our github (linked down below).
+    <h1>{lang.headings.potato}</h1>
+    <div class="inline backwards">
+        <img class="bigicon" draggable="false" src="potato.png" alt="potato">
+        
+        <div id="potatoes">
+            <p>{@html lang.description.potato}</p>
 
-            If you are willing to spend more time on this project, you can also become a member of Modern Modpacks.
-            Right now we are searching for:
-            - Pixel artists
-            - KubeJS coders
-            - Quest creators
-            - Translators
-            - PR managers
-            If you fit in one of those groups, or belive you can also help in a different way, contact G_cat#2267
-            on discord, or info@modernmodpacks.site through email.
-            <b>REMEMBER THO</b>, membership is NOT employment. This is a voluntary thing 
-            and you WON'T be paid anything.
+            {#each potatoes as potato}
+                <div on:click={() => {popups[potato.abbr]()}}>
+                    <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/Icons/1024px/{potato.abbr}.png" alt="icon">
+                    <h2>{potato.name}</h2>
+                </div>
+            {/each}
+        </div>
+    </div>
 
-            And lastly, you can just tell other people about our project! We want people to know about us, and 
-            simply by sharing this website with others you can help us a ton!
-        </p>
+    <h1>{lang.headings.hellish}</h1>
+    <div class="inline" id="hellish">
+        <a href="https://github.com/Hellish-Mods">
+            <img draggable="false" src="https://avatars.githubusercontent.com/u/118846598?s=200&v=4" alt="logo">
+        </a>
+    
+        <div>
+            <p>{@html lang.description.hellish}</p>
+
+            <div>
+                {#each mods as mod}
+                    <a href={mod.link} title={mod.name}>
+                        <img src={mod.image} alt="modicon">
+                    </a>
+                {/each}
+            </div>
+        </div>
+    </div>
+
+    <h1>{lang.headings.mission}</h1>
+    <div class="inline backwards">
+        <img class="bigicon" draggable="false" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b3/Compass_JE3_BE3.gif" alt="compass">
+
+        <p>{@html lang.description.mission.join("\n\n")}</p>
+    </div>
+
+    <h1>{lang.headings.contributors}</h1>
+    <div id="contributors">
+        <div id="bg">
+            {#each [...Array(150).keys()] as i}
+                <img draggable="false" src="{contributors[i%contributors.length].pfp}" alt="avatar">
+            {/each}
+        </div>
+        <div id="fg">
+            <img src="{randomcontrib.pfp}" alt="avatar" draggable="false">
+            <h2>{randomcontrib.name}</h2>
+            <p>{lang.description.contributors[randomcontrib.name]}</p>
+            <a href="{randomcontrib.link}">
+                <img draggable="false" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMGMtNi42MjYgMC0xMiA1LjM3My0xMiAxMiAwIDUuMzAyIDMuNDM4IDkuOCA4LjIwNyAxMS4zODcuNTk5LjExMS43OTMtLjI2MS43OTMtLjU3N3YtMi4yMzRjLTMuMzM4LjcyNi00LjAzMy0xLjQxNi00LjAzMy0xLjQxNi0uNTQ2LTEuMzg3LTEuMzMzLTEuNzU2LTEuMzMzLTEuNzU2LTEuMDg5LS43NDUuMDgzLS43MjkuMDgzLS43MjkgMS4yMDUuMDg0IDEuODM5IDEuMjM3IDEuODM5IDEuMjM3IDEuMDcgMS44MzQgMi44MDcgMS4zMDQgMy40OTIuOTk3LjEwNy0uNzc1LjQxOC0xLjMwNS43NjItMS42MDQtMi42NjUtLjMwNS01LjQ2Ny0xLjMzNC01LjQ2Ny01LjkzMSAwLTEuMzExLjQ2OS0yLjM4MSAxLjIzNi0zLjIyMS0uMTI0LS4zMDMtLjUzNS0xLjUyNC4xMTctMy4xNzYgMCAwIDEuMDA4LS4zMjIgMy4zMDEgMS4yMy45NTctLjI2NiAxLjk4My0uMzk5IDMuMDAzLS40MDQgMS4wMi4wMDUgMi4wNDcuMTM4IDMuMDA2LjQwNCAyLjI5MS0xLjU1MiAzLjI5Ny0xLjIzIDMuMjk3LTEuMjMuNjUzIDEuNjUzLjI0MiAyLjg3NC4xMTggMy4xNzYuNzcuODQgMS4yMzUgMS45MTEgMS4yMzUgMy4yMjEgMCA0LjYwOS0yLjgwNyA1LjYyNC01LjQ3OSA1LjkyMS40My4zNzIuODIzIDEuMTAyLjgyMyAyLjIyMnYzLjI5M2MwIC4zMTkuMTkyLjY5NC44MDEuNTc2IDQuNzY1LTEuNTg5IDguMTk5LTYuMDg2IDguMTk5LTExLjM4NiAwLTYuNjI3LTUuMzczLTEyLTEyLTEyeiIvPjwvc3ZnPg==" alt="github">
+            </a>
+        </div>
+
+        <div id="fgtext">
+            <p>{@html lang.description.together.join("\n\n")}</p>
+        </div>
     </div>
 
     <div id="socials">

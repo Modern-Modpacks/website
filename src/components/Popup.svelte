@@ -1,6 +1,7 @@
 <script>
     // External vars
     export let modpack // Modpack info
+    export let lang // Lang
 
     // Vars
     let active // If the popup is active
@@ -19,7 +20,7 @@
         document.body.id = "" // Enable scroll
         noanim=false // Enable animation
         
-        window.location.hash = "" // Reset hash
+        history.pushState({}, "", "#") // Reset hash
 
         active=false // Set if popup active to false
     }
@@ -202,23 +203,23 @@
             <h1>{modpack.name}</h1>
             <h2>[{modpack.abbr}]</h2>
 
-            <p>{modpack.desc}</p>
+            <p>{lang.description.modpacks[modpack.abbr]}</p>
 
-            <h3>Difficulty: {modpack.difficulty}/5</h3>
+            <h3>{lang.difficulty}: {modpack.difficulty}/5</h3>
 
             <a id="download" href={modpack.links.cf}>
                 <img src="https://gist.githubusercontent.com/thecodewarrior/110057b210551c4ecf2c9be6d58ff824/raw/38748511ca1eb5677f009092fb3fcd71cc76cdf0/logo.svg" alt="curseforge">
-                <h1>Download</h1>
+                <h1>{lang.links.download}</h1>
             </a>
 
             <a id="source" href={modpack.links.gh + "/modlist.md"}>
                 <img src="data:image/svg+xml;base64,PHN2ZyBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMjEgNGMwLS40NzgtLjM3OS0xLTEtMWgtMTZjLS42MiAwLTEgLjUxOS0xIDF2MTZjMCAuNjIxLjUyIDEgMSAxaDE2Yy40NzggMCAxLS4zNzkgMS0xem0tNCAxMS4yNWMwIC40MTQtLjMzNi43NS0uNzUuNzVoLTguNWMtLjQxNCAwLS43NS0uMzM2LS43NS0uNzVzLjMzNi0uNzUuNzUtLjc1aDguNWMuNDE0IDAgLjc1LjMzNi43NS43NXptMC0zLjI0OGMwIC40MTQtLjMzNi43NS0uNzUuNzVoLTguNWMtLjQxNCAwLS43NS0uMzM2LS43NS0uNzVzLjMzNi0uNzUuNzUtLjc1aDguNWMuNDE0IDAgLjc1LjMzNi43NS43NXptMC0zLjI1MmMwIC40MTQtLjMzNi43NS0uNzUuNzVoLTguNWMtLjQxNCAwLS43NS0uMzM2LS43NS0uNzVzLjMzNi0uNzUuNzUtLjc1aDguNWMuNDE0IDAgLjc1LjMzNi43NS43NXoiIGZpbGwtcnVsZT0ibm9uemVybyIvPjwvc3ZnPg==" alt="modlist">
-                <h2>Modlist</h2>
+                <h2>{lang.links.modlist}</h2>
             </a>
 
             <a id="source" href={modpack.links.gh}>
                 <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMGMtNi42MjYgMC0xMiA1LjM3My0xMiAxMiAwIDUuMzAyIDMuNDM4IDkuOCA4LjIwNyAxMS4zODcuNTk5LjExMS43OTMtLjI2MS43OTMtLjU3N3YtMi4yMzRjLTMuMzM4LjcyNi00LjAzMy0xLjQxNi00LjAzMy0xLjQxNi0uNTQ2LTEuMzg3LTEuMzMzLTEuNzU2LTEuMzMzLTEuNzU2LTEuMDg5LS43NDUuMDgzLS43MjkuMDgzLS43MjkgMS4yMDUuMDg0IDEuODM5IDEuMjM3IDEuODM5IDEuMjM3IDEuMDcgMS44MzQgMi44MDcgMS4zMDQgMy40OTIuOTk3LjEwNy0uNzc1LjQxOC0xLjMwNS43NjItMS42MDQtMi42NjUtLjMwNS01LjQ2Ny0xLjMzNC01LjQ2Ny01LjkzMSAwLTEuMzExLjQ2OS0yLjM4MSAxLjIzNi0zLjIyMS0uMTI0LS4zMDMtLjUzNS0xLjUyNC4xMTctMy4xNzYgMCAwIDEuMDA4LS4zMjIgMy4zMDEgMS4yMy45NTctLjI2NiAxLjk4My0uMzk5IDMuMDAzLS40MDQgMS4wMi4wMDUgMi4wNDcuMTM4IDMuMDA2LjQwNCAyLjI5MS0xLjU1MiAzLjI5Ny0xLjIzIDMuMjk3LTEuMjMuNjUzIDEuNjUzLjI0MiAyLjg3NC4xMTggMy4xNzYuNzcuODQgMS4yMzUgMS45MTEgMS4yMzUgMy4yMjEgMCA0LjYwOS0yLjgwNyA1LjYyNC01LjQ3OSA1LjkyMS40My4zNzIuODIzIDEuMTAyLjgyMyAyLjIyMnYzLjI5M2MwIC4zMTkuMTkyLjY5NC44MDEuNTc2IDQuNzY1LTEuNTg5IDguMTk5LTYuMDg2IDguMTk5LTExLjM4NiAwLTYuNjI3LTUuMzczLTEyLTEyLTEyeiIvPjwvc3ZnPg==" alt="github">
-                <h2>Source</h2>
+                <h2>{lang.links.source}</h2>
             </a>
         </div>
     </div>

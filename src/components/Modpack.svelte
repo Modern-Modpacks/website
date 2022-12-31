@@ -6,6 +6,7 @@
     export let modpack // Modpack info
     export let index // Modpack index
     export let click // Click action
+    export let lang // Lang
 
     // Consts and vars
     const discovered = modpack.name!=null // If modpack is discovered (available)
@@ -39,17 +40,20 @@
         background-size: cover;
     }
     @media (max-width: 850px) {
+        h1 {
+            font-size: .6em;
+        }
         #logo {
             height: 50px;
         }
     }
 </style>
 
-<div id="wrap" title="{discovered ? modpack.shortdesc : ""}" style="cursor: {discovered ? "pointer" : "not-allowed"};" on:click={() => {discovered && click()}}>
+<div id="wrap" title="{discovered ? lang.shortdesc[modpack.abbr] : ""}" style="cursor: {discovered ? "pointer" : "not-allowed"};" on:click={() => {discovered && click()}}>
     <div on:mouseover={() => {discovered ? inverted=false : ""}} on:mouseleave={() => {discovered ? inverted=true : ""}} id="logo" style="background-image: url(https://github.com/Modern-Modpacks/assets/raw/main/BG/{("0"+(index+1)).slice(-2)}{modpack.color}.png)">
         <img draggable="false" style="--mask: url(/masks/{discovered ? index : "null"}{inverted ? "inverted" : ""}.png);" src="https://github.com/Modern-Modpacks/assets/raw/main/FG.png" alt="foreground">
     </div>
     <h1>{modpack.name!=null ? modpack.name : "???"}</h1>
 </div>
 
-<Popup modpack={modpack} bind:activate={click}/>
+<Popup modpack={modpack} bind:activate={click} lang={lang}/>
