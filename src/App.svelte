@@ -555,6 +555,8 @@
             padding-top: 12%;
 
             align-items: center;
+
+            z-index: 2;
         }
         #contributors > #fg > img {
             height: 200px;

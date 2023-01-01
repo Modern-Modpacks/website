@@ -123,6 +123,8 @@
     #desc > h3 {
         font-size: 2em;
         font-weight: 500;
+
+        margin-bottom: 15px;
     }
     #desc > p {
         font-size: 1.5em;
@@ -136,6 +138,17 @@
         display: flex;
         justify-content: center;
         gap: 15px;
+    }
+
+    #ram {
+        display: flex;
+        gap: 50px;
+    }
+    #ram > p {
+        margin-top: 0;
+        margin-bottom: 50px;
+
+        font-size: 1.5em;
     }
 
     #download {
@@ -206,6 +219,12 @@
         #desc > p, #desc > h3  {
             font-size: 1.25em;
         }
+
+        #ram > p {
+            margin-bottom: 20px;
+
+            font-size: 1em;
+        }
     }
 </style>
 
@@ -222,6 +241,12 @@
             <p>{lang.description.modpacks[modpack.abbr]}</p>
 
             <h3>{lang.difficulty}: {modpack.difficulty}/5</h3>
+
+            <h3>{lang.ram}:</h3>
+            <div id="ram">
+                <p>{lang.minimum}:{"\n" + modpack.ram.minimum}</p>
+                <p>{lang.recommended}:{"\n" + modpack.ram.recommended}</p>
+            </div>
 
             <a id="download" href={modpack.links.cf}>
                 <img src="https://gist.githubusercontent.com/thecodewarrior/110057b210551c4ecf2c9be6d58ff824/raw/38748511ca1eb5677f009092fb3fcd71cc76cdf0/logo.svg" alt="curseforge">

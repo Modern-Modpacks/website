@@ -39,7 +39,12 @@
         "modlist": "Modlist",
         "source": "Source"
     },
+
     "difficulty": "Difficulty",
+    "ram": "RAM requirements",
+    "minimum": "Minimum",
+    "recommended": "Recommended",
+
     "description": {
         "modpacks": {},
         "contributors": {
