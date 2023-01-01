@@ -15,6 +15,7 @@
         "NullPointerException",
         "Better call Greg!",
         "Better than rats!",
+        "wood good",
 
         "Can't do 3D!",
         "Trans rights!",
@@ -66,7 +67,9 @@
             "<b>That only leaves one version - 1.16.5.</b> Yes, performance <b>is</b> worse than in 1.12.2, but it isn't as bad as 1.18.2. It lacks some new cave-generation features, but not enough to make it feel outdated. That's why we make modpacks for this version specifically.",
 
             "<b>One other thing that was one of the ideas behind this project was the idea of memento mori, all good things must come to an end.</b>",
-            "<b>That's why we are only making 16 unqiue modpacks and then leaving for good.</b> After we release our last modpack, we are done. The end. Felina."
+            "<b>That's why we are only making 16 unqiue modpacks and then leaving for good.</b> After we release our last modpack, we are done. The end. Felina.",
+
+            "<b>Enjoy it while it lasts.</b> We guarantee you will have a good modded minecraft experience, no matter if you are an experienced gregtech loving hardcore gamer or you've just found out about modded 10 seconds ago."
         ],
 
         "together": [

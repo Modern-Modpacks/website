@@ -191,6 +191,22 @@
     #download > img, #source > img {
         width: 1.25em;
     }
+
+    @media (max-width: 850px) {
+        #banner {
+            height: 17.5vh;
+        }
+
+        #desc > h1 {
+            font-size: 2em;
+        }
+        #desc > h2 {
+            font-size: 1.5em;
+        }
+        #desc > p, #desc > h3  {
+            font-size: 1.25em;
+        }
+    }
 </style>
 
 <div id="darken" class="{!active ? "disabled" : ""} {noanim ? "disableanim" : ""}">

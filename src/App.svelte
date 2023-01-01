@@ -364,7 +364,7 @@
         height: 100%;
         image-rendering: pixelated;
 
-        margin-left: 0;
+        margin-left: -15%;
 
         border-top-right-radius: 50px;
         border-bottom-right-radius: 50px;
@@ -497,6 +497,9 @@
         p {
             font-size: 1.2em;
         }
+        h1 {
+            font-size: 2em;
+        }
 
         .bigicon {
             height: 45vw;
@@ -508,6 +511,7 @@
 
         #modpacks {
             grid-template-columns: repeat(4, 50px);
+            grid-auto-rows: 100px;
         }
 
         #difficulty > div > div {
@@ -525,6 +529,8 @@
             height: auto;
         }
         #hellish > a > img {
+            margin-left: 0;
+
             border-radius: 20px;
         }
         #hellish p {
@@ -532,7 +538,7 @@
         }
 
         #contributors {
-            height: 80vh;
+            height: 90vh;
             flex-direction: row;
         }
         #contributors > #bg {
@@ -546,7 +552,7 @@
         }
         #contributors > #fg {
             padding: 0;
-            padding-top: 15px;
+            padding-top: 12%;
 
             align-items: center;
         }
@@ -564,7 +570,7 @@
             padding-top: 0;
         }
         #contributors > #fgtext > p {
-            font-size: 1em;
+            font-size: 1.6vh;
 
             margin-inline: auto;
         }
