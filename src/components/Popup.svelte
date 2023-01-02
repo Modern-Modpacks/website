@@ -245,7 +245,7 @@
             <h3>{lang.ram}:</h3>
             <div id="ram">
                 <p>{lang.minimum}:{"\n" + modpack.ram.minimum}</p>
-                <p>{lang.recommended}:{"\n" + modpack.ram.recommended}</p>
+                <p>{lang.recommended}:{"\n" + (modpack.ram.minimum+2)}</p>
             </div>
 
             <a id="download" href={modpack.links.cf}>
