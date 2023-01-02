@@ -63,7 +63,7 @@
     modpacks.forEach(pack => {
         if (pack.name!=null) {
             banners.push(pack.assets.banner)
-            pack.ram.minimum <= 4 ? potatoes.push(pack) : null
+            pack.ram<= 4 ? potatoes.push(pack) : null
         }
     })
     let randomcontrib = contributors[random(0, contributors.length)]
