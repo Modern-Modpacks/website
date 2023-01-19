@@ -390,14 +390,14 @@
         padding: 0;
     }
     #hellish > div > div {
-        width: 30vw;
+        width: 50vw;
         
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
+        flex-direction: row;
+        flex-wrap: wrap;
         gap: 2vw;
     }
     #hellish > div > div img {
-        height: 50px;
+        height: 75px;
         border-radius: 5px;
     }
 
