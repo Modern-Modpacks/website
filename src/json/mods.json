@@ -3,5 +3,10 @@
         "name": "Hellish Localization",
         "image": "https://raw.githubusercontent.com/Hellish-Mods/Hellish-Localization/main/src/main/resources/pack.png",
         "link": "https://www.curseforge.com/minecraft/mc-mods/hellish-localization"
+    },
+    {
+        "name": "Modern Custom Discs",
+        "image": "https://raw.githubusercontent.com/Hellish-Mods/Modern-Custom-Discs/main/src/main/resources/pack.png",
+        "link": "https://www.curseforge.com/minecraft/mc-mods/modern-custom-discs"
     }
 ]
