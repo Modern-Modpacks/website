@@ -399,6 +399,11 @@
     #hellish > div > div img {
         height: 75px;
         border-radius: 5px;
+
+        transition: transform .3s;
+    }
+    #hellish > div > div img:hover {
+        transform: scale(110%); 
     }
 
     #contributors {
@@ -462,7 +467,7 @@
     }
     #contributors > #fgtext {
         z-index: 1;
-        width: 40vw;
+        width: 37vw;
         height: 100%;
 
         margin-right: 0;
@@ -548,9 +553,12 @@
         #hellish p {
             margin-bottom: 0;
         }
+        #hellish > div > div img {
+            height: 65px;
+        }
 
         #contributors {
-            height: 90vh;
+            height: auto;
             flex-direction: row;
         }
         #contributors > #bg {
@@ -558,20 +566,21 @@
         }
         #contributors > #fg, #contributors > #fgtext {
             width: 100%;
-            height: 50%;
+            height: auto;
 
             background: rgba(0, 0, 0, .5);
         }
         #contributors > #fg {
             padding: 0;
-            padding-top: 12%;
+            padding-top: 5%;
 
             align-items: center;
 
             z-index: 2;
         }
         #contributors > #fg > img {
-            height: 200px;
+            height: 150px;
+            border-radius: 25px;
         }
         #contributors > #fg > p {
             text-align: center;
@@ -581,7 +590,7 @@
             animation: none;
         }
         #contributors > #fgtext {
-            padding-top: 0;
+            padding-block: 0;
         }
         #contributors > #fgtext > p {
             font-size: 1.6vh;
