@@ -394,10 +394,10 @@
         
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 2vw;
+        gap: 1vw;
     }
     #hellish > div > div img {
-        height: 75px;
+        height: 100px;
         border-radius: 5px;
 
         transition: transform .3s;
@@ -552,6 +552,9 @@
         }
         #hellish p {
             margin-bottom: 0;
+        }
+        #hellish > div > div {
+            gap: 2vw;
         }
         #hellish > div > div img {
             height: 65px;
