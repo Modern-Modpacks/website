@@ -8,5 +8,10 @@
         "name": "Modern Custom Discs",
         "image": "https://raw.githubusercontent.com/Hellish-Mods/Modern-Custom-Discs/main/src/main/resources/pack.png",
         "link": "https://www.curseforge.com/minecraft/mc-mods/modern-custom-discs"
+    },
+    {
+        "name": "DigitalityAPI",
+        "image": "https://raw.githubusercontent.com/Hellish-Mods/DigitalityAPI/main/src/main/resources/pack.png",
+        "link": "https://www.curseforge.com/minecraft/mc-mods/digitality"
     }
 ]
