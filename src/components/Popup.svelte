@@ -253,7 +253,7 @@
                 <h1>{lang.links.download}</h1>
             </a>
 
-            <a id="source" href={modpack.links.gh + "/modlist.md"}>
+            <a id="source" href={modpack.links.cf + "/relations/dependencies"}>
                 <img src="data:image/svg+xml;base64,PHN2ZyBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMjEgNGMwLS40NzgtLjM3OS0xLTEtMWgtMTZjLS42MiAwLTEgLjUxOS0xIDF2MTZjMCAuNjIxLjUyIDEgMSAxaDE2Yy40NzggMCAxLS4zNzkgMS0xem0tNCAxMS4yNWMwIC40MTQtLjMzNi43NS0uNzUuNzVoLTguNWMtLjQxNCAwLS43NS0uMzM2LS43NS0uNzVzLjMzNi0uNzUuNzUtLjc1aDguNWMuNDE0IDAgLjc1LjMzNi43NS43NXptMC0zLjI0OGMwIC40MTQtLjMzNi43NS0uNzUuNzVoLTguNWMtLjQxNCAwLS43NS0uMzM2LS43NS0uNzVzLjMzNi0uNzUuNzUtLjc1aDguNWMuNDE0IDAgLjc1LjMzNi43NS43NXptMC0zLjI1MmMwIC40MTQtLjMzNi43NS0uNzUuNzVoLTguNWMtLjQxNCAwLS43NS0uMzM2LS43NS0uNzVzLjMzNi0uNzUuNzUtLjc1aDguNWMuNDE0IDAgLjc1LjMzNi43NS43NXoiIGZpbGwtcnVsZT0ibm9uemVybyIvPjwvc3ZnPg==" alt="modlist">
                 <h2>{lang.links.modlist}</h2>
             </a>
