@@ -18,5 +18,10 @@
         "name": "Hellish Blåhaj",
         "image": "https://raw.githubusercontent.com/Hellish-Mods/hellish-blahaj/main/src/main/resources/pack.png",
         "link": "https://www.curseforge.com/minecraft/mc-mods/hellish-blahaj"
+    },
+    {
+        "name": "Amber (Jade)",
+        "image": "https://raw.githubusercontent.com/Hellish-Mods/amber/main/src/main/resources/pack.png",
+        "link": "https://www.curseforge.com/minecraft/mc-mods/amber-jade"
     }
 ]
