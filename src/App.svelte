@@ -387,7 +387,7 @@
         width: 100%;
         max-height: 100%;
 
-        animation: scroll 10s infinite linear;
+        animation: scroll 20s infinite linear;
     }
     #contributors > #fg {
         width: 60vw;
