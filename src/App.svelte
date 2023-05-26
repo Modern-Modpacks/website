@@ -146,7 +146,7 @@
             transform: translateY(0%);
         }
         to {
-            transform: translateY(300%);
+            transform: translateY(var(--move-percent));
         }
     }
     @keyframes slide {
@@ -620,7 +620,7 @@
 
     <h1>{lang.headings.contributors}</h1>
     <div id="contributors">
-        <div id="bg">
+        <div id="bg" style="--move-percent: {contributors.length%2 ? 3 : 2}00%;">
             {#each [...Array(150).keys()] as i}
                 <img draggable="false" src="{contributors[i%contributors.length].pfp}" alt="avatar">
             {/each}

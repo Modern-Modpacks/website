@@ -55,6 +55,7 @@
         "contributors": {
             "G_cat": "The creator and owner of Modern Modpacks and Hellish Mods",
             "Rainbuu": "Flowchart maker, asset creator, and coder for MM and HM",
+            "Bigbee": "Texture creator for Hellish Mods",
             "Kasualix": "Simplified Chineese translator for Hellish Mods"
         },
 
@@ -87,7 +88,7 @@
         "together": [
             "<b>These people help us achive our goal.</b>",
             "Want to be one of them?",
-            "If you know KubeJS, can write quests, make assets (sprites/music), translate things into other languages or be useful in any other way - contact us through email (info@modernmodpacks.site) or through discord (G_cat#2267).",
+            "If you know KubeJS/Forge, can write quests, make assets (sprites/music), translate things into other languages or be useful in any other way - contact us through email (info@modernmodpacks.site) or through discord (G_cat#2267).",
             "Who knows, maybe you'll end up on this cool animated wall ;)"
         ]
     },
