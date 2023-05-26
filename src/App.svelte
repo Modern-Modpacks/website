@@ -30,14 +30,17 @@
             pack.ram<= 4 ? potatoes.push(pack) : null
         }
     })
-    let randomcontrib = contributors[random(0, contributors.length)]
+
+    let nextcontribcount = 0
+    $: nextcontrib = contributors[nextcontribcount % contributors.length]
+
     setInterval(() => {
         const fgchildren = document.getElementById("fg").children
         for (const c of fgchildren) {c.classList.add("animate-fg")} // Add sliding animation
 
         setTimeout(() => {
-            const contriblist = contributors.length>1 ? contributors.filter(c => c.name!=randomcontrib.name) : contributors
-            randomcontrib = contriblist[random(0, contriblist.length)]
+            nextcontribcount++
+
             setTimeout(() => {
                 for (const c of fgchildren) {c.classList.remove("animate-fg")} // Remove sliding animation
             }, 1000)
@@ -143,7 +146,7 @@
             transform: translateY(0%);
         }
         to {
-            transform: translateY(100%);
+            transform: translateY(300%);
         }
     }
     @keyframes slide {
@@ -623,10 +626,10 @@
             {/each}
         </div>
         <div id="fg">
-            <img src="{randomcontrib.pfp}" alt="avatar" draggable="false">
-            <h2>{randomcontrib.name}</h2>
-            <p>{lang.description.contributors[randomcontrib.name]}</p>
-            <a href="{randomcontrib.link}">
+            <img src="{nextcontrib.pfp}" alt="avatar" draggable="false">
+            <h2>{nextcontrib.name}</h2>
+            <p>{lang.description.contributors[nextcontrib.name]}</p>
+            <a href="{nextcontrib.link}">
                 <img draggable="false" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMGMtNi42MjYgMC0xMiA1LjM3My0xMiAxMiAwIDUuMzAyIDMuNDM4IDkuOCA4LjIwNyAxMS4zODcuNTk5LjExMS43OTMtLjI2MS43OTMtLjU3N3YtMi4yMzRjLTMuMzM4LjcyNi00LjAzMy0xLjQxNi00LjAzMy0xLjQxNi0uNTQ2LTEuMzg3LTEuMzMzLTEuNzU2LTEuMzMzLTEuNzU2LTEuMDg5LS43NDUuMDgzLS43MjkuMDgzLS43MjkgMS4yMDUuMDg0IDEuODM5IDEuMjM3IDEuODM5IDEuMjM3IDEuMDcgMS44MzQgMi44MDcgMS4zMDQgMy40OTIuOTk3LjEwNy0uNzc1LjQxOC0xLjMwNS43NjItMS42MDQtMi42NjUtLjMwNS01LjQ2Ny0xLjMzNC01LjQ2Ny01LjkzMSAwLTEuMzExLjQ2OS0yLjM4MSAxLjIzNi0zLjIyMS0uMTI0LS4zMDMtLjUzNS0xLjUyNC4xMTctMy4xNzYgMCAwIDEuMDA4LS4zMjIgMy4zMDEgMS4yMy45NTctLjI2NiAxLjk4My0uMzk5IDMuMDAzLS40MDQgMS4wMi4wMDUgMi4wNDcuMTM4IDMuMDA2LjQwNCAyLjI5MS0xLjU1MiAzLjI5Ny0xLjIzIDMuMjk3LTEuMjMuNjUzIDEuNjUzLjI0MiAyLjg3NC4xMTggMy4xNzYuNzcuODQgMS4yMzUgMS45MTEgMS4yMzUgMy4yMjEgMCA0LjYwOS0yLjgwNyA1LjYyNC01LjQ3OSA1LjkyMS40My4zNzIuODIzIDEuMTAyLjgyMyAyLjIyMnYzLjI5M2MwIC4zMTkuMTkyLjY5NC44MDEuNTc2IDQuNzY1LTEuNTg5IDguMTk5LTYuMDg2IDguMTk5LTExLjM4NiAwLTYuNjI3LTUuMzczLTEyLTEyLTEyeiIvPjwvc3ZnPg==" alt="github">
             </a>
         </div>
@@ -636,7 +639,7 @@
         </div>
     </div>
 
-    <Socials />
+    <Socials splash={false}/>
 
     <h4>greg</h4>
 </main>
