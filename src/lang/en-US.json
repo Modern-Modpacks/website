@@ -92,7 +92,7 @@
         "difficulty": [
             "<b>The Modern Modpack Difficulty Scale™</b> has got you covered! The 5 difficulty levels represent how much time you will spend on a modpack:",
             "<b>1 (Vanila+)</b> - The easiest level, these modpacks are designed to be simple to complete. One of those will take you about 10-200 hours of in-game time. Most of FTB's kitchen sink packs fall under this.",
-            "<b>2 (Casual)</b> - These packs are where you want to start as a begginer. If the packs on the first level are designed for experts to relax, these are specifically target towards newcomers. 50-200 hours to complete. The 1.16.5 pack most closly resembling this difficulty is Create: Above and Beyond.",
+            "<b>2 (Casual)</b> - These packs are where you want to start as a beginner. If the packs on the first level are designed for experts to relax, these are specifically target towards newcomers. 50-200 hours to complete. The 1.16.5 pack most closly resembling this difficulty is Create: Above and Beyond.",
             "<b>3 (Expert)</b> - The golden mean of modpack difficulties. Some gregic elements start to show and you'll need dedication to complete one of these. 200-500 hours of your free time are required. Enigmatica 2 Expert is probably the most popular example.",
             "<b>4 (Professional)</b> - Things get hard here. You can play these without any experience but there's a high chance you are going to have a bad time. You need around 500 hours to get to the end, this can be caused by hard to understand technology or unbearable hardcore mods - like RLCraft.",
             "<b>5 (Gregic)</b> - Welcome to hell! These are your Gregtech: New Horizons clones. Only play those if you never want to see people in your life again. Warning: 1000+ hours!"
@@ -118,7 +118,7 @@
         "together": [
             "<b>These people help us achive our goal.</b>",
             "Want to be one of them?",
-            "If you know KubeJS/Forge, can write quests, make assets (sprites/music), translate things into other languages or be useful in any other way - contact us through email (info@modernmodpacks.site) or through discord (G_cat#2267).",
+            "If you know KubeJS/Forge, can write quests, make assets (sprites/music), translate things into other languages or be useful in any other way - contact us through email (info@modernmodpacks.site) or through discord (gcat101).",
             "Who knows, maybe you'll end up on this cool animated wall ;)"
         ]
     },
