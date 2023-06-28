@@ -23,5 +23,10 @@
         "name": "Amber (Jade)",
         "image": "https://raw.githubusercontent.com/Hellish-Mods/amber/main/src/main/resources/pack.png",
         "link": "https://www.curseforge.com/minecraft/mc-mods/amber-jade"
+    },
+    {
+        "name": "Powah: Overcharged",
+        "image": "https://raw.githubusercontent.com/Hellish-Mods/powah-overcharged/main/src/main/resources/pack.png",
+        "link": "https://www.curseforge.com/minecraft/mc-mods/powah-overcharged"
     }
 ]
