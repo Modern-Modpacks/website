@@ -558,7 +558,7 @@
         <div>
             <div>
                 {#each Array.from(Array(5).keys()) as i}
-                    <h2>{i+1} ({["Vanila+", "Casual", "Expert", "Professional", "Gregic"][i]})</h2>
+                    <h2>{i+1} ({["Casual", "Advanced", "Difficult", "Professional", "Gregic"][i]})</h2>
                 {/each}
             </div>
             <div id="scale"/>
