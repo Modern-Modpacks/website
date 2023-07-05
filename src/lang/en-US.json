@@ -93,11 +93,11 @@
 
         "difficulty": [
             "<b>The Modern Modpack Difficulty Scale™</b> has got you covered! The 5 difficulty levels represent how much time you will spend on a modpack:",
-            "<b>1 (Vanila+)</b> - The easiest level, these modpacks are designed to be simple to complete. One of those will take you about 10-200 hours of in-game time. Most of FTB's kitchen sink packs fall under this.",
-            "<b>2 (Casual)</b> - These packs are where you want to start as a beginner. If the packs on the first level are designed for experts to relax, these are specifically target towards newcomers. 50-200 hours to complete. The 1.16.5 pack most closly resembling this difficulty is Create: Above and Beyond.",
-            "<b>3 (Expert)</b> - The golden mean of modpack difficulties. Some gregic elements start to show and you'll need dedication to complete one of these. 200-500 hours of your free time are required. Enigmatica 2 Expert is probably the most popular example.",
-            "<b>4 (Professional)</b> - Things get hard here. You can play these without any experience but there's a high chance you are going to have a bad time. You need around 500 hours to get to the end, this can be caused by hard to understand technology or unbearable hardcore mods - like RLCraft.",
-            "<b>5 (Gregic)</b> - Welcome to hell! These are your Gregtech: New Horizons clones. Only play those if you never want to see people in your life again. Warning: 1000+ hours!"
+            "<b>1 (Casual)</b> - The easiest expert modpacks, these are the ones you probably want to start with if you are a begginer. Perhaps the most well-known example of this difficulty is All The Mods series",
+            "<b>2 (Advanced)</b> - Packs here are not hard and can still be played by complete begginers, but they will not be as easy as the casual ones. They compare to such packs as Enigmatica 2 Expert and Create: Above and Beyond.",
+            "<b>3 (Difficult)</b> - Things become tricky here, if you have never played modded before these might not be the best pick, but on the other side, these can be more fun than the previous difficulies! A good example here would be Nomifactory.",
+            "<b>4 (Professional)</b> - When you enter a modpack with this difficulty you have to be prepared to make playing it your routine for at least a month of your life. You know this feeling if you have ever played Divine Journey 2 or Enigmatica 6 Expert.",
+            "<b>5 (Gregic)</b> - These require serious dedication and can take tens of thousands of hours to complete. No pack compares better than the infamous GregTech: New Horizons."
         ],
 
         "potato": "Most of our pack run perfectly fine on 4GBs of RAM, <b>with some only requiring 2 to work!</b>\nHere's a list of them:",
