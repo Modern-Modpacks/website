@@ -35,16 +35,23 @@
     $: nextcontrib = contributors[nextcontribcount % contributors.length]
 
     setInterval(() => {
+        const duration = 1500
         const fgchildren = document.getElementById("fg").children
-        for (const c of fgchildren) {c.classList.add("animate-fg")} // Add sliding animation
 
-        setTimeout(() => {
-            nextcontribcount++
+        if (!window.matchMedia("(max-width: 850px)").matches) {
+            for (const c of fgchildren) {
+                c.animate([
+                    {transform: "translateX(0)"},
+                    {transform: "translateX(-100vw)"}
+                ], {duration: duration, easing: "cubic-bezier(0.33, 1, 0.68, 1)"})
+                c.animate([
+                    {transform: "translateX(-100vw)"},
+                    {transform: "translateX(0)"}
+                ], {duration: duration-500, delay: duration, easing: "cubic-bezier(0.32, 0, 0.67, 0)"})
+            } // Add sliding animation
+        }
 
-            setTimeout(() => {
-                for (const c of fgchildren) {c.classList.remove("animate-fg")} // Remove sliding animation
-            }, 1000)
-        }, 1000)
+        setTimeout(() => nextcontribcount++, duration)
     }, 10000)
 
     // Page-reload related stuff
@@ -147,14 +154,6 @@
         }
         to {
             transform: translateY(var(--move-percent));
-        }
-    }
-    @keyframes slide {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(-100vw);
         }
     }
 
@@ -384,8 +383,8 @@
     }
     #contributors > #bg > img {
         object-fit: cover;
+        aspect-ratio: 1/1;
         width: 100%;
-        max-height: 100%;
 
         animation: scroll 20s infinite linear;
     }
@@ -402,7 +401,7 @@
         background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
     }
     #contributors > #fg > img {
-        height: 250px;
+        height: 20vh;
         border-radius: 50px;
     }
     #contributors > #fg > h2 {
@@ -410,15 +409,13 @@
     }
     #contributors > #fg > p {
         width: 30vw;
+        font-size: 1.2em;
         text-align: start;
 
         margin-block: 10px;
     }
     #contributors > #fg > a > img {
         filter: invert(1);
-    }
-    :global(.animate-fg) {
-        animation: slide 1s alternate infinite;
     }
     #contributors > #fgtext {
         z-index: 1;
@@ -437,7 +434,7 @@
         width: 70%;
         margin-right: 10%;
 
-        font-size: 1.15em;
+        font-size: 1em;
     }
 
     h1 {
@@ -523,9 +520,6 @@
         #contributors > #fg > p {
             text-align: center;
             width: 50%;
-        }
-        :global(.animate-fg) {
-            animation: none;
         }
         #contributors > #fgtext {
             padding-block: 0;
@@ -620,8 +614,8 @@
 
     <h1>{lang.headings.contributors}</h1>
     <div id="contributors">
-        <div id="bg" style="--move-percent: {contributors.length%2 ? 3 : 2}00%;">
-            {#each [...Array(150).keys()] as i}
+        <div id="bg" style="--move-percent: {contributors.length*100}%">
+            {#each [...Array(contributors.length*100).keys()] as i}
                 <img draggable="false" src="{contributors[i%contributors.length].pfp}" alt="avatar">
             {/each}
         </div>
