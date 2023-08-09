@@ -386,7 +386,7 @@
         aspect-ratio: 1/1;
         width: 100%;
 
-        animation: scroll 20s infinite linear;
+        animation: scroll 30s infinite linear;
     }
     #contributors > #fg {
         width: 60vw;
