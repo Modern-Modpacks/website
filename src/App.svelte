@@ -5,6 +5,7 @@
     import Modpack from "./components/Modpack.svelte"
     import modpacks from "./json/modpacks.json"
     import mods from "./json/mods.json"
+    import projects from "./json/projects.json"
     import contributors from "./json/contributors.json"
 
     // Lang stuff
@@ -23,11 +24,9 @@
 
     // Modpack related-stuff
     const banners = [] // Banner images
-    const potatoes = [] // Packs that require 4GBs of RAM or less
     modpacks.forEach(pack => {
         if (pack.name!=null) {
             banners.push(pack.assets.banner)
-            pack.ram<= 4 ? potatoes.push(pack) : null
         }
     })
 
@@ -36,7 +35,7 @@
 
     setInterval(() => {
         const duration = 1500
-        const fgchildren = document.getElementById("fg").children
+        const fgchildren = document.querySelector("#contributors > #fg").children
 
         if (!window.matchMedia("(max-width: 850px)").matches) {
             for (const c of fgchildren) {
@@ -72,6 +71,7 @@
         else { // Else
             document.getElementById("banner").style.animation = "none" // Stop the starting animation
             for (const e of document.getElementById("banner").children) { // Stop children's starting animations
+                // @ts-ignore
                 e.style.animation = "none"
             }
             splash = localStorage.getItem("splash") // Set splash to previous splash
@@ -154,6 +154,14 @@
         }
         to {
             transform: translateY(var(--move-percent));
+        }
+    }
+    @keyframes scrollX {
+        from {
+            transform: translateX(0%);
+        }
+        to {
+            transform: translateX(var(--move-percent));
         }
     }
 
@@ -298,42 +306,23 @@
         cursor: pointer;
     }
 
-    #potatoes {
-        width: auto;
-
-        flex-direction: column;
-    }
-    #potatoes > div {
-        width: 100%;
-        padding-block: 0;
-
-        flex-direction: row;
-        column-gap: 20px;
-
-        cursor: pointer;
-    }
-    #potatoes > div > img {
-        height: 50px;
-        border-radius: 5px;
-    }
-
     #hellish {
         padding: 0;
     }
     #hellish > a {
         height: 42vh;
 
-        margin-left: 0;
-        margin-right: auto;
+        margin-left: auto;
+        margin-right: 0;
     }
     #hellish > a > img {
         height: 100%;
         image-rendering: pixelated;
 
-        margin-left: -15%;
+        margin-right: -15%;
 
-        border-top-right-radius: 50px;
-        border-bottom-right-radius: 50px;
+        border-top-left-radius: 50px;
+        border-bottom-left-radius: 50px;
     }
     :global(#hellish a) {
         text-decoration: none;
@@ -358,6 +347,77 @@
     }
     #hellish > div > div img:hover {
         transform: scale(110%); 
+    }
+
+    #ecosystem {
+        position: relative;
+        overflow: hidden;
+
+        flex-direction: column;
+
+        height: 45vh;
+    }
+    #ecosystem > #fg {
+        align-self: flex-start;
+
+        height: 100%;
+        width: 60vw;
+        z-index: 1;
+
+        pointer-events: none;
+
+        align-items: flex-start;
+        padding-left: 50px;
+        margin: 0;
+
+        background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    }
+    #ecosystem > #fg > p {
+        pointer-events: all;
+        width: 50%;
+        font-size: 2vh;
+    }
+    #ecosystem > #bg {
+        position: absolute;
+        row-gap: 15px;
+    }
+    #ecosystem > #bg > .row {
+        display: grid;
+        grid-auto-flow: column;
+        
+        gap: 15px;
+        overflow: hidden;
+
+        padding: 0;
+    }
+    #ecosystem > #bg > .row > .button {
+        width: 25vw;
+        animation: scrollX 30s linear infinite;
+    }
+    #ecosystem > #bg > .row.offset > .button {
+        translate: 17.5vw;
+    }
+    #ecosystem > #bg > .row:hover > .button {
+        animation-play-state: paused;
+    }
+    #ecosystem > #bg > .row > .button > a {
+        background-color: #222222;
+        border-radius: 15px;
+        width: 100%;
+
+        text-decoration: none;
+
+        transition: transform .15s;
+    }
+    #ecosystem > #bg > .row:hover > .button > a {
+        transform: scale(90%);
+    }
+    #ecosystem > #bg > .row > .button > a:hover {
+        transform: scale(110%);
+    }
+    #ecosystem > #bg > .row > .button > a > p {
+        font-size: 2vh;
+        text-wrap: nowrap;
     }
 
     #contributors {
@@ -466,18 +526,14 @@
             height: 50vh;
         }
 
-        #potatoes > div > img {
-            height: 50px;
-        }
-
         #hellish > a {
-            margin-left: auto;
+            margin-right: auto;
             margin-top: 25px;
 
             height: auto;
         }
         #hellish > a > img {
-            margin-left: 0;
+            margin-right: 0;
 
             border-radius: 20px;
         }
@@ -490,6 +546,31 @@
         }
         #hellish > div > div img {
             height: 65px;
+        }
+
+        #ecosystem {
+            height: auto;
+        }
+        #ecosystem > #fg {
+            width: 100%;
+            padding: 0;
+            background-color: #000000;
+
+            flex-wrap: wrap;
+            align-content: center;
+        }
+        #ecosystem > #fg > p {
+            font-size: inherit;
+        }
+        #ecosystem > #bg {
+            position: relative;
+            row-gap: 0;
+        }
+        #ecosystem > #bg > .row > .button > a {
+            padding: 5px;
+        }
+        #ecosystem > #bg > .row > .button > a > p {
+            font-size: .65em;
         }
 
         #contributors {
@@ -570,24 +651,8 @@
         </p>
     </div>
 
-    <h1>{lang.headings.potato}</h1>
-    <div class="inline backwards">
-        <img class="bigicon" draggable="false" src="potato.png" alt="potato">
-        
-        <div id="potatoes">
-            <p>{@html lang.description.potato}</p>
-
-            {#each potatoes as potato}
-                <div on:click={() => {popups[potato.abbr]()}}>
-                    <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/Icons/1024px/{potato.abbr}.png" alt="icon">
-                    <h2>{potato.name}</h2>
-                </div>
-            {/each}
-        </div>
-    </div>
-
     <h1>{lang.headings.hellish}</h1>
-    <div class="inline" id="hellish">
+    <div class="inline backwards" id="hellish">
         <a href="https://github.com/Hellish-Mods">
             <img draggable="false" src="https://avatars.githubusercontent.com/u/118846598?s=200&v=4" alt="logo">
         </a>
@@ -602,6 +667,26 @@
                     </a>
                 {/each}
             </div>
+        </div>
+    </div>
+
+    <h1>{lang.headings.ecosystem}</h1>
+    <div class="inline" id="ecosystem">
+        <div id="fg">
+            <p>{@html lang.description.ecosystem.join("\n\n")}</p>
+        </div>
+        <div id="bg">
+            {#each [...Array(3).keys()] as row}
+                <div class="row {row%2==1 ? "offset" : ""}">
+                    {#each [...Array(25).keys()].map(i => projects[(i+row)%projects.length]) as project}
+                        <div class="button" style="--move-percent: calc({row%2==1 ? "-" : ""}{projects.length*100}% {row%2==1 ? "-" : "+"} {projects.length*15}px)">
+                            <a href="{project.link}" title="{lang.description.projects[project.name.toLowerCase()]}">
+                                <p>{project.icon} {project.name}</p>
+                            </a>
+                        </div>
+                    {/each}
+                </div>
+            {/each}
         </div>
     </div>
 

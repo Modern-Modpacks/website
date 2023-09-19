@@ -50,6 +50,7 @@
 </style>
 
 <div id="wrap" title="{discovered ? lang.shortdesc[modpack.abbr] : ""}" style="cursor: {discovered ? "pointer" : "not-allowed"};" on:click={() => {discovered && click()}}>
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <div on:mouseover={() => {discovered ? inverted=false : ""}} on:mouseleave={() => {discovered ? inverted=true : ""}} id="logo" style="background-image: url(https://github.com/Modern-Modpacks/assets/raw/main/BG/{("0"+(index+1)).slice(-2)}{modpack.color}.png)">
         <img draggable="false" style="--mask: url(/masks/{discovered ? index : "null"}{inverted ? "inverted" : ""}.png);" src="https://github.com/Modern-Modpacks/assets/raw/main/FG.png" alt="foreground">
     </div>

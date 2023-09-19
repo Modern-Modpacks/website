@@ -67,8 +67,8 @@
     "headings": {
         "modpacks": "We make expert modpacks for 1.16.5",
         "difficulty": "Looking for a challenge?",
-        "potato": "Have a potato? Don't panic!",
         "hellish": "Hellish Mods",
+        "ecosystem": "Welcome to the ecosystem",
         "mission": "Our mission",
         "contributors": "Stronger together!"
     },
@@ -87,12 +87,20 @@
         "modpacks": {},
         "contributors": {
             "G_cat": "The creator and owner of Modern Modpacks and Hellish Mods",
-            "Rainbuu": "Flowchart maker, asset creator, German translator, and coder for MM and HM",
-            "glomdom": "Coder and Quest Writer for MM",
+            "Rainbuu": "Flowchart maker, asset creator, German translator and coder for MM and HM",
+            "glomdom": "Coder and quest writer for MM",
             "Bigbee": "Texture creator for Hellish Mods",
             "Kasualix": "Simplified Chinese translator for Hellish Mods",
             "Kazimir": "Spanish/French translator for Hellish Mods",
             "eyecubed": "Ex-Turkish translator for Hellish Mods"
+        },
+        "projects": {
+            "website": "The website you're on right now!",
+            "kjspkg": "A package manager for KubeJS scripts",
+            "kjspkg lookup": "A helper tool for KJSPKG, allowing you to see information about packages in your browser",
+            "trdne": "ThisRecipeDoesNotExist. A random minecraft recipe generator",
+            "missingtexture": "A per-server-specialized private Discord bot developed by MM",
+            "pissmc": "A parody modloader designed for the first version of Minecraft available in the launcher, rd-132211"
         },
 
         "difficulty": [
@@ -104,9 +112,13 @@
             "<b>5 (Gregic)</b> - These require serious dedication and can take tens of thousands of hours to complete. No pack compares better than the infamous GregTech: New Horizons."
         ],
 
-        "potato": "Most of our pack run perfectly fine on 4GBs of RAM, <b>with some only requiring 2 to work!</b>\nHere's a list of them:",
-        "hellish": "<a href=\"https://github.com/Hellish-Mods\"><b>Hellish Mods</b></a> is a subsidiary organization of Modern Modpacks that focuses on making 1.16.5 mods and utilities!",
-
+        "hellish": "<a href=\"https://github.com/Hellish-Mods\"><b>Hellish Mods</b></a> is a subsidiary organization of Modern Modpacks that focuses on making 1.16.5 mods and utilities!\nWe also maintain some forks of mods that have abandoned their 1.16 versions, for example Jade and Powah.",
+        "ecosystem": [
+            "<b>Modern Modpacks not only develops modpacks and mods, but also a slew of other utilities.</b>",
+            "Everything from discord bots to modloaders, if we find something even slightly interesting, we will make it.",
+            "Checkout the stuff that interests you by clicking on one of these buttons with a cool animation I made.&nbsp&nbsp:)",
+            "You can also hover over them to find out more."
+        ],
         "mission": [
             "<b>We started this organization as a way to make 1.16.5 popular among modded players again.</b>",
             "We belive that, currently, there isn't a better version to play.",

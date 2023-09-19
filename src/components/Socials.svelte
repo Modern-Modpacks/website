@@ -5,7 +5,7 @@
     const links = [
         {
             "title": "Discord",
-            "url": "https://discord.gg/ZTTw4J6aYu",
+            "url": "https://discord.modernmodpacks.site/",
             "img": "https://www.svgrepo.com/show/353655/discord-icon.svg",
             "splash": true
         },

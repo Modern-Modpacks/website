@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Website",
+        "icon": "🌐",
+        "link": "https://github.com/Modern-Modpacks/website"
+    },
+    {
+        "name": "KJSPKG",
+        "icon": "📦",
+        "link": "https://github.com/Modern-Modpacks/kjspkg"
+    },
+    {
+        "name": "KJSPKG Lookup",
+        "icon": "🔎",
+        "link": "https://kjspkglookup.modernmodpacks.site"
+    },
+    {
+        "name": "TRDNE",
+        "icon": "🔨",
+        "link": "https://thisrecipedoesnotexist.modernmodpacks.site"
+    },
+    {
+        "name": "MissingTexture",
+        "icon": "🤖",
+        "link": "https://discord.modernmodpacks.site"
+    },
+    {
+        "name": "PissMC",
+        "icon": "💦",
+        "link": "https://pissmc.modernmodpacks.site"
+    }
+]
