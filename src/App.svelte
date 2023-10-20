@@ -10,8 +10,10 @@
 
     // Lang stuff
     import en_us from "./lang/en-US.json"
+    import ru_ru from "./lang/ru-RU.json"
     const langs = {
-        "en-US": en_us
+        "en-US": en_us,
+        "ru-RU": ru_ru
     }
     
     let locale = navigator.language
