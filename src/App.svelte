@@ -7,22 +7,14 @@
     import mods from "./json/mods.json"
     import projects from "./json/projects.json"
     import contributors from "./json/contributors.json"
+    import LangPicker from "./components/LangPicker.svelte";
 
-    // Lang stuff
-    import en_us from "./lang/en-US.json"
-    import ru_ru from "./lang/ru-RU.json"
-    const langs = {
-        "en-US": en_us,
-        "ru-RU": ru_ru
-    }
-    
-    let locale = navigator.language
-    // locale = "en-US" // Un-comment for debuging purposes
-    const lang = {...langs["en-US"], ...langs[locale]} // Get locale lang + english
+    import eng from "./lang/en-US.json"
 
     // Consts and vars
     const random = (min, max) => Math.floor(Math.random() * (max-min) + min)
     const modpacklist = Array.from(modpacks.entries()) // Enum modpacks
+    $: lang = eng
 
     // Modpack related-stuff
     const banners = [] // Banner images
@@ -68,7 +60,7 @@
             
             // And pick a new splash
             if (localStorage.getItem("splash")!=null)
-                splash = lang.splashes[random(0, lang.splashes.length)]
+                change_splash()
         }
         else { // Else
             document.getElementById("banner").style.animation = "none" // Stop the starting animation
@@ -87,13 +79,17 @@
 
         localStorage.setItem("splash", splash) // Store splash in local storage
     })
+
+    function change_splash() {
+        splash = lang.splashes[random(0, lang.splashes.length)]
+    }
 </script>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
     * {
-        font-family: "Reem Kufi Fun", monospace, sans-serif;
+        font-family: "Montserrat", monospace, sans-serif;
         color: white;
         text-align: center;
         font-weight: 300;
@@ -180,6 +176,7 @@
     }
     h1 {
         margin: 0;
+        padding: 10px;
         font-size: 3em;
     }
     h1, h2 {
@@ -235,6 +232,7 @@
     }
     #banner > h1 {
         margin: 10px;
+        padding: 0;
 
         animation: opacity .25s both;
         animation-delay: 1.5s;
@@ -484,6 +482,8 @@
         width: 37vw;
         height: 100%;
 
+        line-height: 20px;
+
         margin-right: 0;
         margin-left: auto;
         margin-block: 0;
@@ -617,6 +617,7 @@
 
 <main>
     <div id="banner" style="background-image: url({banners[random(0, banners.length)]});">
+        <LangPicker bind:lang={lang} change_splash={change_splash}/>
         <img src="https://avatars.githubusercontent.com/u/112729506?s=200&v=4" alt="logo" id="logo" draggable="false">
         <h1>Modern Modpacks</h1>
         <h2>{splash}</h2>
