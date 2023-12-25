@@ -106,7 +106,8 @@
             "kjspkg lookup": "A helper tool for KJSPKG, allowing you to see information about packages in your browser",
             "trdne": "ThisRecipeDoesNotExist. A random minecraft recipe generator",
             "missingtexture": "A per-server-specialized private Discord bot developed by MM",
-            "pissmc": "A parody modloader designed for the first version of Minecraft available in the launcher, rd-132211"
+            "pissmc": "A parody modloader designed for the first version of Minecraft available in the launcher, rd-132211",
+            "awesome packdev": "A awesome-eqsue curated list of different useful mods, utilities and resources for packdevs"
         },
 
         "difficulty": [
