@@ -40,7 +40,7 @@
 
         {
             "title": "Modrinth",
-            "url": "https://modrinth.com/user/ModernModpacks",
+            "url": "https://modrinth.com/organization/modernmodpacks",
             "img": "https://docs.modrinth.com/img/logo.svg",
             "splash": false
         },
