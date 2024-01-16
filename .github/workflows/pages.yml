@@ -15,8 +15,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
           
-      - run: curl -fsSL https://get.pnpm.io/install.sh | sh -
       - run: pnpm i
       - run: pnpm run build
       
