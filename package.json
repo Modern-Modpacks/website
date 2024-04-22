@@ -1,0 +1,34 @@
+{
+	"name": "mm-website",
+	"version": "2.0",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"preinstall": "npx only-allow pnpm",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"devDependencies": {
+		"@babichjacob/svelte-localstorage": "^1.0.1",
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"autoprefixer": "^10.4.19",
+		"lucide-svelte": "^0.372.0",
+		"postcss": "^8.4.38",
+		"svelte": "^4.2.7",
+		"svelte-check": "^3.6.0",
+		"tailwind-scrollbar-hide": "^1.1.7",
+		"tailwindcss": "^3.4.3",
+		"tailwindcss-animated": "^1.0.1",
+		"tslib": "^2.4.1",
+		"typescript": "^5.0.0",
+		"vite": "^5.0.3"
+	},
+	"type": "module",
+	"dependencies": {
+		"svelte-i18n": "^4.0.0"
+	}
+}

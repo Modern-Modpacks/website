@@ -1,0 +1,1 @@
+export const randomChoice = (elements: any[]) => elements[Math.floor(Math.random()*elements.length)]
