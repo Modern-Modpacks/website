@@ -1,0 +1,31 @@
+{
+    "name": "Русский",
+
+    "splashes": [
+        "Minecraft, the way it wasn't meant to be",
+        "Vazkii is a mod by neat!",
+        "Greg is love, Greg is life!",
+        "Woo! PGA!",
+        "Check out supersymmetry!",
+        "WeGoByASingleName",
+        "Speedy modpacks for you!",
+        "@zeldalord activate windows",
+
+        "Asbestos free since 2023!",
+        "Not sponsored!",
+        "This ain't your grandma's modpacks",
+        "Obsessed with beets!",
+        "Clinically insane (sometimes)!",
+        "Let us cook",
+        "KubeJS > CraftTweaker",
+        "5 minute in-and-out coding adventure!",
+        "skibidi gyatt ohio rizz"
+    ],
+
+    "projects": {
+        "modpacks": {
+            "heading": "We develop Minercaft modpacks for 1.16.5",
+            "desc": "TODO"
+        }
+    }
+}

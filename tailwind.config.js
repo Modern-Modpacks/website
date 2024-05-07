@@ -6,14 +6,14 @@ const mmColors = {
   "mm-yellow": "#f1af15",
   "mm-green": "#495b24",
   "mm-lime": "#5ea918",
-  "mm-light-blue": "#2489c7",
+  "mm-lightblue": "#2489c7",
   "mm-cyan": "#157788",
   "mm-blue": "#2d2f8f",
   "mm-purple": "#64209c",
   "mm-magenta": "#a9309f",
   "mm-pink": "#d5658f",
-  "mm-dark-gray": "#373a3e",
-  "mm-gray": "#7d7d73",
+  "mm-gray": "#373a3e",
+  "mm-lightgray": "#7d7d73",
   "mm-white": "#cfd5d6",
   "mm-black": "#080a0f",
   "mm-brown": "#603c20"
@@ -30,12 +30,14 @@ export default {
   theme: {
     colors: {
       "black": "#000",
+      "white": "#fff",
       "transparent": "#00000000",
       ...mmColors,
 
       "primary-dark": "#1c1c1c",
       "header-dark": "#33333388",
-      "text-dark": "#ffffff"
+      "text-dark": "#ffffff",
+      "selected-text-dark": "#000000"
     },
     fontFamily: {
       "raleway": ["Raleway", "monospace", "sans-serif"]
@@ -58,7 +60,8 @@ export default {
   },
   plugins: [
     require("tailwindcss-animated"),
-    require("tailwind-scrollbar-hide")
+    require("tailwind-scrollbar-hide"),
+    require("tailwindcss-view-transitions")
   ]
 }
 
