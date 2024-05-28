@@ -15,14 +15,17 @@
         let settingsClasses : DOMTokenList | undefined = document.getElementById("settings")?.classList
         let settingsIconClasses : DOMTokenList | undefined = document.getElementById("settingsicon")?.classList
 
-        if (settingsClasses?.contains("opacity-0") && !disable) {
-            settingsClasses.remove("opacity-0", "pointer-events-none")
-            settingsIconClasses?.add("motion-safe:-rotate-180", "motion-safe:group-hover:-rotate-180")
-        }
-        else {
+        if (disable) {
             settingsClasses?.add("opacity-0", "pointer-events-none")
-            settingsIconClasses?.remove("motion-safe:-rotate-180", "motion-safe:group-hover:-rotate-180")
+            settingsIconClasses?.remove("motion-safe:!-rotate-180", "motion-safe:group-hover:!-rotate-180")
+            
+            return
         }
+
+        settingsClasses?.toggle("opacity-0")
+        settingsClasses?.toggle("pointer-events-none")
+        settingsIconClasses?.toggle("motion-safe:!-rotate-180")
+        settingsIconClasses?.toggle("motion-safe:group-hover:!-rotate-180")
     }
 
     onMount(() => {
@@ -66,7 +69,7 @@
             >{button.title}</a>
         {/each}
 
-        <button class="ml-3 cursor-pointer h-full group" on:click={() => {toggleSettings(false)}}>
+        <button class="ml-3 cursor-pointer h-full group" on:click={e => {e.stopPropagation(); toggleSettings(false)}}>
             <SettingsIcon class="duration-200 motion-safe:group-hover:-rotate-90" id="settingsicon"/>
         </button>
     </span>

@@ -1,7 +1,7 @@
 <script lang="ts">
     import HeaderBar from "$lib/components/HeaderBar.svelte"
     import "../app.css"
-    import { reducedMotion, scrollY } from "$lib/scripts/stores"
+    import { mousePos, reducedMotion, scrollY } from "$lib/scripts/stores"
     import { _, addMessages, getLocaleFromNavigator, init, locales } from "svelte-i18n"
     import consts from "$lib/scripts/consts"
     import { onNavigate } from "$app/navigation"
@@ -12,9 +12,9 @@
         $reducedMotion = !!window.matchMedia(`(prefers-reduced-motion: reduce)`) && window.matchMedia(`(prefers-reduced-motion: reduce)`).matches
     })
 
-    let langs = import.meta.glob("../lib/json/langs/*.json", {eager: true})
+    let langs = import.meta.glob("../lib/json/langs/*.json5", {eager: true})
     for(let l of Object.keys(langs)) {
-        addMessages(l.split("/").at(-1)?.replace(".json", "")!, (langs[l] as any))
+        addMessages(l.split("/").at(-1)?.replace(".json5", "")!, (langs[l] as any))
     }
     let locale : string | null = getLocaleFromNavigator()
     init(
@@ -32,6 +32,15 @@
                 resolve();
                 await navigation.complete;
             })
+        })
+    })
+
+    onMount(() => {
+        document.addEventListener("mousemove", e => {
+            $mousePos = {
+                x: e.pageX,
+                y: e.pageY
+            }
         })
     })
 </script>

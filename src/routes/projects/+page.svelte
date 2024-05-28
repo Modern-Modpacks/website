@@ -6,6 +6,10 @@
     import { ChevronsDown } from "lucide-svelte"
     import { randomChoice } from "$lib/scripts/utils";
     import { _, json } from "svelte-i18n";
+    import Modpack from "$lib/components/Modpack.svelte";
+    import { tweened, type Tweened } from "svelte/motion";
+    import { get } from "svelte/store";
+    import { cubicIn, cubicInOut, cubicOut, sineOut } from "svelte/easing";
 
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
         for (let child of children!) {
@@ -16,6 +20,12 @@
     }
 
     $: if ($navigating?.to?.url==$page.url) setTimeout(() => scrollTo(0, innerHeight), 1)
+
+    let maxScale : number = 100
+    let minScale : number = 90
+    let animations : {scale: Tweened<number>, scaleup: boolean}[] = [...Array(16).keys()].map(i => {return {scale: tweened(minScale - ((Math.floor(i / 4) + i % 4) * 5), {duration: 750, easing: sineOut}), scaleup: false}})
+
+    let modpacksHovered : boolean = false
 
     onMount(() => {
         let nav = $navigating
@@ -48,6 +58,15 @@
                 bg!.style.backgroundPositionY = `${Math.max($scrollY*.5-10, 0)}px`
             })
         }, 1)
+
+        setInterval(() => {
+            animations.forEach(anim => {
+                anim.scale.set(get(anim.scale) + (anim.scaleup ? 1 : -1))
+
+                if ((anim.scaleup && get(anim.scale)>maxScale)) anim.scaleup = false
+                else if (get(anim.scale)<minScale) anim.scaleup = true
+            })
+        }, 1)
     })
 </script>
 
@@ -63,10 +82,14 @@
         <ChevronsDown class="absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
     </div>
 
-    <div class="h-[45rem] my-10 mx-10 flex [&>*]:flex-1 [&>*]:text-center">
-        <div class="grid grid-cols-4 gap-16">
+    <div class="h-[45rem] my-16 mx-10 flex gap-24 [&>*]:text-center">
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div 
+            class="grid grid-cols-4 gap-[4.5rem] w-[48rem] h-[48rem] aspect-square group"
+            on:mouseenter={() => {modpacksHovered = true}} on:mouseleave={() => {modpacksHovered = false}}
+        >
             {#each [...Array(16).keys()] as i}
-                <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/BG/{('0'+(i+1)).slice(-2)}{consts.COLORS[i]}.png" alt="icon background">
+                <Modpack index={i} scale={$reducedMotion ? null : animations[i].scale} bind:parentHover={modpacksHovered} />
             {/each}
         </div>
         <div class="flex flex-col gap-5 items-center">

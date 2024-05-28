@@ -23,8 +23,10 @@ Object.keys(mmColors).forEach(c => {mmSafelist.push("after:bg-"+c, "hover:text-"
 
 export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
-  safelist: [ // TODO
+  safelist: [
     "hover:font-bold", "hover:font-semibold",
+    "motion-safe:hover:!scale-110", "motion-safe:hover:!scale-100",
+    "cursor-pointer", "cursor-[not-allowed]",
     ...mmSafelist
   ],
   theme: {
@@ -51,17 +53,27 @@ export default {
             to: {
                 transform: "translateY(20%)"
             }
+        },
+        breathe: {
+          from: {
+              transform: "scale(75%)"
+          },
+          to: {
+              transform: "scale(100%)"
+          }
         }
       },
       animation: {
-        float: "float 2s alternate infinite ease-in-out"
+        float: "float 2s alternate infinite ease-in-out",
+        breathe: "breathe 2s alternate infinite ease-in-out"
       }
     }
   },
   plugins: [
     require("tailwindcss-animated"),
     require("tailwind-scrollbar-hide"),
-    require("tailwindcss-view-transitions")
+    require("tailwindcss-view-transitions"),
+    require("tailwindcss-image-rendering")()
   ]
 }
 
