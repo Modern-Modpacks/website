@@ -5,9 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  flat:
+    specifier: ^6.0.1
+    version: 6.0.1
   svelte-i18n:
     specifier: ^4.0.0
     version: 4.0.0(svelte@4.2.15)
+  svelte-portal:
+    specifier: ^2.2.1
+    version: 2.2.1
   svelte-toggles:
     specifier: ^2.1.7
     version: 2.1.7
@@ -1284,6 +1290,12 @@ packages:
       is-buffer: 2.0.5
     dev: true
 
+  /flat@6.0.1:
+    resolution: {integrity: sha512-/3FfIa8mbrg3xE7+wAhWeV+bd7L2Mof+xtZb5dRDKZ+wDvYJK4WDYeIOuOhre5Yv5aQObZrlbRmk3RTSiuQBtw==}
+    engines: {node: '>=18'}
+    hasBin: true
+    dev: false
+
   /foreground-child@3.1.1:
     resolution: {integrity: sha512-TMKDUnIte6bfb5nWv7V/caI169OHgvwjb7V4WkeUvbQQdjr5rWKqHFiKWb/fcOwB+CzBT+qbWjvj+DVwRskpIg==}
     engines: {node: '>=14'}
@@ -2013,6 +2025,10 @@ packages:
       sade: 1.8.1
       svelte: 4.2.15
       tiny-glob: 0.2.9
+    dev: false
+
+  /svelte-portal@2.2.1:
+    resolution: {integrity: sha512-uF7is5sM4aq5iN7QF/67XLnTUvQCf2iiG/B1BHTqLwYVY1dsVmTeXZ/LeEyU6dLjApOQdbEG9lkqHzxiQtOLEQ==}
     dev: false
 
   /svelte-preprocess@5.1.4(postcss@8.4.38)(svelte@4.2.15)(typescript@5.4.5):

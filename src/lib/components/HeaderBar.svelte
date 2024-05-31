@@ -76,11 +76,11 @@
 </div>
 
 <div class="
-    fixed{settingsOpenByDefault ? " " : " opacity-0 pointer-events-none "}z-20 motion-safe:duration-150 top-20 right-20 w-56 p-5 shadow-2xl rounded-xl shadow-black bg-header-dark backdrop-blur-xl
+    fixed{settingsOpenByDefault ? " " : " opacity-0 pointer-events-none "}z-50 motion-safe:duration-150 top-20 right-20 w-56 p-5 shadow-2xl rounded-xl shadow-black bg-header-dark backdrop-blur-xl
     flex flex-col gap-1
     [&_p]:text-lg [&_p]:font-medium
 " id="settings">
-    <h3>Settings</h3>
+    <h2>Settings</h2>
     <p>Language</p>
     <div class="
         grid grid-cols-2 gap-2

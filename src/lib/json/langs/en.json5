@@ -29,7 +29,16 @@
     "projects": {
         "modpacks": {
             "heading": "We develop Minercaft modpacks for 1.16.5",
-            "desc": "TODO"
+            "desc": "\
+                <b>The word \"modpack\" has recently been tainted</b> by the overwhelming quantity of low-tier sludge being uploaded to the internet everyday by people who have no idea what they are doing, most of them simply throwing in a bunch of mods together with no regard to their intercompatiblity whatsoever.\n\n\
+                <b>We are, however, looking to provide a change.</b> We've been inspired by modpacks that the player can truly enjoy for prolonged amounts of time - such gems as <b>Divine Journey 1/2, The Enigmatica Series, Nomifactory, Create Above and Beyond, GregTech: New Horizons</b> and any other pack which is simply fun to discover and play.\n\n\
+                <b>No \"Kitchen Sink\" bullshit, progression-based is the only way to go.</b> There is only so much you can do without completely overhauling the way the player is supposed to progress through and eventually beat the game. <b>We don't deny that vanilla+ can be fun for some if done properly,</b> however, most of us came to the modded scene because we were tired of vanilla, and we believe that if you are burned out of the unmodded experience, you shouldn't desire something that is meant to mimic it. \n\n\
+                <b>We design our modpacks as if they were games,</b> and we dream to create 16 of them. We know our goal is unrealistic, and that's why we consider it secondary over <b>delivering quality experiences to you</b> and other members of the community regardless of their preference or skill. <b>Just pick a modpack at random and see if it fits you!</b>\
+            "
+        },
+        "partner": {
+            "heading": "Not enough for you?\nCheck out our partners' modpacks!",
+            "desc": "<b>Partners are not directly affiliated with Modern Modpacks</b>, but we trust them enough to put their modpacks here."
         }
     }
 }

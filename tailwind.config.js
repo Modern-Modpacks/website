@@ -27,6 +27,8 @@ export default {
     "hover:font-bold", "hover:font-semibold",
     "motion-safe:hover:!scale-110", "motion-safe:hover:!scale-100",
     "cursor-pointer", "cursor-[not-allowed]",
+    "scale-100", "scale-75",
+
     ...mmSafelist
   ],
   theme: {
@@ -37,8 +39,10 @@ export default {
       ...mmColors,
 
       "primary-dark": "#1c1c1c",
+      "secondary-dark": "#0c0c0c",
       "header-dark": "#33333388",
       "text-dark": "#ffffff",
+      "highlight-dark": "#ffffff",
       "selected-text-dark": "#000000"
     },
     fontFamily: {
@@ -61,11 +65,20 @@ export default {
           to: {
               transform: "scale(100%)"
           }
+        },
+        marquee: {
+          from: {
+              transform: "translateX(0rem)"
+          },
+          to: {
+              transform: "translateX(var(--scroll-amount))"
+          }
         }
       },
       animation: {
         float: "float 2s alternate infinite ease-in-out",
-        breathe: "breathe 2s alternate infinite ease-in-out"
+        breathe: "breathe 2s alternate infinite ease-in-out",
+        marquee: "marquee var(--scroll-time) infinite linear"
       }
     }
   },

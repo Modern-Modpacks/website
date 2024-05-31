@@ -1,15 +1,17 @@
 <script lang="ts">
-    import { navigating, page } from "$app/stores";
+    import { navigating, page } from "$app/stores"
     import consts from "$lib/scripts/consts"
     import { randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
-    import { randomChoice } from "$lib/scripts/utils";
-    import { _, json } from "svelte-i18n";
-    import Modpack from "$lib/components/Modpack.svelte";
-    import { tweened, type Tweened } from "svelte/motion";
-    import { get } from "svelte/store";
-    import { cubicIn, cubicInOut, cubicOut, sineOut } from "svelte/easing";
+    import { randomChoice } from "$lib/scripts/utils"
+    import { _, json } from "svelte-i18n"
+    import Modpack from "$lib/components/Modpack.svelte"
+    import { tweened, type Tweened } from "svelte/motion"
+    import { get } from "svelte/store"
+    import { sineOut } from "svelte/easing"
+    import partneredModpacks from "$lib/json/partner_modpacks.json"
+    import PartnerModpack from "$lib/components/PartnerModpack.svelte";
 
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
         for (let child of children!) {
@@ -27,8 +29,12 @@
 
     let modpacksHovered : boolean = false
 
+    let partnerQueueLen : number | null
+    let partnerModpacks : HTMLElement | null
+
     onMount(() => {
         let nav = $navigating
+        partnerQueueLen = $reducedMotion ? partneredModpacks.length : Math.max(partneredModpacks.length+2, 8)
 
         setTimeout(() => {
             let shouldShowOpacityAnim = !$scrollY && !nav && !$reducedMotion
@@ -77,12 +83,12 @@
         <img src="{consts.LOGO_URL}" class="w-64 h-64 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="logo" draggable="false">
         <span class="w-[60%] flex flex-col gap-3">
             <h1 class="opacity-0 translate-y-10 duration-[.5s] delay-[.5s]">Modern Modpacks</h1>
-            <h2 class="opacity-0 translate-y-10 duration-[.5s] delay-[.75s]">{$randomSplash}</h2>
+            <h3 class="opacity-0 translate-y-10 duration-[.5s] delay-[.75s]">{$randomSplash}</h3>
         </span>
         <ChevronsDown class="absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
     </div>
 
-    <div class="h-[45rem] my-16 mx-10 flex gap-24 [&>*]:text-center">
+    <div class="pt-16 pb-8 px-10 bg-primary-dark flex gap-32 [&>*]:text-center">
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div 
             class="grid grid-cols-4 gap-[4.5rem] w-[48rem] h-[48rem] aspect-square group"
@@ -92,9 +98,33 @@
                 <Modpack index={i} scale={$reducedMotion ? null : animations[i].scale} bind:parentHover={modpacksHovered} />
             {/each}
         </div>
-        <div class="flex flex-col gap-5 items-center">
-            <h1>{$_("projects.modpacks.heading")}</h1>
-            <p>{$_("projects.modpacks.desc")}</p>
+        <div class="flex flex-col gap-5 items-center w-[100%]">
+            <h2>{$_("projects.modpacks.heading")}</h2>
+            <p>{@html $_("projects.modpacks.desc")}</p>
+        </div>
+    </div>
+
+    <div class="py-8 pl-10 bg-secondary-dark flex justify-between">
+        <div class="w-[75rem]">
+            <h2>{@html $_("projects.partner.heading")}</h2>
+            <p class="mt-3">{@html $_("projects.partner.desc")}</p>
+        </div>
+        <div class="flex" style="mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);">
+            <div
+                class="flex items-center gap-6 motion-safe:animate-marquee hover:animate-pause motion-reduce:overflow-x-scroll"
+                style="--scroll-amount: -{10.5*partneredModpacks.length}rem; --scroll-time: {.5 * (partnerQueueLen ?? 0)}s"
+                bind:this={partnerModpacks}
+                on:wheel={e => {
+                    if (!$reducedMotion || partnerModpacks==null) return
+                    e.preventDefault()
+
+                    partnerModpacks.scrollLeft += e.deltaY
+                }}
+            >
+                {#each [...Array(partnerQueueLen).keys()] as i}
+                    <PartnerModpack modpack={partneredModpacks[i % partneredModpacks.length]} />
+                {/each}
+            </div>
         </div>
     </div>
 </main>
