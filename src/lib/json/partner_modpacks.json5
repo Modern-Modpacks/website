@@ -1,0 +1,24 @@
+[
+    {
+        "name": "GregTech: Beyond",
+        "abbr": "GTB",
+        
+        "icon": "https://cdn.discordapp.com/icons/1099658057010651176/7ee71d99a4a123398cc7718f9f2d7c91.png?size=256",
+        // "banner": "",
+
+        "tags": [
+            "gt",
+            "tech",
+            "magic",
+            "automation"
+        ],
+        "ram": {
+            "minimal": 6,
+            "recommended": 8
+        },
+        "links": {
+            "download": "https://curseforge.com/minecraft/modpacks/gregtech-beyond",
+            "source": "https://github.com/Blocky106/gregtech_beyond"
+        }
+    }
+]

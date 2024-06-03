@@ -19,14 +19,16 @@ const mmColors = {
   "mm-brown": "#603c20"
 }
 let mmSafelist = []
-Object.keys(mmColors).forEach(c => {mmSafelist.push("after:bg-"+c, "hover:text-"+c)})
+Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "after:bg-"+c, "hover:text-"+c)})
 
 export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
   safelist: [
-    "hover:font-bold", "hover:font-semibold",
+    "hover:font-bold", "hover:font-semibold", "hover:opacity-0",
+    "bg-white", "border-white",
+    "bg-text-dark", "text-selected-text-dark",
     "motion-safe:hover:!scale-110", "motion-safe:hover:!scale-100",
-    "cursor-pointer", "cursor-[not-allowed]",
+    "cursor-pointer", "cursor-not-allowed",
     "scale-100", "scale-75",
 
     ...mmSafelist
@@ -42,7 +44,6 @@ export default {
       "secondary-dark": "#0c0c0c",
       "header-dark": "#33333388",
       "text-dark": "#ffffff",
-      "highlight-dark": "#ffffff",
       "selected-text-dark": "#000000"
     },
     fontFamily: {

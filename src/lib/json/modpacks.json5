@@ -1,0 +1,39 @@
+[
+    {},
+    {},
+    {},
+    {},
+    {},
+    {
+        "name": "Futuristic Astronomy",
+        "abbr": "FA",
+
+        "banner": "https://raw.githubusercontent.com/Modern-Modpacks/assets/33dd3c4842f8cb8ceacbf4daf13e7e3b6d4f0ade/Banners/FA/00.png",
+
+        "tags": [
+            "space",
+            "tech",
+            "automation",
+            "lore",
+            "exploration"
+        ],
+        "ram": {
+            "minimal": 6,
+            "recommended": 8
+        },
+        // "links": {
+        //     "download": "https://curseforge.com/minecraft/modpacks/futuristic-astronomy",
+        //     "source": "https://github.com/Modern-Modpacks/futuristic-astronomy"
+        // }
+    },
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {}
+]

@@ -2,7 +2,7 @@
     import { base } from "$app/paths"
     import { page } from "$app/stores"
     import consts from "$lib/scripts/consts"
-    import { scrollY } from "$lib/scripts/stores"
+    import { scrollY, storedLocale } from "$lib/scripts/stores"
     import { SettingsIcon } from "lucide-svelte"
     import { onMount } from "svelte"
     import { locales, locale, _ } from "svelte-i18n"
@@ -40,12 +40,6 @@
     })
 </script>
 
-<style>
-    #selected {
-        @apply bg-text-dark text-selected-text-dark
-    }
-</style>
-
 <div class="fixed z-50 w-[90%] bg-header-dark backdrop-blur-sm shadow-2xl shadow-black h-16 flex justify-between px-2 left-[50%] translate-x-[-50%]{$page.url.pathname=="/projects" && !$scrollY ? " translate-y-[-100%] shadow-none " : " "}motion-safe:duration-150 rounded-b-2xl" style="view-transition-name: _;" id="header">
     <a class="group flex items-center h-full" href="{base}">
         <img src={consts.LOGO_URL} alt="logo" class="rounded-2xl p-2 duration-100 motion-safe:group-hover:rounded-[1.35rem]">
@@ -80,14 +74,14 @@
     flex flex-col gap-1
     [&_p]:text-lg [&_p]:font-medium
 " id="settings">
-    <h2>Settings</h2>
+    <h3 class="font-bold">Settings</h3>
     <p>Language</p>
     <div class="
         grid grid-cols-2 gap-2
         [&>button]:h-10 [&>button]:rounded-xl [&>button]:duration-100
     ">
         {#each $locales.sort((a, _) => a=="en" ? -1 : 0) as l}
-            <button id="{$locale==l ? "selected" : ""}" on:click={() => {$locale=l}}>{$_("name", {locale: l})}</button>
+            <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : ""}" on:click={() => {$storedLocale=l; $locale=l}}>{$_("name", {locale: l})}</button>
         {/each}
     </div>
     <span class="flex items-center">

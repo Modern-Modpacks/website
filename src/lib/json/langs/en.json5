@@ -23,8 +23,53 @@
         "Let us cook",
         "KubeJS > CraftTweaker",
         "5 minute in-and-out coding adventure!",
-        "skibidi gyatt ohio rizz"
+        "skibidi gyatt ohio rizz",
+        "Not enshittified!"
     ],
+
+    "ui": {
+        "download": "Download",
+        "source": "Source",
+
+        "tagstitle": "Tags",
+        "tags": {
+            "tech": "Tech",
+            "magic": "Magic",
+            "exploration": "Exploration",
+            "rpg": "RPG",
+
+            "lore": "Lore",
+            "automation": "Automation",
+            "space": "Space",
+            "gt": "GregTech"
+        },
+
+        "ram": {
+            "title": "RAM Requirements",
+            "minimal": "Minimal",
+            "recommended": "Recommended"
+        },
+
+        "wip": "WIP!",
+        "wipbig": "Work in progress!"
+    },
+
+    "modpacks": {
+        "fa": {
+            "shortdesc": "The company sends you to an all important mission in a long abandoned part of the universe, can you make it out alive?",
+            "longdesc": "<b>You wake up in a landing pod.</b> Your destination? Earth, Sector α.\n\n\
+            <b>You hear a voice talking to you through the radio,</b> it informs you that you've been selected by your employer to go here and collect materials that simply don't exist back home. As you start to regain consciousness and your memory becomes a bit more clear, the mechanical door opens to reveal a beatiful nightly sky.\n\n\
+            <b>Explore the universe,</b> collect and automate materials, find and connect with what's left of the flora and fauna, and find out what secrets this ancient sector holds."
+        },
+
+        "gtb": {
+            "shortdesc": "A GregTech modpack meticulously designed to be as complex as possible while still maintaining the freedom unique to Minecraft",
+            "longdesc": "<b>Integrating and combining mods such as</b> Gregtech, Nuclearcraft, Pneumaticraft, AE2, Thermal Foundation and many more.\n\n\
+            <b>Optionally become a master magician using Thaumcraft.</b> Start your apricaltural empire and become the richest human alive using Forestry Bees. Venture into the depths of the void.\n\n\
+            <b>Mine entire planets</b> and even <b>galaxies</b> using Galactical Miners. Send space missions using your Astro Mining Stations.\n\n\
+            Always remember the most important phrase: <b>Grow the Factory.</b>"
+        }
+    },
 
     "projects": {
         "modpacks": {

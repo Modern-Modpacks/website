@@ -1,7 +1,7 @@
 <script lang="ts">
     import HeaderBar from "$lib/components/HeaderBar.svelte"
     import "../app.css"
-    import { mousePos, reducedMotion, scrollY } from "$lib/scripts/stores"
+    import { mousePos, reducedMotion, scrollY, storedLocale } from "$lib/scripts/stores"
     import { _, addMessages, getLocaleFromNavigator, init, locales } from "svelte-i18n"
     import consts from "$lib/scripts/consts"
     import { onNavigate } from "$app/navigation"
@@ -23,7 +23,7 @@
 
         addMessages(l.split("/").at(-1)?.replace(".json5", "")!, dictsWithNewlines)
     }
-    let locale : string | null = getLocaleFromNavigator()
+    let locale : string | undefined = $storedLocale ? $storedLocale : getLocaleFromNavigator()?.split("-").at(-1)?.toLowerCase()
     init(
         {
             fallbackLocale: "en",
@@ -67,6 +67,9 @@
     }
     :global(h3) {
         @apply font-medium text-3xl
+    }
+    :global(h4) {
+        @apply font-extralight text-xl
     }
     :global(p) {
         @apply text-xl w-[60ch]

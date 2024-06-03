@@ -10,7 +10,7 @@
     import { tweened, type Tweened } from "svelte/motion"
     import { get } from "svelte/store"
     import { sineOut } from "svelte/easing"
-    import partneredModpacks from "$lib/json/partner_modpacks.json"
+    import partneredModpacks from "$lib/json/partner_modpacks.json5"
     import PartnerModpack from "$lib/components/PartnerModpack.svelte";
 
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
@@ -34,9 +34,10 @@
 
     onMount(() => {
         let nav = $navigating
-        partnerQueueLen = $reducedMotion ? partneredModpacks.length : Math.max(partneredModpacks.length+2, 8)
 
         setTimeout(() => {
+            partnerQueueLen = $reducedMotion ? partneredModpacks.length : Math.max(partneredModpacks.length+2, 8)
+
             let shouldShowOpacityAnim = !$scrollY && !nav && !$reducedMotion
 
             let title : HTMLElement | null = document.getElementById("title")
@@ -91,14 +92,14 @@
     <div class="pt-16 pb-8 px-10 bg-primary-dark flex gap-32 [&>*]:text-center">
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div 
-            class="grid grid-cols-4 gap-[4.5rem] w-[48rem] h-[48rem] aspect-square group"
+            class="grid grid-cols-4 gap-[4.5rem] min-w-[770px] min-h-[770px] aspect-square group"
             on:mouseenter={() => {modpacksHovered = true}} on:mouseleave={() => {modpacksHovered = false}}
         >
             {#each [...Array(16).keys()] as i}
                 <Modpack index={i} scale={$reducedMotion ? null : animations[i].scale} bind:parentHover={modpacksHovered} />
             {/each}
         </div>
-        <div class="flex flex-col gap-5 items-center w-[100%]">
+        <div class="flex flex-col gap-5 items-center">
             <h2>{$_("projects.modpacks.heading")}</h2>
             <p>{@html $_("projects.modpacks.desc")}</p>
         </div>
