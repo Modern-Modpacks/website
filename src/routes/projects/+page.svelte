@@ -11,7 +11,8 @@
     import { get } from "svelte/store"
     import { sineOut } from "svelte/easing"
     import partneredModpacks from "$lib/json/partner_modpacks.json5"
-    import PartnerModpack from "$lib/components/PartnerModpack.svelte";
+    import PartnerModpack from "$lib/components/PartnerModpack.svelte"
+    import SocialBar from "$lib/components/SocialBar.svelte";
 
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
         for (let child of children!) {
@@ -85,6 +86,7 @@
         <span class="w-[60%] flex flex-col gap-3">
             <h1 class="opacity-0 translate-y-10 duration-[.5s] delay-[.5s]">Modern Modpacks</h1>
             <h3 class="opacity-0 translate-y-10 duration-[.5s] delay-[.75s]">{$randomSplash}</h3>
+            <SocialBar header={true} />
         </span>
         <ChevronsDown class="absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
     </div>

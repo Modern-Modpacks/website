@@ -75,7 +75,7 @@
                     <div class="w-full">
                         {#if modpack.links?.download}
                             <a href="{modpack.links.download}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-4 bg-text-dark rounded-lg p-4 hover:scale-110 duration-200">
-                                {#if downloadIcon!=null}<img src="{downloadIcon}" alt="logo" class="brightness-0 w-9">
+                                {#if downloadIcon!=null}<img src="{downloadIcon}" alt="logo" class="brightness-0 w-[36px]">
                                 {:else}<Globe color="#000000" size="30" />{/if}
 
                                 <b class="text-lg text-secondary-dark">{$_("ui.download")}</b>
@@ -84,7 +84,7 @@
 
                         {#if modpack.links?.source}
                             <a href="{modpack.links.source}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 mt-4 hover:scale-110 duration-200">
-                                {#if sourceIcon!=null}<img src="{sourceIcon}" alt="logo" class="brightness-0 invert w-9">
+                                {#if sourceIcon!=null}<img src="{sourceIcon}" alt="logo" class="brightness-0 invert w-[36px]">
                                 {:else}<Globe color="#000000" size="30" />{/if}
 
                                 <b class="text-lg">{$_("ui.source")}</b>

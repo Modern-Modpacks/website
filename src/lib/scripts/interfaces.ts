@@ -2,6 +2,11 @@ export interface Coordinates {
     x: number
     y: number
 }
+export interface Social {
+    url: string
+    title: string
+    header: boolean
+}
 export interface Modpack {
     name?: string
     abbr?: string
