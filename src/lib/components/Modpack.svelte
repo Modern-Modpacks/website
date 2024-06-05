@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Saos from "saos"
     import consts from "$lib/scripts/consts"
     import { type Modpack } from "$lib/scripts/interfaces";
     import modpacks from "$lib/json/modpacks.json5"
@@ -30,6 +31,15 @@
 </script>
 
 <style>
+    @keyframes -global-appear {
+        from {
+            @apply opacity-0
+        }
+        to {
+            @apply opacity-100
+        }
+    }
+
     img {
         mask-image: var(--mask);
         mask-size: cover;
@@ -42,37 +52,39 @@
 {/if}
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div 
-    class="flex justify-center duration-200 aspect-square"
-    style="transform: translateX({transformX*+!$reducedMotion}px) translateY({transformY*+!$reducedMotion}px)"
-    title="{discovered ? $_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`) : ""}"
-    on:mouseenter={() => {parentHover=false}} on:mouseleave={() => {parentHover=true}}
-    on:click={popupToggle}
->
+<Saos animation={`appear .25s ${.1*(index%4)}s backwards`} once={true}>
     <div
-        bind:this={element}
-        class="[&>img]:rounded-xl bg-cover relative motion-safe:duration-150 motion-safe:[&:not(:hover)]:group-hover:!scale-[90%] motion-safe:hover:!scale-{discovered ? 110 : 100} cursor-{discovered ? "pointer" : "not-allowed"} z-10 flex justify-center"
-        style="transform: scale({scale!=null ? $scale : 100}%);"
+        class="flex justify-center duration-200 aspect-square"
+        style="transform: translateX({transformX*+!$reducedMotion}px) translateY({transformY*+!$reducedMotion}px)"
+        title="{discovered ? $_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`) : ""}"
+        on:mouseenter={() => {parentHover=false}} on:mouseleave={() => {parentHover=true}}
+        on:click={popupToggle}
     >
-        <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/BG/{path}.png" alt="icon background">
-        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-        <img
-            class="scale-[102%] duration-200 absolute rendering-pixelated peer z-10{discovered ? " motion-safe:hover:opacity-0" : ""}"
-            src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
-            style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/inverted/{index*+discovered}inverted.png');"
-            alt="icon foreground inverted"
+        <div
+            bind:this={element}
+            class="[&>img]:rounded-xl bg-cover relative motion-safe:duration-150 motion-safe:[&:not(:hover)]:group-hover:!scale-[90%] motion-safe:hover:!scale-{discovered ? 110 : 100} cursor-{discovered ? "pointer" : "not-allowed"} z-10 flex justify-center"
+            style="transform: scale({scale!=null ? $scale : 100}%);"
         >
-        {#if discovered && !$reducedMotion}
+            <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/BG/{path}.png" alt="icon background">
+            <!-- svelte-ignore a11y-mouse-events-have-key-events -->
             <img
-                class="scale-[102%] duration-200 absolute rendering-pixelated peer opacity-0 peer-hover:opacity-100"
+                class="scale-[102%] duration-200 absolute rendering-pixelated peer z-10{discovered ? " motion-safe:hover:opacity-0" : ""}"
                 src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
-                style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/{path}_{modpack.abbr}.png');"
-                alt="icon foreground"
+                style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/inverted/{index*+discovered}inverted.png');"
+                alt="icon foreground inverted"
             >
-        {/if}
-        
-        <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible motion-safe:peer-hover:translate-y-[4.7rem] motion-reduce:translate-y-[4.7rem] motion-safe:duration-150">
-            {modpack.name ?? ""}
-        </h3>
+            {#if discovered && !$reducedMotion}
+                <img
+                    class="scale-[102%] duration-200 absolute rendering-pixelated peer opacity-0 peer-hover:opacity-100"
+                    src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
+                    style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/{path}_{modpack.abbr}.png');"
+                    alt="icon foreground"
+                >
+            {/if}
+    
+            <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible motion-safe:peer-hover:translate-y-[4.7rem] motion-reduce:translate-y-[4.7rem] motion-safe:duration-150">
+                {modpack.name ?? ""}
+            </h3>
+        </div>
     </div>
-</div>
+</Saos>
