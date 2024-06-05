@@ -1,1 +1,1 @@
-afdasd
+<p class="absolute bottom-0 w-full text-center text-transparent text-sm">greg</p>
