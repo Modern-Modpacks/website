@@ -78,6 +78,7 @@
         @apply min-h-0
     }
     :global(img) {
+        -webkit-user-drag: none;
         @apply h-full
     }
     

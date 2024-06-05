@@ -13,7 +13,7 @@
     {@const social = socials[k]}
         {#if !header || social.header}
             <a href="{social.url}" title="{social.title}" class="{header ? " opacity-0 translate-y-10 duration-[.5s]" : ""}" style="transition-delay: {1 + (.05 * +i * +header)}s;">
-                <img src="{icons[k]}" alt="website logo" class="h-10 brightness-0 invert motion-safe:hover:invert-[55%] duration-200">
+                <img src="{icons[k]}" id="social" alt="website logo" class="h-10 brightness-0 invert motion-safe:hover:invert-[55%] duration-200">
             </a>
         {/if}
     {/each}

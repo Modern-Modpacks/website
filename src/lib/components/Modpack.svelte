@@ -60,14 +60,14 @@
             class="scale-[102%] duration-200 absolute rendering-pixelated peer z-10{discovered ? " motion-safe:hover:opacity-0" : ""}"
             src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
             style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/inverted/{index*+discovered}inverted.png');"
-            draggable="false" alt="icon foreground inverted"
+            alt="icon foreground inverted"
         >
         {#if discovered && !$reducedMotion}
             <img
                 class="scale-[102%] duration-200 absolute rendering-pixelated peer opacity-0 peer-hover:opacity-100"
                 src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
                 style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/{path}_{modpack.abbr}.png');"
-                draggable="false" alt="icon foreground"
+                alt="icon foreground"
             >
         {/if}
         

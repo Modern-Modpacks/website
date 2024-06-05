@@ -28,6 +28,13 @@
     ],
 
     "ui": {
+        "settings": {
+            "title": "Settings",
+
+            "language": "Language",
+            "darkmode": "Dark Mode"
+        },
+
         "download": "Download",
         "source": "Source",
 

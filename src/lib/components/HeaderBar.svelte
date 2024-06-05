@@ -74,8 +74,8 @@
     flex flex-col gap-1
     [&_p]:text-lg [&_p]:font-medium
 " id="settings">
-    <h3 class="font-bold">Settings</h3>
-    <p>Language</p>
+    <h3 class="font-bold">{$_("ui.settings.title")}</h3>
+    <p>{$_("ui.settings.language")}</p>
     <div class="
         grid grid-cols-2 gap-2
         [&>button]:h-10 [&>button]:rounded-xl [&>button]:duration-100
@@ -85,7 +85,7 @@
         {/each}
     </div>
     <span class="flex items-center">
-        <p>Dark Mode</p>
+        <p>{$_("ui.settings.darkmode")}</p>
         <Basic lightFill="#f1af15" darkFill="#7d7d73" />
     </span>
 </div>

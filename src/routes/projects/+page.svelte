@@ -17,7 +17,7 @@
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
         for (let child of children!) {
             removeOpacity(child.children, withAnimation)
-            if (!withAnimation) child.classList?.add("!duration-0", "!delay-0")
+            if (!withAnimation && child.id!="social") child.classList?.add("!duration-0", "!delay-0")
             child.classList?.remove("opacity-0", "translate-y-10")
         }
     }
@@ -82,7 +82,7 @@
     <div class="w-[100vw] h-[100vh] relative bg-black bg-opacity-50 flex gap-10 items-center justify-center" id="title">
         <div class="absolute bg-[url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/continuouspixelanim.gif')] w-full h-full -z-10 object-cover" id="bg" />
 
-        <img src="{consts.LOGO_URL}" class="w-64 h-64 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="logo" draggable="false">
+        <img src="{consts.LOGO_URL}" class="w-64 h-64 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="logo">
         <span class="w-[60%] flex flex-col gap-3">
             <h1 class="opacity-0 translate-y-10 duration-[.5s] delay-[.5s]">Modern Modpacks</h1>
             <h3 class="opacity-0 translate-y-10 duration-[.5s] delay-[.75s]">{$randomSplash}</h3>
