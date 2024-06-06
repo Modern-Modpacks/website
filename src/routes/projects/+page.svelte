@@ -80,7 +80,7 @@
 
 <main>
     <div class="w-[100vw] h-[100vh] relative bg-black bg-opacity-50 flex gap-10 items-center justify-center" id="title">
-        <div class="absolute bg-[url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/continuouspixelanim.gif')] w-full h-full -z-10 object-cover" id="bg" />
+        <div class="absolute w-full h-full -z-10 object-cover" style="background-image: url('{consts.BANNER_URL}');" id="bg" />
 
         <img src="{consts.LOGO_URL}" class="w-64 h-64 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="logo">
         <span class="w-[60%] flex flex-col gap-3">
