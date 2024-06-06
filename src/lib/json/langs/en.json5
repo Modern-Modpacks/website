@@ -28,6 +28,12 @@
     ],
 
     "ui": {
+        "navbar": {
+            "projects": "Projects",
+            "aboutus": "About Us",
+            "blog": "Blog",
+            "status": "Status"
+        },
         "settings": {
             "title": "Settings",
 

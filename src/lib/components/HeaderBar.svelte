@@ -53,14 +53,15 @@
         after:hover:[&>a]:scale-y-[50%]
     ">
         {#each [
-            {link: "projects", title: "Projects", color: "mm-red"},
-            {link: "about", title: "About us", color: "mm-lime"},
-            {link: "blog", title: "Blog", color: "mm-lightblue"}
+            {link: "projects", title: "projects", color: "mm-red"},
+            {link: "about", title: "aboutus", color: "mm-yellow"},
+            {link: "blog", title: "blog", color: "mm-lime"},
+            {link: "https://status.modernmodpacks.site", title: "status", color: "mm-lightblue"}
         ] as button}
             <a 
                 href={button.link}
                 class="{$page.url.pathname=="/"+button.link ? "font-bold scale-[120%]" : "font-semibold opacity-80"} hover:text-{button.color} after:bg-{button.color}"
-            >{button.title}</a>
+            >{$_("ui.navbar."+button.title)}</a>
         {/each}
 
         <button class="ml-3 cursor-pointer h-full group" on:click={e => {e.stopPropagation(); toggleSettings(false)}}>
