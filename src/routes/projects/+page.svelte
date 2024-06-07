@@ -1,18 +1,20 @@
 <script lang="ts">
     import { navigating, page } from "$app/stores"
     import consts from "$lib/scripts/consts"
-    import { randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
+    import { previousRandomBanner, randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
     import { randomChoice } from "$lib/scripts/utils"
     import { _, json } from "svelte-i18n"
     import Modpack from "$lib/components/Modpack.svelte"
+    import { type Modpack as MPack } from "$lib/scripts/interfaces"
     import { tweened, type Tweened } from "svelte/motion"
     import { get } from "svelte/store"
     import { sineOut } from "svelte/easing"
+    import modpacks from "$lib/json/modpacks.json5"
     import partneredModpacks from "$lib/json/partner_modpacks.json5"
     import PartnerModpack from "$lib/components/PartnerModpack.svelte"
-    import SocialBar from "$lib/components/SocialBar.svelte";
+    import SocialBar from "$lib/components/SocialBar.svelte"
 
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
         for (let child of children!) {
@@ -23,6 +25,18 @@
     }
 
     $: if ($navigating?.to?.url==$page.url) setTimeout(() => scrollTo(0, innerHeight), 1)
+
+    let packs : MPack[] = modpacks
+    let banner : string | null
+    let generateBanner = (pool : string[]) => {
+        banner = pool[Math.floor(Math.random() * pool.length)]
+    }
+
+    let possibleBanners : string[] = consts.ADDITIONAL_BANNERS
+    packs.forEach(p => {
+        if (p.banner) possibleBanners.push(p.banner)
+    })
+    generateBanner(possibleBanners)
 
     let maxScale : number = 100
     let minScale : number = 90
@@ -38,6 +52,7 @@
 
         setTimeout(() => {
             partnerQueueLen = $reducedMotion ? partneredModpacks.length : Math.max(partneredModpacks.length+2, 8)
+            if ($reducedMotion) generateBanner(possibleBanners.filter(b => !b.endsWith(".gif")))
 
             let shouldShowOpacityAnim = !$scrollY && !nav && !$reducedMotion
 
@@ -45,9 +60,13 @@
             let bg : HTMLElement | null = document.getElementById("bg")
             let arrowClasses : DOMTokenList | undefined = document.getElementById("arrow")?.classList
 
-            if ($scrollY || nav) arrowClasses?.add("hidden")
+            if ($scrollY || nav) {
+                banner = $previousRandomBanner
+                arrowClasses?.add("hidden")
+            }
             else {
                 $randomSplash = randomChoice($json("splashes") as any[])
+                $previousRandomBanner = banner!
 
                 if (!$reducedMotion) {
                     document.body.classList.add("overflow-y-hidden")
@@ -80,7 +99,7 @@
 
 <main>
     <div class="w-[100vw] h-[100vh] relative bg-black bg-opacity-50 flex gap-10 items-center justify-center" id="title">
-        <div class="absolute w-full h-full -z-10 object-cover" style="background-image: url('{consts.BANNER_URL}');" id="bg" />
+        <div class="absolute w-full h-full -z-10 object-cover" style="background-image: url('{banner}');" id="bg" />
 
         <img src="{consts.LOGO_URL}" class="w-64 h-64 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="logo">
         <span class="w-[60%] flex flex-col gap-3">
@@ -91,7 +110,7 @@
         <ChevronsDown class="absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
     </div>
 
-    <div class="pt-16 pb-8 px-10 bg-primary-dark flex gap-32 [&>*]:text-center">
+    <div class="pt-16 pb-8 pl-10 bg-primary-dark flex gap-32 [&>*]:text-center">
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div 
             class="grid grid-cols-4 gap-[4.5rem] min-w-[770px] min-h-[770px] aspect-square group"
@@ -128,6 +147,21 @@
                     <PartnerModpack modpack={partneredModpacks[i % partneredModpacks.length]} />
                 {/each}
             </div>
+        </div>
+    </div>
+
+    <div class="py-8 px-10 h-[95vh] bg-black flex items-center justify-center [&>*]:text-center">
+        <div>
+
+        </div>
+        <div class="bg-[radial-gradient(circle,_#1c1c1c_0%,_transparent_80%)] h-[95%] p-16 aspect-square rounded-full flex flex-col gap-5 items-center justify-center">
+            <h2>{$_("projects.hellish.heading")}</h2>
+            <p class="w-[90%]">{$_("projects.hellish.desc")}</p>
+
+            <span class="flex gap-4 items-center [&>a]:duration-200 [&_img]:brightness-0 [&_img]:invert">
+                <a href="{consts.HELLISH_URL}" target="_blank" rel="noopener noreferrer"  class="hover:scale-125"><img src="{consts.WEBSITE_ICONS.curseforge}" alt="logo curseforge" class="h-12"></a>
+                <a href="{consts.SOCIALS.modrinth.url}" target="_blank" rel="noopener noreferrer" class="hover:scale-125"><img src="{consts.WEBSITE_ICONS.modrinth}" alt="logo curseforge" class="h-10"></a>
+            </span>
         </div>
     </div>
 </main>

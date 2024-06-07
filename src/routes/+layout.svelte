@@ -56,6 +56,9 @@
     :global(body)::-webkit-scrollbar {
         @apply scrollbar-hide
     }
+    :global(body) {
+        @apply bg-primary-dark
+    }
     :global(*) {
         @apply text-text-dark font-raleway
     }

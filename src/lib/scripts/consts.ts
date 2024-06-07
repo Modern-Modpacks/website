@@ -17,6 +17,9 @@ export default {
         "black",
         "brown"
     ],
+    ADDITIONAL_BANNERS:[
+        "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/animated_header.gif"
+    ],
     WEBSITE_ICONS: {
         curseforge: "https://www.svgrepo.com/show/330245/curseforge.svg",
         modrinth: "https://raw.githubusercontent.com/modrinth/knossos/master/assets/images/logo.svg",
@@ -86,8 +89,9 @@ export default {
             header: false
         }
     },
+    HELLISH_URL: "https://curseforge.com/members/hellishmods",
 
     LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/logo.png",
-    ROUNDED_LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/rounded_logo.png",
-    BANNER_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/animated_header.gif"
+    HM_LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/HMlogo.png",
+    ROUNDED_LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/rounded_logo.png"
 }

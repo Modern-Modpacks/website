@@ -40,7 +40,7 @@
     })
 </script>
 
-<div class="fixed z-50 w-[90%] bg-header-dark backdrop-blur-sm shadow-2xl shadow-black h-16 flex justify-between px-2 left-[50%] translate-x-[-50%]{$page.url.pathname=="/projects" && !$scrollY ? " translate-y-[-100%] shadow-none " : " "}motion-safe:duration-150 rounded-b-2xl" style="view-transition-name: _;" id="header">
+<div class="fixed z-50 w-[90%] bg-header-dark backdrop-blur-sm shadow-2xl shadow-black h-16 flex justify-between px-2 left-[50%] translate-x-[-50%]{["/", "/projects"].includes($page.url.pathname) && !$scrollY ? " translate-y-[-100%] shadow-none " : " "}motion-safe:duration-150 rounded-b-2xl" style="view-transition-name: _;" id="header">
     <a class="group flex items-center h-full" href="{base}">
         <img src={consts.LOGO_URL} alt="logo" class="rounded-2xl p-2 duration-100 motion-safe:group-hover:rounded-[1.35rem]">
         <b>Modern Modpacks</b>

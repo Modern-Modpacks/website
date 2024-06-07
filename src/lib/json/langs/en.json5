@@ -97,6 +97,10 @@
         "partner": {
             "heading": "Not enough for you?\nCheck out our partners' modpacks!",
             "desc": "<b>Partners are not directly affiliated with Modern Modpacks</b>, but we trust them enough to put their modpacks here."
+        },
+        "hellish": {
+            "heading": "We also make mods",
+            "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem aperiam beatae sit tenetur, vero laborum repellat sed, ex dolores aspernatur ratione incidunt consequuntur nostrum. Omnis tempora vel aperiam hic assumenda."
         }
     }
 }
