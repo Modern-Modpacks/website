@@ -16,7 +16,12 @@ const mmColors = {
   "mm-lightgray": "#7d7d73",
   "mm-white": "#cfd5d6",
   "mm-black": "#080a0f",
-  "mm-brown": "#603c20"
+  "mm-brown": "#603c20",
+
+  "hm-red": "#8e2121",
+  "hm-orange": "#e06101",
+  "hm-yellow": "#f1af15",
+  "hm-gray": "#373a3e"
 }
 let mmSafelist = []
 Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "after:bg-"+c, "hover:text-"+c)})
