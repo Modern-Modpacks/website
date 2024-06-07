@@ -159,7 +159,7 @@
             <p class="w-[90%]">{$_("projects.hellish.desc")}</p>
 
             <span class="flex gap-4 items-center [&>a]:duration-200 [&_img]:brightness-0 [&_img]:invert">
-                <a href="{consts.HELLISH_URL}" target="_blank" rel="noopener noreferrer"  class="hover:scale-125"><img src="{consts.WEBSITE_ICONS.curseforge}" alt="logo curseforge" class="h-12"></a>
+                <a href="{consts.HELLISH_URL}" target="_blank" rel="noopener noreferrer" class="hover:scale-125"><img src="{consts.WEBSITE_ICONS.curseforge}" alt="logo curseforge" class="h-12"></a>
                 <a href="{consts.SOCIALS.modrinth.url}" target="_blank" rel="noopener noreferrer" class="hover:scale-125"><img src="{consts.WEBSITE_ICONS.modrinth}" alt="logo curseforge" class="h-10"></a>
             </span>
         </div>
