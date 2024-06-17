@@ -52,7 +52,7 @@
 {/if}
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<Saos animation={`appear .25s ${.1*(index%4)}s backwards`} once={true}>
+<Saos animation={$reducedMotion ? "" : `appear .25s ${.1*(index%4)}s backwards`} once={true}>
     <div
         class="flex justify-center duration-200 aspect-square"
         style="transform: translateX({transformX*+!$reducedMotion}px) translateY({transformY*+!$reducedMotion}px)"

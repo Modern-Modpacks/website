@@ -166,14 +166,14 @@
 
             </div>
             <div class="group">
-                <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 h-48 rendering-pixelated rounded-md group-hover:!scale-100 duration-100" style="transform: scale({$HMLogoAnim}%);">
-                <div class="mt-5 flex justify-center gap-5 [&>a]:block [&>a]:w-10 [&>a]:duration-200 [&>a]:!animate-duration-[5s] [&>a]:!animate-fill-backwards [&_img]:brightness-0 [&_img]:invert">
+                <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 h-48 rendering-pixelated rounded-md motion-safe:group-hover:!scale-100 duration-100" style="transform: scale({$reducedMotion ? 100 : $HMLogoAnim}%);">
+                <div class="mt-5 flex justify-center gap-5 [&>a]:block [&>a]:w-10 [&>a]:motion-safe:duration-200 [&>a]:!animate-duration-[5s] [&>a]:!animate-fill-backwards [&_img]:brightness-0 [&_img]:invert">
                     {#each [
                         {link: "https://curseforge.com/members/hellishmods", title: "CurseForge", anim: $CFHMLogoAnim},
                         {link: consts.SOCIALS.modrinth.url, title: "Modrinth", anim: $MRHMLogoAnim},
                         {link: "https://github.com/Hellish-Mods", title: "GitHub", anim: $GHHMLogoAnim}
                     ] as social}
-                        <a href="{social.link}" target="_blank" rel="noopener noreferrer" class="motion-safe:hover:!scale-[1.15] motion-safe:[&:not(:hover)]:group-hover:!scale-100" style="transform: scale({social.anim}%);">
+                        <a href="{social.link}" target="_blank" rel="noopener noreferrer" class="motion-safe:hover:!scale-[1.15] motion-safe:[&:not(:hover)]:group-hover:!scale-100" style="transform: scale({$reducedMotion ? 100 : social.anim}%);">
                             <img src="{icons[social.title.toLowerCase()]}" alt="logo icon {social.title.toLowerCase()}" title="{social.title}">
                         </a>
                     {/each}
