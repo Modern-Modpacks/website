@@ -1,13 +1,13 @@
 <script lang="ts">
     import { navigating, page } from "$app/stores"
-    import consts from "$lib/scripts/consts"
+    import consts, { icons } from "$lib/scripts/consts"
     import { previousRandomBanner, randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
     import { randomChoice } from "$lib/scripts/utils"
     import { _, json } from "svelte-i18n"
     import Modpack from "$lib/components/Modpack.svelte"
-    import { type Modpack as MPack } from "$lib/scripts/interfaces"
+    import { type Modpack as MPack, type TweenedAnim } from "$lib/scripts/interfaces"
     import { tweened, type Tweened } from "svelte/motion"
     import { get } from "svelte/store"
     import { sineOut } from "svelte/easing"
@@ -38,14 +38,24 @@
     })
     generateBanner(possibleBanners)
 
-    let maxScale : number = 100
-    let minScale : number = 90
-    let animations : {scale: Tweened<number>, scaleup: boolean}[] = [...Array(16).keys()].map(i => {return {scale: tweened(minScale - ((Math.floor(i / 4) + i % 4) * 5), {duration: 750, easing: sineOut}), scaleup: false}})
+    let animations : TweenedAnim[] = [...Array(16).keys()].map(i => {return {scale: tweened(100 - ((Math.floor(i / 4) + i % 4) * 5), {duration: 750, easing: sineOut}), scaleup: false, maxScale: 100, minScale: 90}})
+    let HMIconAnims : TweenedAnim[] = []
+    for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100-(10*i), {duration: 200}), scaleup: true, maxScale: 100, minScale: 80})
+    animations = [...animations, {scale: tweened(100, {duration: 1200}), scaleup: true, maxScale: 100, minScale: 95}, ...HMIconAnims]
 
     let modpacksHovered : boolean = false
 
     let partnerQueueLen : number | null
     let partnerModpacks : HTMLElement | null
+
+    let HMLogoAnim : Tweened<number>
+    $: HMLogoAnim = animations[16].scale
+    let CFHMLogoAnim : Tweened<number>
+    $: CFHMLogoAnim = animations[17].scale
+    let MRHMLogoAnim : Tweened<number>
+    $: MRHMLogoAnim = animations[18].scale
+    let GHHMLogoAnim : Tweened<number>
+    $: GHHMLogoAnim = animations[19].scale
 
     onMount(() => {
         let nav = $navigating
@@ -90,8 +100,8 @@
             animations.forEach(anim => {
                 anim.scale.set(get(anim.scale) + (anim.scaleup ? 1 : -1))
 
-                if ((anim.scaleup && get(anim.scale)>maxScale)) anim.scaleup = false
-                else if (get(anim.scale)<minScale) anim.scaleup = true
+                if ((anim.scaleup && get(anim.scale)>anim.maxScale)) anim.scaleup = false
+                else if (get(anim.scale)<anim.minScale) anim.scaleup = true
             })
         }, 1)
     })
@@ -110,7 +120,7 @@
         <ChevronsDown class="absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
     </div>
 
-    <div class="pt-16 pb-8 pl-10 bg-primary-dark flex gap-32 [&>*]:text-center">
+    <div class="pt-16 pb-8 px-10 bg-primary-dark flex justify-between [&>*]:text-center">
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div 
             class="grid grid-cols-4 gap-[4.5rem] min-w-[770px] min-h-[770px] aspect-square group"
@@ -120,7 +130,7 @@
                 <Modpack index={i} scale={$reducedMotion ? null : animations[i].scale} bind:parentHover={modpacksHovered} />
             {/each}
         </div>
-        <div class="flex flex-col gap-5 items-center">
+        <div class="flex flex-col gap-5 items-center w-[50%]">
             <h2>{$_("projects.modpacks.heading")}</h2>
             <p>{@html $_("projects.modpacks.desc")}</p>
         </div>
@@ -150,18 +160,29 @@
         </div>
     </div>
 
-    <div class="py-8 px-10 h-[95vh] bg-black flex items-center justify-center [&>*]:text-center">
-        <div>
+    <div class="py-8 px-10 bg-primary-dark flex justify-between [&>*]:text-center">
+        <div class="min-w-[50%] relative flex flex-col justify-center items-center">
+            <div class="absolute w-full h-full bg-[radial-gradient(circle,_#0c0c0c_25%,_transparent_65%)]">
 
+            </div>
+            <div class="group">
+                <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 h-48 rendering-pixelated rounded-md group-hover:!scale-100 duration-100" style="transform: scale({$HMLogoAnim}%);">
+                <div class="mt-5 flex justify-center gap-5 [&>a]:block [&>a]:w-10 [&>a]:duration-200 [&>a]:!animate-duration-[5s] [&>a]:!animate-fill-backwards [&_img]:brightness-0 [&_img]:invert">
+                    {#each [
+                        {link: "https://curseforge.com/members/hellishmods", title: "CurseForge", anim: $CFHMLogoAnim},
+                        {link: consts.SOCIALS.modrinth.url, title: "Modrinth", anim: $MRHMLogoAnim},
+                        {link: "https://github.com/Hellish-Mods", title: "GitHub", anim: $GHHMLogoAnim}
+                    ] as social}
+                        <a href="{social.link}" target="_blank" rel="noopener noreferrer" class="motion-safe:hover:!scale-[1.15] motion-safe:[&:not(:hover)]:group-hover:!scale-100" style="transform: scale({social.anim}%);">
+                            <img src="{icons[social.title.toLowerCase()]}" alt="logo icon {social.title.toLowerCase()}" title="{social.title}">
+                        </a>
+                    {/each}
+                </div>
+            </div>
         </div>
-        <div class="bg-[radial-gradient(circle,_#1c1c1c_0%,_transparent_80%)] h-[95%] p-16 aspect-square rounded-full flex flex-col gap-5 items-center justify-center">
+        <div class="flex flex-col gap-5 items-center w-[50%]">
             <h2>{$_("projects.hellish.heading")}</h2>
-            <p class="w-[90%]">{$_("projects.hellish.desc")}</p>
-
-            <span class="flex gap-4 items-center [&>a]:duration-200 [&_img]:brightness-0 [&_img]:invert">
-                <a href="{consts.HELLISH_URL}" target="_blank" rel="noopener noreferrer" class="hover:scale-125"><img src="{consts.WEBSITE_ICONS.curseforge}" alt="logo curseforge" class="h-12"></a>
-                <a href="{consts.SOCIALS.modrinth.url}" target="_blank" rel="noopener noreferrer" class="hover:scale-125"><img src="{consts.WEBSITE_ICONS.modrinth}" alt="logo curseforge" class="h-10"></a>
-            </span>
+            <p>{@html $_("projects.hellish.desc")}</p>
         </div>
     </div>
 </main>

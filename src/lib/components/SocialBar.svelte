@@ -1,11 +1,10 @@
 <script lang="ts">
-    import consts from "$lib/scripts/consts"
+    import consts, { icons } from "$lib/scripts/consts"
     import type { Social } from "$lib/scripts/interfaces"
 
     export let header : boolean = false
 
     const socials : {[key: string]: Social} = consts.SOCIALS
-    const icons : {[key: string]: string} = consts.WEBSITE_ICONS
 </script>
 
 <span class="{header ? "mt-4 " : ""}flex gap-3">

@@ -1,4 +1,4 @@
-export default {
+const consts = {
     COLORS: [
         "red",
         "orange",
@@ -95,3 +95,7 @@ export default {
     HM_LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/HMlogo.png",
     ROUNDED_LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/rounded_logo.png"
 }
+const icons : {[key: string]: string} = consts.WEBSITE_ICONS
+
+export default consts
+export { icons }
