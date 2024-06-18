@@ -62,7 +62,7 @@
                         <b class="text-xl mb-2">{$_("ui.tagstitle")}</b>
                         <div class="flex flex-wrap gap-2 justify-end">
                             {#each modpack.tags ?? [] as tag}
-                                <p class="w-auto text-base bg-{color} bg-opacity-30 border-{color} border-2 rounded-xl px-2.5 py-0.5 hover:scale-110 duration-150">{$_("ui.tags."+tag)}</p>
+                                <p class="w-auto text-base cursor-default bg-{color} bg-opacity-30 border-{color} border-2 rounded-xl px-2.5 py-0.5 hover:scale-110 duration-150">{$_("ui.tags."+tag)}</p>
                             {/each}
                         </div>
                         

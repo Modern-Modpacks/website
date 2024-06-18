@@ -45,7 +45,7 @@
     // This would be replaced with css if browsers sucked less
     let animations : TweenedAnim[] = [...Array(16).keys()].map(i => {return {scale: tweened(100, {duration: 2000, delay: (Math.floor(i / 4) + i % 4) * 500, easing: sineOut}), scaleup: false, maxScale: 100, minScale: 90}})
     let HMIconAnims : TweenedAnim[] = []
-    for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100-(10*i), {duration: 200}), scaleup: true, maxScale: 100, minScale: 80})
+    for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100, {duration: 1200, delay: 200*i}), scaleup: true, maxScale: 100, minScale: 80})
     animations = [...animations, {scale: tweened(100, {duration: 1200}), scaleup: true, maxScale: 100, minScale: 95}, ...HMIconAnims]
 
     let modpacksHovered : boolean = false // Weather or not the left of the modpack section is hovered, activates the following mouse effect
@@ -140,7 +140,7 @@
             setInterval(() => {
                 anim.scale.set(anim.scaleup ? anim.maxScale : anim.minScale)
                 anim.scaleup = !anim.scaleup
-            }, i<16 ? 2000 : (i==16 ? 1200 : 200))
+            }, i<16 ? 2000 : (i==16 ? 1200 : 1200))
         }
 
         setInterval(() => {
@@ -202,19 +202,20 @@
         </div>
     </div>
 
-    <div class="py-8 px-10 bg-primary-dark flex justify-between [&>*]:text-center">
+    <div class="pr-10 bg-primary-dark flex justify-between [&>*]:text-center">
         <div class="min-w-[50%] relative flex flex-col justify-center items-center">
-            <div class="absolute w-full h-full bg-[radial-gradient(circle,_#0c0c0c_25%,_transparent_65%)] flex justify-center items-center">
-                <div class="h-[65%] w-[65%] [&_span]:h-16 [&_span]:w-16 [&_span]:absolute [&_span]:left-0 [&_span]:right-0 [&_span]:top-0 [&_span]:bottom-0 [&_span]:mx-auto [&_span]:my-auto"> 
+            <div class="absolute w-[120vw] h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
+                <div class="h-full w-full relative overflow-hidden [&>span]:h-14 [&>span]:w-14 [&>span]:absolute [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_h2]:text-sm"> 
                     <!-- animate-spin [&>img]:animate-unspin -->
-                    {#each [...Array(10).keys()] as i}
+                    {#each [...Array(90).keys()] as i}
+                        {@const layerFirst = 16}
                         {@const layerAdd = 2}
-                        {@const layer = getLayer(0, 4, layerAdd, i)}
-                        {@const itemsInLayer = 4 + (layerAdd * layer)}
+                        {@const layer = getLayer(0, layerFirst, layerAdd, i)}
+                        {@const itemsInLayer = layerFirst + (layerAdd * layer)}
                         {@const rotAmount = (360 / itemsInLayer) * (i + rotOffsetNumbers[layer])}
-                        {@const radius = 250 + (layer * 100)}
+                        {@const radius = 225 + (layer**4)}
 
-                        <span style="transform: rotate({rotAmount}deg) translate({radius}px) rotate(-{rotAmount}deg);">
+                        <span style="transform: scale({100 + (50 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate(-{rotAmount}deg);">
                             <img src="{consts.HM_LOGO_URL}" alt="">
                             <h2>{i}</h2>
                         </span>
@@ -236,7 +237,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col gap-5 items-center w-[50%]">
+        <div class="py-8 z-10 flex flex-col gap-5 items-center w-[50%] bg-gradient-to-l from-primary-dark from-90%">
             <h2>{$_("projects.hellish.heading")}</h2>
             <p>{@html $_("projects.hellish.desc")}</p>
         </div>
