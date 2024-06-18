@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts";
     import type { Modpack } from "$lib/scripts/interfaces"
-    import { popupOpened } from "$lib/scripts/stores"
+    import { popupOpened, settingsOpened } from "$lib/scripts/stores"
     import { Globe, X } from "lucide-svelte";
     import { onMount } from "svelte"
     import { _ } from "svelte-i18n";
@@ -33,7 +33,7 @@
     // Escape on escape, duh
     onMount(() => {
         document.addEventListener("keydown", e => {
-            if (shown && e.key=="Escape") toggle()
+            if (shown && e.key=="Escape" && !$settingsOpened) toggle()
         })
     })
 </script>

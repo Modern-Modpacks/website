@@ -2,7 +2,7 @@
     import { base } from "$app/paths"
     import { page } from "$app/stores"
     import consts from "$lib/scripts/consts"
-    import { scrollY, storedLocale } from "$lib/scripts/stores"
+    import { scrollY, settingsOpened, storedLocale } from "$lib/scripts/stores"
     import { SettingsIcon } from "lucide-svelte"
     import { onMount } from "svelte"
     import { locales, locale, _ } from "svelte-i18n"
@@ -20,8 +20,11 @@
             settingsClasses?.add("opacity-0", "pointer-events-none")
             settingsIconClasses?.remove("motion-safe:!-rotate-180", "motion-safe:group-hover:!-rotate-180")
             
+            $settingsOpened = false
             return
         }
+
+        $settingsOpened = !$settingsOpened
 
         settingsClasses?.toggle("opacity-0")
         settingsClasses?.toggle("pointer-events-none")
@@ -34,9 +37,12 @@
             let target : HTMLElement = e.target as HTMLElement
             if (!target.matches("#settings, #settings *, #settingsicon")) toggleSettings(true) // If the user clicks outside of the settings menu, close that shit
         })
+        document.addEventListener("keydown", e => {
+            if (e.key=="Escape") setTimeout(() => toggleSettings(true), 1) // If escape is pressed, close that shit (and by shit I mean settings)
+        })
         scrollY.subscribe(n => {
             if ($page.url.pathname!="/projects" || n!=0) return
-            toggleSettings(true) // If the header gets hidden in the projects page, close that shit (by shit I mean settings)
+            toggleSettings(true) // If the header gets hidden in the projects page, close that shit (and by shit I mean you get it)
         })
     })
 </script>
