@@ -2,9 +2,9 @@
     import consts, { icons } from "$lib/scripts/consts"
     import type { Social } from "$lib/scripts/interfaces"
 
-    export let header : boolean = false
+    export let header : boolean = false // Specifies weather the social bar is in the header or in "about us", shortens the social list if in header
 
-    const socials : {[key: string]: Social} = consts.SOCIALS
+    const socials : {[key: string]: Social} = consts.SOCIALS // Socials, digested for TS
 </script>
 
 <span class="{header ? "mt-4 " : ""}flex gap-3">

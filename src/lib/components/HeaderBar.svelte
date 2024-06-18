@@ -8,9 +8,10 @@
     import { locales, locale, _ } from "svelte-i18n"
     import Basic from "svelte-toggles/src/Basic"
 
-    // const settingsOpenByDefault : boolean = true // DEBUG
+    // const settingsOpenByDefault : boolean = true // DEBUG, don't turn on in prod
     const settingsOpenByDefault : boolean = false
 
+    // Toggle settings or just disable
     let toggleSettings = (disable : boolean) => {
         let settingsClasses : DOMTokenList | undefined = document.getElementById("settings")?.classList
         let settingsIconClasses : DOMTokenList | undefined = document.getElementById("settingsicon")?.classList
@@ -31,11 +32,11 @@
     onMount(() => {
         document.addEventListener("click", e => {
             let target : HTMLElement = e.target as HTMLElement
-            if (!target.matches("#settings, #settings *, #settingsicon")) toggleSettings(true)
+            if (!target.matches("#settings, #settings *, #settingsicon")) toggleSettings(true) // If the user clicks outside of the settings menu, close that shit
         })
         scrollY.subscribe(n => {
             if ($page.url.pathname!="/projects" || n!=0) return
-            toggleSettings(true)
+            toggleSettings(true) // If the header gets hidden in the projects page, close that shit (by shit I mean settings)
         })
     })
 </script>

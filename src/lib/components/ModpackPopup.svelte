@@ -11,6 +11,7 @@
     export let icon : string
     export let color : string
 
+    // Activates the popup which is hidden by default
     export const toggle = () => {
         $popupOpened = !$popupOpened
         shown = !shown
@@ -19,6 +20,7 @@
     }
     let shown : boolean = false
 
+    // Get the icons for download and source button depending on the url of the links
     let downloadIcon : string | null = null
     let sourceIcon : string | null = null
     for (let k of Object.keys(consts.WEBSITE_ICONS)) {
@@ -28,6 +30,7 @@
         if (modpack.links?.source?.includes(k) && sourceIcon==null) sourceIcon = icon
     }
 
+    // Escape on escape, duh
     onMount(() => {
         document.addEventListener("keydown", e => {
             if (shown && e.key=="Escape") toggle()

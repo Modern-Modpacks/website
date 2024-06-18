@@ -9,20 +9,24 @@
     import { page } from "$app/stores"
     import { flatten, unflatten } from "flat"
 
+    // Check for reducedmotion
     onMount(() => {
         $reducedMotion = !!window.matchMedia(`(prefers-reduced-motion: reduce)`) && window.matchMedia(`(prefers-reduced-motion: reduce)`).matches
     })
 
+    // Add locales from the src/lib/json/langs folder
+    // JSON5 ftw baby
     let langs = import.meta.glob("../lib/json/langs/*.json5", {eager: true})
     for(let l of Object.keys(langs)) {
         let dictsWithNewlines : {[key: string]: string} = (flatten(langs[l]) as {[key: string]: string})
         Object.keys(dictsWithNewlines).forEach(k => {
-            dictsWithNewlines[k] = dictsWithNewlines[k].replace(/\n/g, "<br/>")
+            dictsWithNewlines[k] = dictsWithNewlines[k].replace(/\n/g, "<br/>") // Newline fuckery. Nothing special, html being html, continue scrolling
         })
         dictsWithNewlines = unflatten(dictsWithNewlines)
 
         addMessages(l.split("/").at(-1)?.replace(".json5", "")!, dictsWithNewlines)
     }
+    // Get locale and init svelte-i18n
     let locale : string | undefined = $storedLocale ? $storedLocale : getLocaleFromNavigator()?.split("-").at(-1)?.toLowerCase()
     init(
         {
@@ -31,6 +35,7 @@
         }
     )
 
+    // Init view transitions, awesome
     onNavigate(navigation => {
         if (!document.startViewTransition || $page.url.pathname=="/") return
 
@@ -42,6 +47,7 @@
         })
     })
 
+    // Store mouse pos for later use
     onMount(() => {
         document.addEventListener("mousemove", e => {
             $mousePos = {

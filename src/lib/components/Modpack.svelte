@@ -9,19 +9,20 @@
     import { _ } from "svelte-i18n";
 
     export let index : number
-    export let scale : Tweened<number> | null = null
+    export let scale : Tweened<number> | null = null // Animation shenanigans
     export let parentHover : boolean
 
     let element : HTMLElement
-    let popupToggle : (() => void) | undefined
+    let popupToggle : (() => void) | undefined // The toggle function of the attached popup
 
     let modpack : Modpack
     $: modpack = modpacks[index]
     let discovered : boolean
-    $: discovered = !!Object.keys(modpack).length
+    $: discovered = !!Object.keys(modpack).length // Weather the modpack is accessible to the public or not
     let path : string
-    $: path = `${('0'+(index+1)).slice(-2)}${consts.COLORS[index]}`
+    $: path = `${('0'+(index+1)).slice(-2)}${consts.COLORS[index]}` // The pointer to the pack's icon on the github asset repo (https://github.com/Modern-Modpacks/assets)
 
+    // More animation shenanigans, this one for the mouse follow anim
     let transformX : number
     $: transformX = ($mousePos.x - (element?.getBoundingClientRect().left + (element?.getBoundingClientRect().width / 2))) * mouseMoveMul * +(parentHover && !$popupOpened)
     let transformY : number

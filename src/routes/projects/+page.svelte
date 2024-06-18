@@ -16,6 +16,7 @@
     import PartnerModpack from "$lib/components/PartnerModpack.svelte"
     import SocialBar from "$lib/components/SocialBar.svelte"
 
+    // This function gets triggered on first page load, does the little appearance animation (if allowed of course)
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
         for (let child of children!) {
             removeOpacity(child.children, withAnimation)
@@ -24,30 +25,36 @@
         }
     }
 
+    // Scroll a page down if navigating from another page, hiding the header
     $: if ($navigating?.to?.url==$page.url) setTimeout(() => scrollTo(0, innerHeight), 1)
 
-    let packs : MPack[] = modpacks
-    let banner : string | null
-    let generateBanner = (pool : string[]) => {
+    let packs : MPack[] = modpacks // Modpacks, chewed for typescript's enjoyment
+    let banner : string | null // The banner's background
+    let generateBanner = (pool : string[]) => { // A function to randomly generate said background
         banner = pool[Math.floor(Math.random() * pool.length)]
     }
 
+    // Generate the banner for the first time, using custom banners and ones from modpack pages
     let possibleBanners : string[] = consts.ADDITIONAL_BANNERS
     packs.forEach(p => {
         if (p.banner) possibleBanners.push(p.banner)
     })
     generateBanner(possibleBanners)
 
+    // The breathe animations for modpacks, the hellish mods logo, and the social buttons below said logo
+    // This would be replaced with css if browsers sucked less
     let animations : TweenedAnim[] = [...Array(16).keys()].map(i => {return {scale: tweened(100 - ((Math.floor(i / 4) + i % 4) * 5), {duration: 750, easing: sineOut}), scaleup: false, maxScale: 100, minScale: 90}})
     let HMIconAnims : TweenedAnim[] = []
     for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100-(10*i), {duration: 200}), scaleup: true, maxScale: 100, minScale: 80})
     animations = [...animations, {scale: tweened(100, {duration: 1200}), scaleup: true, maxScale: 100, minScale: 95}, ...HMIconAnims]
 
-    let modpacksHovered : boolean = false
+    let modpacksHovered : boolean = false // Weather or not the left of the modpack section is hovered, activates the following mouse effect
 
-    let partnerQueueLen : number | null
-    let partnerModpacks : HTMLElement | null
+    let partnerQueueLen : number | null // The length of the partnered modpacks section
+    let partnerModpacks : HTMLElement | null // The partnered modpacks chain element, used to determine the length needed to be scrolled
 
+    // Blame svelte not me
+    // "Stores must be declared at the top level of the component" my ass
     let HMLogoAnim : Tweened<number>
     $: HMLogoAnim = animations[16].scale
     let CFHMLogoAnim : Tweened<number>
@@ -57,40 +64,48 @@
     let GHHMLogoAnim : Tweened<number>
     $: GHHMLogoAnim = animations[19].scale
 
-    const defaultRotDuration = 5000
-    const rotDurationAdd = 1000
+    // Constants used for the spin animation in the HM section
+    const defaultRotDuration = 5000 // Default rotation duration
+    const rotDurationAdd = 1000 // How many ms is added per layer
 
+    // Instantiate the tweened's for all mod elements
     let rotOffsets : {anim: Tweened<number>, duration : number}[] = []
     for (let i = 0; i < 5; i++) {
         let rotDuration : number = defaultRotDuration + (rotDurationAdd * i)
         rotOffsets.push({anim: tweened(0, {duration: rotDuration}), duration: rotDuration})
     }
-    let rotOffsetNumbers : number[] = Array.from({length: rotOffsets.length}, () => 0)
+    let rotOffsetNumbers : number[] = Array.from({length: rotOffsets.length}, () => 0) // Dear god svelte, kids are watching
 
-    let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set(get(rotOffsets[layer].anim) + 1)}
-    let getLayer = (layerNum: number, layerMax: number, layerAdd : number, i: number): number => {
+    let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set(get(rotOffsets[layer].anim) + 1)} // Spin a layer of the animation, whee
+    let getLayer = (layerNum: number, layerMax: number, layerAdd : number, i: number): number => { // Get a layer based on super complex math :5head:
         if (i<layerMax) return layerNum
-        return getLayer(layerNum + 1, layerMax + layerAdd, layerAdd, i - layerMax)
+        return getLayer(layerNum + 1, layerMax + layerAdd, layerAdd, i - layerMax) // Each layer is `layerAdd` elements more than the last one, usually this is set to 2
     }
 
     onMount(() => {
-        let nav = $navigating
+        let nav = $navigating // idk
 
         setTimeout(() => {
-            partnerQueueLen = $reducedMotion ? partneredModpacks.length : Math.max(partneredModpacks.length+2, 8)
-            if ($reducedMotion) generateBanner(possibleBanners.filter(b => !b.endsWith(".gif")))
+            partnerQueueLen = $reducedMotion ? partneredModpacks.length : Math.max(partneredModpacks.length+2, 8) // Calculate the length of partnered packs; if no anim then match the amount of partnered packs, if yes anim then either the amount of packs+2 or just 8, whichever is bigger
+            if ($reducedMotion) generateBanner(possibleBanners.filter(b => !b.endsWith(".gif"))) // Generate the banner for the second time if reducedmotion is enabled, remove all gifs to not make the users dizzy
 
-            let shouldShowOpacityAnim = !$scrollY && !nav && !$reducedMotion
+            let shouldShowOpacityAnim = !$scrollY && !nav && !$reducedMotion // If the previously mentioned appearance anim should play; stop if reducedmotion, navigating, or reload after already scrolled 
 
-            let title : HTMLElement | null = document.getElementById("title")
-            let bg : HTMLElement | null = document.getElementById("bg")
-            let arrowClasses : DOMTokenList | undefined = document.getElementById("arrow")?.classList
-
+            // You spin me right round
+            // Baby right round
+            // Like a record baby
+            // Round round, round round
             for (let i = 0; i < rotOffsets.length; i++) {
                 doABarrelRoll(i)
                 setInterval(() => doABarrelRoll(i), rotOffsets[i].duration)
             }
 
+            // Different elements and classlists of elements in the header
+            let title : HTMLElement | null = document.getElementById("title")
+            let bg : HTMLElement | null = document.getElementById("bg")
+            let arrowClasses : DOMTokenList | undefined = document.getElementById("arrow")?.classList
+
+            // Keep the banner and the splash text if navigating, otherwise generate new ones
             if ($scrollY || nav) {
                 banner = $previousRandomBanner
                 arrowClasses?.add("hidden")
@@ -99,14 +114,16 @@
                 $randomSplash = randomChoice($json("splashes") as any[])
                 $previousRandomBanner = banner!
 
+                // If appearance anim is playing, make the user wait a bit and enjoy the beauty
                 if (!$reducedMotion) {
                     document.body.classList.add("overflow-y-hidden")
                     setTimeout(() => {document.body.classList.remove("overflow-y-hidden")}, 2500)
                 }
             }
 
-            setTimeout(() => {removeOpacity(title?.children, shouldShowOpacityAnim)}, !shouldShowOpacityAnim ? 0 : 500)
+            setTimeout(() => {removeOpacity(title?.children, shouldShowOpacityAnim)}, !shouldShowOpacityAnim ? 0 : 500) // Play the actual appearance anim
 
+            // Remove banner down arrows on first scroll, and apply parallax effect to the bg if reducedmotion isn't enabled
             document.addEventListener("scroll", () => {
                 arrowClasses?.remove("duration-[1s]", "delay-[2s]")
                 arrowClasses?.add(`duration-[${$reducedMotion ? '0s' : '.25s'}]`, "opacity-0", "scale-0")
@@ -118,6 +135,7 @@
         }, 1)
 
         setInterval(() => {
+            // Update breathing animations
             animations.forEach(anim => {
                 anim.scale.set(get(anim.scale) + (anim.scaleup ? 1 : -1))
 
@@ -125,7 +143,7 @@
                 else if (get(anim.scale)<anim.minScale) anim.scaleup = true
             })
 
-            for (let i = 0; i < rotOffsets.length; i++) rotOffsetNumbers[i] = get(rotOffsets[i].anim)
+            for (let i = 0; i < rotOffsets.length; i++) rotOffsetNumbers[i] = get(rotOffsets[i].anim) // Svelte fuck off. Look at what you did
         }, 1)
     })
 </script>
