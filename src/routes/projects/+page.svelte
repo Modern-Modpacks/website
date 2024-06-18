@@ -95,9 +95,11 @@
             // Baby right round
             // Like a record baby
             // Round round, round round
-            for (let i = 0; i < rotOffsets.length; i++) {
-                doABarrelRoll(i)
-                setInterval(() => doABarrelRoll(i), rotOffsets[i].duration)
+            if (!$reducedMotion) {
+                for (let i = 0; i < rotOffsets.length; i++) {
+                    doABarrelRoll(i)
+                    setInterval(() => doABarrelRoll(i), rotOffsets[i].duration)
+                }
             }
 
             // Different elements and classlists of elements in the header
