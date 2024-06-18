@@ -45,8 +45,8 @@
     // This would be replaced with css if browsers sucked less
     let animations : TweenedAnim[] = [...Array(16).keys()].map(i => {return {scale: tweened(100, {duration: 2000, delay: (Math.floor(i / 4) + i % 4) * 500, easing: sineOut}), scaleup: false, maxScale: 100, minScale: 90}})
     let HMIconAnims : TweenedAnim[] = []
-    for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100, {duration: 1200, delay: 200*i}), scaleup: true, maxScale: 100, minScale: 80})
-    animations = [...animations, {scale: tweened(100, {duration: 1200}), scaleup: true, maxScale: 100, minScale: 95}, ...HMIconAnims]
+    for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100, {duration: 2000, delay: 500*i}), scaleup: true, maxScale: 100, minScale: 80})
+    animations = [...animations, {scale: tweened(100, {duration: 2000}), scaleup: true, maxScale: 100, minScale: 95}, ...HMIconAnims]
 
     let modpacksHovered : boolean = false // Weather or not the left of the modpack section is hovered, activates the following mouse effect
 
@@ -66,17 +66,17 @@
 
     // Constants used for the spin animation in the HM section
     const defaultRotDuration = 5000 // Default rotation duration
-    const rotDurationAdd = 1000 // How many ms is added per layer
+    const rotDurationAdd = 3000 // How many ms is added per layer
 
     // Instantiate the tweened's for all mod elements
     let rotOffsets : {anim: Tweened<number>, duration : number}[] = []
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 15; i++) { // TODO: change the number of layers possible
         let rotDuration : number = defaultRotDuration + (rotDurationAdd * i)
         rotOffsets.push({anim: tweened(0, {duration: rotDuration}), duration: rotDuration})
     }
     let rotOffsetNumbers : number[] = Array.from({length: rotOffsets.length}, () => 0) // Dear god svelte, kids are watching
 
-    let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set(get(rotOffsets[layer].anim) + 1)} // Spin a layer of the animation, whee
+    let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set((get(rotOffsets[layer].anim) + 1) % 360)} // Spin a layer of the animation, whee
     let getLayer = (layerNum: number, layerMax: number, layerAdd : number, i: number): number => { // Get a layer based on super complex math :5head:
         if (i<layerMax) return layerNum
         return getLayer(layerNum + 1, layerMax + layerAdd, layerAdd, i - layerMax) // Each layer is `layerAdd` elements more than the last one, usually this is set to 2
@@ -140,7 +140,7 @@
             setInterval(() => {
                 anim.scale.set(anim.scaleup ? anim.maxScale : anim.minScale)
                 anim.scaleup = !anim.scaleup
-            }, i<16 ? 2000 : (i==16 ? 1200 : 1200))
+            }, 2000)
         }
 
         setInterval(() => {
@@ -205,17 +205,17 @@
     <div class="pr-10 bg-primary-dark flex justify-between [&>*]:text-center">
         <div class="min-w-[50%] relative flex flex-col justify-center items-center">
             <div class="absolute w-[120vw] h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
-                <div class="h-full w-full relative overflow-hidden [&>span]:h-14 [&>span]:w-14 [&>span]:absolute [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_h2]:text-sm"> 
+                <div class="h-full w-full relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_h2]:text-sm"> 
                     <!-- animate-spin [&>img]:animate-unspin -->
                     {#each [...Array(90).keys()] as i}
-                        {@const layerFirst = 16}
+                        {@const layerFirst = 8}
                         {@const layerAdd = 2}
                         {@const layer = getLayer(0, layerFirst, layerAdd, i)}
                         {@const itemsInLayer = layerFirst + (layerAdd * layer)}
-                        {@const rotAmount = (360 / itemsInLayer) * (i + rotOffsetNumbers[layer])}
-                        {@const radius = 225 + (layer**4)}
+                        {@const rotAmount = (360 / itemsInLayer) * (i + rotOffsetNumbers[layer]) * (layer % 2 ? 1 : -1)}
+                        {@const radius = 250 + ((layer+1) ** 7)}
 
-                        <span style="transform: scale({100 + (50 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate(-{rotAmount}deg);">
+                        <span style="transform: scale({100 + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg);">
                             <img src="{consts.HM_LOGO_URL}" alt="">
                             <h2>{i}</h2>
                         </span>
