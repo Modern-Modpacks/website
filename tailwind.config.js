@@ -64,22 +64,6 @@ export default {
                 transform: "translateY(20%)"
             }
         },
-        breathe: {
-          from: {
-              transform: "scale(75%)"
-          },
-          to: {
-              transform: "scale(100%)"
-          }
-        },
-        "small-breathe": {
-          from: {
-              transform: "scale(100%)"
-          },
-          to: {
-              transform: "scale(105%)"
-          }
-        },
         marquee: {
           from: {
               transform: "translateX(0rem)"
@@ -87,13 +71,29 @@ export default {
           to: {
               transform: "translateX(var(--scroll-amount))"
           }
+        },
+        spin: {
+          from: {
+              transform: "rotate(0deg)"
+          },
+          to: {
+              transform: "rotate(360deg)"
+          }
+        },
+        unspin: {
+          from: {
+              transform: "rotate(0deg)"
+          },
+          to: {
+              transform: "rotate(-360deg)"
+          }
         }
       },
       animation: {
         float: "float 2s alternate infinite ease-in-out",
-        breathe: "breathe 2s alternate infinite ease-in-out",
-        "small-breathe": "small-breathe 5s alternate infinite ease-in-out",
-        marquee: "marquee var(--scroll-time) infinite linear"
+        marquee: "marquee var(--scroll-time) infinite linear",
+        spin: "spin 5s infinite linear",
+        unspin: "unspin 5s infinite linear"
       }
     }
   },

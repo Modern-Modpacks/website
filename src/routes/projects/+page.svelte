@@ -57,6 +57,22 @@
     let GHHMLogoAnim : Tweened<number>
     $: GHHMLogoAnim = animations[19].scale
 
+    const defaultRotDuration = 5000
+    const rotDurationAdd = 1000
+
+    let rotOffsets : {anim: Tweened<number>, duration : number}[] = []
+    for (let i = 0; i < 5; i++) {
+        let rotDuration : number = defaultRotDuration + (rotDurationAdd * i)
+        rotOffsets.push({anim: tweened(0, {duration: rotDuration}), duration: rotDuration})
+    }
+    let rotOffsetNumbers : number[] = Array.from({length: rotOffsets.length}, () => 0)
+
+    let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set(get(rotOffsets[layer].anim) + 1)}
+    let getLayer = (layerNum: number, layerMax: number, layerAdd : number, i: number): number => {
+        if (i<layerMax) return layerNum
+        return getLayer(layerNum + 1, layerMax + layerAdd, layerAdd, i - layerMax)
+    }
+
     onMount(() => {
         let nav = $navigating
 
@@ -69,6 +85,11 @@
             let title : HTMLElement | null = document.getElementById("title")
             let bg : HTMLElement | null = document.getElementById("bg")
             let arrowClasses : DOMTokenList | undefined = document.getElementById("arrow")?.classList
+
+            for (let i = 0; i < rotOffsets.length; i++) {
+                doABarrelRoll(i)
+                setInterval(() => doABarrelRoll(i), rotOffsets[i].duration)
+            }
 
             if ($scrollY || nav) {
                 banner = $previousRandomBanner
@@ -103,6 +124,8 @@
                 if ((anim.scaleup && get(anim.scale)>anim.maxScale)) anim.scaleup = false
                 else if (get(anim.scale)<anim.minScale) anim.scaleup = true
             })
+
+            for (let i = 0; i < rotOffsets.length; i++) rotOffsetNumbers[i] = get(rotOffsets[i].anim)
         }, 1)
     })
 </script>
@@ -162,12 +185,26 @@
 
     <div class="py-8 px-10 bg-primary-dark flex justify-between [&>*]:text-center">
         <div class="min-w-[50%] relative flex flex-col justify-center items-center">
-            <div class="absolute w-full h-full bg-[radial-gradient(circle,_#0c0c0c_25%,_transparent_65%)]">
+            <div class="absolute w-full h-full bg-[radial-gradient(circle,_#0c0c0c_25%,_transparent_65%)] flex justify-center items-center">
+                <div class="h-[65%] w-[65%] [&_span]:h-16 [&_span]:w-16 [&_span]:absolute [&_span]:left-0 [&_span]:right-0 [&_span]:top-0 [&_span]:bottom-0 [&_span]:mx-auto [&_span]:my-auto"> 
+                    <!-- animate-spin [&>img]:animate-unspin -->
+                    {#each [...Array(10).keys()] as i}
+                        {@const layerAdd = 2}
+                        {@const layer = getLayer(0, 4, layerAdd, i)}
+                        {@const itemsInLayer = 4 + (layerAdd * layer)}
+                        {@const rotAmount = (360 / itemsInLayer) * (i + rotOffsetNumbers[layer])}
+                        {@const radius = 250 + (layer * 100)}
 
+                        <span style="transform: rotate({rotAmount}deg) translate({radius}px) rotate(-{rotAmount}deg);">
+                            <img src="{consts.HM_LOGO_URL}" alt="">
+                            <h2>{i}</h2>
+                        </span>
+                    {/each}
+                </div>
             </div>
-            <div class="group">
+            <div class="group z-10">
                 <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 h-48 rendering-pixelated rounded-md motion-safe:group-hover:!scale-100 duration-100" style="transform: scale({$reducedMotion ? 100 : $HMLogoAnim}%);">
-                <div class="mt-5 flex justify-center gap-5 [&>a]:block [&>a]:w-10 [&>a]:motion-safe:duration-200 [&>a]:!animate-duration-[5s] [&>a]:!animate-fill-backwards [&_img]:brightness-0 [&_img]:invert">
+                <div class="mt-5 flex justify-center gap-5 [&>a]:block [&>a]:w-10 [&>a]:motion-safe:duration-200 [&_img]:brightness-0 [&_img]:invert">
                     {#each [
                         {link: "https://curseforge.com/members/hellishmods", title: "CurseForge", anim: $CFHMLogoAnim},
                         {link: consts.SOCIALS.modrinth.url, title: "Modrinth", anim: $MRHMLogoAnim},
