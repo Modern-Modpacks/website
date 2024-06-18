@@ -43,7 +43,7 @@
 
     // The breathe animations for modpacks, the hellish mods logo, and the social buttons below said logo
     // This would be replaced with css if browsers sucked less
-    let animations : TweenedAnim[] = [...Array(16).keys()].map(i => {return {scale: tweened(100 - ((Math.floor(i / 4) + i % 4) * 5), {duration: 750, easing: sineOut}), scaleup: false, maxScale: 100, minScale: 90}})
+    let animations : TweenedAnim[] = [...Array(16).keys()].map(i => {return {scale: tweened(100, {duration: 2000, delay: (Math.floor(i / 4) + i % 4) * 500, easing: sineOut}), scaleup: false, maxScale: 100, minScale: 90}})
     let HMIconAnims : TweenedAnim[] = []
     for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100-(10*i), {duration: 200}), scaleup: true, maxScale: 100, minScale: 80})
     animations = [...animations, {scale: tweened(100, {duration: 1200}), scaleup: true, maxScale: 100, minScale: 95}, ...HMIconAnims]
@@ -134,15 +134,16 @@
             })
         }, 1)
 
+        // Update breathing animations
+        for (let i = 0; i < animations.length; i++) {
+            let anim = animations[i]
+            setInterval(() => {
+                anim.scale.set(anim.scaleup ? anim.maxScale : anim.minScale)
+                anim.scaleup = !anim.scaleup
+            }, i<16 ? 2000 : (i==16 ? 1200 : 200))
+        }
+
         setInterval(() => {
-            // Update breathing animations
-            animations.forEach(anim => {
-                anim.scale.set(get(anim.scale) + (anim.scaleup ? 1 : -1))
-
-                if ((anim.scaleup && get(anim.scale)>anim.maxScale)) anim.scaleup = false
-                else if (get(anim.scale)<anim.minScale) anim.scaleup = true
-            })
-
             for (let i = 0; i < rotOffsets.length; i++) rotOffsetNumbers[i] = get(rotOffsets[i].anim) // Svelte fuck off. Look at what you did
         }, 1)
     })
