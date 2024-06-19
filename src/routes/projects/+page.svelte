@@ -16,6 +16,7 @@
     import PartnerModpack from "$lib/components/PartnerModpack.svelte"
     import SocialBar from "$lib/components/SocialBar.svelte"
     import ModContextMenu from "$lib/components/ModContextMenu.svelte"
+    import { inview } from "svelte-inview";
 
     // This function gets triggered on first page load, does the little appearance animation (if allowed of course)
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
@@ -88,6 +89,10 @@
         })
     }
 
+    // You spin me right round
+    // Baby right round
+    // Like a record baby
+    // Round round, round round
     let barrelRolling : boolean = false // Weather the spin animation is playing
     let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set((get(rotOffsets[layer].anim) + 1))} // Spin a layer of the animation, whee
     let doAllBarrelRolls = () => { // Set spin intervals for all layers
@@ -127,12 +132,6 @@
             if ($reducedMotion) generateBanner(possibleBanners.filter(b => !b.endsWith(".gif"))) // Generate the banner for the second time if reducedmotion is enabled, remove all gifs to not make the users dizzy
 
             let shouldShowOpacityAnim = !$scrollY && !nav && !$reducedMotion // If the previously mentioned appearance anim should play; stop if reducedmotion, navigating, or reload after already scrolled 
-
-            // You spin me right round
-            // Baby right round
-            // Like a record baby
-            // Round round, round round
-            doAllBarrelRolls()
 
             // Different elements and classlists of elements in the header
             let title : HTMLElement | null = document.getElementById("title")
@@ -215,7 +214,7 @@
         <div class="flex" style="mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);">
             <div
                 class="flex items-center gap-6 motion-safe:animate-marquee hover:animate-pause motion-reduce:overflow-x-scroll"
-                style="--scroll-amount: -{10.5*partneredModpacks.length}rem; --scroll-time: {.5 * (partnerQueueLen ?? 0)}s"
+                style="--scroll-amount: -{11.5*partneredModpacks.length}rem; --scroll-time: {.5 * (partnerQueueLen ?? 0)}s"
                 bind:this={partnerModpacks}
                 on:wheel={e => {
                     if (!$reducedMotion || partnerModpacks==null) return
@@ -239,6 +238,12 @@
                 <div
                     class="h-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md [&_img]:duration-200"
                     on:mouseover={() => {spinAnimHovered=true; stopAllBarrelRolls()}} on:mouseleave={() => {spinAnimHovered=false; if (contextMenuAboutToBeClosed) doAllBarrelRolls()}}
+                    use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {
+                        let duration = 600
+
+                        rotOffsets.forEach(l => {l.anim.set(1, {duration: duration})})
+                        setTimeout(doAllBarrelRolls, duration)
+                    }}
                 >
                     <ModContextMenu bind:this={modContextMenu} bind:aboutToClose={contextMenuAboutToBeClosed} bind:spinAnimHovered={spinAnimHovered} doAllBarrelRolls={doAllBarrelRolls} />
                     {#each [...Array((8 * layerCount) + (2 * (layerCount - 1))).keys()] as i}
