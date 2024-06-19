@@ -87,9 +87,12 @@
         })
     }
 
+    let barrelRolling : boolean = false // Weather the spin animation is playing
     let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set((get(rotOffsets[layer].anim) + 1))} // Spin a layer of the animation, whee
     let doAllBarrelRolls = () => { // Set spin intervals for all layers
-        if ($reducedMotion) return
+        if ($reducedMotion || barrelRolling) return
+        barrelRolling = true
+
         for (let i = 0; i < rotOffsets.length; i++) {
             let rotOffset = rotOffsets[i]
 
@@ -98,9 +101,12 @@
         }
     }
     let stopAllBarrelRolls = () => { // Suspend spin intervals for all layers
+        if ($reducedMotion || !barrelRolling) return
+        barrelRolling = false
+
         rotOffsets.forEach(off => {
             clearInterval(off.interval!)
-            off.anim.set(get(off.anim))
+            off.anim.set(get(off.anim)+.03, {duration: 500, easing: sineOut})
         })
     }
     let getLayer = (layerNum: number, layerMax: number, layerAdd : number, i: number): number => { // Get a layer based on super complex math :5head:
