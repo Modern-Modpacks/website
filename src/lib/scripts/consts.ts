@@ -1,5 +1,5 @@
 const consts = {
-    COLORS: [
+    COLORS: [ // MM's brand colors' names
         "red",
         "orange",
         "yellow",
@@ -17,10 +17,10 @@ const consts = {
         "black",
         "brown"
     ],
-    ADDITIONAL_BANNERS:[
+    ADDITIONAL_BANNERS: [ // Additional banners for the projects page banner, excluding pack-specific banners
         "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/animated_header.gif"
     ],
-    WEBSITE_ICONS: {
+    WEBSITE_ICONS: { // Icons for various social websites
         curseforge: "https://www.svgrepo.com/show/330245/curseforge.svg",
         modrinth: "https://raw.githubusercontent.com/modrinth/knossos/master/assets/images/logo.svg",
         technicpack: "https://cdn.worldvectorlogo.com/logos/technic-launcher.svg",
@@ -37,7 +37,7 @@ const consts = {
         email: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMTIuNzEzbC0xMS45ODUtOS43MTNoMjMuOTcxbC0xMS45ODYgOS43MTN6bS01LjQyNS0xLjgyMmwtNi41NzUtNS4zMjl2MTIuNTAxbDYuNTc1LTcuMTcyem0xMC44NSAwbDYuNTc1IDcuMTcydi0xMi41MDFsLTYuNTc1IDUuMzI5em0tMS41NTcgMS4yNjFsLTMuODY4IDMuMTM1LTMuODY4LTMuMTM1LTguMTEgOC44NDhoMjMuOTU2bC04LjExLTguODQ4eiIvPjwvc3ZnPg=="
     },
 
-    SOCIALS: {
+    SOCIALS: { // Links to various socials of MM
         curseforge: {
             url: "https://www.curseforge.com/members/modernmodpacks",
             title: "CurseForge",
@@ -89,13 +89,13 @@ const consts = {
             header: false
         }
     },
-    HELLISH_URL: "https://curseforge.com/members/hellishmods",
 
+    // Logos of MM, HM, and MM rounded respectively
     LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/logo.png",
     HM_LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/HMlogo.png",
     ROUNDED_LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/rounded_logo.png"
 }
-const icons : {[key: string]: string} = consts.WEBSITE_ICONS
+const icons : {[key: string]: string} = consts.WEBSITE_ICONS // Icons again, but now in a way TS likes it
 
 export default consts
 export { icons }
