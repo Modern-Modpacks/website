@@ -1,12 +1,12 @@
 <script lang="ts">
     import Saos from "saos"
     import consts from "$lib/scripts/consts"
-    import { type Modpack } from "$lib/scripts/interfaces";
+    import { type Modpack } from "$lib/scripts/interfaces"
     import modpacks from "$lib/json/modpacks.json5"
     import { mousePos, popupOpened, reducedMotion, scrollY } from "$lib/scripts/stores"
     import { type Tweened } from "svelte/motion"
-    import ModpackPopup from "./ModpackPopup.svelte";
-    import { _ } from "svelte-i18n";
+    import ModpackPopup from "./ModpackPopup.svelte"
+    import { _ } from "svelte-i18n"
 
     export let index : number
     export let scale : Tweened<number> | null = null // Animation shenanigans

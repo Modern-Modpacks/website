@@ -1,10 +1,10 @@
 <script lang="ts">
-    import consts from "$lib/scripts/consts";
+    import consts from "$lib/scripts/consts"
     import type { Modpack } from "$lib/scripts/interfaces"
     import { popupOpened, settingsOpened } from "$lib/scripts/stores"
-    import { Globe, X } from "lucide-svelte";
+    import { Globe, X } from "lucide-svelte"
     import { onMount } from "svelte"
-    import { _ } from "svelte-i18n";
+    import { _ } from "svelte-i18n"
     import Portal from "svelte-portal"
     
     export let modpack : Modpack

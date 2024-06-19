@@ -1,7 +1,7 @@
 <script lang="ts">
     import { navigating, page } from "$app/stores"
     import consts, { icons } from "$lib/scripts/consts"
-    import { previousRandomBanner, randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
+    import { modalOpenedBy, previousRandomBanner, randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
     import { randomChoice } from "$lib/scripts/utils"
@@ -15,6 +15,7 @@
     import partneredModpacks from "$lib/json/partner_modpacks.json5"
     import PartnerModpack from "$lib/components/PartnerModpack.svelte"
     import SocialBar from "$lib/components/SocialBar.svelte"
+    import ModModal from "$lib/components/ModModal.svelte"
 
     // This function gets triggered on first page load, does the little appearance animation (if allowed of course)
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
@@ -55,6 +56,7 @@
 
     let partnerQueueLen : number | null // The length of the partnered modpacks section
     let partnerModpacks : HTMLElement | null // The partnered modpacks chain element, used to determine the length needed to be scrolled
+    let modModal : ModModal | null // The modal element covering the left half of the HM section
 
     // Blame svelte not me
     // "Stores must be declared at the top level of the component" my ass
@@ -68,9 +70,10 @@
     $: GHHMLogoAnim = animations[19].scale
 
     // Constants used for the spin animation in the HM section
-    const defaultRotDuration = 5000 // Default rotation duration
-    const rotDurationAdd = 3000 // How many ms is added per layer
-    const layerCount = 2 // How many layers are shown
+    const defaultRotDuration : number = 5000 // Default rotation duration
+    const rotDurationAdd : number = 3000 // How many ms is added per layer
+    const layerCount : number = 2 // How many layers are shown
+    let modalAboutToBeClosed : boolean = true // Weather to allow playing the spin anim based on the modal being opened
 
     // Instantiate the tweened's for all mod elements
     let rotOffsets : {anim: Tweened<number>, duration : number, interval: number | null}[] = []
@@ -228,8 +231,9 @@
                 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
                 <div
                     class="h-full w-full relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md [&_img]:duration-200"
-                    on:mouseover={stopAllBarrelRolls} on:mouseleave={doAllBarrelRolls}
-                > 
+                    on:mouseover={stopAllBarrelRolls} on:mouseleave={() => {modalAboutToBeClosed ? doAllBarrelRolls() : null}}
+                >
+                    <ModModal bind:this={modModal} bind:aboutToClose={modalAboutToBeClosed} />
                     {#each [...Array((8 * layerCount) + (2 * (layerCount - 1))).keys()] as i}
                         {@const layerFirst = 8}
                         {@const layerAdd = 2}
@@ -239,8 +243,9 @@
                         {@const radius = 250 + ((layer+1) ** 7)}
                         {@const mod = mods ? mods[i % mods?.length] : null}
 
-                        <span style="transform: scale({100 + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg);" title="{mod?.name}">
-                            <img src="{mod?.icon_url}" alt="" class="motion-safe:hover:!scale-[1.15]">
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <span style="transform: scale({100 + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($modalOpenedBy==i)}" title="{mod?.name}" on:click={() => {modModal?.toggle(i)}}>
+                            <img id="mod" src="{mod?.icon_url}" alt="" class="motion-safe:hover:!scale-[1.15]{$modalOpenedBy==i ? " motion-safe:!scale-[1.15]" : ""}">
                         </span>
                     {/each}
                 </div>
@@ -260,7 +265,7 @@
                 </div>
             </div>
         </div>
-        <div class="py-8 z-10 flex flex-col gap-5 items-center w-[50%] pointer-events-none bg-gradient-to-l from-primary-dark from-90%">
+        <div class="py-8 z-30 flex flex-col gap-5 items-center w-[50%] pointer-events-none bg-gradient-to-l from-primary-dark from-90%">
             <h2 class="pointer-events-auto">{$_("projects.hellish.heading")}</h2>
             <p class="pointer-events-auto">{@html $_("projects.hellish.desc")}</p>
         </div>

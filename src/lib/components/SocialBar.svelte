@@ -1,8 +1,7 @@
 <script lang="ts">
     import consts, { icons } from "$lib/scripts/consts"
     import type { Social, TweenedBreatheAnim } from "$lib/scripts/interfaces"
-    import { tweened } from "svelte/motion";
-    import { get } from "svelte/store";
+    import { tweened } from "svelte/motion"
 
     export let header : boolean = false // Specifies weather the social bar is in the header or in "about us", shortens the social list if in header
     const socials : {[key: string]: Social} = consts.SOCIALS // Socials, digested for TS
