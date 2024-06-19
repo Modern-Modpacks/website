@@ -9,7 +9,7 @@ export interface Social {
     title: string
     header: boolean
 }
-export interface TweenedAnim {
+export interface TweenedBreatheAnim {
     scale: Tweened<number>
     scaleup: boolean
     

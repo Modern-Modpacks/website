@@ -17,7 +17,7 @@
     // Add locales from the src/lib/json/langs folder
     // JSON5 ftw baby
     let langs = import.meta.glob("../lib/json/langs/*.json5", {eager: true})
-    for(let l of Object.keys(langs)) {
+    for (let l of Object.keys(langs)) {
         let dictsWithNewlines : {[key: string]: string} = (flatten(langs[l]) as {[key: string]: string})
         Object.keys(dictsWithNewlines).forEach(k => {
             dictsWithNewlines[k] = dictsWithNewlines[k].replace(/\n/g, "<br/>") // Newline fuckery. Nothing special, html being html, continue scrolling

@@ -7,7 +7,7 @@
     import { randomChoice } from "$lib/scripts/utils"
     import { _, json } from "svelte-i18n"
     import Modpack from "$lib/components/Modpack.svelte"
-    import { type Modpack as MPack, type Mod, type TweenedAnim } from "$lib/scripts/interfaces"
+    import { type Modpack as MPack, type Mod, type TweenedBreatheAnim } from "$lib/scripts/interfaces"
     import { tweened, type Tweened } from "svelte/motion"
     import { get } from "svelte/store"
     import { sineOut } from "svelte/easing"
@@ -46,10 +46,10 @@
 
     // The breathe animations for modpacks, the hellish mods logo, and the social buttons below said logo
     // This would be replaced with css if browsers sucked less
-    let animations : TweenedAnim[] = [...Array(16).keys()].map(i => {return {scale: tweened(100, {duration: 2000, delay: (Math.floor(i / 4) + i % 4) * 500, easing: sineOut}), scaleup: false, maxScale: 100, minScale: 90}})
-    let HMIconAnims : TweenedAnim[] = []
-    for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100, {duration: 2000, delay: 500*i}), scaleup: true, maxScale: 100, minScale: 80})
-    animations = [...animations, {scale: tweened(100, {duration: 2000}), scaleup: true, maxScale: 100, minScale: 95}, ...HMIconAnims]
+    let animations : TweenedBreatheAnim[] = [...Array(16).keys()].map(i => {return {scale: tweened(100, {duration: 2000, delay: (Math.floor(i / 4) + i % 4) * 500, easing: sineOut}), scaleup: false, maxScale: 100, minScale: 90}})
+    let HMIconAnims : TweenedBreatheAnim[] = []
+    for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100, {duration: 2000, delay: 500*i}), scaleup: false, maxScale: 100, minScale: 80})
+    animations = [...animations, {scale: tweened(100, {duration: 2000}), scaleup: false, maxScale: 100, minScale: 95}, ...HMIconAnims]
 
     let modpacksHovered : boolean = false // Weather or not the left of the modpack section is hovered, activates the following mouse effect
 
@@ -74,11 +74,15 @@
 
     // Instantiate the tweened's for all mod elements
     let rotOffsets : {anim: Tweened<number>, duration : number, interval: number | null}[] = []
+    let rotOffsetNumbers : number[] = Array.from({length: rotOffsets.length}, () => 0) // Dear god svelte, kids are watching
     for (let i = 0; i < layerCount; i++) {
         let rotDuration : number = defaultRotDuration + (rotDurationAdd * i)
         rotOffsets.push({anim: tweened(0, {duration: rotDuration}), duration: rotDuration, interval: null})
+
+        rotOffsets[i].anim.subscribe(v => {
+            rotOffsetNumbers[i] = v
+        })
     }
-    let rotOffsetNumbers : number[] = Array.from({length: rotOffsets.length}, () => 0) // Dear god svelte, kids are watching
 
     let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set((get(rotOffsets[layer].anim) + 1))} // Spin a layer of the animation, whee
     let doAllBarrelRolls = () => { // Set spin intervals for all layers
@@ -155,17 +159,12 @@
         }, 1)
 
         // Update breathing animations
-        for (let i = 0; i < animations.length; i++) {
-            let anim = animations[i]
+        animations.forEach(anim => {
             setInterval(() => {
                 anim.scale.set(anim.scaleup ? anim.maxScale : anim.minScale)
                 anim.scaleup = !anim.scaleup
             }, 2000)
-        }
-
-        setInterval(() => {
-            for (let i = 0; i < rotOffsets.length; i++) rotOffsetNumbers[i] = get(rotOffsets[i].anim) // Svelte fuck off. Look at what you did
-        }, 1)
+        })
     })
 </script>
 
