@@ -32,6 +32,11 @@ export interface Modpack {
         source?: string
     }
 }
+export interface Mod {
+    slug: string
+    name: string
+    icon_url: string
+}
 export interface PartnerModpack extends Modpack {
     icon?: string
 }

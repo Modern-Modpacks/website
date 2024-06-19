@@ -71,29 +71,11 @@ export default {
           to: {
               transform: "translateX(var(--scroll-amount))"
           }
-        },
-        spin: {
-          from: {
-              transform: "rotate(0deg)"
-          },
-          to: {
-              transform: "rotate(360deg)"
-          }
-        },
-        unspin: {
-          from: {
-              transform: "rotate(0deg)"
-          },
-          to: {
-              transform: "rotate(-360deg)"
-          }
         }
       },
       animation: {
         float: "float 2s alternate infinite ease-in-out",
-        marquee: "marquee var(--scroll-time) infinite linear",
-        spin: "spin 5s infinite linear",
-        unspin: "unspin 5s infinite linear"
+        marquee: "marquee var(--scroll-time) infinite linear"
       }
     }
   },

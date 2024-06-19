@@ -7,7 +7,7 @@
     import { randomChoice } from "$lib/scripts/utils"
     import { _, json } from "svelte-i18n"
     import Modpack from "$lib/components/Modpack.svelte"
-    import { type Modpack as MPack, type TweenedAnim } from "$lib/scripts/interfaces"
+    import { type Modpack as MPack, type Mod, type TweenedAnim } from "$lib/scripts/interfaces"
     import { tweened, type Tweened } from "svelte/motion"
     import { get } from "svelte/store"
     import { sineOut } from "svelte/easing"
@@ -28,7 +28,10 @@
     // Scroll a page down if navigating from another page, hiding the header
     $: if ($navigating?.to?.url==$page.url) setTimeout(() => scrollTo(0, innerHeight), 1)
 
-    let packs : MPack[] = modpacks // Modpacks, chewed for typescript's enjoyment
+    // Mods and modpacks, chewed for typescript's enjoyment
+    let packs : MPack[] = modpacks
+    let mods : Mod[] | null
+
     let banner : string | null // The banner's background
     let generateBanner = (pool : string[]) => { // A function to randomly generate said background
         banner = pool[Math.floor(Math.random() * pool.length)]
@@ -67,16 +70,32 @@
     // Constants used for the spin animation in the HM section
     const defaultRotDuration = 5000 // Default rotation duration
     const rotDurationAdd = 3000 // How many ms is added per layer
+    const layerCount = 2 // How many layers are shown
 
     // Instantiate the tweened's for all mod elements
-    let rotOffsets : {anim: Tweened<number>, duration : number}[] = []
-    for (let i = 0; i < 15; i++) { // TODO: change the number of layers possible
+    let rotOffsets : {anim: Tweened<number>, duration : number, interval: number | null}[] = []
+    for (let i = 0; i < layerCount; i++) {
         let rotDuration : number = defaultRotDuration + (rotDurationAdd * i)
-        rotOffsets.push({anim: tweened(0, {duration: rotDuration}), duration: rotDuration})
+        rotOffsets.push({anim: tweened(0, {duration: rotDuration}), duration: rotDuration, interval: null})
     }
     let rotOffsetNumbers : number[] = Array.from({length: rotOffsets.length}, () => 0) // Dear god svelte, kids are watching
 
-    let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set((get(rotOffsets[layer].anim) + 1) % 360)} // Spin a layer of the animation, whee
+    let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set((get(rotOffsets[layer].anim) + 1))} // Spin a layer of the animation, whee
+    let doAllBarrelRolls = () => { // Set spin intervals for all layers
+        if ($reducedMotion) return
+        for (let i = 0; i < rotOffsets.length; i++) {
+            let rotOffset = rotOffsets[i]
+
+            doABarrelRoll(i)
+            rotOffset.interval = setInterval(() => doABarrelRoll(i), rotOffset.duration)
+        }
+    }
+    let stopAllBarrelRolls = () => { // Suspend spin intervals for all layers
+        rotOffsets.forEach(off => {
+            clearInterval(off.interval!)
+            off.anim.set(get(off.anim))
+        })
+    }
     let getLayer = (layerNum: number, layerMax: number, layerAdd : number, i: number): number => { // Get a layer based on super complex math :5head:
         if (i<layerMax) return layerNum
         return getLayer(layerNum + 1, layerMax + layerAdd, layerAdd, i - layerMax) // Each layer is `layerAdd` elements more than the last one, usually this is set to 2
@@ -84,6 +103,10 @@
 
     onMount(() => {
         let nav = $navigating // idk
+        
+        fetch("https://api.modrinth.com/v3/organization/modernmodpacks/projects").then(async res => {
+            mods = await res.json() // Fetch mods and store
+        })
 
         setTimeout(() => {
             partnerQueueLen = $reducedMotion ? partneredModpacks.length : Math.max(partneredModpacks.length+2, 8) // Calculate the length of partnered packs; if no anim then match the amount of partnered packs, if yes anim then either the amount of packs+2 or just 8, whichever is bigger
@@ -95,12 +118,7 @@
             // Baby right round
             // Like a record baby
             // Round round, round round
-            if (!$reducedMotion) {
-                for (let i = 0; i < rotOffsets.length; i++) {
-                    doABarrelRoll(i)
-                    setInterval(() => doABarrelRoll(i), rotOffsets[i].duration)
-                }
-            }
+            doAllBarrelRolls()
 
             // Different elements and classlists of elements in the header
             let title : HTMLElement | null = document.getElementById("title")
@@ -207,19 +225,23 @@
     <div class="pr-10 bg-primary-dark flex justify-between [&>*]:text-center">
         <div class="min-w-[50%] relative flex flex-col justify-center items-center">
             <div class="absolute w-[120vw] h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
-                <div class="h-full w-full relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_h2]:text-sm"> 
-                    <!-- animate-spin [&>img]:animate-unspin -->
-                    {#each [...Array(90).keys()] as i}
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+                <div
+                    class="h-full w-full relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md [&_img]:duration-200"
+                    on:mouseover={stopAllBarrelRolls} on:mouseleave={doAllBarrelRolls}
+                > 
+                    {#each [...Array((8 * layerCount) + (2 * (layerCount - 1))).keys()] as i}
                         {@const layerFirst = 8}
                         {@const layerAdd = 2}
                         {@const layer = getLayer(0, layerFirst, layerAdd, i)}
                         {@const itemsInLayer = layerFirst + (layerAdd * layer)}
                         {@const rotAmount = (360 / itemsInLayer) * (i + rotOffsetNumbers[layer]) * (layer % 2 ? 1 : -1)}
                         {@const radius = 250 + ((layer+1) ** 7)}
+                        {@const mod = mods ? mods[i % mods?.length] : null}
 
-                        <span style="transform: scale({100 + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg);">
-                            <img src="{consts.HM_LOGO_URL}" alt="">
-                            <h2>{i}</h2>
+                        <span style="transform: scale({100 + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg);" title="{mod?.name}">
+                            <img src="{mod?.icon_url}" alt="" class="motion-safe:hover:!scale-[1.15]">
                         </span>
                     {/each}
                 </div>
@@ -239,9 +261,9 @@
                 </div>
             </div>
         </div>
-        <div class="py-8 z-10 flex flex-col gap-5 items-center w-[50%] bg-gradient-to-l from-primary-dark from-90%">
-            <h2>{$_("projects.hellish.heading")}</h2>
-            <p>{@html $_("projects.hellish.desc")}</p>
+        <div class="py-8 z-10 flex flex-col gap-5 items-center w-[50%] pointer-events-none bg-gradient-to-l from-primary-dark from-90%">
+            <h2 class="pointer-events-auto">{$_("projects.hellish.heading")}</h2>
+            <p class="pointer-events-auto">{@html $_("projects.hellish.desc")}</p>
         </div>
     </div>
 </main>

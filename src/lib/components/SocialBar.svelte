@@ -7,7 +7,7 @@
     const socials : {[key: string]: Social} = consts.SOCIALS // Socials, digested for TS
 </script>
 
-<span class="{header ? "mt-4 " : ""}flex gap-3">
+<span class="{header ? "mt-2 " : ""}flex gap-3">
     {#each Object.entries(Object.keys(socials)) as [i, k]}
     {@const social = socials[k]}
         {#if !header || social.header}
