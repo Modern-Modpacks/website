@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { modalOpenedBy } from "$lib/scripts/stores"
+    import { contextMenuOpenedBy } from "$lib/scripts/stores"
     import { onMount } from "svelte";
 
     let element : HTMLElement | null
@@ -8,8 +8,8 @@
     export const toggle = (i : number | null) => {
         aboutToClose = !aboutToClose
 
-        if ($modalOpenedBy==null) $modalOpenedBy = i
-        else setTimeout(() => {$modalOpenedBy = null}, 200)
+        if ($contextMenuOpenedBy==null) $contextMenuOpenedBy = i
+        else setTimeout(() => {$contextMenuOpenedBy = null}, 200)
 
         let classes = element?.classList
 
@@ -20,10 +20,10 @@
     onMount(() => {
         document.addEventListener("click", e => {
             let target : HTMLElement = e.target as HTMLElement
-            if ($modalOpenedBy!=null && !target.matches("#modalcontent, #mod")) toggle(null)
+            if ($contextMenuOpenedBy!=null && !target.matches("#contextmenu, #mod")) toggle(null)
         })
         document.addEventListener("keydown", e => {
-            if ($modalOpenedBy!=null && e.key=="Escape") toggle(null)
+            if ($contextMenuOpenedBy!=null && e.key=="Escape") toggle(null)
         })
     })
 </script>
