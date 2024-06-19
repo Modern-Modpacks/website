@@ -1,6 +1,8 @@
 <script lang="ts">
     import consts, { icons } from "$lib/scripts/consts"
     import type { Social, TweenedBreatheAnim } from "$lib/scripts/interfaces"
+    import { reducedMotion } from "$lib/scripts/stores";
+    import { onMount } from "svelte";
     import { tweened } from "svelte/motion"
 
     export let header : boolean = false // Specifies weather the social bar is in the header or in "about us", shortens the social list if in header
@@ -10,22 +12,26 @@
     let anims : TweenedBreatheAnim[] = []
     let animNumbers : number[] = []
     let barHovered = false
-    if (header) {
-        const duration = 2000
+    const duration = 2000
 
-        for (let i = 0; i < Object.values(socials).filter(s => s.header).length; i++) {
-            anims.push({scale: tweened(100, {duration: duration, delay: 400*i}), scaleup: false, maxScale: 100, minScale: 85})            
-            let anim = anims[i]
+    onMount(() => {
+        setTimeout(() => {
+            if (!header || $reducedMotion) return
 
-            setInterval(() => {
-                anim.scale.set(anim.scaleup ? anim.maxScale : anim.minScale)
-                anim.scaleup = !anim.scaleup
-            }, duration)
-            anim.scale.subscribe(v => {
-                animNumbers[i] = v
-            })
-        }
-    }
+            for (let i = 0; i < Object.values(socials).filter(s => s.header).length; i++) {
+                anims.push({scale: tweened(100, {duration: duration, delay: 400*i}), scaleup: false, maxScale: 100, minScale: 85})            
+                let anim = anims[i]
+
+                setInterval(() => {
+                    anim.scale.set(anim.scaleup ? anim.maxScale : anim.minScale)
+                    anim.scaleup = !anim.scaleup
+                }, duration)
+                anim.scale.subscribe(v => {
+                    animNumbers[i] = v
+                })
+            }
+        }, 1)
+    })
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->

@@ -73,6 +73,7 @@
     const defaultRotDuration : number = 5000 // Default rotation duration
     const rotDurationAdd : number = 3000 // How many ms is added per layer
     const layerCount : number = 2 // How many layers are shown
+    let spinAnimHovered : boolean = false // Weather the spin animation is hovered upon
     let contextMenuAboutToBeClosed : boolean = true // Weather to allow playing the spin anim based on the context menu being opened
 
     // Instantiate the tweened's for all mod elements
@@ -236,10 +237,10 @@
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
                 <div
-                    class="h-full w-full relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md [&_img]:duration-200"
-                    on:mouseover={stopAllBarrelRolls} on:mouseleave={() => {contextMenuAboutToBeClosed ? doAllBarrelRolls() : null}}
+                    class="h-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md [&_img]:duration-200"
+                    on:mouseover={() => {spinAnimHovered=true; stopAllBarrelRolls()}} on:mouseleave={() => {spinAnimHovered=false; if (contextMenuAboutToBeClosed) doAllBarrelRolls()}}
                 >
-                    <ModContextMenu bind:this={modContextMenu} bind:aboutToClose={contextMenuAboutToBeClosed} />
+                    <ModContextMenu bind:this={modContextMenu} bind:aboutToClose={contextMenuAboutToBeClosed} bind:spinAnimHovered={spinAnimHovered} doAllBarrelRolls={doAllBarrelRolls} />
                     {#each [...Array((8 * layerCount) + (2 * (layerCount - 1))).keys()] as i}
                         {@const layerFirst = 8}
                         {@const layerAdd = 2}
