@@ -7,3 +7,7 @@ export const getDistance = (point1: Coordinates, point2: Coordinates): number =>
 
     return Math.sqrt((distX ** 2) + (distY ** 2))
 }
+export const targetToHTML = (target: EventTarget | null): HTMLElement | null => {  // Converts EventTarget to HTMLElement, don't ask why
+    if (target==null) return null
+    return target as HTMLElement
+}

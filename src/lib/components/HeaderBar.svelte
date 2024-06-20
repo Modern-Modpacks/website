@@ -3,6 +3,7 @@
     import { page } from "$app/stores"
     import consts from "$lib/scripts/consts"
     import { scrollY, settingsOpened, storedLocale } from "$lib/scripts/stores"
+    import { targetToHTML } from "$lib/scripts/utils";
     import { SettingsIcon } from "lucide-svelte"
     import { onMount } from "svelte"
     import { locales, locale, _ } from "svelte-i18n"
@@ -34,8 +35,7 @@
 
     onMount(() => {
         document.addEventListener("click", e => {
-            let target : HTMLElement = e.target as HTMLElement
-            if (!target.matches("#settings, #settings *, #settingsicon")) toggleSettings(true) // If the user clicks outside of the settings menu, close that shit
+            if (!targetToHTML(e.target)?.matches("#settings, #settings *, #settingsicon")) toggleSettings(true) // If the user clicks outside of the settings menu, close that shit
         })
         document.addEventListener("keydown", e => {
             if (e.key=="Escape") setTimeout(() => toggleSettings(true), 1) // If escape is pressed, close that shit (and by shit I mean settings)

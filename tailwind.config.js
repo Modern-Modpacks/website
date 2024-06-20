@@ -31,7 +31,7 @@ export default {
   safelist: [
     "hover:font-bold", "hover:font-semibold", "hover:opacity-0",
     "bg-white", "border-white",
-    "bg-text-dark", "text-selected-text-dark",
+    "bg-text-dark", "text-selected-text-dark", "motion-safe:shadow-2xl",
     "motion-safe:hover:!scale-110", "motion-safe:hover:!scale-[1.15]", "motion-safe:!scale-[1.15]", "motion-safe:hover:!scale-100", "motion-safe:[&:not(:hover)]:group-hover:!scale-100",
     "cursor-pointer", "cursor-not-allowed",
     "scale-100", "scale-75",

@@ -4,7 +4,7 @@
     import { contextMenuOpenedBy, previousRandomBanner, randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
-    import { randomChoice } from "$lib/scripts/utils"
+    import { randomChoice, targetToHTML } from "$lib/scripts/utils"
     import { _, json } from "svelte-i18n"
     import Modpack from "$lib/components/Modpack.svelte"
     import { type Modpack as MPack, type Mod, type TweenedBreatheAnim } from "$lib/scripts/interfaces"
@@ -123,7 +123,7 @@
     onMount(() => {
         let nav = $navigating // idk
         
-        fetch("https://api.modrinth.com/v3/organization/modernmodpacks/projects").then(async res => {
+        fetch(consts.MODRINTH_API_ENDPOINT).then(async res => {
             mods = await res.json() // Fetch mods and store
         })
 
@@ -230,7 +230,7 @@
         </div>
     </div>
 
-    <div class="pr-10 bg-primary-dark flex justify-between [&>*]:text-center">
+    <div class="bg-primary-dark flex justify-between [&>*]:text-center">
         <div class="min-w-[50%] relative flex flex-col justify-center items-center">
             <div class="absolute w-[120vw] h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -256,8 +256,16 @@
                         {@const mod = mods ? mods[i % mods?.length] : null}
 
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <span style="transform: scale({100 + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==i)}" title="{mod?.name}" on:click={() => {modContextMenu?.toggle(i)}}>
-                            <img id="mod" src="{mod?.icon_url}" alt="" class="motion-safe:hover:!scale-[1.15]{$contextMenuOpenedBy==i ? " motion-safe:!scale-[1.15]" : ""}">
+                        <span
+                            style="transform: scale({100 + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==i)}"
+                            title="{mod?.name}" on:click={e => {
+                                modContextMenu?.toggle(i, mod, {
+                                    x: e.clientX + 10,
+                                    y: e.clientY + $scrollY + 10
+                                })
+                            }}
+                        >
+                            <img id="mod" src="{mod?.icon_url}" alt="" class="shadow-black motion-safe:hover:!scale-[1.15]{$contextMenuOpenedBy==i ? " motion-safe:!scale-[1.15] motion-safe:shadow-2xl" : ""}">
                         </span>
                     {/each}
                 </div>

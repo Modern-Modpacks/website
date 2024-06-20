@@ -35,7 +35,11 @@ export interface Modpack { // Used for modpacks in modpacks.json5
 export interface Mod { // Used for mods gotten from modrinth api
     slug: string
     name: string
+
     icon_url: string
+    link_urls: {
+        source: {url: string}
+    }
 }
 export interface PartnerModpack extends Modpack { // Used for partnered packs, since they don't have an icon by default
     icon?: string

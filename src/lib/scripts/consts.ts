@@ -89,6 +89,7 @@ const consts = {
             header: false
         }
     },
+    MODRINTH_API_ENDPOINT: "https://api.modrinth.com/v3/organization/modernmodpacks/projects", // Which endpoint is used to get the mods for the HM section
 
     // Logos of MM, HM, and MM rounded respectively
     LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/logo.png",
