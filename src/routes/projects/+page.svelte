@@ -128,7 +128,7 @@
         })
 
         setTimeout(() => {
-            partnerQueueLen = $reducedMotion ? partneredModpacks.length : Math.max(partneredModpacks.length+2, 8) // Calculate the length of partnered packs; if no anim then match the amount of partnered packs, if yes anim then either the amount of packs+2 or just 8, whichever is bigger
+            partnerQueueLen = $reducedMotion ? partneredModpacks.length : Math.max(partneredModpacks.length+8, 8) // Calculate the length of partnered packs; if no anim then match the amount of partnered packs, if yes anim then either the amount of packs+8 or just 8, whichever is bigger
             if ($reducedMotion) generateBanner(possibleBanners.filter(b => !b.endsWith(".gif"))) // Generate the banner for the second time if reducedmotion is enabled, remove all gifs to not make the users dizzy
 
             let shouldShowOpacityAnim = !$scrollY && !nav && !$reducedMotion // If the previously mentioned appearance anim should play; stop if reducedmotion, navigating, or reload after already scrolled 
@@ -206,15 +206,15 @@
         </div>
     </div>
 
-    <div class="py-8 pl-10 bg-secondary-dark flex justify-between">
-        <div class="w-[75rem]">
+    <div class="py-8 pl-10 motion-reduce:pr-10 bg-secondary-dark flex justify-between">
+        <div class="min-w-[50rem]">
             <h2>{@html $_("projects.partner.heading")}</h2>
             <p class="mt-3">{@html $_("projects.partner.desc")}</p>
         </div>
-        <div class="flex" style="mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);">
+        <div class="flex" style="{!$reducedMotion ? "mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);" : ""}">
             <div
-                class="flex items-center gap-6 motion-safe:animate-marquee hover:animate-pause motion-reduce:overflow-x-scroll"
-                style="--scroll-amount: -{11.5*partneredModpacks.length}rem; --scroll-time: {.5 * (partnerQueueLen ?? 0)}s"
+                class="flex items-center gap-6 motion-safe:animate-marquee hover:animate-pause motion-reduce:overflow-x-auto"
+                style="--scroll-amount: -{11.5 * ((partnerQueueLen ?? 0) - 6)}rem; --scroll-time: {4.5 * ((partnerQueueLen ?? 0) - 6)}s;"
                 bind:this={partnerModpacks}
                 on:wheel={e => {
                     if (!$reducedMotion || partnerModpacks==null) return
@@ -236,9 +236,10 @@
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
                 <div
-                    class="h-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md [&_img]:duration-200"
+                    class="h-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md motion-safe:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
                     on:mouseover={() => {spinAnimHovered=true; stopAllBarrelRolls()}} on:mouseleave={() => {spinAnimHovered=false; if (contextMenuAboutToBeClosed) doAllBarrelRolls()}}
                     use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {
+                        if ($reducedMotion) return
                         let duration = 600
 
                         rotOffsets.forEach(l => {l.anim.set(1, {duration: duration})})
@@ -265,20 +266,20 @@
                                 })
                             }}
                         >
-                            <img id="mod" src="{mod?.icon_url}" alt="" class="shadow-black motion-safe:hover:!scale-[1.15]{$contextMenuOpenedBy==i ? " motion-safe:!scale-[1.15] motion-safe:shadow-2xl" : ""}">
+                            <img id="mod" src="{mod?.icon_url}" alt="" class="shadow-black{$contextMenuOpenedBy==i ? " motion-safe:!scale-[1.15] motion-safe:shadow-2xl" : ""}">
                         </span>
                     {/each}
                 </div>
             </div>
             <div class="group z-10">
                 <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 h-48 rendering-pixelated rounded-md motion-safe:group-hover:!scale-100 duration-100" style="transform: scale({$reducedMotion ? 100 : $HMLogoAnim}%);">
-                <div class="mt-5 flex justify-center gap-5 [&>a]:block [&>a]:w-10 [&>a]:motion-safe:duration-200 [&_img]:brightness-0 [&_img]:invert">
+                <div class="mt-5 flex justify-center gap-5 [&>a]:block [&>a]:w-10 [&>a]:motion-safe:duration-200 motion-safe:[&>a:hover]:!scale-[1.15] motion-safe:[&>a:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0 [&_img]:invert">
                     {#each [
                         {link: "https://curseforge.com/members/hellishmods", title: "CurseForge", anim: $CFHMLogoAnim},
                         {link: consts.SOCIALS.modrinth.url, title: "Modrinth", anim: $MRHMLogoAnim},
                         {link: "https://github.com/Hellish-Mods", title: "GitHub", anim: $GHHMLogoAnim}
                     ] as social}
-                        <a href="{social.link}" target="_blank" rel="noopener noreferrer" class="motion-safe:hover:!scale-[1.15] motion-safe:[&:not(:hover)]:group-hover:!scale-100" style="transform: scale({$reducedMotion ? 100 : social.anim}%);">
+                        <a href="{social.link}" target="_blank" rel="noopener noreferrer" style="transform: scale({$reducedMotion ? 100 : social.anim}%);">
                             <img src="{icons[social.title.toLowerCase()]}" alt="logo icon {social.title.toLowerCase()}" title="{social.title}">
                         </a>
                     {/each}

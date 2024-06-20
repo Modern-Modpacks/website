@@ -39,7 +39,7 @@ const consts = {
 
     SOCIALS: { // Links to various socials of MM
         curseforge: {
-            url: "https://www.curseforge.com/members/modernmodpacks",
+            url: "https://curseforge.com/members/modernmodpacks",
             title: "CurseForge",
             header: true
         },

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Coordinates, Mod } from "$lib/scripts/interfaces";
-    import { contextMenuOpenedBy } from "$lib/scripts/stores"
+    import { contextMenuOpenedBy, reducedMotion } from "$lib/scripts/stores"
     import { targetToHTML } from "$lib/scripts/utils";
     import { onMount } from "svelte";
     import Portal from "svelte-portal";
@@ -53,10 +53,21 @@
 <div bind:this={element} class="pointer-events-none">
     <div bind:this={bg} class="opacity-0 motion-safe:duration-200 backdrop-blur-xl w-full h-full absolute z-20" />
     <Portal target="body">
-        <div bind:this={contextmenu} id="contextmenu" class="absolute top-0 z-50 grid grid-rows-[0fr]" style="transform: translate({coords?.x}px, {coords?.y}px); transition: grid-template-rows 200ms;">
+        <div bind:this={contextmenu} id="contextmenu" class="absolute top-0 z-50 grid grid-rows-[0fr] shadow-black shadow-xl rounded-xl" style="transform: translate({coords?.x}px, {coords?.y}px);{!$reducedMotion ? " transition: grid-template-rows 200ms;" : ""}">
             <div class="overflow-hidden">
-                <div class="bg-black w-fit">
-                    <a href="{mod?.link_urls.source.url}">{mod?.name}</a>
+                <div class="bg-header-dark backdrop-blur-lg p-2 rounded-xl w-fit [&>hr]:opacity-50 [&>a]:text-lg [&>a]:font-semibold [&>a]:duration-150 motion-safe:[&>a:hover]:text-xl">
+                    <b class="text-2xl">{mod?.name}</b>
+                    <p class="text-lg w-[20ch] my-2">{mod?.summary}</p>
+
+                    {#each [
+                        {name: "CurseForge", link: "https://curseforge.com/minecraft/mc-mods/"+mod?.slug},
+                        {name: "CurseRinth", link: "https://curserinth-tizu.vercel.app/mod/mod__"+mod?.slug},
+                        {name: "Modrinth", link: "https://modrinth.com/mod/"+mod?.slug},
+                        {name: "GitHub", link: mod?.link_urls.source.url}
+                    ] as url}
+                        <a href="{url.link}" target="_blank" rel="noopener noreferrer" >Open on {url.name}</a>
+                        {#if url.name.toLowerCase()!="github"}<hr />{/if}
+                    {/each}
                 </div>
             </div>
         </div>

@@ -49,7 +49,7 @@
 
 {#if discovered}
     <div class="w-0 h-0 absolute" style="mask-image: url(https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/{path+"_"+modpack.abbr}.png);"/>
-    <ModpackPopup bind:toggle={popupToggle} modpack={modpack} icon={`https://raw.githubusercontent.com/Modern-Modpacks/assets/main/Icons/1024px/${modpack.abbr}.png`} color={"mm-"+consts.COLORS[index]} />
+    <ModpackPopup bind:toggle={popupToggle} modpack={modpack} icon={`https://raw.githubusercontent.com/Modern-Modpacks/assets/main/Icons/1024px/${modpack.abbr}.png`} color={"mm-"+consts.COLORS[index]} partner={false} />
 {/if}
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->

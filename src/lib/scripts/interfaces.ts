@@ -34,7 +34,9 @@ export interface Modpack { // Used for modpacks in modpacks.json5
 }
 export interface Mod { // Used for mods gotten from modrinth api
     slug: string
+
     name: string
+    summary: string
 
     icon_url: string
     link_urls: {

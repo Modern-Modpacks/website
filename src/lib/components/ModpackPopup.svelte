@@ -6,10 +6,12 @@
     import { onMount } from "svelte"
     import { _ } from "svelte-i18n"
     import Portal from "svelte-portal"
+    import PartnerModpack from "./PartnerModpack.svelte";
     
     export let modpack : Modpack
     export let icon : string
     export let color : string
+    export let partner : boolean
 
     // Activates the popup which is hidden by default
     export const toggle = () => {
@@ -95,9 +97,16 @@
                         {/if}
 
                         {#if !modpack.links}
-                            <div class="flex items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
-                                <b class="text-lg">{$_("ui.wip")}</b>
-                            </div>
+                            {#if partner}
+                                <div class="flex items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
+                                    <b class="text-lg">{$_("ui.wip")}</b>
+                                </div>
+                            {:else}
+                                <a href="{consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 hover:scale-105 duration-200" title="{$_("ui.wipbigmm")}">
+                                    <img src="{consts.WEBSITE_ICONS.discord}" alt="logo" class="brightness-0 invert w-[36px]">
+                                    <b class="text-lg">{$_("ui.wip")}</b>
+                                </a>
+                            {/if}
                         {/if}
                     </div>
                 </div>

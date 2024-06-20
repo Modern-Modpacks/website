@@ -29,11 +29,11 @@ Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "after
 export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
   safelist: [
-    "hover:font-bold", "hover:font-semibold", "hover:opacity-0",
+    "hover:font-bold", "hover:font-semibold",
     "bg-white", "border-white",
     "bg-text-dark", "text-selected-text-dark", "motion-safe:shadow-2xl",
-    "motion-safe:hover:!scale-110", "motion-safe:hover:!scale-[1.15]", "motion-safe:!scale-[1.15]", "motion-safe:hover:!scale-100", "motion-safe:[&:not(:hover)]:group-hover:!scale-100",
-    "cursor-pointer", "cursor-not-allowed",
+    "motion-safe:!scale-[1.15]", "hover:opacity-0",
+    "cursor-pointer", "cursor-not-allowed", "cursor-help",
     "scale-100", "scale-75",
 
     ...mmSafelist
