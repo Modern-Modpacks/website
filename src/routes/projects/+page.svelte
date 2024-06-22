@@ -204,7 +204,7 @@
             <div class="
                 absolute w-full h-full flex flex-col justify-evenly
                 [&>span]:flex [&>span]:gap-8
-                [&_a]:block [&_a]:h-20 [&_a]:min-w-96 [&_a]:bg-primary-dark [&_a]:rounded-xl
+                [&_a]:h-20 [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:bg-primary-dark [&_a]:rounded-xl [&_a]:font-bold [&_a]:text-2xl
                 [&_a]:duration-200 [&_a:hover]:scale-110
             ">
                 {#each [...Array(3).keys()] as row}
@@ -219,7 +219,7 @@
                 {/each}
             </div>
         {/if}
-        <div class="h-full w-full rounded-full px-16 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)]">
+        <div class="h-full w-full px-16 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center bg-[radial-gradient(circle,_#0c0c0c_10%,_transparent_65%)]">
             <h2>{$_("projects.ecosystem.heading")}</h2>
             <p>{@html $_("projects.ecosystem.desc")}</p>
         </div>
