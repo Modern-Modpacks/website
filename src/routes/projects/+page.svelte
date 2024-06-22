@@ -7,7 +7,7 @@
     import { randomChoice } from "$lib/scripts/utils"
     import { _, json } from "svelte-i18n"
     import Modpack from "$lib/components/Modpack.svelte"
-    import { type Modpack as MPack, type Mod, type Project, type TweenedBreatheAnim } from "$lib/scripts/interfaces"
+    import { type Modpack as MPack, type Mod, type Project } from "$lib/scripts/interfaces"
     import { writable, type Writable } from "svelte/store"
     import modpacks from "$lib/json/modpacks.json5"
     import partneredModpacks from "$lib/json/partner_modpacks.json5"
