@@ -44,8 +44,8 @@
 <Portal target="body">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="{shown ? "opacity-100" : "invisible pointer-events-none opacity-0"} h-[100vh] w-[100vw] fixed top-0 left-0 flex items-center justify-center duration-500 bg-black bg-opacity-50 z-40" on:click={toggle}>
-        <div class="bg-primary-dark shadow-black shadow-2xl rounded-xl h-[800px] w-[850px] duration-500 {shown ? "scale-100" : "scale-75"}" on:click={e => {e.stopPropagation()}}>
+    <div class="{shown ? "opacity-100" : "invisible pointer-events-none opacity-0"} h-[100vh] w-[100vw] fixed top-0 left-0 flex items-center justify-center motion-safe:duration-500 motion-safe:bg-black motion-safe:bg-opacity-50 z-40" on:click={toggle}>
+        <div class="bg-primary-dark shadow-black shadow-2xl rounded-xl h-[800px] w-[850px] motion-safe:duration-500 {shown ? "scale-100" : "scale-75"}" on:click={e => {e.stopPropagation()}}>
             <button class="absolute right-5 top-5 motion-safe:hover:rotate-180 duration-[350ms] ease-out cursor-pointer bg-black bg-opacity-30 rounded-full p-1" on:click={toggle}>
                 <X size="32" />
             </button>
@@ -64,7 +64,7 @@
                         <b class="text-xl mb-2">{$_("ui.tagstitle")}</b>
                         <div class="flex flex-wrap gap-2 justify-end">
                             {#each modpack.tags ?? [] as tag}
-                                <p class="w-auto text-base cursor-default bg-{color} bg-opacity-30 border-{color} border-2 rounded-xl px-2.5 py-0.5 hover:scale-110 duration-150">{$_("ui.tags."+tag)}</p>
+                                <p class="w-auto text-base cursor-default bg-{color} bg-opacity-30 border-{color} border-2 rounded-xl px-2.5 py-0.5 motion-safe:hover:scale-110 duration-150">{$_("ui.tags."+tag)}</p>
                             {/each}
                         </div>
                         
@@ -79,7 +79,7 @@
 
                     <div class="w-full">
                         {#if modpack.links?.download}
-                            <a href="{modpack.links.download}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-4 bg-text-dark rounded-lg p-4 hover:scale-110 duration-200">
+                            <a href="{modpack.links.download}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-4 bg-text-dark rounded-lg p-4 motion-safe:hover:scale-110 duration-200">
                                 {#if downloadIcon!=null}<img src="{downloadIcon}" alt="logo" class="brightness-0 w-[36px]">
                                 {:else}<Globe color="#000000" size="30" />{/if}
 
@@ -88,7 +88,7 @@
                         {/if}
 
                         {#if modpack.links?.source}
-                            <a href="{modpack.links.source}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 mt-4 hover:scale-110 duration-200">
+                            <a href="{modpack.links.source}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 mt-4 motion-safe:hover:scale-110 duration-200">
                                 {#if sourceIcon!=null}<img src="{sourceIcon}" alt="logo" class="brightness-0 invert w-[36px]">
                                 {:else}<Globe color="#000000" size="30" />{/if}
 
@@ -98,11 +98,11 @@
 
                         {#if !modpack.links}
                             {#if partner}
-                                <div class="flex items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
+                                <div class="flex items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
                                     <b class="text-lg">{$_("ui.wip")}</b>
                                 </div>
                             {:else}
-                                <a href="{consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 hover:scale-105 duration-200" title="{$_("ui.wipbigmm")}">
+                                <a href="{consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:scale-105 duration-200" title="{$_("ui.wipbigmm")}">
                                     <img src="{consts.WEBSITE_ICONS.discord}" alt="logo" class="brightness-0 invert w-[36px]">
                                     <b class="text-lg">{$_("ui.wip")}</b>
                                 </a>

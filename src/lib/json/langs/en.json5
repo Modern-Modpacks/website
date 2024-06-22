@@ -64,6 +64,8 @@
             "recommended": "Recommended"
         },
 
+        "openon": "Open on",
+
         "wip": "WIP!",
         "wipbig": "Work in progress!",
         "wipbigmm": "Work in progress! Click to join our discord, where we post development updates about the pack!"
@@ -107,9 +109,13 @@
                 <b>Since our main goal</b> is still to make modpacks, usually we don't make big content mods unless we decide we want/have to, and just <b>make small projects</b> to complement the modpack we are currently working on by adding features we cannot implement through other means.\n\n\
                 <b>Our utility mods</b>, while still being made out of the necessity for projects that haven't been made yet, are <b>never made to be hyper-specific</b>, which makes them useful for other modpack authors or individual players as well.\n\n\
                 <b>Forks of other open-source mods</b> are also usually made by us for the same reasons and with the same intentions. <b>When we fork a project,</b> we don't just add things specifically we need, we also add other features highly requested by the community.\n\n\
-                <b>Ports</b> help us keep our prefered version alive, by modernizing abandoned mods made for versions such as <b>1.12.2/1.7.10</b>; and backporting mods from newer versions such as <b>1.18.2/1.20</b>.\n\n\
+                <b>Ports help us</b> keep our prefered version alive, by modernizing abandoned mods made for versions such as <b>1.12.2/1.7.10</b>; and backporting mods from newer versions such as <b>1.18.2/1.20</b>.\n\n\
                 <b>Our mods are at their best</b> when used in our modpacks, so if you as a player want to try out what's included in them, we recommend you download one of the <b>packs in the section above!</b>\
             "
+        },
+        "ecosystem": {
+            "heading": "Welcome to our ecosystem",
+            "desc": "<b>And it doesn't even end at mods either!</b> We have a lot of projects that can't be classified as mods or modpacks. Among them are useful development utilities, fun websites, discord bots, and even <b>modloaders!</b> Click on any of the scrolling cards to get sent to the respective project's info page."
         }
     }
 }

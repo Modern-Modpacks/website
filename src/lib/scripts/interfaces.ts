@@ -43,6 +43,11 @@ export interface Mod { // Used for mods gotten from modrinth api
         source: {url: string}
     }
 }
+export interface Project { // Used for side projects in projects.json5
+    name: string
+    icon: string
+    link: string
+}
 export interface PartnerModpack extends Modpack { // Used for partnered packs, since they don't have an icon by default
     icon?: string
 }

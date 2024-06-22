@@ -7,22 +7,26 @@
     import { randomChoice, targetToHTML } from "$lib/scripts/utils"
     import { _, json } from "svelte-i18n"
     import Modpack from "$lib/components/Modpack.svelte"
-    import { type Modpack as MPack, type Mod, type TweenedBreatheAnim } from "$lib/scripts/interfaces"
+    import { type Modpack as MPack, type Mod, type Project, type TweenedBreatheAnim } from "$lib/scripts/interfaces"
     import { tweened, type Tweened } from "svelte/motion"
-    import { get } from "svelte/store"
+    import { get, writable, type Writable } from "svelte/store"
     import { sineOut } from "svelte/easing"
     import modpacks from "$lib/json/modpacks.json5"
     import partneredModpacks from "$lib/json/partner_modpacks.json5"
+    import projs from "$lib/json/projects.json5"
     import PartnerModpack from "$lib/components/PartnerModpack.svelte"
     import SocialBar from "$lib/components/SocialBar.svelte"
     import ModContextMenu from "$lib/components/ModContextMenu.svelte"
     import { inview } from "svelte-inview";
+    import Marquee from "$lib/components/Marquee.svelte";
+    import ModIcon from "$lib/components/ModIcon.svelte";
+    import BreathingIcon from "$lib/components/BreathingIcon.svelte";
 
     // This function gets triggered on first page load, does the little appearance animation (if allowed of course)
     let removeOpacity = (children : HTMLCollection | undefined, withAnimation : boolean) => {
         for (let child of children!) {
             removeOpacity(child.children, withAnimation)
-            if (!withAnimation && child.id!="social") child.classList?.add("!duration-0", "!delay-0")
+            if (!withAnimation && child.id!="animinheader") child.classList?.add("!duration-0", "!delay-0")
             child.classList?.remove("opacity-0", "translate-y-10")
         }
     }
@@ -30,9 +34,10 @@
     // Scroll a page down if navigating from another page, hiding the header
     $: if ($navigating?.to?.url==$page.url) setTimeout(() => scrollTo(0, innerHeight), 1)
 
-    // Mods and modpacks, chewed for typescript's enjoyment
+    // Modpacks, mods, and projects; chewed for typescript's enjoyment
     let packs : MPack[] = modpacks
     let mods : Mod[] | null
+    let projects : Project[] = projs
 
     let banner : string | null // The banner's background
     let generateBanner = (pool : string[]) => { // A function to randomly generate said background
@@ -46,79 +51,19 @@
     })
     generateBanner(possibleBanners)
 
-    // The breathe animations for modpacks, the hellish mods logo, and the social buttons below said logo
-    // This would be replaced with css if browsers sucked less
-    let animations : TweenedBreatheAnim[] = [...Array(16).keys()].map(i => {return {scale: tweened(100, {duration: 2000, delay: (Math.floor(i / 4) + i % 4) * 500, easing: sineOut}), scaleup: false, maxScale: 100, minScale: 90}})
-    let HMIconAnims : TweenedBreatheAnim[] = []
-    for (let i = 0; i < 3; i++) HMIconAnims.push({scale: tweened(100, {duration: 2000, delay: 500*i}), scaleup: false, maxScale: 100, minScale: 80})
-    animations = [...animations, {scale: tweened(100, {duration: 2000}), scaleup: false, maxScale: 100, minScale: 95}, ...HMIconAnims]
-
     let modpacksHovered : boolean = false // Weather or not the left of the modpack section is hovered, activates the following mouse effect
+    let shouldModsAnimPlay : Writable<boolean> = writable<boolean>(false) // Weather or not the spin animation for the mods section should play
+
+    // Stuff needed for the mods anim
+    const layerFirst = 8 // How many items are on the first circle layer
+    const layerAdd = 2 // How many items to add per circle layer
+    const layerCount = 2 // How many layers are visible
+
+    let contextMenuAboutToBeClosed : boolean = true
+    let spinAnimHovered : boolean = false
 
     let partnerQueueLen : number | null // The length of the partnered modpacks section
-    let partnerModpacks : HTMLElement | null // The partnered modpacks chain element, used to determine the length needed to be scrolled
     let modContextMenu : ModContextMenu | null // The context menu element covering the left half of the HM section
-
-    // Blame svelte not me
-    // "Stores must be declared at the top level of the component" my ass
-    let HMLogoAnim : Tweened<number>
-    $: HMLogoAnim = animations[16].scale
-    let CFHMLogoAnim : Tweened<number>
-    $: CFHMLogoAnim = animations[17].scale
-    let MRHMLogoAnim : Tweened<number>
-    $: MRHMLogoAnim = animations[18].scale
-    let GHHMLogoAnim : Tweened<number>
-    $: GHHMLogoAnim = animations[19].scale
-
-    // Constants used for the spin animation in the HM section
-    const defaultRotDuration : number = 5000 // Default rotation duration
-    const rotDurationAdd : number = 3000 // How many ms is added per layer
-    const layerCount : number = 2 // How many layers are shown
-    let spinAnimHovered : boolean = false // Weather the spin animation is hovered upon
-    let contextMenuAboutToBeClosed : boolean = true // Weather to allow playing the spin anim based on the context menu being opened
-
-    // Instantiate the tweened's for all mod elements
-    let rotOffsets : {anim: Tweened<number>, duration : number, interval: number | null}[] = []
-    let rotOffsetNumbers : number[] = Array.from({length: rotOffsets.length}, () => 0) // Dear god svelte, kids are watching
-    for (let i = 0; i < layerCount; i++) {
-        let rotDuration : number = defaultRotDuration + (rotDurationAdd * i)
-        rotOffsets.push({anim: tweened(0, {duration: rotDuration}), duration: rotDuration, interval: null})
-
-        rotOffsets[i].anim.subscribe(v => {
-            rotOffsetNumbers[i] = v
-        })
-    }
-
-    // You spin me right round
-    // Baby right round
-    // Like a record baby
-    // Round round, round round
-    let barrelRolling : boolean = false // Weather the spin animation is playing
-    let doABarrelRoll = (layer: number) => {rotOffsets[layer].anim.set((get(rotOffsets[layer].anim) + 1))} // Spin a layer of the animation, whee
-    let doAllBarrelRolls = () => { // Set spin intervals for all layers
-        if ($reducedMotion || barrelRolling) return
-        barrelRolling = true
-
-        for (let i = 0; i < rotOffsets.length; i++) {
-            let rotOffset = rotOffsets[i]
-
-            doABarrelRoll(i)
-            rotOffset.interval = setInterval(() => doABarrelRoll(i), rotOffset.duration)
-        }
-    }
-    let stopAllBarrelRolls = () => { // Suspend spin intervals for all layers
-        if ($reducedMotion || !barrelRolling) return
-        barrelRolling = false
-
-        rotOffsets.forEach(off => {
-            clearInterval(off.interval!)
-            off.anim.set(get(off.anim)+.03, {duration: 500, easing: sineOut})
-        })
-    }
-    let getLayer = (layerNum: number, layerMax: number, layerAdd : number, i: number): number => { // Get a layer based on super complex math :5head:
-        if (i<layerMax) return layerNum
-        return getLayer(layerNum + 1, layerMax + layerAdd, layerAdd, i - layerMax) // Each layer is `layerAdd` elements more than the last one, usually this is set to 2
-    }
 
     onMount(() => {
         let nav = $navigating // idk
@@ -166,14 +111,6 @@
                 bg!.style.backgroundPositionY = `${Math.max($scrollY*.5-10, 0)}px`
             })
         }, 1)
-
-        // Update breathing animations
-        animations.forEach(anim => {
-            setInterval(() => {
-                anim.scale.set(anim.scaleup ? anim.maxScale : anim.minScale)
-                anim.scaleup = !anim.scaleup
-            }, 2000)
-        })
     })
 </script>
 
@@ -197,7 +134,7 @@
             on:mouseenter={() => {modpacksHovered = true}} on:mouseleave={() => {modpacksHovered = false}}
         >
             {#each [...Array(16).keys()] as i}
-                <Modpack index={i} scale={$reducedMotion ? null : animations[i].scale} bind:parentHover={modpacksHovered} />
+                <Modpack index={i} bind:parentHover={modpacksHovered} />
             {/each}
         </div>
         <div class="flex flex-col gap-5 items-center w-[50%]">
@@ -211,22 +148,15 @@
             <h2>{@html $_("projects.partner.heading")}</h2>
             <p class="mt-3">{@html $_("projects.partner.desc")}</p>
         </div>
-        <div class="flex" style="{!$reducedMotion ? "mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);" : ""}">
-            <div
-                class="flex items-center gap-6 motion-safe:animate-marquee hover:animate-pause motion-reduce:overflow-x-auto"
-                style="--scroll-amount: -{11.5 * ((partnerQueueLen ?? 0) - 6)}rem; --scroll-time: {4.5 * ((partnerQueueLen ?? 0) - 6)}s;"
-                bind:this={partnerModpacks}
-                on:wheel={e => {
-                    if (!$reducedMotion || partnerModpacks==null) return
-                    e.preventDefault()
-
-                    partnerModpacks.scrollLeft += e.deltaY
-                }}
-            >
+        <div
+            class="flex [&>span]:flex [&>span]:items-center [&>span]:gap-6" 
+            style="{!$reducedMotion ? "mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);" : ""}"
+        >
+            <Marquee baseAnimDur={2500 * ((partnerQueueLen ?? 0) - 6)} animMin={0} animMax={11.5 * ((partnerQueueLen ?? 0) - 6)} stopDur={600}>
                 {#each [...Array(partnerQueueLen).keys()] as i}
                     <PartnerModpack modpack={partneredModpacks[i % partneredModpacks.length]} />
                 {/each}
-            </div>
+            </Marquee>
         </div>
     </div>
 
@@ -237,58 +167,63 @@
                 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
                 <div
                     class="h-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md motion-safe:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
-                    on:mouseover={() => {spinAnimHovered=true; stopAllBarrelRolls()}} on:mouseleave={() => {spinAnimHovered=false; if (contextMenuAboutToBeClosed) doAllBarrelRolls()}}
-                    use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {
-                        if ($reducedMotion) return
-                        let duration = 600
-
-                        rotOffsets.forEach(l => {l.anim.set(1, {duration: duration})})
-                        setTimeout(doAllBarrelRolls, duration)
-                    }}
+                    on:mouseover={() => {spinAnimHovered = true; $shouldModsAnimPlay = false}} on:mouseleave={() => {spinAnimHovered = false; if (contextMenuAboutToBeClosed) $shouldModsAnimPlay = true}}
+                    use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {$shouldModsAnimPlay = true}}
                 >
-                    <ModContextMenu bind:this={modContextMenu} bind:aboutToClose={contextMenuAboutToBeClosed} bind:spinAnimHovered={spinAnimHovered} doAllBarrelRolls={doAllBarrelRolls} />
-                    {#each [...Array((8 * layerCount) + (2 * (layerCount - 1))).keys()] as i}
-                        {@const layerFirst = 8}
-                        {@const layerAdd = 2}
-                        {@const layer = getLayer(0, layerFirst, layerAdd, i)}
-                        {@const itemsInLayer = layerFirst + (layerAdd * layer)}
-                        {@const rotAmount = (360 / itemsInLayer) * (i + rotOffsetNumbers[layer]) * (layer % 2 ? 1 : -1)}
-                        {@const radius = 250 + ((layer+1) ** 7)}
-                        {@const mod = mods ? mods[i % mods?.length] : null}
-
-                        <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <span
-                            style="transform: scale({100 + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==i)}"
-                            title="{mod?.name}" on:click={e => {
-                                modContextMenu?.toggle(i, mod, {
-                                    x: e.clientX + 10,
-                                    y: e.clientY + $scrollY + 10
-                                })
-                            }}
-                        >
-                            <img id="mod" src="{mod?.icon_url}" alt="" class="shadow-black{$contextMenuOpenedBy==i ? " motion-safe:!scale-[1.15] motion-safe:shadow-2xl" : ""}">
-                        </span>
+                    <ModContextMenu bind:this={modContextMenu} bind:aboutToClose={contextMenuAboutToBeClosed} bind:spinAnimHovered={spinAnimHovered} bind:shouldSpinAnimPlay={shouldModsAnimPlay} />
+                    {#each [...Array((layerFirst * layerCount) + (layerAdd * (layerCount - 1))).keys()] as i}
+                        <ModIcon modNumber={i} layerFirst={layerFirst} layerAdd={layerAdd} modContextMenu={modContextMenu} mods={mods} bind:shouldAnimPlay={shouldModsAnimPlay} />
                     {/each}
                 </div>
             </div>
             <div class="group z-10">
-                <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 h-48 rendering-pixelated rounded-md motion-safe:group-hover:!scale-100 duration-100" style="transform: scale({$reducedMotion ? 100 : $HMLogoAnim}%);">
-                <div class="mt-5 flex justify-center gap-5 [&>a]:block [&>a]:w-10 [&>a]:motion-safe:duration-200 motion-safe:[&>a:hover]:!scale-[1.15] motion-safe:[&>a:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0 [&_img]:invert">
-                    {#each [
-                        {link: "https://curseforge.com/members/hellishmods", title: "CurseForge", anim: $CFHMLogoAnim},
-                        {link: consts.SOCIALS.modrinth.url, title: "Modrinth", anim: $MRHMLogoAnim},
-                        {link: "https://github.com/Hellish-Mods", title: "GitHub", anim: $GHHMLogoAnim}
-                    ] as social}
-                        <a href="{social.link}" target="_blank" rel="noopener noreferrer" style="transform: scale({$reducedMotion ? 100 : social.anim}%);">
-                            <img src="{icons[social.title.toLowerCase()]}" alt="logo icon {social.title.toLowerCase()}" title="{social.title}">
-                        </a>
+                <BreathingIcon duration={2000} minScale={95} maxScale={100} class="duration-100 motion-safe:group-hover:!scale-100">
+                    <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 h-48 rendering-pixelated rounded-md">
+                </BreathingIcon>
+                <div class="mt-5 flex justify-center gap-5 [&>span]:block [&>span]:w-10 [&>span]:duration-200 motion-safe:[&>span:hover]:!scale-[1.15] motion-safe:[&>span:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0 [&_img]:invert">
+                    {#each Object.entries([
+                        {link: "https://curseforge.com/members/hellishmods", title: "CurseForge"},
+                        {link: consts.SOCIALS.modrinth.url, title: "Modrinth"},
+                        {link: "https://github.com/Hellish-Mods", title: "GitHub"}
+                    ]) as [i, social]}
+                        <BreathingIcon duration={2000} minScale={80} maxScale={100} delay={500 * +i}>
+                            <a href="{social.link}" target="_blank" rel="noopener noreferrer">
+                                <img src="{icons[social.title.toLowerCase()]}" alt="logo icon {social.title.toLowerCase()}" title="{social.title}">
+                            </a>
+                        </BreathingIcon>
                     {/each}
                 </div>
             </div>
         </div>
-        <div class="py-8 z-30 flex flex-col gap-5 items-center w-[50%] pointer-events-none bg-gradient-to-l from-primary-dark from-90%">
-            <h2 class="pointer-events-auto">{$_("projects.hellish.heading")}</h2>
-            <p class="pointer-events-auto">{@html $_("projects.hellish.desc")}</p>
+        <div class="py-8 z-30 flex flex-col gap-5 items-center w-[50%] pointer-events-none [&>*]:pointer-events-auto bg-gradient-to-l from-primary-dark from-90%">
+            <h2>{$_("projects.hellish.heading")}</h2>
+            <p>{@html $_("projects.hellish.desc")}</p>
+        </div>
+    </div>
+
+    <div class="h-[65vh] bg-secondary-dark relative flex justify-center items-center [&>*]:text-center">
+        {#if !$reducedMotion}
+            <div class="
+                absolute w-full h-full flex flex-col justify-evenly
+                [&>span]:flex [&>span]:gap-8
+                [&_a]:block [&_a]:h-20 [&_a]:min-w-96 [&_a]:bg-primary-dark [&_a]:rounded-xl
+                [&_a]:duration-200 [&_a:hover]:scale-110
+            ">
+                {#each [...Array(3).keys()] as row}
+                    <Marquee backwards={!!(row%2)} baseAnimDur={projects.length * 3500} animMin={0} animMax={26 * projects.length} stopDur={500}>
+                        {#each [...Array(projects.length * 2).keys()] as i}
+                        {@const project = projects[i % projects.length]}
+                            <a href="{project.link}" target="_blank" rel="noopener noreferrer">
+                                {project.name} {project.icon}
+                            </a>
+                        {/each}
+                    </Marquee>
+                {/each}
+            </div>
+        {/if}
+        <div class="h-full w-full rounded-full px-16 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)]">
+            <h2>{$_("projects.ecosystem.heading")}</h2>
+            <p>{@html $_("projects.ecosystem.desc")}</p>
         </div>
     </div>
 </main>

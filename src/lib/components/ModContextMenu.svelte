@@ -3,11 +3,13 @@
     import { contextMenuOpenedBy, reducedMotion } from "$lib/scripts/stores"
     import { targetToHTML } from "$lib/scripts/utils";
     import { onMount } from "svelte";
+    import { _ } from "svelte-i18n";
     import Portal from "svelte-portal";
+    import type { Writable } from "svelte/store";
 
     export let aboutToClose : boolean = true // Set before $contextMenuOpenedBy is unset, required by the parent to determine if it's time to continue the spin anim
     export let spinAnimHovered : boolean = false // Weather the parent is hovered, if not and the context menu is escaped, continue the animation
-    export let doAllBarrelRolls : () => void // Spin all layers function passed by the parent
+    export let shouldSpinAnimPlay : Writable<boolean>
 
     let element : HTMLElement | null // The main div
     let bg : HTMLElement | null // The blur background
@@ -27,7 +29,7 @@
         }
         else {
             setTimeout(() => {if (aboutToClose) $contextMenuOpenedBy = null}, 200)
-            if (!spinAnimHovered) doAllBarrelRolls()
+            if (!spinAnimHovered) $shouldSpinAnimPlay = true
         }
 
         element?.classList?.toggle("pointer-events-none")
@@ -65,7 +67,7 @@
                         {name: "Modrinth", link: "https://modrinth.com/mod/"+mod?.slug},
                         {name: "GitHub", link: mod?.link_urls.source.url}
                     ] as url}
-                        <a href="{url.link}" target="_blank" rel="noopener noreferrer" >Open on {url.name}</a>
+                        <a href="{url.link}" target="_blank" rel="noopener noreferrer" >{$_("ui.openon")} {url.name}</a>
                         {#if url.name.toLowerCase()!="github"}<hr />{/if}
                     {/each}
                 </div>

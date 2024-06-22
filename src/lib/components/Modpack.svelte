@@ -7,9 +7,9 @@
     import { type Tweened } from "svelte/motion"
     import ModpackPopup from "./ModpackPopup.svelte"
     import { _ } from "svelte-i18n"
+    import BreathingIcon from "./BreathingIcon.svelte";
 
     export let index : number
-    export let scale : Tweened<number> | null = null // Animation shenanigans
     export let parentHover : boolean
 
     let element : HTMLElement
@@ -22,7 +22,7 @@
     let path : string
     $: path = `${('0'+(index+1)).slice(-2)}${consts.COLORS[index]}` // The pointer to the pack's icon on the github asset repo (https://github.com/Modern-Modpacks/assets)
 
-    // More animation shenanigans, this one for the mouse follow anim
+    // Mouse follow animation shenanigans
     let transformX : number
     $: transformX = ($mousePos.x - (element?.getBoundingClientRect().left + (element?.getBoundingClientRect().width / 2))) * mouseMoveMul * +(parentHover && !$popupOpened)
     let transformY : number
@@ -56,15 +56,15 @@
 <Saos animation={$reducedMotion ? "" : `appear .25s ${.1*(index%4)}s backwards`} once={true}>
     <div
         class="flex justify-center duration-200 aspect-square"
-        style="transform: translateX({transformX*+!$reducedMotion}px) translateY({transformY*+!$reducedMotion}px)"
+        style="transform: translateX({transformX*+!$reducedMotion}px) translateY({transformY*+!$reducedMotion}px);"
         title="{discovered ? $_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`) : ""}"
         on:mouseenter={() => {parentHover=false}} on:mouseleave={() => {parentHover=true}}
         on:click={popupToggle}
     >
-        <div
-            bind:this={element}
-            class="[&>img]:rounded-xl bg-cover relative motion-safe:duration-150 motion-safe:[&:not(:hover)]:group-hover:!scale-[90%] motion-safe:hover:!scale-{discovered ? 110 : 100} cursor-{discovered ? "pointer" : "not-allowed"} z-10 flex justify-center"
-            style="transform: scale({scale!=null ? $scale : 100}%);"
+        <BreathingIcon 
+            duration={2000} minScale={90} maxScale={100} delay={(Math.floor(index / 4) + index % 4) * 500}
+            class="w-full h-full [&>img]:rounded-xl bg-cover relative motion-safe:duration-150 motion-safe:[&:not(:hover)]:group-hover:!scale-[90%] motion-safe:hover:!scale-{discovered ? 110 : 100} cursor-{discovered ? "pointer" : "not-allowed"} z-10 flex justify-center"
+            bind:element={element}
         >
             <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/BG/{path}.png" alt="icon background">
             <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -86,6 +86,6 @@
             <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible motion-safe:peer-hover:translate-y-[4.7rem] motion-reduce:translate-y-[4.7rem] motion-safe:duration-150">
                 {modpack.name ?? ""}
             </h3>
-        </div>
+        </BreathingIcon>
     </div>
 </Saos>
