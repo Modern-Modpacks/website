@@ -6,7 +6,6 @@
     import { onMount } from "svelte"
     import { _ } from "svelte-i18n"
     import Portal from "svelte-portal"
-    import PartnerModpack from "./PartnerModpack.svelte";
     
     export let modpack : Modpack
     export let icon : string

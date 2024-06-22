@@ -4,7 +4,6 @@
     import { type Modpack } from "$lib/scripts/interfaces"
     import modpacks from "$lib/json/modpacks.json5"
     import { mousePos, popupOpened, reducedMotion, scrollY } from "$lib/scripts/stores"
-    import { type Tweened } from "svelte/motion"
     import ModpackPopup from "./ModpackPopup.svelte"
     import { _ } from "svelte-i18n"
     import BreathingIcon from "./BreathingIcon.svelte";

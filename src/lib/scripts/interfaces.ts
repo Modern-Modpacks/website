@@ -9,13 +9,6 @@ export interface Social { // Used for socials in consts.ts
     title: string
     header: boolean
 }
-export interface TweenedBreatheAnim { // Used for breathing animations around the website
-    scale: Tweened<number>
-    scaleup: boolean
-    
-    maxScale: number
-    minScale: number
-}
 export interface Modpack { // Used for modpacks in modpacks.json5
     name?: string
     abbr?: string

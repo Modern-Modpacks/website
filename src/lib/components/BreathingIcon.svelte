@@ -4,8 +4,8 @@
     import { tweened, type Tweened } from "svelte/motion";
 
     let cls : string = ""
-    export {cls as class}
-    export let element : HTMLElement | null = null
+    export {cls as class} // Class attribute support
+    export let element : HTMLElement | null = null // To be able to do bind:element instead of bind:this
 
     export let duration : number
     export let minScale : number
@@ -24,6 +24,7 @@
         setTimeout(() => {
             if ($reducedMotion || !play) return
 
+            // Play anim and start interval to play it continuously
             doCycle()
             setInterval(doCycle, duration)
         }, 1)

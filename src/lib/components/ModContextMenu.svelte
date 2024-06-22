@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { Coordinates, Mod } from "$lib/scripts/interfaces";
     import { contextMenuOpenedBy, reducedMotion } from "$lib/scripts/stores"
-    import { targetToHTML } from "$lib/scripts/utils";
     import { onMount } from "svelte";
     import { _ } from "svelte-i18n";
     import Portal from "svelte-portal";
@@ -42,7 +41,7 @@
     // Closing the context menu through various means
     onMount(() => {
         document.addEventListener("click", e => { // Clicking outside of it
-            if ($contextMenuOpenedBy!=null && !targetToHTML(e.target)?.matches("#contextmenu *, #mod")) toggle(null, null, null)
+            if ($contextMenuOpenedBy!=null && !(e.target! as HTMLElement).matches("#contextmenu *, #mod")) toggle(null, null, null)
         })
         document.addEventListener("keydown", e => { // Pressing esc
             if ($contextMenuOpenedBy!=null && e.key=="Escape") toggle(null, null, null)
