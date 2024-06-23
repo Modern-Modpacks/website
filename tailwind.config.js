@@ -49,6 +49,7 @@ export default {
       "primary-dark": "#1c1c1c",
       "secondary-dark": "#0c0c0c",
       "header-dark": "#33333388",
+      "footer-dark": "#070707",
       "text-dark": "#ffffff",
       "selected-text-dark": "#000000"
     },
