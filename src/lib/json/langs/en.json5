@@ -88,13 +88,13 @@
         }
     },
     "sideprojects": {
-        "website": "",
-        "kjspkg": "",
-        "kjspkglookup": "",
-        "missing": "",
-        "trdne": "",
-        "pissmc": "",
-        "awesome": ""
+        "website": "The very website you are on right now is open-source, check it out on GitHub!",
+        "kjspkg": "A simple package manager for KubeJS scripts written in Python",
+        "kjspkglookup": "A frontend for looking up KJSPKG packages within your browser",
+        "missing": "A per-server specialized private Discord bot with various features related to modded Minecraft",
+        "trdne": "A procedural generator that produces real-looking screenshots of fake Minecraft recipes",
+        "pissmc": "A parody modloader made for the oldest accessible version of Minecraft, rd-132211",
+        "awesome": "An curated awesome-esque list of useful utilities related to modpack development"
     },
 
     "projects": {

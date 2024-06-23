@@ -210,7 +210,7 @@
                 {#each [...Array(3).keys()] as row}
                     <Marquee backwards={!!(row%2)} baseAnimDur={projects.length * 3500} animMin={0} animMax={26 * projects.length} stopDur={500}>
                         {#each [...Array(projects.length * 2).keys()] as i}
-                        {@const project = projects[i % projects.length]}
+                        {@const project = projects[(i + (row * 2)) % projects.length]}
                             <a href="{project.link}" target="_blank" rel="noopener noreferrer" title="{$_("sideprojects."+project.id)}">
                                 {project.name} {project.icon}
                             </a>
