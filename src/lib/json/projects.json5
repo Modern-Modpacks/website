@@ -1,35 +1,49 @@
 [
     {
+        "id": "website",
+
         "name": "Website",
         "icon": "🌐",
         "link": "https://github.com/Modern-Modpacks/website"
     },
     {
+        "id": "kjspkg",
+
         "name": "KJSPKG",
         "icon": "📦",
         "link": "https://github.com/Modern-Modpacks/kjspkg"
     },
     {
+        "id": "kjspkglookup",
+
         "name": "KJSPKG Lookup",
         "icon": "🔎",
         "link": "https://kjspkglookup.modernmodpacks.site"
     },
     {
-        "name": "TRDNE",
+        "id": "missing",
+
+        "name": "MissingTexture",
+        "icon": "🤖",
+        "link": "https://github.com/Modern-Modpacks/MissingTexture"
+    },
+    {
+        "id": "trdne",
+
+        "name": "ThisRecipeDoesNotExist",
         "icon": "🔨",
         "link": "https://thisrecipedoesnotexist.modernmodpacks.site"
     },
     {
-        "name": "MissingTexture",
-        "icon": "🤖",
-        "link": "https://discord.modernmodpacks.site"
-    },
-    {
+        "id": "pissmc",
+
         "name": "PissMC",
         "icon": "💦",
         "link": "https://pissmc.modernmodpacks.site"
     },
     {
+        "id": "awesome",
+
         "name": "Awesome Packdev",
         "icon": "🕶️",
         "link": "https://awesome.modernmodpacks.site"

@@ -87,6 +87,15 @@
             Always remember the most important phrase: <b>Grow the Factory.</b>"
         }
     },
+    "sideprojects": {
+        "website": "",
+        "kjspkg": "",
+        "kjspkglookup": "",
+        "missing": "",
+        "trdne": "",
+        "pissmc": "",
+        "awesome": ""
+    },
 
     "projects": {
         "modpacks": {

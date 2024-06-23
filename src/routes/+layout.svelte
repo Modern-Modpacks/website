@@ -20,6 +20,7 @@
     for (let l of Object.keys(langs)) {
         let dictsWithNewlines : {[key: string]: string} = (flatten(langs[l]) as {[key: string]: string})
         Object.keys(dictsWithNewlines).forEach(k => {
+            if (dictsWithNewlines[k].constructor == Object) return
             dictsWithNewlines[k] = dictsWithNewlines[k].replace(/\n/g, "<br/>") // Newline fuckery. Nothing special, html being html, continue scrolling
         })
         dictsWithNewlines = unflatten(dictsWithNewlines)

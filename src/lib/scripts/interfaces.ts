@@ -37,6 +37,8 @@ export interface Mod { // Used for mods gotten from modrinth api
     }
 }
 export interface Project { // Used for side projects in projects.json5
+    id: string
+
     name: string
     icon: string
     link: string

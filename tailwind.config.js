@@ -64,19 +64,10 @@ export default {
             to: {
                 transform: "translateY(20%)"
             }
-        },
-        marquee: {
-          from: {
-              transform: "translateX(0rem)"
-          },
-          to: {
-              transform: "translateX(var(--scroll-amount))"
-          }
         }
       },
       animation: {
-        float: "float 2s alternate infinite ease-in-out",
-        marquee: "marquee var(--scroll-time) infinite linear"
+        float: "float 2s alternate infinite ease-in-out"
       }
     }
   },
