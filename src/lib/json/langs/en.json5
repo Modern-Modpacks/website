@@ -69,7 +69,8 @@
 
         "wip": "WIP!",
         "wipbig": "Work in progress!",
-        "wipbigmm": "Work in progress! Click to join our discord, where we post development updates about the pack!"
+        "wipbigmm": "Work in progress! Click to join our discord, where we post development updates about the pack!",
+        "wipbigdiscord": "Work in progress! Click to join the modpack developer's discord!"
     },
 
     "modpacks": {

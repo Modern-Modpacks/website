@@ -45,4 +45,10 @@ export interface Project { // Used for side projects in projects.json5
 }
 export interface PartnerModpack extends Modpack { // Used for partnered packs, since they don't have an icon by default
     icon?: string
+
+    links?: {
+        download?: string
+        source?: string
+        discord?: string
+    }
 }

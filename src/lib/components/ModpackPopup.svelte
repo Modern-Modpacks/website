@@ -1,6 +1,6 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts"
-    import type { Modpack } from "$lib/scripts/interfaces"
+    import type { Modpack, PartnerModpack } from "$lib/scripts/interfaces"
     import { popupOpened, settingsOpened } from "$lib/scripts/stores"
     import { Globe, X } from "lucide-svelte"
     import { onMount } from "svelte"
@@ -11,6 +11,9 @@
     export let icon : string
     export let color : string
     export let partner : boolean
+
+    let partnerPack : PartnerModpack | null = null
+    if (partner) partnerPack = modpack as PartnerModpack
 
     // Activates the popup which is hidden by default
     export const toggle = () => {
@@ -95,16 +98,16 @@
                             </a>
                         {/if}
 
-                        {#if !modpack.links}
-                            {#if partner}
-                                <div class="flex items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
-                                    <b class="text-lg">{$_("ui.wip")}</b>
-                                </div>
-                            {:else}
-                                <a href="{consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:scale-105 duration-200" title="{$_("ui.wipbigmm")}">
+                        {#if (!modpack.links?.download && !modpack.links?.source)}
+                            {#if !partner || partnerPack?.links?.discord}
+                                <a href="{partner ? partnerPack?.links?.discord : consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:scale-105 duration-200" title="{$_(partner ? "ui.wipbigdiscord" : "ui.wipbigmm")}">
                                     <img src="{consts.WEBSITE_ICONS.discord}" alt="logo" class="brightness-0 invert w-[36px]">
                                     <b class="text-lg">{$_("ui.wip")}</b>
                                 </a>
+                            {:else}
+                                <div class="flex items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
+                                    <b class="text-lg">{$_("ui.wip")}</b>
+                                </div>
                             {/if}
                         {/if}
                     </div>
