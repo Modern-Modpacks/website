@@ -113,41 +113,41 @@
 </script>
 
 <main>
-    <div class="w-[100vw] h-[100vh] relative bg-black bg-opacity-50 flex gap-10 items-center justify-center" id="title">
-        <div class="absolute w-full h-full -z-10 object-cover" style="background-image: url('{banner}');" id="bg" />
+    <div class="w-[100vw] h-[100vh] relative bg-black bg-opacity-50 flex mobile:flex-col mobile:[&>*]:text-center gap-10 items-center justify-center" id="title">
+        <div class="absolute w-full h-full -z-10 object-cover mobile:bg-center" style="background-image: url('{banner}');" id="bg" />
 
         <img src="{consts.LOGO_URL}" class="w-64 h-64 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="logo">
-        <span class="w-[60%] flex flex-col gap-3">
+        <span class="w-[60%] mobile:w-full flex flex-col mobile:items-center gap-3">
             <h1 class="opacity-0 translate-y-10 duration-[.5s] delay-[.5s]">Modern Modpacks</h1>
             <h3 class="opacity-0 translate-y-10 duration-[.5s] delay-[.75s]">{$randomSplash}</h3>
             <SocialBar header={true} />
         </span>
-        <ChevronsDown class="absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
+        <ChevronsDown class="mobile:hidden absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
     </div>
 
-    <div class="pt-16 pb-8 px-10 bg-primary-dark flex justify-between [&>*]:text-center">
+    <div class="pt-16 mobile:pt-8 pb-8 px-10 mobile:px-5 bg-primary-dark flex mobile:flex-col mobile:gap-8 justify-between items-center [&>*]:text-center">
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div 
-            class="grid grid-cols-4 gap-[4.5rem] min-w-[770px] min-h-[770px] aspect-square group"
+            class="grid grid-cols-4 gap-[4vw] w-[40vw] h-[40vw] mobile:w-full mobile:h-full aspect-square group"
             on:mouseenter={() => {modpacksHovered = true}} on:mouseleave={() => {modpacksHovered = false}}
         >
             {#each [...Array(16).keys()] as i}
                 <Modpack index={i} bind:parentHover={modpacksHovered} />
             {/each}
         </div>
-        <div class="flex flex-col gap-5 items-center w-[50%]">
+        <div class="flex flex-col gap-5 items-center w-[50%] mobile:w-full">
             <h2>{$_("projects.modpacks.heading")}</h2>
             <p>{@html $_("projects.modpacks.desc")}</p>
         </div>
     </div>
 
-    <div class="py-8 pl-10 motion-reduce:pr-10 bg-secondary-dark flex justify-between">
-        <div class="min-w-[50rem]">
+    <div class="py-8 pl-10 motion-reduce:pr-10 bg-secondary-dark flex justify-between gap-10">
+        <div>
             <h2>{@html $_("projects.partner.heading")}</h2>
-            <p class="mt-3">{@html $_("projects.partner.desc")}</p>
+            <p class="mt-3 max-w-full">{@html $_("projects.partner.desc")}</p>
         </div>
         <div
-            class="flex [&>span]:flex [&>span]:items-center [&>span]:gap-6" 
+            class="flex [&>span]:flex [&>span]:items-center [&>span]:gap-6 [&>span]:w-[50vw]" 
             style="{!$reducedMotion ? "mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);" : ""}"
         >
             <Marquee baseAnimDur={2500 * ((partnerQueueLen ?? 0) - 6)} animMin={0} animMax={11.5 * ((partnerQueueLen ?? 0) - 6)} stopDur={600}>
@@ -158,13 +158,13 @@
         </div>
     </div>
 
-    <div class="bg-primary-dark flex justify-between [&>*]:text-center">
-        <div class="min-w-[50%] relative flex flex-col justify-center items-center">
-            <div class="absolute w-[120vw] h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
+    <div class="bg-primary-dark desktop:pr-10 flex mobile:flex-col justify-between [&>*]:text-center">
+        <div class="min-w-[50%] mobile:min-w-full mobile:h-[50vh] relative flex flex-col justify-center items-center">
+            <div class="absolute w-[120vw] mobile:w-full h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
                 <div
-                    class="h-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md motion-safe:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
+                    class="h-full mobile:w-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md motion-safe:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
                     on:mouseover={() => {spinAnimHovered = true; $shouldModsAnimPlay = false}} on:mouseleave={() => {spinAnimHovered = false; if (contextMenuAboutToBeClosed) $shouldModsAnimPlay = true}}
                     use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {$shouldModsAnimPlay = true}}
                 >
@@ -193,7 +193,7 @@
                 </div>
             </div>
         </div>
-        <div class="py-8 z-30 flex flex-col gap-5 items-center w-[50%] pointer-events-none [&>*]:pointer-events-auto bg-gradient-to-l from-primary-dark from-90%">
+        <div class="py-8 mobile:px-5 z-30 flex flex-col gap-5 items-center w-[50%] mobile:w-full pointer-events-none [&>*]:pointer-events-auto bg-gradient-to-l from-primary-dark from-90%">
             <h2>{$_("projects.hellish.heading")}</h2>
             <p>{@html $_("projects.hellish.desc")}</p>
         </div>
@@ -204,7 +204,7 @@
             <div class="
                 absolute w-full h-full flex flex-col justify-evenly
                 [&>span]:flex [&>span]:gap-8
-                [&_a]:h-20 [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:bg-primary-dark [&_a]:rounded-xl [&_a]:font-bold [&_a]:text-2xl
+                [&_a]:h-[8.5vh] [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:bg-primary-dark [&_a]:rounded-xl [&_a]:font-bold [&_a]:text-2xl
                 [&_a]:duration-200 [&_a:hover]:scale-110
             ">
                 {#each [...Array(3).keys()] as row}

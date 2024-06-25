@@ -82,7 +82,7 @@
                 >
             {/if}
     
-            <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible motion-safe:peer-hover:translate-y-[4.7rem] motion-reduce:translate-y-[4.7rem] motion-safe:duration-150">
+            <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible 2xl:motion-safe:peer-hover:translate-y-[4.7rem] xl:motion-safe:peer-hover:translate-y-[2rem] 2xl:motion-reduce:translate-y-[4.7rem] xl:motion-reduce:translate-y-[2rem] motion-safe:duration-150">
                 {modpack.name ?? ""}
             </h3>
         </BreathingIcon>

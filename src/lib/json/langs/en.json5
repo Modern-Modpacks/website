@@ -116,7 +116,7 @@
         "hellish": {
             "heading": "We also make mods",
             "desc": "\
-                <b>Our subsidiary organization, Hellish Mods,</b> specializes on making mods for <b>Forge 1.16.5;</b> with the main focus being on utility mods, and forks/ports of other mods that have been discontinued for that specific version, or were <b>never on 1.16 in the first place.</b>\n\n\
+                <b>Our subsidiary organization, Hellish Mods,</b> specializes on making mods for <b>Forge 1.16.5;</b> with the main focus being on utility mods and forks/ports of other mods that have been discontinued for that specific version, or were <b>never on 1.16 in the first place.</b>\n\n\
                 <b>Since our main goal</b> is still to make modpacks, usually we don't make big content mods unless we decide we want/have to, and just <b>make small projects</b> to complement the modpack we are currently working on by adding features we cannot implement through other means.\n\n\
                 <b>Our utility mods</b>, while still being made out of the necessity for projects that haven't been made yet, are <b>never made to be hyper-specific</b>, which makes them useful for other modpack authors or individual players as well.\n\n\
                 <b>Forks of other open-source mods</b> are also usually made by us for the same reasons and with the same intentions. <b>When we fork a project,</b> we don't just add things specifically we need, we also add other features highly requested by the community.\n\n\

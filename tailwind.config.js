@@ -40,6 +40,10 @@ export default {
     ...mmSafelist
   ],
   theme: {
+    screens: {
+      "mobile": {"max": "1023px"},
+      "desktop": "1024px"
+    },
     colors: {
       "black": "#000",
       "white": "#fff",
