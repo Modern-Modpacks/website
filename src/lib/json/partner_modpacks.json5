@@ -17,8 +17,8 @@
             "recommended": 8
         },
         "links": {
-            // "download": "https://curseforge.com/minecraft/modpacks/gregtech-beyond",
-            // "source": "https://github.com/Blocky106/gregtech_beyond",
+            "download": "https://curseforge.com/minecraft/modpacks/gregtech-beyond",
+            "source": "https://github.com/Blocky106/gregtech_beyond",
             "discord": "https://discord.gg/sG6NZ7NaeC"
         }
     }
