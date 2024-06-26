@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Coordinates, Mod } from "$lib/scripts/interfaces";
-    import { contextMenuOpenedBy, reducedMotion } from "$lib/scripts/stores"
+    import { contextMenuOpenedBy, mobile, reducedMotion } from "$lib/scripts/stores"
     import { onMount } from "svelte";
     import { _ } from "svelte-i18n";
     import Portal from "svelte-portal";
@@ -28,7 +28,7 @@
         }
         else {
             setTimeout(() => {if (aboutToClose) $contextMenuOpenedBy = null}, 200)
-            if (!spinAnimHovered) $shouldSpinAnimPlay = true
+            if (!spinAnimHovered || $mobile) $shouldSpinAnimPlay = true
         }
 
         element?.classList?.toggle("pointer-events-none")

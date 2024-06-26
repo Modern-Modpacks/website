@@ -5,6 +5,7 @@ import type { Coordinates } from "./interfaces"
 export let scrollY = writable<number>(0) // Scroll position of the page
 export let mousePos = writable<Coordinates>({x: 0, y: 0})
 export let reducedMotion = writable<boolean>(false)
+export let mobile = writable<boolean>(false)
 export let settingsOpened = writable<boolean>(false)
 export let popupOpened = writable<boolean>(false) // Weather the modpack popup is opened
 export let contextMenuOpenedBy = writable<number | null>(null) // Weather the mod context menu is opened

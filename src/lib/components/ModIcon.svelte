@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { contextMenuOpenedBy, reducedMotion, scrollY } from "$lib/scripts/stores";
+    import { contextMenuOpenedBy, mobile, reducedMotion, scrollY } from "$lib/scripts/stores";
     import { tweened, type Tweened } from "svelte/motion";
     import ModContextMenu from "./ModContextMenu.svelte";
     import type { Mod } from "$lib/scripts/interfaces";
@@ -23,7 +23,8 @@
     }
     const layer : number = getLayer(0, layerFirst, layerAdd, modNumber)
     const itemsInLayer : number = layerFirst + (layerAdd * layer)
-    const radius : number = 250 + ((layer + 1) ** 7)
+    let radius : number
+    $: radius = ($mobile ? 200 : 250) + ((layer + 1) ** ($mobile ? 6.5 : 7))
 
     let firstBarrelRollDone : boolean = false // Weather the first anim has already occurred
     let duration : number = defaultRotDuration + (rotDurationAdd * layer)
@@ -63,8 +64,9 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <span
-    style="transform: scale({100 + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==modNumber)}"
+    style="transform: scale({($mobile ? 65 : 100) + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==modNumber)}"
     title="{mod?.name}" on:click={e => {
+        if ($mobile) $shouldAnimPlay = false
         modContextMenu?.toggle(modNumber, mod, {
             x: e.clientX + 10,
             y: e.clientY + $scrollY + 10

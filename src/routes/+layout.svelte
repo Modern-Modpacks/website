@@ -1,7 +1,7 @@
 <script lang="ts">
     import HeaderBar from "$lib/components/HeaderBar.svelte"
     import "../app.css"
-    import { mousePos, reducedMotion, scrollY, storedLocale } from "$lib/scripts/stores"
+    import { mobile, mousePos, reducedMotion, scrollY, storedLocale } from "$lib/scripts/stores"
     import { _, addMessages, getLocaleFromNavigator, init, locales } from "svelte-i18n"
     import consts from "$lib/scripts/consts"
     import { onNavigate } from "$app/navigation"
@@ -15,6 +15,7 @@
     // Check for reducedmotion
     onMount(() => {
         $reducedMotion = !!window.matchMedia("(prefers-reduced-motion: reduce)") && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        $mobile = !!window.matchMedia("(max-width: 1023px)") && window.matchMedia("(max-width: 1023px)").matches
     })
 
     // Add locales from the src/lib/json/langs folder
@@ -76,9 +77,6 @@
             showMMIcon = $reducedMotion
         }, 1)
     })
-
-    let loaded = false
-    onMount(() => {loaded = true})
 </script>
 
 <style>
@@ -150,10 +148,10 @@
     <link rel="icon" href={consts.ROUNDED_LOGO_URL} />
 </svelte:head>
 
-<HeaderBar />
-<slot />
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-{#if loaded}
+<div class="overflow-x-hidden">
+    <HeaderBar />
+    <slot />
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div 
         class="w-full h-52 relative flex flex-col gap-2 justify-center items-center bg-footer-dark"
         use:inview={{unobserveOnEnter: true}} on:inview_enter={startMMIconAnimation}
@@ -176,7 +174,7 @@
             {/if}
         </svg>
 
-        <p class="w-auto font-semibold [&>a]:text-mm-lightblue [&>a:hover]:underline">{@html $_("credits")}</p>
+        <p class="w-auto font-semibold text-center [&>a]:text-mm-lightblue [&>a:hover]:underline">{@html $_("credits")}</p>
         <p class="absolute bottom-0 w-full text-center text-transparent text-sm">greg</p>
     </div>
-{/if}
+</div>

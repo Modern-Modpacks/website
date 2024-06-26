@@ -1,7 +1,7 @@
 <script lang="ts">
     import { navigating, page } from "$app/stores"
     import consts, { icons } from "$lib/scripts/consts"
-    import { previousRandomBanner, randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
+    import { mobile, previousRandomBanner, randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
     import { randomChoice } from "$lib/scripts/utils"
@@ -141,7 +141,7 @@
         </div>
     </div>
 
-    <div class="py-8 pl-10 motion-reduce:pr-10 bg-secondary-dark flex justify-between gap-10">
+    <div class="py-8 desktop:pl-10 motion-reduce:pr-10 bg-secondary-dark flex mobile:flex-col-reverse justify-between gap-10 mobile:relative mobile:z-50 mobile:[&>*]:text-center">
         <div>
             <h2>{@html $_("projects.partner.heading")}</h2>
             <p class="mt-3 max-w-full">{@html $_("projects.partner.desc")}</p>
@@ -160,12 +160,12 @@
 
     <div class="bg-primary-dark desktop:pr-10 flex mobile:flex-col justify-between [&>*]:text-center">
         <div class="min-w-[50%] mobile:min-w-full mobile:h-[50vh] relative flex flex-col justify-center items-center">
-            <div class="absolute w-[120vw] mobile:w-full h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
+            <div class="absolute desktop:w-[120vw] mobile:h-[150vw] mobile:w-full h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
                 <div
                     class="h-full mobile:w-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md motion-safe:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
-                    on:mouseover={() => {spinAnimHovered = true; $shouldModsAnimPlay = false}} on:mouseleave={() => {spinAnimHovered = false; if (contextMenuAboutToBeClosed) $shouldModsAnimPlay = true}}
+                    on:mouseover={() => {spinAnimHovered = true; if (!$mobile) $shouldModsAnimPlay = false}} on:mouseleave={() => {spinAnimHovered = false; if (contextMenuAboutToBeClosed) $shouldModsAnimPlay = true}}
                     use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {$shouldModsAnimPlay = true}}
                 >
                     <ModContextMenu bind:this={modContextMenu} bind:aboutToClose={contextMenuAboutToBeClosed} bind:spinAnimHovered={spinAnimHovered} bind:shouldSpinAnimPlay={shouldModsAnimPlay} />
@@ -174,11 +174,11 @@
                     {/each}
                 </div>
             </div>
-            <div class="group z-10">
-                <BreathingIcon duration={2000} minScale={95} maxScale={100} class="duration-100 motion-safe:group-hover:!scale-100">
-                    <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 h-48 rendering-pixelated rounded-md">
+            <div class="group z-10 mobile:flex mobile:flex-col mobile:items-center">
+                <BreathingIcon duration={2000} minScale={95} maxScale={100} class="duration-100 motion-safe:desktop:group-hover:!scale-100">
+                    <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 mobile:w-24 rendering-pixelated rounded-md">
                 </BreathingIcon>
-                <div class="mt-5 flex justify-center gap-5 [&>span]:block [&>span]:w-10 [&>span]:duration-200 motion-safe:[&>span:hover]:!scale-[1.15] motion-safe:[&>span:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0 [&_img]:invert">
+                <div class="mt-5 flex justify-center gap-5 mobile:gap-4 [&>span]:block [&>span]:w-10 mobile:[&>span]:w-8 [&>span]:duration-200 motion-safe:desktop:[&>span:hover]:!scale-[1.15] motion-safe:desktop:[&>span:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0 [&_img]:invert">
                     {#each Object.entries([
                         {link: "https://curseforge.com/members/hellishmods", title: "CurseForge"},
                         {link: consts.SOCIALS.modrinth.url, title: "Modrinth"},
@@ -193,22 +193,22 @@
                 </div>
             </div>
         </div>
-        <div class="py-8 mobile:px-5 z-30 flex flex-col gap-5 items-center w-[50%] mobile:w-full pointer-events-none [&>*]:pointer-events-auto bg-gradient-to-l from-primary-dark from-90%">
+        <div class="py-8 mobile:px-5 z-30 flex flex-col gap-5 items-center w-[50%] mobile:w-full pointer-events-none [&>*]:pointer-events-auto bg-gradient-to-l mobile:bg-gradient-to-t from-primary-dark from-90%">
             <h2>{$_("projects.hellish.heading")}</h2>
             <p>{@html $_("projects.hellish.desc")}</p>
         </div>
     </div>
 
-    <div class="h-[65vh] bg-secondary-dark relative flex justify-center items-center [&>*]:text-center">
+    <div class="h-[65vh] mobile:h-fit bg-secondary-dark relative flex mobile:flex-col justify-center items-center [&>*]:text-center">
         {#if !$reducedMotion}
             <div class="
-                absolute w-full h-full flex flex-col justify-evenly
+                desktop:absolute w-full mobile:h-[40vh] h-full flex flex-col justify-evenly mobile:justify-between mobile:pt-8
                 [&>span]:flex [&>span]:gap-8
                 [&_a]:h-[8.5vh] [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:bg-primary-dark [&_a]:rounded-xl [&_a]:font-bold [&_a]:text-2xl
-                [&_a]:duration-200 [&_a:hover]:scale-110
+                [&_a]:duration-200 desktop:[&_a:hover]:scale-110
             ">
                 {#each [...Array(3).keys()] as row}
-                    <Marquee backwards={!!(row%2)} baseAnimDur={projects.length * 3500} animMin={0} animMax={26 * projects.length} stopDur={500}>
+                    <Marquee backwards={!!(row%2)} baseAnimDur={projects.length * 3500 * ($mobile ? 1.15 : 1)} animMin={0} animMax={26 * projects.length} stopDur={500}>
                         {#each [...Array(projects.length * 2).keys()] as i}
                         {@const project = projects[(i + (row * 2)) % projects.length]}
                             <a href="{project.link}" target="_blank" rel="noopener noreferrer" title="{$_("sideprojects."+project.id)}">
@@ -219,7 +219,7 @@
                 {/each}
             </div>
         {/if}
-        <div class="h-full w-full px-16 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center bg-[radial-gradient(circle,_#0c0c0c_10%,_transparent_65%)]">
+        <div class="h-full w-full px-16 mobile:my-8 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center desktop:bg-[radial-gradient(circle,_#0c0c0c_10%,_transparent_65%)]">
             <h2>{$_("projects.ecosystem.heading")}</h2>
             <p>{@html $_("projects.ecosystem.desc")}</p>
         </div>

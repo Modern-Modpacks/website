@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { reducedMotion } from "$lib/scripts/stores";
+    import { mobile, reducedMotion } from "$lib/scripts/stores";
     import { onMount } from "svelte"
     import { sineOut } from "svelte/easing";
     import { tweened, type Tweened } from "svelte/motion"
@@ -32,7 +32,7 @@
 <span
     class="w-fit{$reducedMotion ? " overflow-x-scroll" : ""}"
     style="transform: translateX(-{$translate}rem);"
-    on:mouseenter={() => {if ($reducedMotion) return; clearInterval(timeout ?? 0); translate.set(get(translate) + (2 * (backwards ? -1 : 1)), {duration: stopDur, easing: sineOut})}} on:mouseleave={() => {doAnim(false)}}
+    on:mouseenter={() => {if ($reducedMotion || $mobile) return; clearInterval(timeout ?? 0); translate.set(get(translate) + (2 * (backwards ? -1 : 1)), {duration: stopDur, easing: sineOut})}} on:mouseleave={() => {doAnim(false)}}
 >
     <slot />
 </span>
