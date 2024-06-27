@@ -32,7 +32,7 @@ export default {
     "hover:font-bold", "hover:font-semibold",
     "bg-white", "border-white",
     "bg-text-dark", "text-selected-text-dark", "motion-safe:shadow-2xl",
-    "motion-safe:hover:!scale-110", "motion-safe:hover:!scale-100",
+    "motion-safe:desktop:hover:!scale-110", "motion-safe:desktop:hover:!scale-100",
     "motion-safe:!scale-[1.15]", "hover:opacity-0",
     "cursor-pointer", "cursor-not-allowed", "cursor-help", "overflow-x-scroll",
     "scale-100", "scale-75",
@@ -41,6 +41,9 @@ export default {
   ],
   theme: {
     screens: {
+      "xl": "1280px",
+      "2xl": "1536px",
+
       "mobile": {"max": "1023px"},
       "desktop": "1024px"
     },

@@ -3,7 +3,7 @@
     import consts from "$lib/scripts/consts"
     import { type Modpack } from "$lib/scripts/interfaces"
     import modpacks from "$lib/json/modpacks.json5"
-    import { mousePos, popupOpened, reducedMotion, scrollY } from "$lib/scripts/stores"
+    import { mobile, mousePos, popupOpened, reducedMotion, scrollY } from "$lib/scripts/stores"
     import ModpackPopup from "./ModpackPopup.svelte"
     import { _ } from "svelte-i18n"
     import BreathingIcon from "./BreathingIcon.svelte";
@@ -55,36 +55,38 @@
 <Saos animation={$reducedMotion ? "" : `appear .25s ${.1*(index%4)}s backwards`} once={true}>
     <div
         class="flex justify-center duration-200 aspect-square"
-        style="transform: translateX({transformX*+!$reducedMotion}px) translateY({transformY*+!$reducedMotion}px);"
+        style="transform: translateX({transformX * +(!$reducedMotion && !$mobile)}px) translateY({transformY * +(!$reducedMotion && !$mobile)}px);"
         title="{discovered ? $_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`) : ""}"
         on:mouseenter={() => {parentHover=false}} on:mouseleave={() => {parentHover=true}}
         on:click={popupToggle}
     >
         <BreathingIcon 
             duration={2000} minScale={90} maxScale={100} delay={(Math.floor(index / 4) + index % 4) * 500}
-            class="w-full h-full [&>img]:rounded-xl bg-cover relative motion-safe:duration-150 motion-safe:[&:not(:hover)]:group-hover:!scale-[90%] motion-safe:hover:!scale-{discovered ? 110 : 100} cursor-{discovered ? "pointer" : "not-allowed"} z-10 flex justify-center"
+            class="w-full h-full [&>img]:rounded-xl bg-cover relative motion-safe:duration-150 motion-safe:desktop:[&:not(:hover)]:group-hover:!scale-[90%] motion-safe:desktop:hover:!scale-{discovered ? 110 : 100} cursor-{discovered ? "pointer" : "not-allowed"} z-10 flex justify-center"
             bind:element={element}
         >
             <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/BG/{path}.png" alt="icon background">
             <!-- svelte-ignore a11y-mouse-events-have-key-events -->
             <img
-                class="scale-[102%] duration-200 absolute rendering-pixelated peer z-10{discovered ? " motion-safe:hover:opacity-0" : ""}"
+                class="scale-[102%] duration-200 absolute rendering-pixelated peer z-10{discovered ? " motion-safe:desktop:hover:opacity-0" : ""}"
                 src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
-                style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/inverted/{index*+discovered}inverted.png');"
+                style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/inverted/{index * +discovered}inverted.png');"
                 alt="icon foreground inverted"
             >
             {#if discovered && !$reducedMotion}
                 <img
-                    class="scale-[102%] duration-200 absolute rendering-pixelated peer opacity-0 peer-hover:opacity-100"
+                    class="scale-[102%] duration-200 absolute rendering-pixelated peer opacity-0 desktop:peer-hover:opacity-100"
                     src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
                     style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/{path}_{modpack.abbr}.png');"
                     alt="icon foreground"
                 >
             {/if}
-    
-            <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible 2xl:motion-safe:peer-hover:translate-y-[4.7rem] xl:motion-safe:peer-hover:translate-y-[2rem] 2xl:motion-reduce:translate-y-[4.7rem] xl:motion-reduce:translate-y-[2rem] motion-safe:duration-150">
-                {modpack.name ?? ""}
-            </h3>
+
+            {#if !$mobile}
+                <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible 2xl:motion-safe:peer-hover:translate-y-[4.7rem] xl:motion-safe:peer-hover:translate-y-[2rem] 2xl:motion-reduce:translate-y-[4.7rem] xl:motion-reduce:translate-y-[2rem] motion-safe:duration-150">
+                    {modpack.name ?? ""}
+                </h3>
+            {/if}
         </BreathingIcon>
     </div>
 </Saos>

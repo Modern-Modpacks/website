@@ -66,7 +66,7 @@
                         {name: "Modrinth", link: "https://modrinth.com/mod/"+mod?.slug},
                         {name: "GitHub", link: mod?.link_urls.source.url}
                     ] as url}
-                        <a href="{url.link}" target="_blank" rel="noopener noreferrer" >{$_("ui.openon")} {url.name}</a>
+                        <a href="{url.link}" target="_blank" rel="noopener noreferrer">{$_("ui.openon")} {url.name}</a>
                         {#if url.name.toLowerCase()!="github"}<hr />{/if}
                     {/each}
                 </div>
