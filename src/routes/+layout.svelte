@@ -153,13 +153,13 @@
     <slot />
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div 
-        class="w-full h-52 relative flex flex-col gap-2 justify-center items-center bg-footer-dark"
+        class="w-full h-32 relative flex flex-col gap-2 justify-center items-center bg-footer-dark"
         use:inview={{unobserveOnEnter: true}} on:inview_enter={startMMIconAnimation}
-        on:mouseenter={() => {if (MMIconInterval) {clearInterval(MMIconInterval)}; showMMIcon = true}} on:mouseleave={startMMIconAnimation}
+        on:mouseenter={() => {if ($mobile) return; if (MMIconInterval) {clearInterval(MMIconInterval)}; showMMIcon = true}} on:mouseleave={startMMIconAnimation}
     >
         <svg
-            width="96"
-            height="96"
+            width="64"
+            height="64"
             viewBox="0 0 16.933333 16.933333"
             version="1.1"
         >
@@ -174,7 +174,7 @@
             {/if}
         </svg>
 
-        <p class="w-auto font-semibold text-center [&>a]:text-mm-lightblue [&>a:hover]:underline">{@html $_("credits")}</p>
+        <p class="w-auto font-semibold text-center text-sm mobile:text-xs [&>a]:text-mm-lightblue [&>a:hover]:underline">{@html $_("credits")}</p>
         <p class="absolute bottom-0 w-full text-center text-transparent text-sm">greg</p>
     </div>
 </div>

@@ -178,7 +178,7 @@
                 <BreathingIcon duration={2000} minScale={95} maxScale={100} class="duration-100 motion-safe:desktop:group-hover:!scale-100">
                     <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 mobile:w-24 rendering-pixelated rounded-md">
                 </BreathingIcon>
-                <div class="mt-5 flex justify-center gap-5 mobile:gap-4 [&>span]:block [&>span]:w-10 mobile:[&>span]:w-8 [&>span]:duration-200 motion-safe:desktop:[&>span:hover]:!scale-[1.15] motion-safe:desktop:[&>span:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0 [&_img]:invert">
+                <div class="mt-5 mobile:mt-3 flex justify-center gap-5 mobile:gap-4 [&>span]:block [&>span]:w-10 mobile:[&>span]:w-8 [&>span]:h-10 mobile:[&>span]:h-8 [&>span]:duration-200 motion-safe:desktop:[&>span:hover]:!scale-[1.15] motion-safe:desktop:[&>span:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0 [&_img]:invert">
                     {#each Object.entries([
                         {link: "https://curseforge.com/members/hellishmods", title: "CurseForge"},
                         {link: consts.SOCIALS.modrinth.url, title: "Modrinth"},

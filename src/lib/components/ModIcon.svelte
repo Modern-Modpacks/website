@@ -24,7 +24,7 @@
     const layer : number = getLayer(0, layerFirst, layerAdd, modNumber)
     const itemsInLayer : number = layerFirst + (layerAdd * layer)
     let radius : number
-    $: radius = ($mobile ? 200 : 250) + ((layer + 1) ** ($mobile ? 6.5 : 7))
+    $: radius = ($mobile ? 230 : 250) + ((layer + 1) ** ($mobile ? 6 : 7))
 
     let firstBarrelRollDone : boolean = false // Weather the first anim has already occurred
     let duration : number = defaultRotDuration + (rotDurationAdd * layer)
@@ -64,7 +64,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <span
-    style="transform: scale({($mobile ? 65 : 100) + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==modNumber)}"
+    style="transform: scale({($mobile ? 55 : 100) + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==modNumber)}"
     title="{mod?.name}" on:click={e => {
         if ($mobile) $shouldAnimPlay = false
         modContextMenu?.toggle(modNumber, mod, {
