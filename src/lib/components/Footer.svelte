@@ -55,10 +55,20 @@
         <p>{@html $_("ui.footer.opensource")}</p>
         <p class="text-mm-gray">© Modern Modpacks, 2024</p>
     </div>
-    <div class="flex flex-col items-end">
-        <span class="absolute bottom-10">
-            <SocialBar />
-        </span>
+    <div class="flex flex-col items-end [&>span]:absolute [&>span]:bottom-10">
+        <b class="text-2xl">Quick access</b>
+        <div class="h-[63%] flex flex-col justify-evenly">
+            {#each [
+                {url: "", lang: ""},
+                {url: "", lang: ""},
+                {url: "", lang: ""},
+                {url: "", lang: ""}
+            ] as link}
+                <a href="{link.url}" class="opacity-50 hover:opacity-100 hover:underline motion-safe:duration-150">{$_("ui.footer.links." + link.lang)}</a>
+            {/each}
+        </div>
+
+        <SocialBar />
     </div>
 
     <!-- <p class="w-auto font-semibold text-center text-sm mobile:text-xs [&>a]:text-mm-lightblue [&>a:hover]:underline">{@html $_("credits")}</p> -->

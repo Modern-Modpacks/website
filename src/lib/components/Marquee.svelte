@@ -32,7 +32,9 @@
         timeout = setTimeout(() => {doAnim(true)}, animDur)
     }
 
-    if (!firstAnimLength) onMount(() => {doAnim(true)})
+    if (!firstAnimLength) onMount(() => {
+        setTimeout(() => {doAnim(true)}, 1)
+    })
     else {inview.subscribe(v => {
         if (v) doAnim(true)
     })}

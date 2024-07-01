@@ -43,7 +43,12 @@
         },
         "footer": {
             "version": "Website version 2.",
-            "opensource": "This website is <a href=\"https://github.com/Modern-Modpacks/website\" target=\"_blank\" rel=\"noopener noreferrer\">open-source</a> and licensed under <a href=\"https://github.com/Modern-Modpacks/website/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener noreferrer\">MIT</a>."
+            "opensource": "This website is <a href=\"https://github.com/Modern-Modpacks/website\" target=\"_blank\" rel=\"noopener noreferrer\">open-source</a> and licensed under <a href=\"https://github.com/Modern-Modpacks/website/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener noreferrer\">MIT</a>.",
+            
+            "quickaccess": "Quick access",
+            "links": {
+
+            }
         },
 
         "download": "Download",
