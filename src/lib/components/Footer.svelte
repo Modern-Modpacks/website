@@ -5,6 +5,7 @@
     import { inview } from "svelte-inview"
     import { sineOut } from "svelte/easing"
     import { draw } from "svelte/transition"
+    import SocialBar from "./SocialBar.svelte";
 
     // Animate the MM svg icon
     const MMIconDuration : number = 2000
@@ -54,8 +55,10 @@
         <p>{@html $_("ui.footer.opensource")}</p>
         <p class="text-mm-gray">© Modern Modpacks, 2024</p>
     </div>
-    <div>
-        <b>TODO</b>
+    <div class="flex flex-col items-end">
+        <span class="absolute bottom-10">
+            <SocialBar />
+        </span>
     </div>
 
     <!-- <p class="w-auto font-semibold text-center text-sm mobile:text-xs [&>a]:text-mm-lightblue [&>a:hover]:underline">{@html $_("credits")}</p> -->
