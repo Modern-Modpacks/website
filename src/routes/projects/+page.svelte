@@ -62,6 +62,7 @@
 
     let partnerQueueLen : number | null // The length of the partnered modpacks section
     let modContextMenu : ModContextMenu | null // The context menu element covering the left half of the HM section
+    let sideProjectsInView : Writable<boolean> = writable(false) // Weather the side projects section is visible in viewport or not, used to start the marquee animation
 
     onMount(() => {
         let nav = $navigating // idk
@@ -201,14 +202,17 @@
 
     <div class="h-[65vh] mobile:h-fit bg-secondary-dark relative flex mobile:flex-col justify-center items-center [&>*]:text-center">
         {#if !$reducedMotion}
-            <div class="
-                desktop:absolute w-full mobile:h-[40vh] h-full flex flex-col justify-evenly mobile:justify-between mobile:pt-8
-                [&>span]:flex [&>span]:gap-8
-                [&_a]:h-[8.5vh] [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:bg-primary-dark [&_a]:rounded-xl [&_a]:font-bold [&_a]:text-2xl
-                [&_a]:duration-200 desktop:[&_a:hover]:scale-110
-            ">
+            <div 
+                class="
+                    desktop:absolute w-full mobile:h-[40vh] h-full flex flex-col justify-evenly mobile:justify-between mobile:pt-8
+                    [&>span]:flex [&>span]:gap-8
+                    [&_a]:h-[8.5vh] [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:bg-primary-dark [&_a]:rounded-xl [&_a]:font-bold [&_a]:text-2xl
+                    [&_a]:duration-200 desktop:[&_a:hover]:scale-110
+                "
+                use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {$sideProjectsInView = true}}
+            >
                 {#each [...Array(3).keys()] as row}
-                    <Marquee backwards={!!(row%2)} baseAnimDur={projects.length * 3500 * ($mobile ? 1.15 : 1)} animMin={0} animMax={26 * projects.length} stopDur={500}>
+                    <Marquee backwards={!!(row%2)} baseAnimDur={projects.length * 3500 * ($mobile ? 1.15 : 1)} animMin={0} animMax={26 * projects.length} firstAnimLength={(26 * 5)} stopDur={500} bind:inview={sideProjectsInView}>
                         {#each [...Array(projects.length * 2).keys()] as i}
                         {@const project = projects[(i + (row * 2)) % projects.length]}
                             <a href="{project.link}" target="_blank" rel="noopener noreferrer" title="{$_("sideprojects."+project.id)}">
