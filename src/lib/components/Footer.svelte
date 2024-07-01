@@ -57,21 +57,19 @@
     </div>
     <div class="flex flex-col items-end [&>span]:absolute [&>span]:bottom-10">
         <b class="text-2xl">Quick access</b>
-        <div class="h-[63%] flex flex-col justify-evenly">
+        <div class="h-[63%] flex flex-col justify-evenly [&>a]:text-right">
             {#each [
-                {url: "", lang: ""},
-                {url: "", lang: ""},
+                {url: "https://status.modernmodpacks.site/", lang: "status"},
+                {url: "https://stackshare.io/modern-modpacks/mm-stack", lang: "stack"},
                 {url: "", lang: ""},
                 {url: "", lang: ""}
             ] as link}
-                <a href="{link.url}" class="opacity-50 hover:opacity-100 hover:underline motion-safe:duration-150">{$_("ui.footer.links." + link.lang)}</a>
+                <a href="{link.url}" target="_blank" rel="noopener noreferrer" class="opacity-50 hover:opacity-100 hover:underline motion-safe:duration-150">{$_("ui.footer.links." + link.lang)}</a>
             {/each}
         </div>
 
         <SocialBar />
     </div>
-
-    <!-- <p class="w-auto font-semibold text-center text-sm mobile:text-xs [&>a]:text-mm-lightblue [&>a:hover]:underline">{@html $_("credits")}</p> -->
 
     <p class="absolute bottom-0 w-fit text-center text-transparent text-sm">greg</p>
 </div>

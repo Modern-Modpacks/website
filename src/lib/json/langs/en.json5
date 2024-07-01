@@ -47,7 +47,8 @@
             
             "quickaccess": "Quick access",
             "links": {
-
+                "status": "Service monitoring",
+                "stack": "Our tech stack"
             }
         },
 
