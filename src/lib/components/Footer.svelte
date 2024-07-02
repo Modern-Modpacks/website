@@ -28,14 +28,14 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div 
-    class="px-[22vw] pt-14 pb-8 [&>div]:w-full h-[34vh] relative flex justify-evenly gap-16 bg-footer-dark"
+    class="px-[22vw] mobile:px-12 pt-14 mobile:pt-8 pb-8 [&>div]:w-full h-[34vh] mobile:h-[60vh] relative flex mobile:flex-col mobile:items-center justify-evenly gap-16 mobile:gap-4 bg-footer-dark"
     use:inview={{unobserveOnEnter: true}} on:inview_enter={startMMIconAnimation}
     on:mouseenter={() => {if ($mobile) return; if (MMIconInterval) {clearInterval(MMIconInterval)}; showMMIcon = true}} on:mouseleave={startMMIconAnimation}
 >
-    <div class="flex flex-col justify-evenly [&>p]:text-lg [&_a]:text-mm-lightblue [&_a:hover]:underline">
+    <div class="flex flex-col justify-evenly mobile:items-center [&>p]:text-lg mobile:[&>p]:text-sm [&_a]:text-mm-lightblue [&_a:hover]:underline mobile:[&>*]:text-center">
         <svg
-            width="72"
-            height="72"
+            width="{$mobile ? 64 : 72}"
+            height="{$mobile ? 64 : 72}"
             viewBox="0 0 16.933333 16.933333"
             version="1.1"
         >
@@ -50,26 +50,30 @@
             {/if}
         </svg>
 
-        <h1 class="text-4xl pb-4">Modern Modpacks</h1>
+        <h1 class="text-4xl mobile:text-2xl desktop:pb-4">Modern Modpacks</h1>
         <p>{$_("ui.footer.version")}</p>
         <p>{@html $_("ui.footer.opensource")}</p>
         <p class="text-mm-gray">© Modern Modpacks, 2024</p>
     </div>
-    <div class="flex flex-col items-end [&>span]:absolute [&>span]:bottom-10">
-        <b class="text-2xl">Quick access</b>
-        <div class="h-[63%] flex flex-col justify-evenly [&>a]:text-right">
-            {#each [
-                {url: "https://status.modernmodpacks.site/", lang: "status"},
-                {url: "https://stackshare.io/modern-modpacks/mm-stack", lang: "stack"},
-                {url: "", lang: ""},
-                {url: "", lang: ""}
-            ] as link}
-                <a href="{link.url}" target="_blank" rel="noopener noreferrer" class="opacity-50 hover:opacity-100 hover:underline motion-safe:duration-150">{$_("ui.footer.links." + link.lang)}</a>
-            {/each}
-        </div>
+    {#if !$mobile}
+        <div class="flex flex-col items-end [&>span]:absolute [&>span]:bottom-10">
+            <b class="text-2xl">Quick access</b>
+            <div class="h-[63%] flex flex-col justify-evenly [&>a]:text-right">
+                {#each [
+                    {url: "https://status.modernmodpacks.site/", lang: "status"},
+                    {url: "https://stackshare.io/modern-modpacks/mm-stack", lang: "stack"},
+                    {url: "", lang: ""},
+                    {url: "", lang: ""}
+                ] as link}
+                    <a href="{link.url}" target="_blank" rel="noopener noreferrer" class="opacity-50 hover:opacity-100 hover:underline motion-safe:duration-150">{$_("ui.footer.links." + link.lang)}</a>
+                {/each}
+            </div>
 
+            <SocialBar />
+        </div>
+    {:else}
         <SocialBar />
-    </div>
+    {/if}
 
     <p class="absolute bottom-0 w-fit text-center text-transparent text-sm">greg</p>
 </div>

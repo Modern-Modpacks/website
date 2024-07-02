@@ -212,7 +212,7 @@
                 use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {$sideProjectsInView = true}}
             >
                 {#each [...Array(3).keys()] as row}
-                    <Marquee backwards={!!(row%2)} baseAnimDur={projects.length * 3500 * ($mobile ? 1.15 : 1)} animMin={0} animMax={26 * projects.length} firstAnimLength={(26 * 5)} stopDur={500} bind:inview={sideProjectsInView}>
+                    <Marquee backwards={!!(row%2)} baseAnimDur={projects.length * 3500 * ($mobile ? 1.15 : 1)} animMin={0} animMax={26 * projects.length} firstAnimLength={26 * 5} stopDur={500} bind:inview={sideProjectsInView}>
                         {#each [...Array(projects.length * 2).keys()] as i}
                         {@const project = projects[(i + (row * 2)) % projects.length]}
                             <a href="{project.link}" target="_blank" rel="noopener noreferrer" title="{$_("sideprojects."+project.id)}">

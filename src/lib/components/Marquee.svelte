@@ -32,12 +32,16 @@
         timeout = setTimeout(() => {doAnim(true)}, animDur)
     }
 
-    if (!firstAnimLength) onMount(() => {
-        setTimeout(() => {doAnim(true)}, 1)
+    onMount(() => {
+        setTimeout(() => {
+            if ($mobile) animCount = 2
+
+            if (!firstAnimLength || $mobile) doAnim(true)
+            else {inview.subscribe(v => {
+                if (v) doAnim(true)
+            })}
+        }, 1)
     })
-    else {inview.subscribe(v => {
-        if (v) doAnim(true)
-    })}
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
