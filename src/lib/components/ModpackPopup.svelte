@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts"
     import type { Modpack, PartnerModpack } from "$lib/scripts/interfaces"
-    import { popupOpened, settingsOpened } from "$lib/scripts/stores"
+    import { mobile, popupOpened, settingsOpened } from "$lib/scripts/stores"
     import { Globe, X } from "lucide-svelte"
     import { onMount } from "svelte"
     import { _ } from "svelte-i18n"
@@ -20,9 +20,25 @@
         $popupOpened = !$popupOpened
         shown = !shown
 
+        let container : HTMLElement | null = document.getElementById("container")
+        if (!container) return
+
         document.body.style.overflowY = shown ? "hidden" : "auto"
+        document.body.style.touchAction = shown ? "none" : "auto"
+
+        // Reset mobile pull
+        if (shown) pullAmount = startPull
     }
     let shown : boolean = false
+
+    // Mobile pull functionality
+    const startPull : number = 200
+    const pullFriction : number = 100
+    let popupContent : HTMLElement | null
+    let pull : boolean = false
+    let pullAmount : number = startPull
+    let prevTouch : Touch | null
+    let pullUp : boolean | null
 
     // Get the icons for download and source button depending on the url of the links
     let downloadIcon : string | null = null
@@ -46,51 +62,83 @@
 <Portal target="body">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="{shown ? "opacity-100" : "invisible pointer-events-none opacity-0"} h-[100vh] w-[100vw] fixed top-0 left-0 flex items-center justify-center motion-safe:duration-500 motion-safe:bg-black motion-safe:bg-opacity-50 z-40" on:click={toggle}>
-        <div class="bg-primary-dark shadow-black shadow-2xl rounded-xl h-[800px] w-[850px] motion-safe:duration-500 {shown ? "scale-100" : "scale-75"}" on:click={e => {e.stopPropagation()}}>
-            <button class="absolute right-5 top-5 motion-safe:hover:rotate-180 duration-[350ms] ease-out cursor-pointer bg-black bg-opacity-30 rounded-full p-1" on:click={toggle}>
-                <X size="32" />
-            </button>
-            <img src="{modpack.banner}" alt="banner" class="w-full h-[35%] object-cover rounded-t-xl">
-            <img src="{icon}" alt="icon" class="absolute w-24 h-24 top-52 left-7 rounded-xl">
+    <div class="{shown ? "opacity-100" : "invisible pointer-events-none desktop:opacity-0 mobile:!bg-transparent"} h-[100vh] w-[100vw] fixed top-0 left-0 flex items-center justify-center motion-safe:duration-500 motion-safe:bg-black motion-safe:bg-opacity-50 z-40" on:click={toggle}>
+        <div bind:this={popupContent}
+            class="bg-primary-dark shadow-black shadow-2xl desktop:rounded-xl mobile:rounded-t-xl h-[800px] w-[850px] mobile:h-fit mobile:w-[100vw] mobile:fixed mobile:pb-[1000px] {pull ? "" : "motion-safe:duration-500"} {shown ? "scale-100" : "desktop:scale-75 mobile:top-[100%]"}"
+            style="{$mobile && shown ? `top: ${pullAmount}px;` : ""}"
+            on:click={e => {e.stopPropagation()}} on:touchmove={e => {
+                if (!prevTouch) {
+                    pull = true
+                    prevTouch = e.touches[0]
+                    return
+                }
 
-            <div class="p-7 pb-14 mt-5 flex h-[65%] box-border">
+                let changeAmount = e.changedTouches[0].screenY - prevTouch.screenY
+                pullUp = changeAmount < 0
+
+                pullAmount += changeAmount
+                prevTouch = e.changedTouches[0]
+            }} on:touchend={() => {
+                if (!pull) return
+
+                pull = false
+                prevTouch = null
+                
+                pullAmount += (pullFriction * (pullUp ? -1 : 1))
+                let maxPull = -((popupContent?.offsetHeight ?? 0) - 1000 - window.innerHeight)
+                if (pullAmount < maxPull) pullAmount = maxPull
+
+                if (pullAmount > startPull) toggle()
+            }}
+        >
+            {#if !$mobile}
+                <button class="absolute right-5 top-5 motion-safe:desktop:hover:rotate-180 duration-[350ms] ease-out cursor-pointer bg-black bg-opacity-30 rounded-full p-1" on:click={toggle}>
+                    <X size="32" />
+                </button>
+            {:else}
+                <span class="h-1 w-40 bg-white absolute mx-auto mt-4 top-0 left-0 right-0 rounded-xl opacity-60" />
+            {/if}
+            <img src="{modpack.banner}" alt="banner" class="w-full h-[35%] mobile:h-[20vh] object-cover rounded-t-xl">
+            <img src="{icon}" alt="icon" title="{modpack.name}" class="absolute w-24 h-24 mobile:w-20 mobile:h-20 top-[26%] left-[3%] mobile:top-16 mobile:left-5 rounded-xl mobile:rounded-lg">
+
+            <div class="p-7 mobile:p-5 pb-14 mt-4 mobile:mt-2 flex mobile:flex-col mobile:gap-6 desktop:h-[65%] box-border">
                 <div class="w-[36rem]">
-                    <h2>{modpack.name}</h2>
-                    <h4 class="w-[50ch]">{$_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`)}</h4>
-                    <p class="mt-6 w-[50ch] text-lg">{@html $_(`modpacks.${modpack.abbr?.toLowerCase()}.longdesc`)}</p>
+                    <h2 class="mobile:text-2xl">{modpack.name}</h2>
+                    <h4 class="w-[50ch] mobile:text-xs">{$_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`)}</h4>
+                    <p class="mt-6 mobile:mt-4 w-[50ch] mobile:w-[45ch] text-lg mobile:text-xs">{@html $_(`modpacks.${modpack.abbr?.toLowerCase()}.longdesc`)}</p>
                 </div>
 
                 <div class="h-full w-full flex flex-col">
-                    <div class="flex flex-1 flex-col items-end">
-                        <b class="text-xl mb-2">{$_("ui.tagstitle")}</b>
-                        <div class="flex flex-wrap gap-2 justify-end">
-                            {#each modpack.tags ?? [] as tag}
-                                <p class="w-auto text-base cursor-default bg-{color} bg-opacity-30 border-{color} border-2 rounded-xl px-2.5 py-0.5 motion-safe:hover:scale-110 duration-150">{$_("ui.tags."+tag)}</p>
-                            {/each}
+                    {#if !$mobile}
+                        <div class="flex flex-1 flex-col items-end">
+                            <b class="text-xl mb-2">{$_("ui.tagstitle")}</b>
+                            <div class="flex flex-wrap gap-2 justify-end">
+                                {#each modpack.tags ?? [] as tag}
+                                    <p class="w-auto text-base cursor-default bg-{color} bg-opacity-30 border-{color} border-2 rounded-xl px-2.5 py-0.5 motion-safe:hover:scale-110 duration-150">{$_("ui.tags."+tag)}</p>
+                                {/each}
+                            </div>
+                            
+                            {#if modpack.ram}
+                                <b class="text-xl mt-8 mb-2">{$_("ui.ram.title")}</b>
+                                <ul class="flex flex-col items-end [&>li]:text-lg">
+                                    <li>{$_("ui.ram.minimal")}: <b>{modpack.ram.minimal}</b></li>
+                                    <li>{$_("ui.ram.recommended")}: <b>{modpack.ram.recommended}</b></li>
+                                </ul>
+                            {/if}
                         </div>
-                        
-                        {#if modpack.ram}
-                            <b class="text-xl mt-8 mb-2">{$_("ui.ram.title")}</b>
-                            <ul class="flex flex-col items-end [&>li]:text-lg">
-                                <li>{$_("ui.ram.minimal")}: <b>{modpack.ram.minimal}</b></li>
-                                <li>{$_("ui.ram.recommended")}: <b>{modpack.ram.recommended}</b></li>
-                            </ul>
-                        {/if}
-                    </div>
-
+                    {/if}
                     <div class="w-full">
                         {#if modpack.links?.download}
-                            <a href="{modpack.links.download}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-4 bg-text-dark rounded-lg p-4 motion-safe:hover:scale-110 duration-200">
+                            <a href="{modpack.links.download}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-4 bg-text-dark rounded-lg p-4 motion-safe:desktop:hover:scale-110 duration-200">
                                 {#if downloadIcon!=null}<img src="{downloadIcon}" alt="logo" class="brightness-0 w-[36px]">
                                 {:else}<Globe color="#000000" size="30" />{/if}
 
-                                <b class="text-lg text-secondary-dark">{$_("ui.download")}</b>
+                                <b class="text-lg text-secondary-dark">{$_($mobile ? "ui.view" : "ui.download")}</b>
                             </a>
                         {/if}
 
                         {#if modpack.links?.source}
-                            <a href="{modpack.links.source}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 mt-4 motion-safe:hover:scale-110 duration-200">
+                            <a href="{modpack.links.source}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 mt-4 motion-safe:desktop:hover:scale-110 duration-200">
                                 {#if sourceIcon!=null}<img src="{sourceIcon}" alt="logo" class="brightness-0 invert w-[36px]">
                                 {:else}<Globe color="#000000" size="30" />{/if}
 
@@ -100,12 +148,12 @@
 
                         {#if (!modpack.links?.download && !modpack.links?.source)}
                             {#if !partner || partnerPack?.links?.discord}
-                                <a href="{partner ? partnerPack?.links?.discord : consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:scale-105 duration-200" title="{$_(partner ? "ui.wipbigdiscord" : "ui.wipbigmm")}">
+                                <a href="{partner ? partnerPack?.links?.discord : consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:desktop:scale-105 duration-200" title="{$_(partner ? "ui.wipbigdiscord" : "ui.wipbigmm")}">
                                     <img src="{consts.WEBSITE_ICONS.discord}" alt="logo" class="brightness-0 invert w-[36px]">
                                     <b class="text-lg">{$_("ui.wip")}</b>
                                 </a>
                             {:else}
-                                <div class="flex items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
+                                <div class="flex items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:desktop:hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
                                     <b class="text-lg">{$_("ui.wip")}</b>
                                 </div>
                             {/if}

@@ -130,7 +130,7 @@
     <link rel="icon" href={consts.ROUNDED_LOGO_URL} />
 </svelte:head>
 
-<div class="overflow-x-hidden h-fit">
+<div id="container" class="overflow-x-hidden h-fit">
     <HeaderBar />
     <slot />
     <Footer />
