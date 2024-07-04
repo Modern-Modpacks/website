@@ -64,7 +64,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <span
-    style="transform: scale({($mobile ? 55 : 100) + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==modNumber)}"
+    style="transform: scale({($mobile ? 55 : 100) + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==modNumber && !$mobile)}"
     title="{mod?.name}" on:click={e => {
         if ($mobile) $shouldAnimPlay = false
         modContextMenu?.toggle(modNumber, mod, {
@@ -73,5 +73,5 @@
         })
     }}
 >
-    <img id="mod" src="{mod?.icon_url}" alt="" class="shadow-black{$contextMenuOpenedBy==modNumber ? " motion-safe:!scale-[1.15] motion-safe:shadow-2xl" : ""}">
+    <img id="mod" src="{mod?.icon_url}" alt="" class="shadow-black{$contextMenuOpenedBy==modNumber && !$mobile ? " motion-safe:!scale-[1.15] motion-safe:shadow-2xl" : ""}">
 </span>

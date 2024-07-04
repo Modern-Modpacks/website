@@ -161,11 +161,11 @@
 
     <div class="bg-primary-dark desktop:pr-10 flex mobile:flex-col justify-between [&>*]:text-center">
         <div class="min-w-[50%] mobile:min-w-full mobile:h-[50vh] relative flex flex-col justify-center items-center">
-            <div class="absolute desktop:w-[120vw] mobile:h-[150vw] mobile:w-full h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
+            <div class="absolute desktop:w-[120vw] mobile:h-[100vh] mobile:w-full h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
                 <div
-                    class="h-full mobile:w-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md motion-safe:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
+                    class="h-full mobile:w-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md motion-safe:desktop:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
                     on:mouseover={() => {spinAnimHovered = true; if (!$mobile) $shouldModsAnimPlay = false}} on:mouseleave={() => {spinAnimHovered = false; if (contextMenuAboutToBeClosed) $shouldModsAnimPlay = true}}
                     use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {$shouldModsAnimPlay = true}}
                 >
