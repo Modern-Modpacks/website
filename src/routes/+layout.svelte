@@ -10,11 +10,11 @@
     import { flatten, unflatten } from "flat"
     import Footer from "$lib/components/Footer.svelte"
 
-    // Check for reducedmotion
-    onMount(() => {
+    // Update variables that check for media queries
+    let updateMedia = () => {
         $reducedMotion = !!window.matchMedia("(prefers-reduced-motion: reduce)") && window.matchMedia("(prefers-reduced-motion: reduce)").matches
         $mobile = !!window.matchMedia("(max-width: 1023px)") && window.matchMedia("(max-width: 1023px)").matches
-    })
+    }
 
     // Add locales from the src/lib/json/langs folder
     // JSON5 ftw baby
@@ -50,14 +50,18 @@
         })
     })
 
-    // Store mouse pos for later use
     onMount(() => {
+        // Store mouse pos for later use
         document.addEventListener("mousemove", e => {
             $mousePos = {
                 x: e.pageX,
                 y: e.pageY
             }
         })
+
+        // Update queries
+        updateMedia()
+        window.addEventListener("resize", updateMedia)
     })
 </script>
 

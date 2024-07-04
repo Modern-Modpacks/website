@@ -3,13 +3,16 @@
     import { page } from "$app/stores"
     import consts from "$lib/scripts/consts"
     import { mobile, scrollY, settingsOpened, storedLocale } from "$lib/scripts/stores"
-    import { SettingsIcon } from "lucide-svelte"
+    import { Menu, SettingsIcon } from "lucide-svelte"
     import { onMount } from "svelte"
     import { locales, locale, _ } from "svelte-i18n"
     import Basic from "svelte-toggles/src/Basic"
+    import MobileSideBar from "./MobileSideBar.svelte";
 
     // const settingsOpenByDefault : boolean = true // DEBUG, don't turn on in prod
     const settingsOpenByDefault : boolean = false
+
+    let sidebar : MobileSideBar | null // Sidebar, mobile exclusive
 
     // Toggle settings or just disable
     let toggleSettings = (disable : boolean) => {
@@ -97,4 +100,9 @@
             <Basic lightFill="#f1af15" darkFill="#7d7d73" />
         </span>
     </div>
+{:else}
+    <button on:click={sidebar?.toggle} class="fixed top-6 right-6 z-50 cursor-pointer bg-secondary-dark bg-opacity-75 p-3 rounded-full duration-300 ease-out{["/", "/projects"].includes($page.url.pathname) && !$scrollY ? " translate-y-[-200%] shadow-none" : ""}">
+        <Menu size="28" />
+    </button>
+    <MobileSideBar bind:this={sidebar} />
 {/if}
