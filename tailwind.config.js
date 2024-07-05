@@ -24,7 +24,7 @@ const mmColors = {
   "hm-gray": "#373a3e"
 }
 let mmSafelist = []
-Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "after:bg-"+c, "hover:text-"+c)})
+Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "after:bg-"+c, "text-"+c, "hover:text-"+c)})
 
 export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
@@ -34,7 +34,8 @@ export default {
     "bg-text-dark", "text-selected-text-dark", "motion-safe:shadow-2xl",
     "motion-safe:desktop:hover:!scale-110", "motion-safe:desktop:hover:!scale-100",
     "motion-safe:!scale-[1.15]", "hover:opacity-0",
-    "cursor-pointer", "cursor-not-allowed", "cursor-help", "overflow-x-scroll",
+    "cursor-pointer", "cursor-not-allowed", "cursor-help",
+    "overflow-x-scroll", "overflow-y-hidden", "touch-none",
     "scale-100", "scale-75",
 
     ...mmSafelist

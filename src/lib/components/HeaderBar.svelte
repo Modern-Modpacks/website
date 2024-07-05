@@ -62,12 +62,7 @@
             after:[&>a]:content-[''] after:[&>a]:block after:[&>a]:absolute after:[&>a]:bottom-[-60%] motion-safe:after:[&>a]:duration-[.125s] after:[&>a]:h-2 after:[&>a]:w-full after:[&>a]:scale-y-0 after:[&>a]:origin-bottom
             after:hover:[&>a]:scale-y-[50%]
         ">
-            {#each [
-                {link: "projects", title: "projects", color: "mm-red"},
-                {link: "about", title: "aboutus", color: "mm-yellow"},
-                {link: "blog", title: "blog", color: "mm-lime"},
-                {link: "https://status.modernmodpacks.site", title: "status", color: "mm-lightblue"}
-            ] as button}
+            {#each consts.PAGES as button}
                 <a 
                     href={button.link}
                     class="{$page.url.pathname=="/"+button.link ? "font-bold scale-[120%]" : "font-semibold opacity-80"} hover:text-{button.color} after:bg-{button.color}"
@@ -82,7 +77,7 @@
 
     <div class="
         fixed{settingsOpenByDefault ? " " : " opacity-0 pointer-events-none "}z-50 motion-safe:duration-150 top-20 right-20 w-56 p-5 shadow-2xl rounded-xl shadow-black bg-header-dark backdrop-blur-xl
-        flex flex-col gap-1
+        flex flex-col gap-2
         [&_p]:text-lg [&_p]:font-medium
     " id="settings">
         <h3 class="font-bold">{$_("ui.settings.title")}</h3>
@@ -95,7 +90,7 @@
                 <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : ""}" on:click={() => {$storedLocale=l; $locale=l}}>{$_("name", {locale: l})}</button>
             {/each}
         </div>
-        <span class="flex items-center">
+        <span class="flex items-center justify-between">
             <p>{$_("ui.settings.darkmode")}</p>
             <Basic lightFill="#f1af15" darkFill="#7d7d73" />
         </span>

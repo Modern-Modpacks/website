@@ -51,7 +51,7 @@
         </svg>
 
         <h1 class="text-4xl mobile:text-2xl desktop:pb-4">Modern Modpacks</h1>
-        <p>{$_("ui.footer.version")}</p>
+        <p>{@html $_("ui.footer.version")}</p>
         <p>{@html $_("ui.footer.opensource")}</p>
         <p class="text-mm-gray">© Modern Modpacks, 2024</p>
     </div>

@@ -37,6 +37,13 @@ const consts = {
         email: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMTIuNzEzbC0xMS45ODUtOS43MTNoMjMuOTcxbC0xMS45ODYgOS43MTN6bS01LjQyNS0xLjgyMmwtNi41NzUtNS4zMjl2MTIuNTAxbDYuNTc1LTcuMTcyem0xMC44NSAwbDYuNTc1IDcuMTcydi0xMi41MDFsLTYuNTc1IDUuMzI5em0tMS41NTcgMS4yNjFsLTMuODY4IDMuMTM1LTMuODY4LTMuMTM1LTguMTEgOC44NDhoMjMuOTU2bC04LjExLTguODQ4eiIvPjwvc3ZnPg=="
     },
 
+    PAGES: [ // Pages on the website with corresponding colors
+        {link: "projects", title: "projects", color: "mm-red"},
+        {link: "about", title: "aboutus", color: "mm-yellow"},
+        {link: "blog", title: "blog", color: "mm-lime"},
+        {link: "https://status.modernmodpacks.site", title: "status", color: "mm-lightblue"}
+    ],
+
     SOCIALS: { // Links to various socials of MM
         curseforge: {
             url: "https://curseforge.com/members/modernmodpacks",

@@ -4,7 +4,7 @@
     import { mobile, previousRandomBanner, randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
-    import { randomChoice } from "$lib/scripts/utils"
+    import { randomChoice, toggleScroll } from "$lib/scripts/utils"
     import { _, json } from "svelte-i18n"
     import Modpack from "$lib/components/Modpack.svelte"
     import { type Modpack as MPack, type Mod, type Project } from "$lib/scripts/interfaces"
@@ -93,8 +93,8 @@
 
                 // If appearance anim is playing, make the user wait a bit and enjoy the beauty
                 if (!$reducedMotion && !$mobile) {
-                    document.body.classList.add("overflow-y-hidden")
-                    setTimeout(() => {document.body.classList.remove("overflow-y-hidden")}, 2500)
+                    toggleScroll(false)
+                    setTimeout(() => {toggleScroll(true)}, 2500)
                 }
             }
 

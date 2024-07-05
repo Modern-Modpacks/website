@@ -1,14 +1,15 @@
 <script lang="ts">
     import HeaderBar from "$lib/components/HeaderBar.svelte"
     import "../app.css"
-    import { mobile, mousePos, reducedMotion, scrollY, storedLocale } from "$lib/scripts/stores"
+    import { contextMenuOpenedBy, mobile, mousePos, popupOpened, reducedMotion, scrollY, storedLocale } from "$lib/scripts/stores"
     import { _, addMessages, getLocaleFromNavigator, init, locales } from "svelte-i18n"
     import consts from "$lib/scripts/consts"
-    import { onNavigate } from "$app/navigation"
+    import { afterNavigate, onNavigate } from "$app/navigation"
     import { onMount } from "svelte"
     import { page } from "$app/stores"
     import { flatten, unflatten } from "flat"
     import Footer from "$lib/components/Footer.svelte"
+    import { toggleScroll } from "$lib/scripts/utils";
 
     // Update variables that check for media queries
     let updateMedia = () => {
@@ -62,6 +63,12 @@
         // Update queries
         updateMedia()
         window.addEventListener("resize", updateMedia)
+    })
+    afterNavigate(() => { // Cleanup stores and unlock page
+        $popupOpened = false
+        $contextMenuOpenedBy = null
+
+        toggleScroll(true)
     })
 </script>
 
@@ -134,7 +141,7 @@
     <link rel="icon" href={consts.ROUNDED_LOGO_URL} />
 </svelte:head>
 
-<div id="container" class="overflow-x-hidden h-fit">
+<div id="container" class="overflow-x-hidden">
     <HeaderBar />
     <slot />
     <Footer />

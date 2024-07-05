@@ -2,6 +2,7 @@
     import consts from "$lib/scripts/consts"
     import type { Modpack, PartnerModpack } from "$lib/scripts/interfaces"
     import { mobile, popupOpened, settingsOpened } from "$lib/scripts/stores"
+    import { toggleScroll } from "$lib/scripts/utils";
     import { Globe, X } from "lucide-svelte"
     import { onMount } from "svelte"
     import { _ } from "svelte-i18n"
@@ -20,11 +21,7 @@
         $popupOpened = !$popupOpened
         shown = !shown
 
-        let container : HTMLElement | null = document.getElementById("container")
-        if (!container) return
-
-        document.body.style.overflowY = shown ? "hidden" : "auto"
-        document.body.style.touchAction = shown ? "none" : "auto"
+        toggleScroll(false)
 
         // Reset mobile pull
         if (shown) pullAmount = startPull
@@ -104,29 +101,28 @@
             <div class="p-7 mobile:p-5 pb-14 mt-4 mobile:mt-2 flex mobile:flex-col mobile:gap-6 desktop:h-[65%] box-border">
                 <div class="w-[36rem]">
                     <h2 class="mobile:text-2xl">{modpack.name}</h2>
-                    <h4 class="w-[50ch] mobile:text-xs">{$_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`)}</h4>
+                    <h4 class="w-[45ch] mobile:text-xs">{$_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`)}</h4>
                     <p class="mt-6 mobile:mt-4 w-[50ch] mobile:w-[45ch] text-lg mobile:text-xs">{@html $_(`modpacks.${modpack.abbr?.toLowerCase()}.longdesc`)}</p>
                 </div>
 
                 <div class="h-full w-full flex flex-col">
-                    {#if !$mobile}
-                        <div class="flex flex-1 flex-col items-end">
+                    <div class="flex flex-1 flex-col items-end mobile:items-center">
+                        {#if !$mobile}
                             <b class="text-xl mb-2">{$_("ui.tagstitle")}</b>
-                            <div class="flex flex-wrap gap-2 justify-end">
-                                {#each modpack.tags ?? [] as tag}
-                                    <p class="w-auto text-base cursor-default bg-{color} bg-opacity-30 border-{color} border-2 rounded-xl px-2.5 py-0.5 motion-safe:hover:scale-110 duration-150">{$_("ui.tags."+tag)}</p>
-                                {/each}
-                            </div>
-                            
-                            {#if modpack.ram}
-                                <b class="text-xl mt-8 mb-2">{$_("ui.ram.title")}</b>
-                                <ul class="flex flex-col items-end [&>li]:text-lg">
-                                    <li>{$_("ui.ram.minimal")}: <b>{modpack.ram.minimal}</b></li>
-                                    <li>{$_("ui.ram.recommended")}: <b>{modpack.ram.recommended}</b></li>
-                                </ul>
-                            {/if}
+                        {/if}
+                        <div class="flex flex-wrap gap-2 justify-end mobile:justify-center mobile:mb-6">
+                            {#each modpack.tags ?? [] as tag}
+                                <p class="w-auto text-base cursor-default bg-{color} bg-opacity-30 border-{color} border-2 rounded-xl px-2.5 py-0.5 motion-safe:desktop:hover:scale-110 duration-150">{$_("ui.tags."+tag)}</p>
+                            {/each}
                         </div>
-                    {/if}
+                        {#if !$mobile && modpack.ram}
+                            <b class="text-xl mt-8 mb-2">{$_("ui.ram.title")}</b>
+                            <ul class="flex flex-col items-end [&>li]:text-lg">
+                                <li>{$_("ui.ram.minimal")}: <b>{modpack.ram.minimal}</b></li>
+                                <li>{$_("ui.ram.recommended")}: <b>{modpack.ram.recommended}</b></li>
+                            </ul>
+                        {/if}
+                    </div>
                     <div class="w-full">
                         {#if modpack.links?.download}
                             <a href="{modpack.links.download}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-4 bg-text-dark rounded-lg p-4 motion-safe:desktop:hover:scale-110 duration-200">
