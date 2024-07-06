@@ -3,34 +3,18 @@
     import { onMount } from "svelte";
     import { _ } from "svelte-i18n";
     import { inview } from "svelte-inview"
-    import { sineOut } from "svelte/easing"
+    import { linear } from "svelte/easing"
     import { draw } from "svelte/transition"
     import SocialBar from "./SocialBar.svelte";
 
-    // Animate the MM svg icon
-    const MMIconDuration : number = 2000
-    let MMIconInterval : number | null
+    // Weather to show the MM logo svg
     let showMMIcon : boolean = false
-    let startMMIconAnimation = () => {
-        if ($reducedMotion) return
-
-        showMMIcon = !showMMIcon
-        MMIconInterval = setInterval(() => {showMMIcon = !showMMIcon}, MMIconDuration + 1000)
-    }
-
-    onMount(() => {
-        // reducedMotion support for the MM icon anim
-        setTimeout(() => {
-            showMMIcon = $reducedMotion
-        }, 1)
-    })
+    onMount(() => {setTimeout(() => {showMMIcon = $reducedMotion}, 1)}) // reducedMotion support
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div 
     class="px-[22vw] mobile:px-12 pt-14 mobile:pt-8 pb-8 [&>div]:w-full h-[34vh] mobile:h-[60vh] relative flex mobile:flex-col mobile:items-center justify-evenly gap-16 mobile:gap-4 bg-footer-dark"
-    use:inview={{unobserveOnEnter: true}} on:inview_enter={startMMIconAnimation}
-    on:mouseenter={() => {if ($mobile) return; if (MMIconInterval) {clearInterval(MMIconInterval)}; showMMIcon = true}} on:mouseleave={startMMIconAnimation}
+    use:inview={{threshold: .65}} on:inview_enter={() => {showMMIcon = true}} on:inview_leave={() => {if (!$reducedMotion) showMMIcon = false}}
 >
     <div class="flex flex-col justify-evenly mobile:items-center [&>p]:text-lg mobile:[&>p]:text-sm [&_a]:text-mm-lightblue [&_a:hover]:underline mobile:[&>*]:text-center">
         <svg
@@ -41,7 +25,7 @@
         >
             {#if showMMIcon}
                 <path
-                    transition:draw={{duration: MMIconDuration, easing: sineOut}}
+                    transition:draw={{duration: $reducedMotion ? 0 : 2000, easing: linear}}
                     fill="#00000000"
                     stroke="#ffffff"
                     stroke-width=.5
