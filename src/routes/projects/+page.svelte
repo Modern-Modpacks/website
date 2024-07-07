@@ -30,7 +30,7 @@
     }
 
     // Scroll a page down if navigating from another page, hiding the header
-    $: if ($navigating?.to?.url==$page.url) setTimeout(() => scrollTo(0, innerHeight), 1)
+    $: if ($navigating?.to?.url==$page.url) setTimeout(() => scrollTo(0, $mobile ? 1 : innerHeight), 1)
 
     // Modpacks, mods, and projects; chewed for typescript's enjoyment
     let packs : MPack[] = modpacks
@@ -142,7 +142,7 @@
         </div>
     </div>
 
-    <div class="py-8 desktop:pl-10 motion-reduce:pr-10 bg-secondary-dark flex mobile:flex-col-reverse justify-between gap-10 mobile:relative mobile:z-30 mobile:[&>*]:text-center">
+    <div class="py-8 desktop:pl-10 motion-reduce:desktop:pr-10 bg-secondary-dark flex mobile:flex-col-reverse justify-between gap-10 mobile:relative mobile:z-30 mobile:[&>*]:text-center">
         <div>
             <h2>{@html $_("projects.partner.heading")}</h2>
             <p class="mt-3 max-w-full">{@html $_("projects.partner.desc")}</p>

@@ -2,7 +2,7 @@
     import { base } from "$app/paths"
     import { page } from "$app/stores"
     import consts from "$lib/scripts/consts"
-    import { mobile, scrollY, settingsOpened, storedLocale } from "$lib/scripts/stores"
+    import { memeLocales, mobile, scrollY, settingsOpened, sortedLocales, storedLocale } from "$lib/scripts/stores"
     import { Menu, SettingsIcon } from "lucide-svelte"
     import { onMount } from "svelte"
     import { locales, locale, _ } from "svelte-i18n"
@@ -84,15 +84,21 @@
         <p>{$_("ui.settings.language")}</p>
         <div class="
             grid grid-cols-2 gap-2
-            [&>button]:h-10 [&>button]:rounded-xl [&>button]:duration-100
+            [&>button]:h-10 [&>button]:rounded-xl [&>button]:duration-150
         ">
-            {#each $locales.sort((a, _) => a=="en" ? -1 : 0) as l}
-                <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : ""}" on:click={() => {$storedLocale=l; $locale=l}}>{$_("name", {locale: l})}</button>
+            {#each $sortedLocales as l}
+                <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : "bg-black bg-opacity-20"}" on:click={() => {$locale=l}}>{$_("name", {locale: l})}</button>
+            {/each}
+            <hr class="col-span-2 my-2">
+            {#each $memeLocales as l}
+                <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : "bg-black bg-opacity-20"}" on:click={() => {$locale=l}}>{$_("name", {locale: l})}</button>
             {/each}
         </div>
         <span class="flex items-center justify-between">
             <p>{$_("ui.settings.darkmode")}</p>
-            <Basic lightFill="#f1af15" darkFill="#7d7d73" />
+            <span class="rotate-180">
+                <Basic lightFill="#f1af15" darkFill="#7d7d73" />
+            </span>
         </span>
     </div>
 {:else}

@@ -25,7 +25,8 @@
         "KubeJS > CraftTweaker",
         "5 minute in-and-out coding adventure!",
         "skibidi gyatt ohio rizz",
-        "Not enshittified!"
+        "Not enshittified!",
+        "Games, unlimited games"
     ],
 
     "ui": {
@@ -39,7 +40,7 @@
             "title": "Settings",
 
             "language": "Language",
-            "darkmode": "Dark Mode"
+            "darkmode": "Dark mode"
         },
         "footer": {
             "version": "Website version 2. Made with <a  href=\"https://kit.svelte.dev/\" target=\"_blank\" rel=\"noopener noreferrer\">SvelteKit</a>.",
@@ -47,6 +48,7 @@
             
             "quickaccess": "Quick access",
             "links": {
+                "report": "Report a bug",
                 "status": "Service monitoring",
                 "stack": "Our tech stack"
             }

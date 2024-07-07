@@ -1,8 +1,8 @@
 <script lang="ts">
     import HeaderBar from "$lib/components/HeaderBar.svelte"
     import "../app.css"
-    import { contextMenuOpenedBy, mobile, mousePos, popupOpened, reducedMotion, scrollY, storedLocale } from "$lib/scripts/stores"
-    import { _, addMessages, getLocaleFromNavigator, init, locales } from "svelte-i18n"
+    import { contextMenuOpenedBy, memeLocales, mobile, mousePos, popupOpened, reducedMotion, scrollY, sortedLocales, storedLocale } from "$lib/scripts/stores"
+    import { _, addMessages, getLocaleFromNavigator, init, locales, locale as l, json } from "svelte-i18n"
     import consts from "$lib/scripts/consts"
     import { afterNavigate, onNavigate } from "$app/navigation"
     import { onMount } from "svelte"
@@ -23,7 +23,8 @@
     for (let l of Object.keys(langs)) {
         let dictsWithNewlines : {[key: string]: string} = (flatten(langs[l]) as {[key: string]: string})
         Object.keys(dictsWithNewlines).forEach(k => {
-            if (dictsWithNewlines[k].constructor == Object) return
+            let type = dictsWithNewlines[k].constructor
+            if (type == Object || type == Boolean) return
             dictsWithNewlines[k] = dictsWithNewlines[k].replace(/\n/g, "<br/>") // Newline fuckery. Nothing special, html being html, continue scrolling
         })
         dictsWithNewlines = unflatten(dictsWithNewlines)
@@ -38,10 +39,12 @@
             initialLocale: $locales.includes(locale!) ? locale : "en"
         }
     )
+    // Save current locale in local storage
+    l.subscribe(v => {if (v) $storedLocale = v})
 
     // Init view transitions, awesome
     onNavigate(navigation => {
-        if (!document.startViewTransition || $page.url.pathname=="/") return
+        if (!document.startViewTransition || $page.url.pathname=="/" || $mobile) return
 
         return new Promise(resolve => {
             document.startViewTransition(async () => {
@@ -52,6 +55,11 @@
     })
 
     onMount(() => {
+        // Store locales (sorted, regular and meme)
+        $sortedLocales = $locales.sort((a, _) => a=="en" ? -1 : 0)
+        $memeLocales = $sortedLocales.filter(v => $json("meme", v))
+        $sortedLocales = $sortedLocales.filter(v => !$memeLocales.includes(v))
+
         // Store mouse pos for later use
         document.addEventListener("mousemove", e => {
             $mousePos = {

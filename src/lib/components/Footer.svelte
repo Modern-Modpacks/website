@@ -42,11 +42,11 @@
     {#if !$mobile}
         <div class="flex flex-col items-end [&>span]:absolute [&>span]:bottom-10">
             <b class="text-2xl">Quick access</b>
-            <div class="h-[63%] flex flex-col justify-evenly [&>a]:text-right">
+            <div class="h-[63%] flex flex-col justify-evenly items-end [&>a]:w-fit">
                 {#each [
+                    {url: "https://github.com/Modern-Modpacks/website/issues/new", lang: "report"},
                     {url: "https://status.modernmodpacks.site/", lang: "status"},
                     {url: "https://stackshare.io/modern-modpacks/mm-stack", lang: "stack"},
-                    {url: "", lang: ""},
                     {url: "", lang: ""}
                 ] as link}
                     <a href="{link.url}" target="_blank" rel="noopener noreferrer" class="opacity-50 hover:opacity-100 hover:underline motion-safe:duration-150">{$_("ui.footer.links." + link.lang)}</a>

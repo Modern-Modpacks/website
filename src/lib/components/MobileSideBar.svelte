@@ -1,10 +1,10 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import consts from "$lib/scripts/consts";
-    import { popupOpened } from "$lib/scripts/stores";
+    import { memeLocales, popupOpened, sortedLocales } from "$lib/scripts/stores";
     import { toggleScroll } from "$lib/scripts/utils";
     import { ArrowLeft } from "lucide-svelte";
-    import { _ } from "svelte-i18n";
+    import { _, locale, locales } from "svelte-i18n";
     import Basic from "svelte-toggles/src/Basic";
 
     let element : HTMLElement | null // The actual sidebar
@@ -16,7 +16,7 @@
     }
 </script>
 
-<div bind:this={element} class="fixed translate-x-[100%] w-[100vw] h-[100vh] z-[60] bg-primary-dark duration-[400ms] ease-out">
+<div bind:this={element} class="fixed translate-x-[100%] w-[100vw] h-[100vh] z-[60] bg-primary-dark motion-safe:duration-[400ms] ease-out">
     <button on:click={toggle} class="m-6 bg-secondary-dark rounded-full bg-opacity-65">
         <ArrowLeft size="48" />
     </button>
@@ -32,8 +32,20 @@
             {/each}
         </span>
         <span class="mt-6 px-4 flex justify-between items-center">
-            <select name="" id="" class="w-40"></select>
-            <Basic lightFill="#f1af15" darkFill="#7d7d73" size="large" />
+            <span class="before:content-[''] before:block before:absolute before:-z-10 before:w-32 before:h-14 before:rounded-full before:bg-black before:shadow-md before:shadow-black before:opacity-65">
+                <select bind:value={$locale} class="relative w-32 h-14 py-4 indent-4 border-r-[1rem] border-transparent rounded-full focus:outline-none bg-primary-dark bg-opacity-55 backdrop-blur-xl font-bold [&>option]:text-black">
+                    {#each $sortedLocales as l}
+                        <option value="{l}">{$_("name", {locale: l})}</option>
+                    {/each}
+                    <hr>
+                    {#each $memeLocales as l}
+                        <option value="{l}">{$_("name", {locale: l})}</option>
+                    {/each}
+                </select>
+            </span>
+            <span class="rotate-180">
+                <Basic lightFill="#f1af15" darkFill="#7d7d73" size="large" />
+            </span>
         </span>
     </div>
 </div>
