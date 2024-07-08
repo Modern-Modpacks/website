@@ -1,8 +1,8 @@
 <script lang="ts">
     import HeaderBar from "$lib/components/HeaderBar.svelte"
     import "../app.css"
-    import { contextMenuOpenedBy, memeLocales, mobile, mousePos, popupOpened, reducedMotion, scrollY, sortedLocales, storedLocale } from "$lib/scripts/stores"
-    import { _, addMessages, getLocaleFromNavigator, init, locales, locale as l, json } from "svelte-i18n"
+    import { contextMenuOpenedBy, memeLocales, mobile, mousePos, popupOpened, reducedMotion, scrollY, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores"
+    import { _, addMessages, getLocaleFromNavigator, init, locales, locale } from "svelte-i18n"
     import consts from "$lib/scripts/consts"
     import { afterNavigate, onNavigate } from "$app/navigation"
     import { onMount } from "svelte"
@@ -32,15 +32,15 @@
         addMessages(l.split("/").at(-1)?.replace(".json5", "")!, dictsWithNewlines)
     }
     // Get locale and init svelte-i18n
-    let locale : string | undefined = $storedLocale ? $storedLocale : getLocaleFromNavigator()?.split("-").at(-1)?.toLowerCase()
+    let initLocale : string | undefined = $storedLocale ? $storedLocale : getLocaleFromNavigator()?.split("-").at(-1)?.toLowerCase()
     init(
         {
             fallbackLocale: "en",
-            initialLocale: $locales.includes(locale!) ? locale : "en"
+            initialLocale: $locales.includes(initLocale!) ? initLocale : "en"
         }
     )
-    // Save current locale in local storage
-    l.subscribe(v => {if (v) $storedLocale = v})
+    // When the locale is changed in local storage, hot reload it
+    storedLocale.subscribe(v => {if (v) $locale = v})
 
     // Init view transitions, awesome
     onNavigate(navigation => {
@@ -57,7 +57,7 @@
     onMount(() => {
         // Store locales (sorted, regular and meme)
         $sortedLocales = $locales.sort((a, _) => a=="en" ? -1 : 0)
-        $memeLocales = $sortedLocales.filter(v => $json("meme", v))
+        $memeLocales = $sortedLocales.filter(v => v.startsWith("_"))
         $sortedLocales = $sortedLocales.filter(v => !$memeLocales.includes(v))
 
         // Store mouse pos for later use
@@ -71,6 +71,21 @@
         // Update queries
         updateMedia()
         window.addEventListener("resize", updateMedia)
+
+        // Funni upside down locale easter egg
+        locale.subscribe(v => {
+            let flipElements = ["h1", "h2", "h3", "h4", "li", "p", "b"]
+
+            if (v=="_upsidedown") {
+                $upsideDownLocale = true
+                flipElements.forEach(c => {document.body.classList.add(`[&_${c}]:[rotate:180deg]`)})
+
+                return
+            }
+
+            $upsideDownLocale = false
+            flipElements.forEach(c => {document.body.classList.remove(`[&_${c}]:[rotate:180deg]`)})
+        })
     })
     afterNavigate(() => { // Cleanup stores and unlock page
         $popupOpened = false

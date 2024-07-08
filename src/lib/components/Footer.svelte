@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { mobile, reducedMotion } from "$lib/scripts/stores"
+    import { mobile, reducedMotion, upsideDownLocale } from "$lib/scripts/stores"
     import { onMount } from "svelte";
-    import { _ } from "svelte-i18n";
+    import { _, locale } from "svelte-i18n";
     import { inview } from "svelte-inview"
     import { linear } from "svelte/easing"
     import { draw } from "svelte/transition"
@@ -14,9 +14,9 @@
 
 <div 
     class="px-[22vw] mobile:px-12 pt-14 mobile:pt-8 pb-8 [&>div]:w-full h-[34vh] mobile:h-[60vh] relative flex mobile:flex-col mobile:items-center justify-evenly gap-16 mobile:gap-4 bg-footer-dark"
-    use:inview={{threshold: .65}} on:inview_enter={() => {showMMIcon = true}} on:inview_leave={() => {if (!$reducedMotion) showMMIcon = false}}
+    use:inview={{threshold: $mobile ? .5 : .65}} on:inview_enter={() => {showMMIcon = true}} on:inview_leave={() => {if (!$reducedMotion) showMMIcon = false}}
 >
-    <div class="flex flex-col justify-evenly mobile:items-center [&>p]:text-lg mobile:[&>p]:text-sm [&_a]:text-mm-lightblue [&_a:hover]:underline mobile:[&>*]:text-center">
+    <div class="flex flex-col justify-evenly mobile:items-center [&>p]:text-lg mobile:[&>p]:text-sm [&_a]:text-mm-lightblue [&_a:hover]:underline mobile:[&>*]:text-center{$upsideDownLocale ? " [&>*]:text-right" : ""}">
         <svg
             width="{$mobile ? 64 : 72}"
             height="{$mobile ? 64 : 72}"
@@ -49,7 +49,9 @@
                     {url: "https://stackshare.io/modern-modpacks/mm-stack", lang: "stack"},
                     {url: "https://www.youtube.com/watch?v=EJxCw3lDYiQ", lang: "cats"}
                 ] as link}
-                    <a href="{link.url}" target="_blank" rel="noopener noreferrer" class="opacity-50 hover:opacity-100 hover:underline motion-safe:duration-150">{$_("ui.footer.links." + link.lang)}</a>
+                    <a href="{link.url}" target="_blank" rel="noopener noreferrer" class="opacity-50 hover:opacity-100 hover:underline motion-safe:duration-150">
+                        <p class="text-base">{$_("ui.footer.links." + link.lang)}</p>
+                    </a>
                 {/each}
             </div>
 

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { navigating, page } from "$app/stores"
     import consts, { icons } from "$lib/scripts/consts"
-    import { mobile, previousRandomBanner, randomSplash, reducedMotion, scrollY } from "$lib/scripts/stores"
+    import { mobile, previousRandomBanner, randomSplash, reducedMotion, scrollY, upsideDownLocale } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
     import { randomChoice, toggleScroll } from "$lib/scripts/utils"
@@ -25,9 +25,12 @@
         for (let child of children!) {
             removeOpacity(child.children, withAnimation)
             if (!withAnimation && child.id!="animinheader") child.classList?.add("!duration-0", "!delay-0")
-            child.classList?.remove("opacity-0", "translate-y-10")
+            child.classList?.remove("opacity-0", "translate-y-10", "-translate-y-10")
         }
+
+        setTimeout(() => {animPlayed = true}, 1500)
     }
+    let animPlayed : boolean = false // Weather the opacity anim has played
 
     // Scroll a page down if navigating from another page, hiding the header
     $: if ($navigating?.to?.url==$page.url) setTimeout(() => scrollTo(0, $mobile ? 1 : innerHeight), 1)
@@ -119,8 +122,8 @@
 
         <img src="{consts.LOGO_URL}" class="w-64 h-64 mobile:w-52 mobile:h-52 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="logo">
         <span class="w-[60%] mobile:w-full flex flex-col mobile:items-center gap-3">
-            <h1 class="opacity-0 translate-y-10 duration-[.5s] delay-[.5s]">Modern Modpacks</h1>
-            <h3 class="opacity-0 translate-y-10 duration-[.5s] delay-[.75s]">{$randomSplash}</h3>
+            <h1 class="w-fit{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s; transition-delay: .5s;">Modern Modpacks</h1>
+            <h3 class="w-fit{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s;  transition-delay: .75s;">{$randomSplash}</h3>
             <SocialBar header={true} />
         </span>
         <ChevronsDown class="mobile:hidden absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
@@ -142,7 +145,7 @@
         </div>
     </div>
 
-    <div class="py-8 desktop:pl-10 motion-reduce:desktop:pr-10 bg-secondary-dark flex mobile:flex-col-reverse justify-between gap-10 mobile:relative mobile:z-30 mobile:[&>*]:text-center">
+    <div class="py-8 desktop:pl-10 motion-reduce:desktop:pr-10 bg-secondary-dark flex mobile:flex-col-reverse justify-between gap-10 mobile:relative mobile:z-30 mobile:[&>*]:text-center{$upsideDownLocale ? " desktop:[&>*]:text-right" : ""}">
         <div>
             <h2>{@html $_("projects.partner.heading")}</h2>
             <p class="mt-3 max-w-full">{@html $_("projects.partner.desc")}</p>
@@ -206,8 +209,9 @@
                 class="
                     desktop:absolute w-full mobile:h-[40vh] h-full flex flex-col justify-evenly mobile:justify-between mobile:pt-8
                     [&>span]:flex [&>span]:gap-8
-                    [&_a]:h-[8.5vh] [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:bg-primary-dark [&_a]:rounded-xl [&_a]:font-bold [&_a]:text-2xl
+                    [&_a]:h-[8.5vh] [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:bg-primary-dark [&_a]:rounded-xl
                     [&_a]:duration-200 desktop:[&_a:hover]:scale-110
+                    [&_p]:font-bold [&_p]:text-2xl
                 "
                 use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {$sideProjectsInView = true}}
             >
@@ -216,7 +220,7 @@
                         {#each [...Array(projects.length * 2).keys()] as i}
                         {@const project = projects[(i + (row * 2)) % projects.length]}
                             <a href="{project.link}" target="_blank" rel="noopener noreferrer" title="{$_("sideprojects."+project.id)}">
-                                {project.name} {project.icon}
+                                <p>{project.name} {project.icon}</p>
                             </a>
                         {/each}
                     </Marquee>

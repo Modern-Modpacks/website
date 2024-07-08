@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Coordinates, Mod } from "$lib/scripts/interfaces";
-    import { contextMenuOpenedBy, mobile, reducedMotion } from "$lib/scripts/stores"
+    import { contextMenuOpenedBy, mobile, reducedMotion, upsideDownLocale } from "$lib/scripts/stores"
     import { X } from "lucide-svelte";
     import { onMount } from "svelte";
     import { _ } from "svelte-i18n";
@@ -70,17 +70,17 @@
 
                         <img src="{mod?.icon_url}" alt="project logo" class="h-[30%] aspect-square">
                     {/if}
-                    <b class="text-2xl mobile:text-xl">{mod?.name}</b>
-                    <p class="text-lg w-[20ch] my-2">{mod?.summary}</p>
+                    <p class="font-bold text-2xl mobile:text-xl{$upsideDownLocale ? " text-right" : ""}">{mod?.name}</p>
+                    <p class="text-lg w-[20ch] my-2{$upsideDownLocale ? " text-right" : ""}">{mod?.summary}</p>
 
-                    <span class="[&>hr]:opacity-50 [&>a]:text-lg [&>a]:font-semibold [&>a]:duration-150 motion-safe:desktop:[&>a:hover]:text-xl">
+                    <span class="[&>hr]:opacity-50 [&_p]:text-lg [&_p]:font-semibold [&_p]:duration-150{$upsideDownLocale ? " [&_p]:text-right" : ""} motion-safe:desktop:[&_p:hover]:text-xl">
                         {#each [
                             {name: "CurseForge", link: "https://curseforge.com/minecraft/mc-mods/"+mod?.slug},
                             {name: "CurseRinth", link: "https://curserinth-tizu.vercel.app/mod/mod__"+mod?.slug},
                             {name: "Modrinth", link: "https://modrinth.com/mod/"+mod?.slug},
                             {name: "GitHub", link: mod?.link_urls.source.url}
                         ] as url}
-                            <a href="{url.link}" target="_blank" rel="noopener noreferrer">{$_("ui.openon")} {url.name}</a>
+                            <a href="{url.link}" target="_blank" rel="noopener noreferrer"><p>{$_("ui.openon")} {url.name}</p></a>
                             {#if url.name.toLowerCase()!="github"}<hr />{/if}
                         {/each}
                     </span>

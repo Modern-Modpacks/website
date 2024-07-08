@@ -8,6 +8,7 @@ export let reducedMotion = writable<boolean>(false)
 export let mobile = writable<boolean>(false)
 export let sortedLocales = writable<string[]>([])
 export let memeLocales = writable<string[]>([])
+export let upsideDownLocale = writable<boolean>(false)
 export let storedLocale = localStorageWritable<string>("locale", "")
 export let settingsOpened = writable<boolean>(false)
 export let popupOpened = writable<boolean>(false) // Weather the modpack popup is opened

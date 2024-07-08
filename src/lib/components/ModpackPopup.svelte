@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts"
     import type { Modpack, PartnerModpack } from "$lib/scripts/interfaces"
-    import { mobile, popupOpened, settingsOpened } from "$lib/scripts/stores"
+    import { mobile, popupOpened, settingsOpened, upsideDownLocale } from "$lib/scripts/stores"
     import { toggleScroll } from "$lib/scripts/utils";
     import { Globe, X } from "lucide-svelte"
     import { onMount } from "svelte"
@@ -99,9 +99,9 @@
             <img src="{icon}" alt="icon" title="{modpack.name}" class="absolute w-24 h-24 mobile:w-20 mobile:h-20 top-[26%] left-[3%] mobile:top-16 mobile:left-5 rounded-xl mobile:rounded-lg">
 
             <div class="p-7 mobile:p-5 pb-14 mt-4 mobile:mt-2 flex mobile:flex-col mobile:gap-6 desktop:h-[65%] box-border">
-                <div class="w-[36rem]">
+                <div class="w-[36rem]{$upsideDownLocale ? " [&>*]:text-right" : ""}">
                     <h2 class="mobile:text-2xl">{modpack.name}</h2>
-                    <h4 class="w-[45ch] mobile:text-xs">{$_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`)}</h4>
+                    <h4 class="w-[50ch] mobile:w-[45ch] mobile:text-xs">{$_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`)}</h4>
                     <p class="mt-6 mobile:mt-4 w-[50ch] mobile:w-[45ch] text-lg mobile:text-xs">{@html $_(`modpacks.${modpack.abbr?.toLowerCase()}.longdesc`)}</p>
                 </div>
 

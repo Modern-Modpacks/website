@@ -1,10 +1,10 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import consts from "$lib/scripts/consts";
-    import { memeLocales, popupOpened, sortedLocales } from "$lib/scripts/stores";
+    import { memeLocales, popupOpened, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores";
     import { toggleScroll } from "$lib/scripts/utils";
     import { ArrowLeft } from "lucide-svelte";
-    import { _, locale, locales } from "svelte-i18n";
+    import { _ } from "svelte-i18n";
     import Basic from "svelte-toggles/src/Basic";
 
     let element : HTMLElement | null // The actual sidebar
@@ -24,16 +24,18 @@
     <div class="absolute bottom-24 px-8 w-full">
         <span class="flex flex-col">
             {#each consts.PAGES as button}
-                <a 
+                <a
                     href={button.link} on:click={toggle}
-                    class="py-2 {$page.url.pathname=="/"+button.link ? `font-bold text-2xl text-${button.color}` : "font-semibold text-lg"}"
-                >{$_("ui.navbar."+button.title)}</a>
+                    class="py-2 {$page.url.pathname=="/"+button.link ? `[&>p]:font-bold [&>p]:text-2xl [&>p]:text-${button.color}` : "[&>p]:font-semibold [&>p]:text-lg"}"
+                >
+                    <p>{$_("ui.navbar."+button.title)}</p>
+                </a>
                 <hr />
             {/each}
         </span>
         <span class="mt-6 px-4 flex justify-between items-center">
             <span class="before:content-[''] before:block before:absolute before:-z-10 before:w-32 before:h-14 before:rounded-full before:bg-black before:shadow-md before:shadow-black before:opacity-65">
-                <select bind:value={$locale} class="relative w-32 h-14 py-4 indent-4 border-r-[1rem] border-transparent rounded-full focus:outline-none bg-primary-dark bg-opacity-55 backdrop-blur-xl font-bold [&>option]:text-black">
+                <select bind:value={$storedLocale} class="relative w-32 h-14 py-4 indent-4 border-r-[1rem] border-transparent rounded-full focus:outline-none bg-primary-dark bg-opacity-55 backdrop-blur-xl font-bold [&>option]:text-base{$_("name").length>8 ? " text-xs" : ""}{$upsideDownLocale ? " rotate-180" : ""}">
                     {#each $sortedLocales as l}
                         <option value="{l}">{$_("name", {locale: l})}</option>
                     {/each}

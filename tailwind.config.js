@@ -24,7 +24,11 @@ const mmColors = {
   "hm-gray": "#373a3e"
 }
 let mmSafelist = []
-Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "after:bg-"+c, "text-"+c, "hover:text-"+c)})
+Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "after:bg-"+c, "[&>p]:text-"+c, "hover:[&>p]:text-"+c)})
+
+const textElements = ["h1", "h2", "h3", "h4", "li", "p", "b"]
+let udSafelist = []
+textElements.forEach(e => {udSafelist.push(`[&_${e}]:[rotate:180deg]`)})
 
 export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
@@ -34,11 +38,13 @@ export default {
     "bg-text-dark", "text-selected-text-dark", "motion-safe:shadow-2xl",
     "motion-safe:desktop:hover:!scale-110", "motion-safe:desktop:hover:!scale-100",
     "motion-safe:!scale-[1.15]", "hover:opacity-0",
+    "xl:motion-safe:peer-hover:translate-y-[2rem]", "xl:motion-safe:peer-hover:translate-y-[-2rem]", "2xl:motion-safe:peer-hover:translate-y-[4.7rem]", "2xl:motion-safe:peer-hover:translate-y-[-4.7rem]",
+    "xl:motion-reduce:translate-y-[2rem]", "xl:motion-reduce:translate-y-[-2rem]", "2xl:motion-reduce:translate-y-[4.7rem]", "2xl:motion-reduce:translate-y-[-4.7rem]",
     "cursor-pointer", "cursor-not-allowed", "cursor-help",
     "overflow-x-scroll", "overflow-y-hidden", "touch-none",
-    "scale-100", "scale-75",
+    "scale-100", "scale-75", "translate-y-10", "-translate-y-10",
 
-    ...mmSafelist
+    ...udSafelist, ...mmSafelist
   ],
   theme: {
     screens: {

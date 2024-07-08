@@ -3,7 +3,7 @@
     import consts from "$lib/scripts/consts"
     import { type Modpack } from "$lib/scripts/interfaces"
     import modpacks from "$lib/json/modpacks.json5"
-    import { mobile, mousePos, popupOpened, reducedMotion, scrollY } from "$lib/scripts/stores"
+    import { mobile, mousePos, popupOpened, reducedMotion, scrollY, upsideDownLocale } from "$lib/scripts/stores"
     import ModpackPopup from "./ModpackPopup.svelte"
     import { _ } from "svelte-i18n"
     import BreathingIcon from "./BreathingIcon.svelte";
@@ -83,7 +83,10 @@
             {/if}
 
             {#if !$mobile}
-                <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible 2xl:motion-safe:peer-hover:translate-y-[4.7rem] xl:motion-safe:peer-hover:translate-y-[2rem] 2xl:motion-reduce:translate-y-[4.7rem] xl:motion-reduce:translate-y-[2rem] motion-safe:duration-150">
+                {@const twoXLTranslate = 4.7 * ($upsideDownLocale ? -1 : 1)}
+                {@const XLTranslate = 2 * ($upsideDownLocale ? -1 : 1)}
+
+                <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible 2xl:motion-safe:peer-hover:translate-y-[{twoXLTranslate}rem] xl:motion-safe:peer-hover:translate-y-[{XLTranslate}rem] 2xl:motion-reduce:translate-y-[{twoXLTranslate}rem] xl:motion-reduce:translate-y-[{XLTranslate}rem] motion-safe:duration-150">
                     {modpack.name ?? ""}
                 </h3>
             {/if}

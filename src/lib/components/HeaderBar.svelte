@@ -63,10 +63,9 @@
             after:hover:[&>a]:scale-y-[50%]
         ">
             {#each consts.PAGES as button}
-                <a 
-                    href={button.link}
-                    class="{$page.url.pathname=="/"+button.link ? "font-bold scale-[120%]" : "font-semibold opacity-80"} hover:text-{button.color} after:bg-{button.color}"
-                >{$_("ui.navbar."+button.title)}</a>
+                <a href={button.link} class="{$page.url.pathname=="/"+button.link ? "[&>p]:font-bold scale-[120%]" : "[&>p]:font-semibold opacity-80"} hover:[&>p]:text-{button.color} after:bg-{button.color}">
+                    <p class="text-base">{$_("ui.navbar."+button.title)}</p>
+                </a>
             {/each}
 
             <button class="ml-3 cursor-pointer h-full group" on:click={e => {e.stopPropagation(); toggleSettings(false)}}>
@@ -87,11 +86,13 @@
             [&>button]:h-10 [&>button]:rounded-xl [&>button]:duration-150
         ">
             {#each $sortedLocales as l}
-                <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : "bg-black bg-opacity-20"}" on:click={() => {$locale=l}}>{$_("name", {locale: l})}</button>
+                {@const name = $_("name", {locale: l})}
+                <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : "bg-black bg-opacity-20"}{name.length>8 ? " text-[0.8rem]" : ""}" on:click={() => {$storedLocale=l}}>{name}</button>
             {/each}
             <hr class="col-span-2 my-2">
             {#each $memeLocales as l}
-                <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : "bg-black bg-opacity-20"}" on:click={() => {$locale=l}}>{$_("name", {locale: l})}</button>
+             {@const name = $_("name", {locale: l})}
+                <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : "bg-black bg-opacity-20"}{name.length>8 ? " text-[0.8rem]" : ""}{l=="_upsidedown" ? " rotate-180" : ""}" on:click={() => {$storedLocale=l}}>{name}</button>
             {/each}
         </div>
         <span class="flex items-center justify-between">
