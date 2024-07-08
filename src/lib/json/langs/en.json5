@@ -50,7 +50,8 @@
             "links": {
                 "report": "Report a bug",
                 "status": "Service monitoring",
-                "stack": "Our tech stack"
+                "stack": "Our tech stack",
+                "cats": "Funny cats"
             }
         },
 
