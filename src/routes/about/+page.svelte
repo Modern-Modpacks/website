@@ -8,6 +8,7 @@
     import { getMemberAvatar } from "$lib/scripts/utils";
     import { tweened, type Tweened } from "svelte/motion";
     import { sineIn, sineOut } from "svelte/easing";
+    import { mobile } from "$lib/scripts/stores";
 
     // Members, served just as typescript likes it
     let members : Member[] = mems
@@ -48,9 +49,9 @@
 
         if (cardIn) {
             memberId = (memberId + 1) % members.length
-            cardTransition.set(inPercent, {duration: dur, easing: sineOut})
+            if (!$mobile) cardTransition.set(inPercent, {duration: dur, easing: sineOut})
         }
-        else cardTransition.set(outPercent, {duration: dur, easing: sineIn})
+        else if (!$mobile) cardTransition.set(outPercent, {duration: dur, easing: sineIn})
 
         setTimeout(cardCycle, dur + (stayDur * +cardIn))
     }
@@ -65,7 +66,7 @@
     })
 </script>
 
-<div class="h-[90vh]">
+<div class="desktop:h-[90vh]">
     <div class="absolute w-full h-[90vh] -z-10 overflow-hidden [&>span]:flex [&>span]:flex-wrap">
         <Marquee baseAnimDur={10000 * members.length} animMin={0} bind:animMax={wallScrollHeight} vertical={true}>
             {#each [...Array(8 * (wallRowCount ?? 0)).keys()] as i}
@@ -74,7 +75,7 @@
         </Marquee>
     </div>
 
-    <div class="w-full h-full pl-16 flex justify-evenly items-center bg-gradient-to-r from-[#000000f0] from-10% via-transparent to-70% to-[#000000f0]">
+    <div class="w-full h-full desktop:pl-16 flex mobile:flex-col justify-evenly items-center desktop:bg-gradient-to-r mobile:bg-black mobile:bg-opacity-80 from-[#000000f0] from-10% via-transparent to-70% to-[#000000f0]">
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <div class="w-full">
@@ -85,7 +86,7 @@
             </span>
         </div>
 
-        <div class="flex flex-col gap-5 items-center w-full [&>*]:text-center">
+        <div class="flex flex-col gap-5 items-center w-full mobile:bg-primary-dark mobile:px-10 mobile:py-8 [&>*]:text-center">
             <h2>{$_("about.members.heading")}</h2>
             <p>{@html $_("about.members.desc")}</p>
         </div>
