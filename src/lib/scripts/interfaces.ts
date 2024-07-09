@@ -43,7 +43,7 @@ export interface Project { // Used for side projects in projects.json5
     icon: string
     link: string
 }
-export interface PartnerModpack extends Modpack { // Used for partnered packs, since they don't have an icon by default
+export interface PartnerModpack extends Modpack { // Used for partnered packs. These can include a custom icon and a link to a different discord server
     icon?: string
 
     links?: {
@@ -51,4 +51,13 @@ export interface PartnerModpack extends Modpack { // Used for partnered packs, s
         source?: string
         discord?: string
     }
+}
+export interface Member { // Used for members in members.json5
+    name: string
+
+    avatar_url?: string
+    github_id?: number
+
+    titles?: string[]
+    socials?: string[]
 }

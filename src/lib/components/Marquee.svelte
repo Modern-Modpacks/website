@@ -7,11 +7,12 @@
 
     // Options
     export let backwards : boolean = false // By default animation plays right to left, weather to reverse that
+    export let vertical : boolean = false // Weather to play the animation vertically instead of horizontally
     export let baseAnimDur : number
     export let firstAnimLength : number = 0
     export let animMin : number
     export let animMax : number
-    export let stopDur : number
+    export let stopDur : number = 0
     export let inview : Writable<boolean> = writable(false)
     
     // Shenanigans
@@ -47,8 +48,8 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <span
     class="w-fit{$reducedMotion ? " overflow-x-scroll" : ""}"
-    style="transform: translateX({-$translate}rem);"
-    on:mouseenter={() => {if ($reducedMotion || $mobile || animCount<2) return; animPlaying = false; clearInterval(timeout ?? 0); translate.set(get(translate) + (2 * (backwards ? -1 : 1)), {duration: stopDur, easing: sineOut})}} on:mouseleave={() => {if (!animPlaying) doAnim(false)}}
+    style="transform: translate{vertical ? "Y" : "X"}({-$translate}rem);"
+    on:mouseenter={() => {if ($reducedMotion || $mobile || animCount<2 || !stopDur) return; animPlaying = false; clearInterval(timeout ?? 0); translate.set(get(translate) + (2 * (backwards ? -1 : 1)), {duration: stopDur, easing: sineOut})}} on:mouseleave={() => {if (!animPlaying) doAnim(false)}}
 >
     <slot />
 </span>

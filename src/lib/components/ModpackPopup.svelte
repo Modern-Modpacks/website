@@ -2,11 +2,12 @@
     import consts from "$lib/scripts/consts"
     import type { Modpack, PartnerModpack } from "$lib/scripts/interfaces"
     import { mobile, popupOpened, settingsOpened, upsideDownLocale } from "$lib/scripts/stores"
-    import { toggleScroll } from "$lib/scripts/utils";
+    import { getWebsiteIcon, toggleScroll } from "$lib/scripts/utils";
     import { Globe, X } from "lucide-svelte"
     import { onMount } from "svelte"
     import { _ } from "svelte-i18n"
     import Portal from "svelte-portal"
+    import Tag from "./Tag.svelte";
     
     export let modpack : Modpack
     export let icon : string
@@ -38,14 +39,8 @@
     let pullUp : boolean | null
 
     // Get the icons for download and source button depending on the url of the links
-    let downloadIcon : string | null = null
-    let sourceIcon : string | null = null
-    for (let k of Object.keys(consts.WEBSITE_ICONS)) {
-        let icon = consts.WEBSITE_ICONS[k as keyof typeof consts.WEBSITE_ICONS]
-
-        if (modpack.links?.download?.includes(k) && downloadIcon==null) downloadIcon = icon
-        if (modpack.links?.source?.includes(k) && sourceIcon==null) sourceIcon = icon
-    }
+    let downloadIcon : string | null = getWebsiteIcon(modpack.links?.download!)
+    let sourceIcon : string | null = getWebsiteIcon(modpack.links?.source!)
 
     // Escape on escape, duh
     onMount(() => {
@@ -112,7 +107,7 @@
                         {/if}
                         <div class="flex flex-wrap gap-2 justify-end mobile:justify-center mobile:mb-6">
                             {#each modpack.tags ?? [] as tag}
-                                <p class="w-auto text-base cursor-default bg-{color} bg-opacity-30 border-{color} border-2 rounded-xl px-2.5 py-0.5 motion-safe:desktop:hover:scale-110 duration-150">{$_("ui.tags."+tag)}</p>
+                                <Tag color={color} text={$_("ui.tags."+tag)} />
                             {/each}
                         </div>
                         {#if !$mobile && modpack.ram}

@@ -83,10 +83,9 @@
             {/if}
 
             {#if !$mobile}
-                {@const twoXLTranslate = 4.7 * ($upsideDownLocale ? -1 : 1)}
-                {@const XLTranslate = 2 * ($upsideDownLocale ? -1 : 1)}
+                {@const translateAmount = 4 * ($upsideDownLocale ? -1 : 1)}
 
-                <h3 class="absolute top-16 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible 2xl:motion-safe:peer-hover:translate-y-[{twoXLTranslate}rem] xl:motion-safe:peer-hover:translate-y-[{XLTranslate}rem] 2xl:motion-reduce:translate-y-[{twoXLTranslate}rem] xl:motion-reduce:translate-y-[{XLTranslate}rem] motion-safe:duration-150">
+                <h3 class="absolute bottom-0 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible motion-safe:peer-hover:translate-y-[{translateAmount}rem] motion-reduce:translate-y-[{translateAmount}rem] motion-safe:duration-150">
                     {modpack.name ?? ""}
                 </h3>
             {/if}
