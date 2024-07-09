@@ -15,6 +15,7 @@
         "dinner time",
         "Compromises on the uncompromisable!",
         "Hellish and devilish!",
+        "Minecraft Potato Edition",
 
         "Asbestos free since 2023!",
         "Not sponsored!",
@@ -72,7 +73,26 @@
             "gt": "GregTech"
         },
         "titles": {
-            
+            "founder": "Founder",
+            "ceo": "Current owner",
+            "cao": "Cheif automation officer",
+
+            "hm": "HM member",
+            "utilcreator": "Utility creator",
+
+            "scripter": "KubeJS scripter",
+            "multiblocker": "Multiblock expert",
+
+            "pixelartist": "Pixel-artist",
+
+            "questwriter": "Questwriter",
+            "lore": "Lore expert",
+
+            "webdev": "Web developer",
+            "webmaintainer": "Website maintainer",
+
+            "frontendconsult": "Front-end consultant",
+            "realismconsult": "Realism consultant"
         },
 
         "ram": {

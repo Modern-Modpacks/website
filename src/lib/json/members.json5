@@ -4,29 +4,32 @@
 
         "github_id": 79367505,
 
-        "titles": [],
-        "socials": ["https://github.com/Gcat101", "https://www.curseforge.com/members/g_cat/projects", "https://modrinth.com/user/G_cat", "https://lichess.org/@/G_cat101"]
+        "titles": ["founder", "ceo", "scripter", "hm", "utilcreator", "webdev", "lore", "questwriter", "pixelartist"],
+        "socials": ["https://github.com/Gcat101", "https://www.curseforge.com/members/g_cat", "https://modrinth.com/user/G_cat", "https://www.youtube.com/channel/UCOH7EaAnk1HJhbJNPRCVC2g", "https://lichess.org/@/G_cat101"]
     },
     {
         "name": "Rainbuu",
 
         "github_id": 77862418,
 
-        "titles": []
+        "titles": ["scripter", "hm", "multiblocker", "realismconsult"],
+        "socials": ["https://rainbuu.space", "https://github.com/RealRainbuu", "https://www.curseforge.com/members/rainbuu", "https://modrinth.com/user/RealRainbuu", "https://www.youtube.com/channel/UCUbKsgKCm1gKQDCOcrDTBGw"]
     },
     {
         "name": "Kasualix",
 
         "github_id": 110756250,
 
-        "titles": []
+        "titles": ["hm"],
+        "socials": ["https://github.com/Kasualix", "https://www.curseforge.com/members/potato__boy"]
     },
     {
         "name": "Glomdom",
 
         "github_id": 103685817,
 
-        "titles": []
+        "titles": ["cao", "scripter"],
+        "socials": ["https://glomdom.is-a.dev", "https://github.com/glomdom"]
     },
     {
         "name": "Unnecessary",
@@ -34,7 +37,8 @@
         "avatar_url": "https://cdn.discordapp.com/icons/1216098761193820290/1253b917bd8437b234452b8640f3c822.png?size=4096",
         "github_id": 143959812,
 
-        "titles": []
+        "titles": ["scripter", "utilcreator", "lore"],
+        "socials": ["https://github.com/unnecessarymb", "https://www.curseforge.com/members/unnecessary"]
     },
     {
         "name": "Wolfieboy09",
@@ -42,20 +46,23 @@
         "avatar_url": "https://cdn.discordapp.com/avatars/972269221872533524/b0875f62c471e33f000eb7206bf78558.png?size=512",
         "github_id": 105564186,
 
-        "titles": []
+        "titles": ["scripter"],
+        "socials": ["https://github.com/wolfieboy09", "https://www.curseforge.com/members/wolfieboy09", "https://modrinth.com/user/Wolfieboy09"]
     },
     {
         "name": "ZeldaLord",
 
         "github_id": 83875893,
 
-        "titles": []
+        "titles": ["questwriter"],
+        "socials": ["https://github.com/ZeldaLord1", "https://www.youtube.com/channel/UCHkKqiJqKVF89hLAcx9VNqQ", "https://www.reddit.com/user/ZeldaLord_/"]
     },
     {
         "name": "Tizu",
 
         "github_id": 60812901,
 
-        "titles": []
+        "titles": ["webdev", "frontendconsult"],
+        "socials": ["https://tizudev.vercel.app", "https://github.com/tizu69", ""]
     }
 ]

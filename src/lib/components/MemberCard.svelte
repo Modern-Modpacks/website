@@ -25,10 +25,10 @@
     const possibleColors : string[] = consts.COLORS.filter(v => !removeColors.includes(v))
 </script>
 
-<span class="w-72 flex flex-col gap-4">
-    <img src="{getMemberAvatar(member)}" alt="avatar" class="rounded-3xl bg-primary-dark">
+<span class="w-[25rem] flex flex-col gap-4">
+    <img src="{getMemberAvatar(member)}" alt="avatar" class="w-72 rounded-3xl bg-primary-dark">
     <h2 class="w-fit">{member.name}</h2>
-    <span class="flex flex-wrap gap-1.5 [&>p]:w-fit">
+    <span class="flex flex-wrap gap-2.5 [&>p]:w-fit">
         {#each Object.entries(member.titles ?? []) as [i, title]}
             {@const color = possibleColors[(+i * Math.floor(possibleColors.length / Math.min(member.titles?.length ?? 0, possibleColors.length))) % possibleColors.length]}
             <Tag text="{$_("ui.titles."+title)}" color="mm-{color}"/>

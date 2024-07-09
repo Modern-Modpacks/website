@@ -28,12 +28,14 @@
     const outDur : number = 1000 // Leave duration
     const outPercent : number = 150 // Translate percentage when the card is hidden
     const inPercent : number = 0 // Translate percentage when the card is shown
+    const permMemberId : number | null = null // Permanent member id that doesn't change
+    // const permMemberId : number | null = 0 // DEBUG, don't turn on in prod
     let cardAnimPlaying : boolean = false // Weather the card anim is playing
     let cardTransition : Tweened<number> = tweened(0)
     let cardIn : boolean = true // Weather the card is shown
     let mouseOverCard : boolean = false // Weather the mouse is hovering over the cards
     let memberId : number // The id of the shown member
-    $: memberId = 0
+    $: memberId = permMemberId ?? 0
     let cardCycle = () => { // Do a cycle of animation
         if (cardIn && mouseOverCard) {
             cardAnimPlaying = false
@@ -52,7 +54,7 @@
 
         setTimeout(cardCycle, dur + (stayDur * +cardIn))
     }
-    let startCardCycles = () => {setTimeout(cardCycle, stayDur)} // Start card animations
+    let startCardCycles = () => {if (permMemberId==null) setTimeout(cardCycle, stayDur)} // Start card animations
 
     onMount(() => {
         // Recalculate wall on mount and resize
@@ -72,7 +74,7 @@
         </Marquee>
     </div>
 
-    <div class="w-full h-full pl-16 flex justify-evenly items-center bg-gradient-to-r from-black via-transparent to-70% to-[#000000f0]">
+    <div class="w-full h-full pl-16 flex justify-evenly items-center bg-gradient-to-r from-[#000000f0] from-10% via-transparent to-70% to-[#000000f0]">
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <div class="w-full">
