@@ -13,7 +13,7 @@
 </script>
 
 <div 
-    class="px-[22vw] mobile:px-12 pt-14 mobile:pt-8 pb-8 [&>div]:w-full h-[34vh] mobile:h-[60vh] relative flex mobile:flex-col mobile:items-center justify-evenly gap-16 mobile:gap-4 bg-footer-dark"
+    class="px-[22vw] mobile:px-12 pt-14 mobile:pt-8 pb-8 [&>div]:w-full h-80 mobile:h-96 relative flex mobile:flex-col mobile:items-center justify-evenly gap-16 mobile:gap-4 bg-footer-dark"
     use:inview={{threshold: $mobile ? .5 : .65}} on:inview_enter={() => {showMMIcon = true}} on:inview_leave={() => {if (!$reducedMotion) showMMIcon = false}}
 >
     <div class="flex flex-col justify-evenly mobile:items-center [&>p]:text-lg mobile:[&>p]:text-sm [&_a]:text-mm-lightblue [&_a:hover]:underline mobile:[&>*]:text-center{$upsideDownLocale ? " [&>*]:text-right" : ""}">
@@ -45,7 +45,7 @@
             <div class="h-[63%] flex flex-col justify-evenly items-end [&>a]:w-fit">
                 {#each [
                     {url: "https://github.com/Modern-Modpacks/website/issues/new", lang: "report"},
-                    {url: "https://status.modernmodpacks.site/", lang: "status"},
+                    {url: "https://status.modernmodpacks.site", lang: "status"},
                     {url: "https://stackshare.io/modern-modpacks/mm-stack", lang: "stack"},
                     {url: "https://www.youtube.com/watch?v=EJxCw3lDYiQ", lang: "cats"}
                 ] as link}
