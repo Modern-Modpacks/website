@@ -54,7 +54,7 @@
 
         "github_id": 83875893,
 
-        "titles": ["questwriter"],
+        "titles": ["questwriter", "scripter"],
         "socials": ["https://github.com/ZeldaLord1", "https://www.youtube.com/channel/UCHkKqiJqKVF89hLAcx9VNqQ", "https://www.reddit.com/user/ZeldaLord_/"]
     },
     {
@@ -63,6 +63,6 @@
         "github_id": 60812901,
 
         "titles": ["webdev", "frontendconsult"],
-        "socials": ["https://tizudev.vercel.app", "https://github.com/tizu69", ""]
+        "socials": ["https://tizudev.vercel.app", "https://github.com/tizu69"]
     }
 ]
