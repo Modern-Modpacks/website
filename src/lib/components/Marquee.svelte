@@ -6,8 +6,8 @@
     import { get, writable, type Writable } from "svelte/store"
 
     // Options
-    export let backwards : boolean = false // By default animation plays right to left, weather to reverse that
-    export let vertical : boolean = false // Weather to play the animation vertically instead of horizontally
+    export let backwards : boolean = false // By default animation plays right to left, Whether to reverse that
+    export let vertical : boolean = false // Whether to play the animation vertically instead of horizontally
     export let baseAnimDur : number
     export let firstAnimLength : number = 0
     export let animMin : number

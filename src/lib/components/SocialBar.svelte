@@ -3,7 +3,7 @@
     import type { Social } from "$lib/scripts/interfaces"
     import BreathingIcon from "./BreathingIcon.svelte"
 
-    export let header : boolean = false // Specifies weather the social bar is in the header or in "about us", shortens the social list if in header
+    export let header : boolean = false // Specifies Whether the social bar is in the header or in "about us", shortens the social list if in header
     const socials : {[key: string]: Social} = consts.SOCIALS // Socials, digested for TS
 </script>
 

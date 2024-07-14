@@ -17,7 +17,7 @@
     let modpack : Modpack
     $: modpack = modpacks[index]
     let discovered : boolean
-    $: discovered = !!Object.keys(modpack).length // Weather the modpack is accessible to the public or not
+    $: discovered = !!Object.keys(modpack).length // Whether the modpack is accessible to the public or not
     let path : string
     $: path = `${('0'+(index+1)).slice(-2)}${consts.COLORS[index]}` // The pointer to the pack's icon on the github asset repo (https://github.com/Modern-Modpacks/assets)
 

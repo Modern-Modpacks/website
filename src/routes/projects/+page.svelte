@@ -30,7 +30,7 @@
 
         setTimeout(() => {animPlayed = true}, 1500)
     }
-    let animPlayed : boolean = false // Weather the opacity anim has played
+    let animPlayed : boolean = false // Whether the opacity anim has played
 
     // Scroll a page down if navigating from another page, hiding the header
     $: if ($navigating?.to?.url==$page.url) setTimeout(() => scrollTo(0, $mobile ? 1 : innerHeight), 1)
@@ -52,8 +52,8 @@
     })
     generateBanner(possibleBanners)
 
-    let modpacksHovered : boolean = false // Weather or not the left of the modpack section is hovered, activates the following mouse effect
-    let shouldModsAnimPlay : Writable<boolean> = writable<boolean>(false) // Weather or not the spin animation for the mods section should play
+    let modpacksHovered : boolean = false // Whether or not the left of the modpack section is hovered, activates the following mouse effect
+    let shouldModsAnimPlay : Writable<boolean> = writable<boolean>(false) // Whether or not the spin animation for the mods section should play
 
     // Stuff needed for the mods anim
     const layerFirst = 8 // How many items are on the first circle layer
@@ -65,7 +65,7 @@
 
     let partnerQueueLen : number | null // The length of the partnered modpacks section
     let modContextMenu : ModContextMenu | null // The context menu element covering the left half of the HM section
-    let sideProjectsInView : Writable<boolean> = writable(false) // Weather the side projects section is visible in viewport or not, used to start the marquee animation
+    let sideProjectsInView : Writable<boolean> = writable(false) // Whether the side projects section is visible in viewport or not, used to start the marquee animation
 
     onMount(() => {
         let nav = $navigating // idk

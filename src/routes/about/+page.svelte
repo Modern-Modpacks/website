@@ -31,10 +31,10 @@
     const inPercent : number = 0 // Translate percentage when the card is shown
     const permMemberId : number | null = null // Permanent member id that doesn't change
     // const permMemberId : number | null = 0 // DEBUG, don't turn on in prod
-    let cardAnimPlaying : boolean = false // Weather the card anim is playing
+    let cardAnimPlaying : boolean = false // Whether the card anim is playing
     let cardTransition : Tweened<number> = tweened(0)
-    let cardIn : boolean = true // Weather the card is shown
-    let mouseOverCard : boolean = false // Weather the mouse is hovering over the cards
+    let cardIn : boolean = true // Whether the card is shown
+    let mouseOverCard : boolean = false // Whether the mouse is hovering over the cards
     let memberId : number // The id of the shown member
     $: memberId = permMemberId ?? 0
     let cardCycle = () => { // Do a cycle of animation

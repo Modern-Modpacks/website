@@ -7,7 +7,7 @@
     import { draw } from "svelte/transition"
     import SocialBar from "./SocialBar.svelte";
 
-    // Weather to show the MM logo svg
+    // Whether to show the MM logo svg
     let showMMIcon : boolean = false
     onMount(() => {setTimeout(() => {showMMIcon = $reducedMotion}, 1)}) // reducedMotion support
 </script>

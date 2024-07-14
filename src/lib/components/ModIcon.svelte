@@ -26,7 +26,7 @@
     let radius : number
     $: radius = ($mobile ? 230 : 250) + ((layer + 1) ** ($mobile ? 6 : 7))
 
-    let firstBarrelRollDone : boolean = false // Weather the first anim has already occurred
+    let firstBarrelRollDone : boolean = false // Whether the first anim has already occurred
     let duration : number = defaultRotDuration + (rotDurationAdd * layer)
     let rotCount : Tweened<number> = tweened(0, {duration: duration})
     let rotAmount : number 

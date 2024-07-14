@@ -8,7 +8,7 @@
     import type { Writable } from "svelte/store";
 
     export let aboutToClose : boolean = true // Set before $contextMenuOpenedBy is unset, required by the parent to determine if it's time to continue the spin anim
-    export let spinAnimHovered : boolean = false // Weather the parent is hovered, if not and the context menu is escaped, continue the animation
+    export let spinAnimHovered : boolean = false // Whether the parent is hovered, if not and the context menu is escaped, continue the animation
     export let shouldSpinAnimPlay : Writable<boolean>
 
     let element : HTMLElement | null // The main div
