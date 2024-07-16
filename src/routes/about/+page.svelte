@@ -92,3 +92,12 @@
         </div>
     </div>
 </div>
+<div class="w-full py-8 bg-primary-dark flex justify-evenly">
+    <div class="w-full">
+        
+    </div>
+    <div class="flex flex-col gap-5 items-center w-full [&>*]:text-center">
+        <h2>{$_("about.translators.heading")}</h2>
+        <p>{@html $_("about.translators.desc")}</p>
+    </div>
+</div>
