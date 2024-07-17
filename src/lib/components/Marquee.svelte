@@ -13,6 +13,7 @@
     export let animMin : number
     export let animMax : number
     export let stopDur : number = 0
+    export let stopDist : number = 2
     export let inview : Writable<boolean> = writable(false)
     
     // Shenanigans
@@ -49,7 +50,7 @@
 <span
     class="w-fit{$reducedMotion ? " overflow-x-scroll" : ""}"
     style="transform: translate{vertical ? "Y" : "X"}({-$translate}rem);"
-    on:mouseenter={() => {if ($reducedMotion || $mobile || animCount<2 || !stopDur) return; animPlaying = false; clearInterval(timeout ?? 0); translate.set(get(translate) + (2 * (backwards ? -1 : 1)), {duration: stopDur, easing: sineOut})}} on:mouseleave={() => {if (!animPlaying) doAnim(false)}}
+    on:mouseenter={() => {if ($reducedMotion || $mobile || animCount<2 || !stopDur) return; animPlaying = false; clearInterval(timeout ?? 0); translate.set(get(translate) + (stopDist * (backwards ? -1 : 1)), {duration: stopDur, easing: sineOut})}} on:mouseleave={() => {if (!animPlaying) doAnim(false)}}
 >
     <slot />
 </span>
