@@ -5,7 +5,7 @@
     import { inview } from "svelte-inview"
     import { linear } from "svelte/easing"
     import { draw } from "svelte/transition"
-    import SocialBar from "./SocialBar.svelte";
+    import SocialsBar from "./SocialsBar.svelte";
 
     // Whether to show the MM logo svg
     let showMMIcon : boolean = false
@@ -55,10 +55,10 @@
                 {/each}
             </div>
 
-            <SocialBar />
+            <SocialsBar />
         </div>
     {:else}
-        <SocialBar />
+        <SocialsBar />
     {/if}
 
     <p class="absolute bottom-0 w-fit text-center text-transparent text-sm">greg</p>

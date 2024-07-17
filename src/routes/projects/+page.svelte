@@ -13,7 +13,7 @@
     import partneredModpacks from "$lib/json/partner_modpacks.json5"
     import projs from "$lib/json/projects.json5"
     import PartnerModpack from "$lib/components/PartnerModpack.svelte"
-    import SocialBar from "$lib/components/SocialBar.svelte"
+    import SocialsBar from "$lib/components/SocialsBar.svelte"
     import ModContextMenu from "$lib/components/ModContextMenu.svelte"
     import { inview } from "svelte-inview";
     import Marquee from "$lib/components/Marquee.svelte";
@@ -124,7 +124,7 @@
         <span class="w-[60%] mobile:w-full flex flex-col mobile:items-center gap-3">
             <h1 class="w-fit{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s; transition-delay: .5s;">Modern Modpacks</h1>
             <h3 class="w-fit{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s;  transition-delay: .75s;">{$randomSplash}</h3>
-            <SocialBar header={true} />
+            <SocialsBar header={true} />
         </span>
         <ChevronsDown class="mobile:hidden absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
     </div>
