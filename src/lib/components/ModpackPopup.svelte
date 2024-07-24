@@ -8,11 +8,13 @@
     import { _ } from "svelte-i18n"
     import Portal from "svelte-portal"
     import Tag from "./Tag.svelte";
+    import { navigating } from "$app/stores";
     
     export let modpack : Modpack
     export let icon : string
     export let color : string
     export let partner : boolean
+    export let firstOfType : boolean | null = null
 
     let partnerPack : PartnerModpack | null = null
     if (partner) partnerPack = modpack as PartnerModpack
@@ -24,10 +26,14 @@
 
         toggleScroll(false)
 
-        // Reset mobile pull
-        if (shown) pullAmount = startPull
+        if (shown) {
+            pullAmount = startPull // Reset mobile pull
+            window.location.hash = modpack.abbr?.toLowerCase()! // Set location hash
+        }
+        else history.pushState("", document.title, window.location.pathname + window.location.search) // Remove location hash
     }
     let shown : boolean = false
+    let loading : boolean = true
 
     // Mobile pull functionality
     const startPull : number = 200
@@ -42,11 +48,17 @@
     let downloadIcon : string | null = getWebsiteIcon(modpack.links?.download!)
     let sourceIcon : string | null = getWebsiteIcon(modpack.links?.source!)
 
-    // Escape on escape, duh
     onMount(() => {
+        // Escape on escape, duh
         document.addEventListener("keydown", e => {
             if (shown && e.key=="Escape" && !$settingsOpened) toggle()
         })
+
+        if (!$navigating && (!partner || firstOfType) && window.location.hash.replace("#", "").toLowerCase()==modpack.abbr?.toLowerCase()) { // Enable the popup if the pack in the location hash is the current one
+            scrollTo(0, innerHeight)
+            setTimeout(toggle, 1)
+        }
+        setTimeout(() => {loading = false}, 10)
     })
 </script>
 
@@ -54,9 +66,9 @@
 <Portal target="body">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="{shown ? "opacity-100" : "invisible pointer-events-none desktop:opacity-0 mobile:!bg-transparent"} h-[100vh] w-[100vw] fixed top-0 left-0 flex items-center justify-center motion-safe:duration-500 motion-safe:bg-black motion-safe:bg-opacity-50 z-40" on:click={toggle}>
+    <div class="{shown ? "opacity-100" : "invisible pointer-events-none desktop:opacity-0 mobile:!bg-transparent"} h-[100vh] w-[100vw] fixed top-0 left-0 flex items-center justify-center {!loading ? "motion-safe:duration-500" : ""} motion-safe:bg-black motion-safe:bg-opacity-50 z-40" on:click={toggle}>
         <div bind:this={popupContent}
-            class="bg-primary-dark shadow-black shadow-2xl desktop:rounded-xl mobile:rounded-t-xl h-[800px] w-[850px] mobile:h-fit mobile:w-[100vw] mobile:fixed mobile:pb-[1000px] {pull ? "" : "motion-safe:duration-500"} {shown ? "scale-100" : "desktop:scale-75 mobile:top-[100%]"}"
+            class="bg-primary-dark shadow-black shadow-2xl desktop:rounded-xl mobile:rounded-t-xl h-[800px] w-[850px] mobile:h-fit mobile:w-[100vw] mobile:fixed mobile:pb-[1000px] {pull || loading ? "" : "motion-safe:duration-500"} {shown ? "scale-100" : "desktop:scale-75 mobile:top-[100%]"}"
             style="{$mobile && shown ? `top: ${pullAmount}px;` : ""}"
             on:click={e => {e.stopPropagation()}} on:touchmove={e => {
                 if (!prevTouch) {

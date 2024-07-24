@@ -9,6 +9,8 @@
     import { tweened, type Tweened } from "svelte/motion";
     import { sineIn, sineOut } from "svelte/easing";
     import { mobile, reducedMotion } from "$lib/scripts/stores";
+    import consts from "$lib/scripts/consts";
+    import TranslatorMap from "$lib/components/TranslatorMap.svelte";
 
     // Members, served just as typescript likes it
     let members : Member[] = mems
@@ -95,17 +97,17 @@
     </div>
 </div>
 <div class="relative w-full bg-secondary-dark">
-    <div class="relative z-10 w-[60%] bg-gradient-to-r from-primary-dark from-75% pointer-events-none">
+    <div class="relative z-10 w-[60%] bg-gradient-to-r from-primary-dark from-70% pointer-events-none">
         <div class="flex flex-col gap-5 items-center w-fit py-8 ml-10 [&>*]:text-center pointer-events-auto">
             <h2>{$_("about.translators.heading")}</h2>
             <p>{@html $_("about.translators.desc")}</p>
         </div>
     </div>
     
-    <div class="absolute top-0 right-0 h-full [&>span]:flex [&>span]:h-full [&_img]:h-[125%] [&_img]:scale-x-[100.5%] [&_img]:rendering-pixelated">
+    <div class="absolute top-0 right-0 h-full [&>span]:flex [&>span]:items-center [&>span]:h-full">
         <Marquee baseAnimDur={30000} animMin={0} animMax={(map?.getBoundingClientRect().width ?? 0) / 16} stopDur={500} stopDist={1}>
             {#each [...Array(3).keys()] as _}
-                <img src="https://t4.ftcdn.net/jpg/03/28/89/61/360_F_328896165_i0TWGgJTtDWyIjKhYKcAUoA0rKiXYyx6.jpg" alt="map" bind:this={map}>
+                <!-- <TranslatorMap bind:element={map} /> -->
             {/each}
         </Marquee>
     </div>
