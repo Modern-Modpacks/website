@@ -156,7 +156,7 @@
         >
             <Marquee baseAnimDur={2500 * ((partnerQueueLen ?? 0) - 6)} animMin={0} animMax={11.5 * ((partnerQueueLen ?? 0) - 6)} stopDur={600}>
                 {#each [...Array(partnerQueueLen).keys()] as i}
-                    <PartnerModpack modpack={partneredModpacks[i % partneredModpacks.length]} firstOfType={!i} />
+                    <PartnerModpack modpack={partneredModpacks[i % partneredModpacks.length]} firstOfType={i < partneredModpacks.length} />
                 {/each}
             </Marquee>
         </div>
