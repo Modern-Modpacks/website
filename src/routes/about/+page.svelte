@@ -105,7 +105,7 @@
     </div>
     
     <div class="absolute top-0 left-0 h-full [&>span]:flex [&>span]:items-center [&>span]:h-full">
-        <Marquee baseAnimDur={30000} animMin={0} animMax={(map?.getBoundingClientRect().width ?? 0) / 16} stopDur={500} stopDist={1.5} backwards={true}>
+        <Marquee baseAnimDur={30000} animMin={0} animMax={(map?.getBoundingClientRect().width ?? 0) / 16} stopDur={1000} stopDist={1.5} backwards={true}>
             {#each [...Array(3).keys()] as _}
                 <TranslatorMap bind:element={map} />
             {/each}
