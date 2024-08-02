@@ -107,7 +107,7 @@ const consts = {
     ROUNDED_LOGO_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/rounded_logo.png",
 
     // Url of the images used for the translator map
-    MAP_URL: "https://static.planetminecraft.com/files/image/minecraft/project/2021/390/13823899-kearth-copy_xl.webp",
+    MAP_URL: "https://static.planetminecraft.com/files/image/minecraft/project/2023/513/16677278-image_xl.webp",
     PIN_URL: "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/Icons/Other/pin.png"
 }
 const icons : {[key: string]: string} = consts.WEBSITE_ICONS // Icons again, but now in a way TS likes it
