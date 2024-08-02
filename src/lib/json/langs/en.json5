@@ -135,6 +135,9 @@
         "pissmc": "A parody modloader made for the oldest accessible version of Minecraft, rd-132211",
         "awesome": "An curated awesome-esque list of useful utilities related to modpack development"
     },
+    "languages": {
+        "ru": "Russian"
+    },
 
     "projects": {
         "modpacks": {
@@ -168,7 +171,7 @@
     },
     "about": {
         "members": {
-            "heading": "This is who we are",
+            "heading": "Meet the crew",
             "desc": "<b>This is us!</b> We are a group of volunteers, each providing their skills to, in some way, contribute and help our various endeavouros reach their final goals.\n\n\
             <b>Modern Modpacks</b> strives to be a democratic organization, where no single person has the right to say in which direction a certain project should be headed in. <b>When developing modpacks, we use a comprehensive idea pipeline</b>, a major part of which is the voting process, where at least half of all members must vote on a proposal at hand.\n\n\
             <b>Members are also free</b> to choose which projects they want to be involved in, or even start projects themselves. <b>For the little money we get,</b> everybody still gets paid proportionally to the amount of work they've put into getting the final product out.\n\n\

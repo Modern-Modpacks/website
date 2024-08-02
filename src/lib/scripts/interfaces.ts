@@ -61,3 +61,7 @@ export interface Member { // Used for members in members.json5
     titles?: string[]
     socials?: string[]
 }
+export interface Pin { // Used for pins on the translator map
+    coords: Coordinates,
+    lang: string
+}
