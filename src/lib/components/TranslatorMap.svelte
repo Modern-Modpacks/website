@@ -7,8 +7,12 @@
 
     const pins : p[] = [
         {
-            coords: {x: 769, y: 182},
+            coords: {x: 696, y: 75},
             lang: "ru"
+        },
+        {
+            coords: {x: 615, y: 90},
+            lang: "de"
         }
     ]
 </script>

@@ -136,7 +136,8 @@
         "awesome": "An curated awesome-esque list of useful utilities related to modpack development"
     },
     "languages": {
-        "ru": "Russian"
+        "ru": "Russian",
+        "de": "German"
     },
 
     "projects": {
