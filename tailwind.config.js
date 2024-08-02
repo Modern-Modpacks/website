@@ -24,7 +24,7 @@ const mmColors = {
   "hm-gray": "#373a3e"
 }
 let mmSafelist = []
-Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "after:bg-"+c, "[&>p]:text-"+c, "hover:[&>p]:text-"+c)})
+Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "text-"+c, "hover:text-"+c)})
 
 const textElements = ["h1", "h2", "h3", "h4", "li", "p", "b"]
 let udSafelist = []
