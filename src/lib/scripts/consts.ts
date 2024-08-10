@@ -79,7 +79,7 @@ const consts = {
             header: false,
         },
         youtube: {
-            url: "https://www.youtube.com/channel/UCgfqMIZPXL64d7HDhM8_Dfg",
+            url: "https://www.youtube.com/@ModernModpacks",
             title: "YouTube",
             header: true
         },
