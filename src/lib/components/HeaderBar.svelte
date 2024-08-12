@@ -63,7 +63,7 @@
                         {$page.url.pathname=="/"+button.link ? "font-bold scale-[120%]" : "font-semibold opacity-80"}
                         text-base duration-100 animate-ease-out animate-alternate hover:text-{button.color} hover:scale-[120%]
                     ">{$_("ui.navbar."+button.title)}</p>
-                    <div class="absolute bg-{button.color} w-full h-1.5 bottom-[-.6vh] group-hover:bottom-0 duration-100" />
+                    <div class="absolute bg-{button.color} w-full h-1.5 -bottom-2 group-hover:bottom-0 duration-100" />
                 </a>
             {/each}
 
