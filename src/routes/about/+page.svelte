@@ -8,7 +8,7 @@
     import { getMemberAvatar } from "$lib/scripts/utils";
     import { tweened, type Tweened } from "svelte/motion";
     import { sineIn, sineOut } from "svelte/easing";
-    import { mobile, reducedMotion } from "$lib/scripts/stores";
+    import { activatedPin, mobile, reducedMotion } from "$lib/scripts/stores";
     import consts from "$lib/scripts/consts";
     import TranslatorMap from "$lib/components/TranslatorMap.svelte";
 
@@ -105,7 +105,7 @@
     </div>
     
     <div class="desktop:absolute top-0 left-0 h-full mobile:h-[335px] [&>span]:flex [&>span]:items-center [&>span]:h-full">
-        <Marquee baseAnimDur={30000} animMin={0} animMax={(map?.getBoundingClientRect().width ?? 0) / 16} stopDur={1000} stopDist={1.5} backwards={true}>
+        <Marquee baseAnimDur={30000} animMin={0} animMax={(map?.getBoundingClientRect().width ?? 0) / 16} stopDur={1000} stopDist={1.5} backwards={true} shouldPlay={!$activatedPin}>
             {#each [...Array(3).keys()] as _}
                 <TranslatorMap bind:element={map} />
             {/each}
