@@ -7,25 +7,29 @@
 
     const pins : p[] = [
         {
-            coords: {x: 696, y: 75},
+            coords: {x: 696, y: 81},
             lang: "ru"
         },
         {
-            coords: {x: 615, y: 90},
+            coords: {x: 615, y: 96},
             lang: "de"
         },
-        // {
-        //     coords: {x: 615, y: 90},
-        //     lang: "fr"
-        // },
-        // {
-        //     coords: {x: 615, y: 90},
-        //     lang: "es"
-        // },
-        // {
-        //     coords: {x: 615, y: 90},
-        //     lang: "cn"
-        // }
+        {
+            coords: {x: 687, y: 141},
+            lang: "tr"
+        },
+        {
+            coords: {x: 586, y: 104},
+            lang: "fr"
+        },
+        {
+            coords: {x: 564, y: 138},
+            lang: "es"
+        },
+        {
+            coords: {x: 961, y: 134},
+            lang: "cn"
+        }
     ]
 </script>
 

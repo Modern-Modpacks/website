@@ -15,3 +15,4 @@ export let popupOpened = writable<boolean>(false) // Whether the modpack popup i
 export let contextMenuOpenedBy = writable<number | null>(null) // Whether the mod context menu is opened
 export let previousRandomBanner = localStorageWritable<string>("banner", "") // Keeping track of the previous banner so it doesn't get regenerated whenever not needed
 export let randomSplash = localStorageWritable<string>("splash", "") // Same as above but for the spalsh
+// export let activatedPin = localStorageWritable<string>("splash", "") // Same as above but for the spalsh

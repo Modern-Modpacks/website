@@ -137,7 +137,11 @@
     },
     "languages": {
         "ru": "Russian",
-        "de": "German"
+        "de": "German",
+        "tr": "Turkish",
+        "fr": "French",
+        "es": "Spanish",
+        "cn": "Chinese (Simplified)"
     },
 
     "projects": {
