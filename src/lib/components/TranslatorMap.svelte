@@ -13,12 +13,24 @@
         {
             coords: {x: 615, y: 90},
             lang: "de"
-        }
+        },
+        // {
+        //     coords: {x: 615, y: 90},
+        //     lang: "fr"
+        // },
+        // {
+        //     coords: {x: 615, y: 90},
+        //     lang: "es"
+        // },
+        // {
+        //     coords: {x: 615, y: 90},
+        //     lang: "cn"
+        // }
     ]
 </script>
 
-<span bind:this={element} class="h-full aspect-video flex items-center overflow-y-hidden scale-x-[100.5%]">
-    <img src="{consts.MAP_URL}" alt="map" class="h-[110%] rendering-pixelated">
+<span bind:this={element} class="h-full aspect-video flex desktop:items-center desktop:overflow-y-hidden scale-x-[100.5%]">
+    <img src="{consts.MAP_URL}" alt="map" class="h-[110%] mobile:h-[125%] mobile:w rendering-pixelated">
 
     {#each pins as pin}
         <Pin pin={pin} />
