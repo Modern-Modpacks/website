@@ -1,6 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts"
     import type { Pin as p } from "$lib/scripts/interfaces";
+    import { activatedPin } from "$lib/scripts/stores";
     import Pin from "./Pin.svelte";
 
     export let element : HTMLElement | null = null
@@ -34,7 +35,10 @@
 </script>
 
 <span bind:this={element} class="h-full aspect-video flex desktop:items-center desktop:overflow-y-hidden scale-x-[100.5%]">
-    <img src="{consts.MAP_URL}" alt="map" class="h-[110%] mobile:h-[125%] mobile:w rendering-pixelated">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <img src="{consts.MAP_URL}" on:click={() => {$activatedPin = null}} alt="map" class="h-[110%] mobile:h-[125%] mobile:w rendering-pixelated">
 
     {#each pins as pin}
         <Pin pin={pin} />
