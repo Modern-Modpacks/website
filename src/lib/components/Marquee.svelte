@@ -36,6 +36,8 @@
         timeout = setTimeout(() => {doAnim(true)}, animDur)
     }
     let stopAnim = (immediate: boolean) => {
+        if (!animPlaying) return
+
         animPlaying = false
         clearTimeout(timeout ?? 0)
         
@@ -43,11 +45,6 @@
     }
 
     onMount(() => {
-        shouldPlay.subscribe(v => {
-            if (!v) stopAnim(true)
-            else if (!animPlaying) doAnim(false)
-        })
-        
         setTimeout(() => {
             if ($mobile) animCount = 2
 
@@ -55,6 +52,11 @@
             else {inView.subscribe(v => {
                 if (v) doAnim(true)
             })}
+
+            shouldPlay.subscribe(v => {
+                if (!v) stopAnim(true)
+                else if ($mobile) doAnim(false)
+            })
         }, 1)
     })
 </script>
@@ -63,7 +65,7 @@
 <span
     class="w-fit{$reducedMotion ? " overflow-x-scroll" : ""}"
     style="transform: translate{vertical ? "Y" : "X"}({-$translate}rem);"
-    on:mouseenter={() => {if ($reducedMotion || $mobile || animCount<2 || !stopDur || !animPlaying) return; stopAnim(false)}} on:mouseleave={() => {if (!animPlaying) doAnim(false)}}
+    on:mouseenter={() => {if ($reducedMotion || $mobile || animCount<2 || !stopDur) return; stopAnim(false)}} on:mouseleave={() => {if (!animPlaying) doAnim(false)}}
 >
     <slot />
 </span>
