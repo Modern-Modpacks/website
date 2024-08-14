@@ -11,6 +11,7 @@
     import { activatedPin, mobile, reducedMotion } from "$lib/scripts/stores";
     import consts from "$lib/scripts/consts";
     import TranslatorMap from "$lib/components/TranslatorMap.svelte";
+    import { writable, type Writable } from "svelte/store";
 
     // Members, served just as typescript likes it
     let members : Member[] = mems
@@ -60,6 +61,8 @@
     let startCardCycles = () => {if (permMemberId==null) setTimeout(cardCycle, stayDur)} // Start card animations
 
     let map : HTMLElement | null // One of the images for the scrolling map
+    let mapShouldPlay : Writable<boolean> = writable(true) // Whether the map marquee should play, based on whether a pin is active on the it
+    activatedPin.subscribe(v => {$mapShouldPlay = v==null})
 
     onMount(() => {
         // Recalculate wall on mount and resize
@@ -105,10 +108,12 @@
     </div>
     
     <div class="desktop:absolute top-0 left-0 h-full mobile:h-[335px] [&>span]:flex [&>span]:items-center [&>span]:h-full">
-        <Marquee baseAnimDur={30000} animMin={0} animMax={(map?.getBoundingClientRect().width ?? 0) / 16} stopDur={1000} stopDist={1.5} backwards={true} shouldPlay={!$activatedPin}>
+        <Marquee baseAnimDur={30000} animMin={0} animMax={(map?.getBoundingClientRect().width ?? 0) / 16} stopDur={1000} stopDist={1.5} backwards={true} bind:shouldPlay={mapShouldPlay}>
             {#each [...Array(3).keys()] as _}
                 <TranslatorMap bind:element={map} />
             {/each}
         </Marquee>
     </div>
+
+    <p class="absolute right-0 bottom-0 text-sm bg-black bg-opacity-75 px-2 py-0.5">© <a href="https://www.planetminecraft.com/project/earth-1-750-1-19" class="underline">{$_("ui.mapcredit")}</a></p>
 </div>
