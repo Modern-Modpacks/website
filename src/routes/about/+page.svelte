@@ -3,7 +3,7 @@
     import mems from "$lib/json/members.json5" 
     import MemberCard from "$lib/components/MemberCard.svelte";
     import { _ } from "svelte-i18n";
-    import type { Member } from "$lib/scripts/interfaces";
+    import type { Member, Pin } from "$lib/scripts/interfaces";
     import { onMount } from "svelte";
     import { getMemberAvatar } from "$lib/scripts/utils";
     import { tweened, type Tweened } from "svelte/motion";
@@ -61,6 +61,10 @@
     let startCardCycles = () => {if (permMemberId==null) setTimeout(cardCycle, stayDur)} // Start card animations
 
     let map : HTMLElement | null // One of the images for the scrolling map
+    let lastActivePin : Pin | null // Last activated pin
+    activatedPin.subscribe(v => {
+        if (v!=null) lastActivePin = v
+    })
     let mapShouldPlay : Writable<boolean> = writable(true) // Whether the map marquee should play, based on whether a pin is active on the it
     activatedPin.subscribe(v => {$mapShouldPlay = v==null})
 
@@ -104,6 +108,17 @@
         <div class="flex flex-col gap-5 items-center justify-center w-fit h-full py-8 mobile:pt-[5.5rem] desktop:ml-10 mobile:px-10 [&>*]:text-center pointer-events-auto">
             <h2>{$_("about.translators.heading")}</h2>
             <p>{@html $_("about.translators.desc")}</p>
+        </div>
+    </div>
+    <div class="absolute left-0 top-0 w-[42.5%] h-full z-20 duration-500 ease-out {$activatedPin ? "backdrop-blur-xl" : "pointer-events-none"}">
+        <div class="{$activatedPin ? "translate-x-0" : "translate-x-[-100%]"} duration-500 ease-in-out h-full w-fit p-6">
+            <span class="flex items-center gap-4">
+                <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="flag" class="w-16">
+                <span>
+                    <h2 class="text-4xl">{$_("languages."+lastActivePin?.lang)}</h2>
+                    <p class="text-lg font-semibold text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>
+                </span>
+            </span>
         </div>
     </div>
     
