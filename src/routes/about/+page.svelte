@@ -2,7 +2,7 @@
     import Marquee from "$lib/components/Marquee.svelte";
     import mems from "$lib/json/members.json5" 
     import MemberCard from "$lib/components/MemberCard.svelte";
-    import { _ } from "svelte-i18n";
+    import { _, locale, locales } from "svelte-i18n";
     import type { Member, Pin } from "$lib/scripts/interfaces";
     import { onMount } from "svelte";
     import { getMemberAvatar } from "$lib/scripts/utils";
@@ -62,11 +62,20 @@
 
     let map : HTMLElement | null // One of the images for the scrolling map
     let lastActivePin : Pin | null // Last activated pin
-    activatedPin.subscribe(v => {
-        if (v!=null) lastActivePin = v
-    })
+    let mapSidebarShown : boolean = false // Whether the sidebar with info is shown
     let mapShouldPlay : Writable<boolean> = writable(true) // Whether the map marquee should play, based on whether a pin is active on the it
-    activatedPin.subscribe(v => {$mapShouldPlay = v==null})
+    activatedPin.subscribe(v => {
+        mapSidebarShown = false
+
+        if (v!=null) {
+            setTimeout(() => {
+                lastActivePin = v
+                mapSidebarShown = true
+            }, 500 * +!$mapShouldPlay)
+        }
+
+        $mapShouldPlay = v==null
+    })
 
     onMount(() => {
         // Recalculate wall on mount and resize
@@ -110,13 +119,13 @@
             <p>{@html $_("about.translators.desc")}</p>
         </div>
     </div>
-    <div class="absolute left-0 top-0 w-[42.5%] h-full z-20 duration-500 ease-out {$activatedPin ? "backdrop-blur-xl" : "pointer-events-none"}">
-        <div class="{$activatedPin ? "translate-x-0" : "translate-x-[-100%]"} duration-500 ease-in-out h-full w-fit p-6">
+    <div class="absolute left-0 top-0 w-[42.5%] h-full z-20 duration-300 ease-out {$activatedPin ? "backdrop-blur-xl" : "pointer-events-none"}">
+        <div class="{mapSidebarShown ? "translate-x-0" : "translate-x-[-100%]"} duration-500 ease-in-out h-full w-fit p-6">
             <span class="flex items-center gap-4">
-                <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="flag" class="w-16">
+                <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="flag" class="w-20">
                 <span>
-                    <h2 class="text-4xl">{$_("languages."+lastActivePin?.lang)}</h2>
-                    <p class="text-lg font-semibold text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>
+                    <h2 class="text-3xl">{$_("languages."+lastActivePin?.lang)}</h2>
+                    {#if $locales.includes(lastActivePin?.lang ?? "") && $locale!=lastActivePin?.lang}<p class="text-base font-semibold text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>{/if}
                 </span>
             </span>
         </div>
