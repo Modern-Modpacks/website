@@ -93,7 +93,11 @@
             "webmaintainer": "Website maintainer",
 
             "frontendconsult": "Front-end consultant",
-            "realismconsult": "Realism consultant"
+            "realismconsult": "Realism consultant",
+
+            "translator": "Translator",
+            "cheif_translator": "Cheif translator",
+            "ex_translator": "Ex-translator"
         },
 
         "ram": {

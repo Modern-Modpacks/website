@@ -1,20 +1,22 @@
 <script lang="ts">
     import Marquee from "$lib/components/Marquee.svelte";
-    import mems from "$lib/json/members.json5" 
+    import membersJson from "$lib/json/members.json5" 
+    import translatorsJson from "$lib/json/translators.json5" 
     import MemberCard from "$lib/components/MemberCard.svelte";
     import { _, locale, locales } from "svelte-i18n";
-    import type { Member, Pin } from "$lib/scripts/interfaces";
+    import type { Member, Pin, Translator } from "$lib/scripts/interfaces";
     import { onMount } from "svelte";
     import { getMemberAvatar } from "$lib/scripts/utils";
     import { tweened, type Tweened } from "svelte/motion";
     import { sineIn, sineOut } from "svelte/easing";
     import { activatedPin, mobile, reducedMotion } from "$lib/scripts/stores";
-    import consts from "$lib/scripts/consts";
     import TranslatorMap from "$lib/components/TranslatorMap.svelte";
     import { writable, type Writable } from "svelte/store";
+    import { ChevronLeft } from "lucide-svelte";
 
-    // Members, served just as typescript likes it
-    let members : Member[] = mems
+    // Members and translators, served just as typescript likes it
+    let members : Member[] = membersJson
+    let translators : {[key: string]: Translator[]} = translatorsJson
 
     // Calculations needed for THE WALL animation
     let wallUnitSize : number | null // The width and height of one image
@@ -61,6 +63,7 @@
     let startCardCycles = () => {if (permMemberId==null) setTimeout(cardCycle, stayDur)} // Start card animations
 
     let map : HTMLElement | null // One of the images for the scrolling map
+    let sidebarScrolled : number = 0 // Times the sidebar has been scrolled
     let lastActivePin : Pin | null // Last activated pin
     let mapSidebarShown : boolean = false // Whether the sidebar with info is shown
     let mapShouldPlay : Writable<boolean> = writable(true) // Whether the map marquee should play, based on whether a pin is active on the it
@@ -69,9 +72,12 @@
 
         if (v!=null) {
             setTimeout(() => {
+                sidebarScrolled = 0
                 lastActivePin = v
                 mapSidebarShown = true
             }, 500 * +!$mapShouldPlay)
+        } else {
+            sidebarScrolled = 0
         }
 
         $mapShouldPlay = v==null
@@ -120,14 +126,47 @@
         </div>
     </div>
     <div class="absolute left-0 top-0 w-[42.5%] h-full z-20 duration-300 ease-out {$activatedPin ? "backdrop-blur-xl" : "pointer-events-none"}">
-        <div class="{mapSidebarShown ? "translate-x-0" : "translate-x-[-100%]"} duration-500 ease-in-out h-full w-fit p-6">
-            <span class="flex items-center gap-4">
+        <div class="{mapSidebarShown ? "translate-x-0" : "translate-x-[-100%]"} duration-500 ease-in-out h-full w-full p-6">
+            <span class="flex items-center gap-4 w-fit">
                 <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="flag" class="w-20">
                 <span>
-                    <h2 class="text-3xl">{$_("languages."+lastActivePin?.lang)}</h2>
+                    <h3 class="font-bold">{$_("languages."+lastActivePin?.lang)}</h3>
                     {#if $locales.includes(lastActivePin?.lang ?? "") && $locale!=lastActivePin?.lang}<p class="text-base font-semibold text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>{/if}
                 </span>
+
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <span class="group absolute w-8 h-8 right-6 p-2 box-content bg-black bg-opacity-35 rounded-full cursor-pointer" on:click={() => {$activatedPin = null}}>
+                    <ChevronLeft class="w-full h-full motion-safe:translate-x-0.5 motion-safe:group-hover:-translate-x-1 duration-200 ease-out" />
+                </span>
             </span>
+            <div
+                class="overflow-hidden h-[34rem] mt-8 flex flex-col gap-4 w-fit"
+                on:wheel={e => {
+                    e.preventDefault()
+
+                    let langTranslators = translators[lastActivePin?.lang ?? ""]
+                    if (langTranslators==null) return
+                    sidebarScrolled = Math.min(Math.max(sidebarScrolled + Math.sign(e.deltaY), 0), Math.floor(translators[lastActivePin?.lang ?? ""].length / 6))
+                }}
+            >
+                {#if Object.keys(translators).includes(lastActivePin?.lang ?? "")}
+                    {#each Object.entries(translators[lastActivePin?.lang ?? ""]) as [i, translator]}
+                        {@const onCurrentPage = (+i >= sidebarScrolled * 6) && (+i < (sidebarScrolled + 1) * 6)}
+
+                        <a 
+                            href="https://github.com/{translator.github.username}" target="_blank" rel="noopener noreferrer" title="GitHub ({translator.github.username})"
+                            class="group flex items-center gap-4{+i > 0 && !(+i % 6) ? " mt-4" : ""} [&_*]:origin-top-left [&_*]:duration-300 duration-500" style="transform: translateY({sidebarScrolled * -34}rem);"
+                        >
+                            <img src="https://avatars.githubusercontent.com/u/{translator.github.id}?v=4" alt="avatar" class="w-[4.5rem]{onCurrentPage ? " group-hover:w-24" : ""} rendering-crisp-edges rounded-xl">
+                            <span>
+                                <h3 class="font-bold{onCurrentPage ? " group-hover:text-4xl" : ""}">{translator.name}</h3>
+                                <p class="text-base{onCurrentPage ? " group-hover:text-lg" : ""} font-semibold text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>
+                            </span>
+                        </a>
+                    {/each}
+                {/if}
+            </div>
         </div>
     </div>
     
