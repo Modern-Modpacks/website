@@ -15,10 +15,11 @@
     export let animMax : number
     export let stopDur : number = 0
     export let stopDist : number = 2
-    export let shouldPlay : Writable<boolean> = writable(true) // Weather the animation should play
-    export let inView : Writable<boolean> = writable(false) // Weather the element is in view
+    export let shouldPlay : Writable<boolean> = writable(true) // Whether the animation should play
+    export let inView : Writable<boolean> = writable(false) // Whether the element is in view
     
     // Shenanigans
+    let mouseOver : boolean = false
     let translate : Tweened<number> = tweened(firstAnimLength ? ((backwards ? animMax : animMin) + (firstAnimLength * (backwards ? 1.5 : -1))) : 0, {duration: baseAnimDur})
     let animCount : number = firstAnimLength ? 0 : 2
     let animPlaying : boolean = false
@@ -55,7 +56,7 @@
 
             shouldPlay.subscribe(v => {
                 if (!v) stopAnim(true)
-                else if ($mobile) doAnim(false)
+                else if (!mouseOver && !animPlaying) doAnim(false)
             })
         }, 1)
     })
@@ -65,7 +66,7 @@
 <span
     class="w-fit{$reducedMotion ? " overflow-x-scroll" : ""}"
     style="transform: translate{vertical ? "Y" : "X"}({-$translate}rem);"
-    on:mouseenter={() => {if ($reducedMotion || $mobile || animCount<2 || !stopDur) return; stopAnim(false)}} on:mouseleave={() => {if (!animPlaying) doAnim(false)}}
+    on:mouseenter={() => {if ($reducedMotion || $mobile || animCount<2 || !stopDur) return; mouseOver = true; stopAnim(false)}} on:mouseleave={() => {mouseOver = false; if (!animPlaying) doAnim(false)}}
 >
     <slot />
 </span>

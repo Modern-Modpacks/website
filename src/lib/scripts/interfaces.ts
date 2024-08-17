@@ -65,3 +65,8 @@ export interface Pin { // Used for pins on the translator map
     coords: Coordinates,
     lang: string
 }
+export interface Translator { // Used for translators in translators.json5
+    name: string,
+    github_id: string,
+    title: string
+}

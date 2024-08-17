@@ -1,7 +1,7 @@
 <script lang="ts">
     import { navigating, page } from "$app/stores"
     import consts, { icons } from "$lib/scripts/consts"
-    import { mobile, previousRandomBanner, randomSplash, reducedMotion, scrollY, upsideDownLocale } from "$lib/scripts/stores"
+    import { mobile, popupOpenedBy, popupOpenedByPartner, previousRandomBanner, randomSplash, reducedMotion, scrollY, upsideDownLocale } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
     import { randomChoice, toggleScroll } from "$lib/scripts/utils"
@@ -53,6 +53,8 @@
     generateBanner(possibleBanners)
 
     let modpacksHovered : boolean = false // Whether or not the left of the modpack section is hovered, activates the following mouse effect
+    let shouldPartnerAnimPlay : Writable<boolean> = writable(true) // Whether a partner modpack popup is opened, stops the marquee anim
+    popupOpenedByPartner.subscribe(v => {$shouldPartnerAnimPlay = !v})
     let shouldModsAnimPlay : Writable<boolean> = writable<boolean>(false) // Whether or not the spin animation for the mods section should play
 
     // Stuff needed for the mods anim
@@ -154,7 +156,7 @@
             class="flex [&>span]:flex [&>span]:items-center [&>span]:gap-6 [&>span]:w-[50vw]" 
             style="{!$reducedMotion ? "mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);" : ""}"
         >
-            <Marquee baseAnimDur={2500 * ((partnerQueueLen ?? 0) - 6)} animMin={0} animMax={11.5 * ((partnerQueueLen ?? 0) - 6)} stopDur={600}>
+            <Marquee baseAnimDur={2500 * ((partnerQueueLen ?? 0) - 6)} animMin={0} animMax={11.5 * ((partnerQueueLen ?? 0) - 6)} stopDur={600} bind:shouldPlay={shouldPartnerAnimPlay}>
                 {#each [...Array(partnerQueueLen).keys()] as i}
                     <PartnerModpack modpack={partneredModpacks[i % partneredModpacks.length]} firstOfType={i < partneredModpacks.length} />
                 {/each}

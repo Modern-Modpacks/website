@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import consts from "$lib/scripts/consts";
-    import { memeLocales, popupOpened, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores";
+    import { memeLocales, popupOpenedBy, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores";
     import { toggleScroll } from "$lib/scripts/utils";
     import { ArrowLeft } from "lucide-svelte";
     import { _ } from "svelte-i18n";
@@ -12,7 +12,7 @@
     // Toggle sidebar
     export const toggle = () => {
         element?.classList.toggle("translate-x-[100%]")
-        if (!$popupOpened) toggleScroll(false)
+        if (!$popupOpenedBy) toggleScroll(false)
     }
 </script>
 

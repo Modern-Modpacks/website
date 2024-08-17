@@ -1,7 +1,7 @@
 <script lang="ts">
     import HeaderBar from "$lib/components/HeaderBar.svelte"
     import "../app.css"
-    import { contextMenuOpenedBy, memeLocales, mobile, mousePos, popupOpened, reducedMotion, scrollY, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores"
+    import { contextMenuOpenedBy, memeLocales, mobile, mousePos, popupOpenedBy, reducedMotion, scrollY, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores"
     import { _, addMessages, getLocaleFromNavigator, init, locales, locale } from "svelte-i18n"
     import consts from "$lib/scripts/consts"
     import { afterNavigate, onNavigate } from "$app/navigation"
@@ -88,7 +88,7 @@
         })
     })
     afterNavigate(() => { // Cleanup stores and unlock page
-        $popupOpened = false
+        $popupOpenedBy = null
         $contextMenuOpenedBy = null
 
         toggleScroll(true)

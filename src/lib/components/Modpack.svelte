@@ -3,7 +3,7 @@
     import consts from "$lib/scripts/consts"
     import { type Modpack } from "$lib/scripts/interfaces"
     import modpacks from "$lib/json/modpacks.json5"
-    import { mobile, mousePos, popupOpened, reducedMotion, scrollY, upsideDownLocale } from "$lib/scripts/stores"
+    import { mobile, mousePos, popupOpenedBy, popupOpenedByPartner, reducedMotion, scrollY, upsideDownLocale } from "$lib/scripts/stores"
     import ModpackPopup from "./ModpackPopup.svelte"
     import { _ } from "svelte-i18n"
     import BreathingIcon from "./BreathingIcon.svelte";
@@ -21,11 +21,14 @@
     let path : string
     $: path = `${('0'+(index+1)).slice(-2)}${consts.COLORS[index]}` // The pointer to the pack's icon on the github asset repo (https://github.com/Modern-Modpacks/assets)
 
+    let thisPackOpened : boolean // Whether this pack is opened
+    $: thisPackOpened = $popupOpenedBy!=null && $popupOpenedBy.abbr==modpack.abbr
+
     // Mouse follow animation shenanigans
     let transformX : number
-    $: transformX = ($mousePos.x - (element?.getBoundingClientRect().left + (element?.getBoundingClientRect().width / 2))) * mouseMoveMul * +(parentHover && !$popupOpened)
+    $: transformX = ($mousePos.x - (element?.getBoundingClientRect().left + (element?.getBoundingClientRect().width / 2))) * mouseMoveMul * +(parentHover && !$popupOpenedBy)
     let transformY : number
-    $: transformY = ($mousePos.y - (element?.getBoundingClientRect().top + (element?.getBoundingClientRect().height / 2) + $scrollY)) * mouseMoveMul * +(parentHover && !$popupOpened)
+    $: transformY = ($mousePos.y - (element?.getBoundingClientRect().top + (element?.getBoundingClientRect().height / 2) + $scrollY)) * mouseMoveMul * +(parentHover && !$popupOpenedBy)
 
     const mouseMoveMul = .05
 </script>
@@ -62,20 +65,24 @@
     >
         <BreathingIcon 
             duration={2000} minScale={90} maxScale={100} delay={(Math.floor(index / 4) + index % 4) * 500}
-            class="w-full h-full [&>img]:rounded-xl bg-cover relative motion-safe:duration-150 motion-safe:desktop:[&:not(:hover)]:group-hover:!scale-[90%] motion-safe:desktop:hover:!scale-{discovered ? 110 : 100} cursor-{discovered ? "pointer" : "not-allowed"} z-10 flex justify-center"
+            class="
+                w-full h-full [&>img]:rounded-xl bg-cover relative motion-safe:duration-150 cursor-{discovered ? "pointer" : "not-allowed"} z-10 flex justify-center
+                {$popupOpenedBy!=null && !$popupOpenedByPartner ? (thisPackOpened ? "motion-safe:desktop:!scale-110" : "motion-safe:desktop:!scale-[90%]") : `motion-safe:desktop:[&:not(:hover)]:group-hover:!scale-[90%] motion-safe:desktop:hover:!scale-${discovered ? 110 : 100}`}
+            "
             bind:element={element}
         >
+        <!-- $popupOpenedBy.abbr==modpack.abbr -->
             <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/BG/{path}.png" alt="icon background">
             <!-- svelte-ignore a11y-mouse-events-have-key-events -->
             <img
-                class="scale-[102%] duration-200 absolute rendering-pixelated peer z-10{discovered ? " motion-safe:desktop:hover:opacity-0" : ""}"
+                class="scale-[102%] duration-200 absolute rendering-pixelated peer z-10{discovered ? ` motion-safe:desktop${thisPackOpened ? "" : ":hover"}:opacity-0` : ""}"
                 src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
                 style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/inverted/{index * +discovered}inverted.png');"
                 alt="icon foreground inverted"
             >
             {#if discovered && !$reducedMotion}
                 <img
-                    class="scale-[102%] duration-200 absolute rendering-pixelated peer opacity-0 desktop:peer-hover:opacity-100"
+                    class="scale-[102%] duration-200 absolute rendering-pixelated peer opacity-0 desktop{thisPackOpened ? "" : ":peer-hover"}:opacity-100"
                     src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
                     style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/{path}_{modpack.abbr}.png');"
                     alt="icon foreground"
@@ -85,7 +92,7 @@
             {#if !$mobile}
                 {@const translateAmount = 4 * ($upsideDownLocale ? -1 : 1)}
 
-                <h3 class="absolute bottom-0 text-2xl font-bold -z-10 motion-safe:invisible peer-hover:!visible motion-safe:peer-hover:translate-y-[{translateAmount}rem] motion-reduce:translate-y-[{translateAmount}rem] motion-safe:duration-150">
+                <h3 class="absolute bottom-0 text-2xl font-bold -z-10 motion-safe:invisible {thisPackOpened ? "" : "peer-hover:"}!visible motion-safe{thisPackOpened ? "" : ":peer-hover"}:translate-y-[{translateAmount}rem] motion-reduce:translate-y-[{translateAmount}rem] motion-safe:duration-150">
                     {modpack.name ?? ""}
                 </h3>
             {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts"
     import type { Modpack, PartnerModpack } from "$lib/scripts/interfaces"
-    import { mobile, popupOpened, settingsOpened, upsideDownLocale } from "$lib/scripts/stores"
+    import { mobile, popupOpenedBy, settingsOpened, upsideDownLocale } from "$lib/scripts/stores"
     import { getWebsiteIcon, toggleScroll } from "$lib/scripts/utils";
     import { Globe, X } from "lucide-svelte"
     import { onMount } from "svelte"
@@ -21,7 +21,7 @@
 
     // Activates the popup which is hidden by default
     export const toggle = () => {
-        $popupOpened = !$popupOpened
+        $popupOpenedBy = $popupOpenedBy==null ? modpack : null
         shown = !shown
 
         toggleScroll(false)
