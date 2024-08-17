@@ -137,11 +137,11 @@
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <span class="group absolute w-8 h-8 right-6 p-2 box-content bg-black bg-opacity-35 rounded-full cursor-pointer" on:click={() => {$activatedPin = null}}>
-                    <ChevronLeft class="w-full h-full motion-safe:translate-x-0.5 motion-safe:group-hover:-translate-x-1 duration-200 ease-out" />
+                    <ChevronLeft class="w-full h-full motion-safe:translate-x-0.5 {mapSidebarShown ? "motion-safe:group-hover:-translate-x-1" : "motion-safe:!-translate-x-1"} duration-200 ease-out" />
                 </span>
             </span>
             <div
-                class="overflow-hidden h-[34rem] mt-8 flex flex-col gap-4 w-fit"
+                class="overflow-hidden h-[34rem] mt-6 flex flex-col gap-4 w-fit"
                 on:wheel={e => {
                     e.preventDefault()
 
@@ -158,7 +158,7 @@
                             href="https://github.com/{translator.github.username}" target="_blank" rel="noopener noreferrer" title="GitHub ({translator.github.username})"
                             class="group flex items-center gap-4{+i > 0 && !(+i % 6) ? " mt-4" : ""} [&_*]:origin-top-left [&_*]:duration-300 duration-500" style="transform: translateY({sidebarScrolled * -34}rem);"
                         >
-                            <img src="https://avatars.githubusercontent.com/u/{translator.github.id}?v=4" alt="avatar" class="w-[4.5rem]{onCurrentPage ? " group-hover:w-24" : ""} rendering-crisp-edges rounded-xl">
+                            <img src="{translator.avatar_url ?? `https://avatars.githubusercontent.com/u/${translator.github.id}?v=4`}" alt="avatar" class="w-[4.5rem]{onCurrentPage ? " group-hover:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
                             <span>
                                 <h3 class="font-bold{onCurrentPage ? " group-hover:text-4xl" : ""}">{translator.name}</h3>
                                 <p class="text-base{onCurrentPage ? " group-hover:text-lg" : ""} font-semibold text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>

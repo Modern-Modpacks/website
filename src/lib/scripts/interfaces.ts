@@ -68,6 +68,7 @@ export interface Pin { // Used for pins on the translator map
 export interface Translator { // Used for translators in translators.json5
     name: string,
     title?: string,
+    avatar_url?: string,
 
     github: {
         username: string,

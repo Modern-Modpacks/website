@@ -9,5 +9,61 @@
                 "id": 79367505
             }
         }
+    ],
+    "de": [
+        {
+            "name": "Rainbuu",
+            "title": "cheif",
+
+            "github": {
+                "username": "RealRainbuu",
+                "id": 77862418
+            }
+        }
+    ],
+    "tr": [
+        {
+            "name": "eyecubed",
+            "title": "cheif",
+            "avatar_url": "https://cdn.discordapp.com/avatars/591647452247883806/6303d27458242cd5f2017681275d96a6.png",
+
+            "github": {
+                "username": "eyecubed",
+                "id": 77862418
+            }
+        }
+    ],
+    "fr": [
+        {
+            "name": "Kazimir",
+            "title": "ex",
+
+            "github": {
+                "username": "kazimir-solan",
+                "id": 90518412
+            }
+        }
+    ],
+    "es": [
+        {
+            "name": "Kazimir",
+            "title": "ex",
+
+            "github": {
+                "username": "kazimir-solan",
+                "id": 90518412
+            }
+        }
+    ],
+    "cn": [
+        {
+            "name": "Kasualix",
+            "title": "cheif",
+
+            "github": {
+                "username": "Kasualix",
+                "id": 110756250
+            }
+        }
     ]
 }
