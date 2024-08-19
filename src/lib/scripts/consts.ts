@@ -37,7 +37,7 @@ const consts = {
         email: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMTIuNzEzbC0xMS45ODUtOS43MTNoMjMuOTcxbC0xMS45ODYgOS43MTN6bS01LjQyNS0xLjgyMmwtNi41NzUtNS4zMjl2MTIuNTAxbDYuNTc1LTcuMTcyem0xMC44NSAwbDYuNTc1IDcuMTcydi0xMi41MDFsLTYuNTc1IDUuMzI5em0tMS41NTcgMS4yNjFsLTMuODY4IDMuMTM1LTMuODY4LTMuMTM1LTguMTEgOC44NDhoMjMuOTU2bC04LjExLTguODQ4eiIvPjwvc3ZnPg==",
 
         "linktr.ee": "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/linktree-white-icon.png",
-        lichess: "https://static-00.iconduck.com/assets.00/lichess-icon-1023x1024-di4awn0a.png"
+        lichess: "https://raw.githubusercontent.com/gist/Gcat101/b0180a1c9cc1d2585eaa2c0bd15c6893/raw/3944a42cfa4940296bc13452f6ffbe1aa554217f/horse.svg"
     },
 
     PAGES: [ // Pages on the website with corresponding colors
