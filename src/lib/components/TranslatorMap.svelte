@@ -38,7 +38,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-    <img src="{consts.MAP_URL}" on:click={() => {$activatedPin = null}} alt="map" class="h-[110%] mobile:h-[125%] mobile:w rendering-pixelated">
+    <img src="{consts.MAP_URL}" on:click={() => {$activatedPin = null}} alt="map" class="h-[110%] mobile:h-[125%] rendering-pixelated">
 
     {#each pins as pin}
         <Pin pin={pin} />

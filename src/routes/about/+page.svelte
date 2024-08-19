@@ -60,7 +60,7 @@
 
         setTimeout(cardCycle, dur + (stayDur * +cardIn))
     }
-    let startCardCycles = () => {if (permMemberId==null) setTimeout(cardCycle, stayDur)} // Start card animations
+    let startCardCycles = () => {if (permMemberId==null) {console.log("a"); setTimeout(cardCycle, stayDur)}} // Start card animations
 
     let map : HTMLElement | null // One of the images for the scrolling map
     let sidebarScrolled : number = 0 // Times the sidebar has been scrolled
@@ -119,25 +119,25 @@
     </div>
 </div>
 <div class="relative w-full desktop:h-[670px] flex mobile:flex-col-reverse bg-secondary-dark">
-    <div class="relative z-10 w-[60%] mobile:w-full h-full mobile:h-fit bg-gradient-to-r mobile:bg-gradient-to-t from-primary-dark from-70% mobile:from-[92.5%] pointer-events-none">
+    <div class="relative z-10 w-[60%] mobile:w-full h-full mobile:h-fit bg-gradient-to-r mobile:bg-gradient-to-t from-primary-dark from-70% mobile:from-[92.5%] mobile:z-20 pointer-events-none">
         <div class="flex flex-col gap-5 items-center justify-center w-fit h-full py-8 mobile:pt-[5.5rem] desktop:ml-10 mobile:px-10 [&>*]:text-center pointer-events-auto">
             <h2>{$_("about.translators.heading")}</h2>
             <p>{@html $_("about.translators.desc")}</p>
         </div>
     </div>
-    <div class="absolute left-0 top-0 w-[42.5%] h-full z-20 duration-300 ease-out {$activatedPin ? "backdrop-blur-xl" : "pointer-events-none"}">
-        <div class="{mapSidebarShown ? "translate-x-0" : "translate-x-[-100%]"} duration-500 ease-in-out h-full w-full p-6">
+    <div class="absolute left-0 top-0 w-[42.5%] mobile:w-full h-full mobile:h-[400px] z-10 duration-300 ease-out {$activatedPin ? "desktop:backdrop-blur-xl mobile:bg-black mobile:bg-opacity-75" : "pointer-events-none"}">
+        <div class="{mapSidebarShown ? "desktop:translate-x-0" : "desktop:translate-x-[-100%] mobile:opacity-0"} duration-500 ease-in-out h-full w-full p-6">
             <span class="flex items-center gap-4 w-fit">
-                <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="flag" class="w-20">
+                <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="flag" class="w-20 mobile:w-14">
                 <span>
-                    <h3 class="font-bold">{$_("languages."+lastActivePin?.lang)}</h3>
-                    {#if $locales.includes(lastActivePin?.lang ?? "") && $locale!=lastActivePin?.lang}<p class="text-base font-semibold text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>{/if}
+                    <h3 class="font-bold mobile:text-lg">{$_("languages."+lastActivePin?.lang)}</h3>
+                    {#if $locales.includes(lastActivePin?.lang ?? "") && $locale!=lastActivePin?.lang}<p class="text-base mobile:text-sm font-semibold text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>{/if}
                 </span>
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <span class="group absolute w-8 h-8 right-6 p-2 box-content bg-black bg-opacity-35 rounded-full cursor-pointer" on:click={() => {$activatedPin = null}}>
-                    <ChevronLeft class="w-full h-full motion-safe:translate-x-0.5 {mapSidebarShown ? "motion-safe:group-hover:-translate-x-1" : "motion-safe:!-translate-x-1"} duration-200 ease-out" />
+                <span class="group absolute w-8 h-8 mobile:w-6 mobile:h-6 right-6 p-2 box-content bg-black bg-opacity-35 rounded-full cursor-pointer" on:click={() => {$activatedPin = null}}>
+                    <ChevronLeft class="w-full h-full motion-safe:desktop:translate-x-0.5 {mapSidebarShown ? "motion-safe:group-hover:desktop:-translate-x-1" : "motion-safe:desktop:!-translate-x-1"} duration-200 ease-out" />
                 </span>
             </span>
             <div
@@ -158,10 +158,10 @@
                             href="https://github.com/{translator.github.username}" target="_blank" rel="noopener noreferrer" title="GitHub ({translator.github.username})"
                             class="group flex items-center gap-4{+i > 0 && !(+i % 6) ? " mt-4" : ""} [&_*]:origin-top-left [&_*]:duration-300 duration-500" style="transform: translateY({sidebarScrolled * -34}rem);"
                         >
-                            <img src="{translator.avatar_url ?? `https://avatars.githubusercontent.com/u/${translator.github.id}?v=4`}" alt="avatar" class="w-[4.5rem]{onCurrentPage ? " group-hover:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
+                            <img src="{translator.avatar_url ?? `https://avatars.githubusercontent.com/u/${translator.github.id}?v=4`}" alt="avatar" class="w-[4.5rem] mobile:w-16{onCurrentPage ? " group-hover:desktop:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
                             <span>
-                                <h3 class="font-bold{onCurrentPage ? " group-hover:text-4xl" : ""}">{translator.name}</h3>
-                                <p class="text-base{onCurrentPage ? " group-hover:text-lg" : ""} font-semibold text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>
+                                <h3 class="font-bold mobile:text-lg{onCurrentPage ? " group-hover:desktop:text-4xl" : ""}">{translator.name}</h3>
+                                <p class="text-base mobile:text-sm{onCurrentPage ? " group-hover:desktop:text-lg" : ""} font-semibold text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>
                             </span>
                         </a>
                     {/each}
