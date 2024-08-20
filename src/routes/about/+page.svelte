@@ -125,8 +125,8 @@
             <p>{@html $_("about.translators.desc")}</p>
         </div>
     </div>
-    <div class="absolute left-0 top-0 w-[42.5%] mobile:w-full h-full mobile:h-[400px] z-10 duration-300 ease-out {$activatedPin ? "desktop:backdrop-blur-xl mobile:bg-black mobile:bg-opacity-75" : "pointer-events-none"}">
-        <div class="{mapSidebarShown ? "desktop:translate-x-0" : "desktop:translate-x-[-100%] mobile:opacity-0"} duration-500 ease-in-out h-full w-full p-6">
+    <div class="absolute left-0 top-0 w-[42.5%] mobile:w-full h-full mobile:h-[400px] z-10 motion-safe:duration-300 ease-out {$activatedPin ? "desktop:backdrop-blur-xl mobile:bg-black mobile:bg-opacity-75" : "pointer-events-none"}">
+        <div class="{mapSidebarShown ? "desktop:translate-x-0" : "desktop:translate-x-[-100%] mobile:opacity-0"} motion-safe:duration-500 ease-in-out h-full w-full p-6">
             <span class="flex items-center gap-4 w-fit">
                 <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="flag" class="w-20 mobile:w-14">
                 <span>
@@ -158,10 +158,10 @@
                             href="https://github.com/{translator.github.username}" target="_blank" rel="noopener noreferrer" title="GitHub ({translator.github.username})"
                             class="group flex items-center gap-4{+i > 0 && !(+i % 6) ? " desktop:mt-4" : ""} [&_*]:origin-top-left [&_*]:duration-300 duration-500" style="transform: translateY({sidebarScrolled * +!$mobile * -34}rem);"
                         >
-                            <img src="{translator.avatar_url ?? `https://avatars.githubusercontent.com/u/${translator.github.id}?v=4`}" alt="avatar" class="w-[4.5rem] mobile:w-16{onCurrentPage ? " group-hover:desktop:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
+                            <img src="{translator.avatar_url ?? `https://avatars.githubusercontent.com/u/${translator.github.id}?v=4`}" alt="avatar" class="w-[4.5rem] mobile:w-16{onCurrentPage ? " motion-safe:group-hover:desktop:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
                             <span>
-                                <h3 class="font-bold mobile:text-lg{onCurrentPage ? " group-hover:desktop:text-4xl" : ""}">{translator.name}</h3>
-                                <p class="text-base mobile:text-sm{onCurrentPage ? " group-hover:desktop:text-lg" : ""} font-semibold text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>
+                                <h3 class="font-bold mobile:text-lg{onCurrentPage ? " motion-safe:group-hover:desktop:text-4xl" : ""}">{translator.name}</h3>
+                                <p class="text-base mobile:text-sm{onCurrentPage ? " motion-safe:group-hover:desktop:text-lg" : ""} font-semibold text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>
                             </span>
                         </a>
                     {/each}
@@ -170,9 +170,9 @@
         </div>
     </div>
     
-    <div class="desktop:absolute top-0 left-0 h-full mobile:h-[335px] [&>span]:flex [&>span]:items-center [&>span]:h-full">
+    <div class="desktop:absolute top-0 motion-safe:left-0 motion-reduce:right-0 h-full mobile:h-[335px] [&>span]:flex [&>span]:items-center [&>span]:h-full motion-reduce:[&>span]:w-full">
         <Marquee baseAnimDur={30000} animMin={0} animMax={(map?.getBoundingClientRect().width ?? 0) / 16} stopDur={1000} stopDist={1.5} backwards={true} bind:shouldPlay={mapShouldPlay}>
-            {#each [...Array(3).keys()] as _}
+            {#each [...Array($reducedMotion ? 1 : 3).keys()] as _}
                 <TranslatorMap bind:element={map} />
             {/each}
         </Marquee>
