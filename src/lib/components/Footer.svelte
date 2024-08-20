@@ -45,7 +45,7 @@
             <div class="h-[63%] flex flex-col justify-evenly items-end [&>a]:w-fit">
                 {#each [
                     {url: "https://github.com/Modern-Modpacks/website/issues/new", lang: "report"},
-                    {url: "https://status.modernmodpacks.site", lang: "status"},
+                    {url: "https://gist.githubusercontent.com/Gcat101/e147899d7fa2c185665daefbf3bbeaa4/raw/mm_website_attributions.txt", lang: "attributions"},
                     {url: "https://stackshare.io/modern-modpacks/mm-stack", lang: "stack"},
                     {url: "https://www.youtube.com/watch?v=EJxCw3lDYiQ", lang: "cats"}
                 ] as link}

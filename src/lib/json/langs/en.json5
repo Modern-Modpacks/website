@@ -51,7 +51,7 @@
             "quickaccess": "Quick access",
             "links": {
                 "report": "Report a bug",
-                "status": "Service monitoring",
+                "attributions": "FOSS attributions",
                 "stack": "Our tech stack",
                 "cats": "Funny cats"
             }
@@ -112,6 +112,7 @@
         "wipbig": "Work in progress!",
         "wipbigmm": "Work in progress! Click to join our discord, where we post development updates about the pack!",
         "wipbigdiscord": "Work in progress! Click to join the modpack developer's discord!",
+        "discord": "Join the Discord",
 
         "mapcredit": "Map by Gl0W1E"
     },
@@ -195,6 +196,16 @@
             <b>This map</b> contains a list of all of the translators currently doing work for us, sorted by their language of specialization. <b>Some of them</b> are also members of MM, additionally volunteering by doing other things for the organization. <b>Others</b> are just curious outside contributors, not particularly interested in joining us, but still wanting to help in some way. \n\n\
             <b>As you could've noticed,</b> translators, similar to members, have titles; they are, however, purely superficial. <b>Chief translators</b> are picked by the current owner of Modern Modpacks, and are usually people who have started translating projects into that language the earliest and are still active; they do not have any direct power over regular translators, but can suggest in which way should that team of translators for that specific language currently be heading into. \n\n\
             <b>Our language repertoire</b> and the list of projects available in those languages are ever-growing, and you can help these processes by joining us!"
+        },
+        "testers": {
+            "heading": "",
+            "desc": ""
+        },
+        "joinus": {
+            "heading": "Join us",
+            "desc": "<b>Want to become</b> a member, a translator, or a tester? <b>Join the team!</b> We are always in need of more manpower and will be happy to see you develop a better future for modded minecraft along with us.\n\n\
+            We are currently looking for: <b>KubeJS programmers</b>, <b>pixel-artists</b>, <b>soundtrack composers</b>, <b>quest/lore writers</b>, <b>web developers</b>, and of course, <b>testers</b> and <b>translators.</b>\n\n\
+            <b>Have any of those skills?</b> Or any other skills you think would be beneficial to what we are doing? <b>Join our Discord</b> and contact the current owner through DMs to get potentially invited as a contributor and see how you can help at the moment!"
         }
     }
 }

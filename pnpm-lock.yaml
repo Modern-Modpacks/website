@@ -23,6 +23,9 @@ importers:
       svelte-toggles:
         specifier: ^2.1.7
         version: 2.1.7
+      vanilla-tilt:
+        specifier: ^1.8.1
+        version: 1.8.1
     devDependencies:
       '@babichjacob/svelte-localstorage':
         specifier: ^1.0.1
@@ -1347,6 +1350,9 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
+  vanilla-tilt@1.8.1:
+    resolution: {integrity: sha512-hPB1XUsnh+SIeVSW2beb5RnuFxz4ZNgxjGD78o52F49gS4xaoLeEMh9qrQnJrnEn/vjjBI7IlxrrXmz4tGV0Kw==}
+
   vite-plugin-json5@1.1.2:
     resolution: {integrity: sha512-V0EowrUhYRXAYPy62L9KLgPqd1L7lfVZcjvLh1fj+DIo5X2t6DT2/HOoiAV9FE4YEljdgFJByA+XwKxZ78uQww==}
     peerDependencies:
@@ -2572,6 +2578,8 @@ snapshots:
       picocolors: 1.0.0
 
   util-deprecate@1.0.2: {}
+
+  vanilla-tilt@1.8.1: {}
 
   vite-plugin-json5@1.1.2(@rollup/pluginutils@5.1.0(rollup@4.14.3))(vite@5.2.9):
     dependencies:

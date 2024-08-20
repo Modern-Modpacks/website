@@ -12,7 +12,10 @@
     import { activatedPin, mobile, reducedMotion } from "$lib/scripts/stores";
     import TranslatorMap from "$lib/components/TranslatorMap.svelte";
     import { writable, type Writable } from "svelte/store";
-    import { ChevronLeft } from "lucide-svelte";
+    import { ChevronLeft, User } from "lucide-svelte";
+    import consts from "$lib/scripts/consts";
+    import VanillaTilt from "vanilla-tilt";
+    import { inview } from "svelte-inview";
 
     // Members and translators, served just as typescript likes it
     let members : Member[] = membersJson
@@ -83,12 +86,23 @@
         $mapShouldPlay = v==null
     })
 
+    let discordButton : HTMLElement // The "join the discord" button
+    let showJoinAnim : boolean = false // Whether to show the animations in the "join us" section (triggered on inview)
+
     onMount(() => {
+        setTimeout(() => {if ($reducedMotion) showJoinAnim = true}, 1)
+
         // Recalculate wall on mount and resize
         recalculateWall()
         window.addEventListener("resize", recalculateWall)
 
         startCardCycles() // Start member card animation
+
+        // Enable discord button tilt
+        if (!$reducedMotion && !$mobile) VanillaTilt.init(discordButton, {
+            reverse: true,
+            speed: 1000
+        })
     })
 </script>
 
@@ -118,9 +132,9 @@
         </div>
     </div>
 </div>
-<div class="relative w-full desktop:h-[670px] flex mobile:flex-col-reverse bg-secondary-dark">
+<div class="relative w-full desktop:h-[670px] flex mobile:flex-col-reverse">
     <div class="relative z-10 w-[60%] mobile:w-full h-full mobile:h-fit bg-gradient-to-r mobile:bg-gradient-to-t from-primary-dark from-70% mobile:from-[92.5%] mobile:z-20 pointer-events-none">
-        <div class="flex flex-col gap-5 items-center justify-center w-fit h-full py-8 mobile:pt-[5.5rem] desktop:ml-10 mobile:px-10 [&>*]:text-center pointer-events-auto">
+        <div class="flex flex-col gap-5 items-center justify-center w-fit h-full py-8 mobile:pt-[5.5rem] ml-10 mobile:mr-10 [&>*]:text-center pointer-events-auto">
             <h2>{$_("about.translators.heading")}</h2>
             <p>{@html $_("about.translators.desc")}</p>
         </div>
@@ -179,4 +193,31 @@
     </div>
 
     <p class="absolute right-0 bottom-0 text-sm bg-black bg-opacity-75 px-2 py-0.5">© <a href="https://www.planetminecraft.com/project/earth-1-750-1-19" class="underline">{$_("ui.mapcredit")}</a></p>
+</div>
+<div class="w-full py-8 flex mobile:flex-col-reverse items-center justify-between">
+    <div class="w-fit ml-10 mobile:mr-10 flex flex-col items-center [&>*]:text-center">
+        <h2>{$_("about.joinus.heading")}</h2>
+        <p>{@html $_("about.joinus.desc")}</p>
+        
+        <span class="mt-9 mobile:mt-8 rounded-full duration-1000 motion-safe:desktop:hover:-translate-y-2">
+            <a
+                href="{consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer"
+                class="py-4 px-6 flex items-center gap-3 bg-[#5865f2] shadow-xl shadow-transparent rounded-full ease-in-out [transition:box-shadow_1s] motion-safe:desktop:hover:shadow-[#5865f233]"
+                bind:this={discordButton}
+            >
+                <img src="{consts.WEBSITE_ICONS.discord}" alt="Discord logo" class="w-12 brightness-0 invert">
+                <p class="font-bold text-2xl">{$_("ui.discord")}</p>
+            </a>
+        </span>
+    </div>
+    <div class="flex w-[50vw] mobile:h-48 desktop:-translate-y-8 justify-center motion-reduce:[&_*]:animate-duration-[0s]" use:inview={{threshold: .5}} on:inview_enter={() => {showJoinAnim = true}}>
+        <span class="flex motion-reduce:gap-16{showJoinAnim ? " animate-join-gap" : ""}">
+            {#each [...Array(2).keys()] as _}
+                <User class="h-48 w-48 mobile:w-24 mobile:h-24" />
+            {/each}
+        </span>
+        <User class="absolute h-48 w-48 mobile:w-24 mobile:h-24 motion-safe:opacity-0 motion-reduce:translate-y-16{showJoinAnim ? " animate-join-main" : ""}" />
+
+        <p class="absolute -bottom-28 right-[15vw] h-24 w-24 flex justify-center items-center text-6xl font-bold bg-mm-red rounded-full select-none mobile:opacity-0 motion-safe:[scale:0%] motion-safe:animate-delay-[650ms]{showJoinAnim ? " animate-join-plusone" : ""}">+1</p>
+    </div>
 </div>

@@ -229,7 +229,7 @@
                 {/each}
             </div>
         {/if}
-        <div class="h-full w-full px-16 mobile:my-8 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center desktop:bg-[radial-gradient(circle,_#0c0c0c_10%,_transparent_65%)]">
+        <div class="h-full w-full px-16 mobile:py-8 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center desktop:bg-[radial-gradient(circle,_#0c0c0c_10%,_transparent_65%)]">
             <h2>{$_("projects.ecosystem.heading")}</h2>
             <p>{@html $_("projects.ecosystem.desc")}</p>
         </div>

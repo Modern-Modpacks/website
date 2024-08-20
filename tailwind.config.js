@@ -82,10 +82,41 @@ export default {
             to: {
                 transform: "translateY(20%)"
             }
+        },
+
+        "join-main": {
+          from: {
+              transform: "translateY(10rem)",
+              opacity: 0
+          },
+          to: {
+              transform: "translateY(4rem)",
+              opacity: 1
+          }
+        },
+        "join-gap": {
+          from: {
+              gap: "0rem"
+          },
+          to: {
+              gap: "4rem"
+          }
+        },
+        "join-plusone": {
+          from: {
+              scale: "0%"
+          },
+          to: {
+            scale: "100%"
+          }
         }
       },
       animation: {
-        float: "float 2s alternate infinite ease-in-out"
+        float: "float 2s alternate infinite ease-in-out",
+
+        "join-main": "join-main 650ms forwards ease-out",
+        "join-gap": "join-gap 650ms forwards ease-out",
+        "join-plusone": "join-plusone 400ms forwards ease-in-out"
       }
     }
   },
