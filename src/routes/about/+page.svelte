@@ -60,7 +60,7 @@
 
         setTimeout(cardCycle, dur + (stayDur * +cardIn))
     }
-    let startCardCycles = () => {if (permMemberId==null) {console.log("a"); setTimeout(cardCycle, stayDur)}} // Start card animations
+    let startCardCycles = () => {if (permMemberId==null) setTimeout(cardCycle, stayDur)} // Start card animations
 
     let map : HTMLElement | null // One of the images for the scrolling map
     let sidebarScrolled : number = 0 // Times the sidebar has been scrolled
@@ -141,7 +141,7 @@
                 </span>
             </span>
             <div
-                class="overflow-hidden h-[34rem] mt-6 flex flex-col gap-4 w-fit"
+                class="overflow-hidden mobile:overflow-scroll h-[34rem] mobile:h-80 mobile:pb-10 mt-6 flex flex-col gap-4 mobile:gap-3 w-fit" style="-webkit-overflow-scrolling: touch;"
                 on:wheel={e => {
                     e.preventDefault()
 
@@ -156,7 +156,7 @@
 
                         <a 
                             href="https://github.com/{translator.github.username}" target="_blank" rel="noopener noreferrer" title="GitHub ({translator.github.username})"
-                            class="group flex items-center gap-4{+i > 0 && !(+i % 6) ? " mt-4" : ""} [&_*]:origin-top-left [&_*]:duration-300 duration-500" style="transform: translateY({sidebarScrolled * -34}rem);"
+                            class="group flex items-center gap-4{+i > 0 && !(+i % 6) ? " desktop:mt-4" : ""} [&_*]:origin-top-left [&_*]:duration-300 duration-500" style="transform: translateY({sidebarScrolled * +!$mobile * -34}rem);"
                         >
                             <img src="{translator.avatar_url ?? `https://avatars.githubusercontent.com/u/${translator.github.id}?v=4`}" alt="avatar" class="w-[4.5rem] mobile:w-16{onCurrentPage ? " group-hover:desktop:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
                             <span>
