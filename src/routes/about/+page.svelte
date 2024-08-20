@@ -166,8 +166,7 @@
             >
                 {#if Object.keys(translators).includes(lastActivePin?.lang ?? "")}
                     {#each Object.entries(translators[lastActivePin?.lang ?? ""]) as [i, translator]}
-                        {@const onCurrentPage = (+i >= sidebarScrolled * 6) && (+i < (sidebarScrolled + 1) * 6)}
-
+                    {@const onCurrentPage = (+i >= sidebarScrolled * 6) && (+i < (sidebarScrolled + 1) * 6)}
                         <a 
                             href="https://github.com/{translator.github.username}" target="_blank" rel="noopener noreferrer" title="GitHub ({translator.github.username})"
                             class="group flex items-center gap-4{+i > 0 && !(+i % 6) ? " desktop:mt-4" : ""} [&_*]:origin-top-left [&_*]:duration-300 duration-500" style="transform: translateY({sidebarScrolled * +!$mobile * -34}rem);"
