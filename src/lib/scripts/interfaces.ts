@@ -9,6 +9,11 @@ export interface Social { // Used for socials in consts.ts
     title: string
     header: boolean
 }
+export interface Pin { // Used for pins on the translator map
+    coords: Coordinates,
+    lang: string
+}
+
 export interface Modpack { // Used for modpacks in modpacks.json5
     name?: string
     abbr?: string
@@ -52,26 +57,21 @@ export interface PartnerModpack extends Modpack { // Used for partnered packs. T
         discord?: string
     }
 }
-export interface Member { // Used for members in members.json5
+
+export interface Contributor { // Base interface for all contributors
     name: string
-
     avatar_url?: string
-    github_id?: number
-
-    titles?: string[]
-    socials?: string[]
-}
-export interface Pin { // Used for pins on the translator map
-    coords: Coordinates,
-    lang: string
-}
-export interface Translator { // Used for translators in translators.json5
-    name: string,
-    title?: string,
-    avatar_url?: string,
 
     github: {
         username: string,
         id: number
     }
 }
+export interface Member extends Contributor { // Used for members in members.json5
+    titles?: string[]
+    socials?: string[]
+}
+export interface Translator extends Contributor { // Used for translators in translators.json5
+    title?: string,
+}
+export interface Tester extends Contributor {} // Used for testers in testers.json5

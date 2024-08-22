@@ -1,10 +1,12 @@
 <script lang="ts">
     import { reducedMotion } from "$lib/scripts/stores";
     import { onMount } from "svelte";
+    import { sineOut } from "svelte/easing";
     import { tweened, type Tweened } from "svelte/motion";
 
     let cls : string = ""
     export {cls as class} // Class attribute support
+    export let style : string = ""
     export let element : HTMLElement | null = null // To be able to do bind:element instead of bind:this
 
     export let duration : number
@@ -14,7 +16,7 @@
     export let play : boolean = true
 
     let scaleup : boolean = false
-    let anim : Tweened<number> = tweened(maxScale, {duration: duration, delay: delay})
+    let anim : Tweened<number> = tweened(maxScale, {duration: duration, delay: delay, easing: sineOut})
     let doCycle = () => {
         $anim = scaleup ? maxScale : minScale
         scaleup = !scaleup
@@ -31,6 +33,6 @@
     })
 </script>
 
-<span bind:this={element} id="animinheader" class="block{cls ? " "+cls : ""}" style="transform: scale({$anim}%);">
+<span bind:this={element} id="animinheader" class="block{cls ? " "+cls : ""}" style="transform: scale({$anim}%); {style}">
     <slot />
 </span>

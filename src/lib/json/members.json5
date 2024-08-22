@@ -2,67 +2,91 @@
     {
         "name": "G_cat",
 
-        "github_id": 79367505,
+        "github": {
+            "username": "Gcat101",
+            "id": 79367505
+        },
 
         "titles": ["founder", "ceo", "scripter", "hm", "utilcreator", "webdev", "lore", "questwriter", "pixelartist"],
-        "socials": ["https://github.com/Gcat101", "https://www.curseforge.com/members/g_cat", "https://modrinth.com/user/G_cat", "https://www.youtube.com/channel/UCOH7EaAnk1HJhbJNPRCVC2g", "https://lichess.org/@/G_cat101"]
+        "socials": ["https://www.curseforge.com/members/g_cat", "https://modrinth.com/user/G_cat", "https://www.youtube.com/channel/UCOH7EaAnk1HJhbJNPRCVC2g", "https://lichess.org/@/G_cat101"]
     },
     {
         "name": "Rainbuu",
 
-        "github_id": 77862418,
+        "github": {
+            "username": "RealRainbuu",
+            "id": 77862418
+        },
 
         "titles": ["scripter", "hm", "multiblocker", "realismconsult"],
-        "socials": ["https://github.com/RealRainbuu", "https://www.curseforge.com/members/rainbuu", "https://modrinth.com/user/RealRainbuu", "https://www.youtube.com/channel/UCUbKsgKCm1gKQDCOcrDTBGw"]
+        "socials": ["https://www.curseforge.com/members/rainbuu", "https://modrinth.com/user/RealRainbuu", "https://www.youtube.com/channel/UCUbKsgKCm1gKQDCOcrDTBGw"]
     },
     {
         "name": "Kasualix",
 
-        "github_id": 110756250,
+        "github": {
+            "username": "Kasualix",
+            "id": 110756250
+        },
 
         "titles": ["hm"],
-        "socials": ["https://github.com/Kasualix", "https://www.curseforge.com/members/potato__boy"]
+        "socials": ["https://www.curseforge.com/members/potato__boy"]
     },
     {
         "name": "Glomdom",
 
-        "github_id": 103685817,
+        "github": {
+            "username": "glomdom",
+            "id": 103685817
+        },
 
         "titles": ["cao", "scripter"],
-        "socials": ["https://glomdom.is-a.dev", "https://github.com/glomdom"]
+        "socials": ["https://glomdom.is-a.dev"]
     },
     {
         "name": "Unnecessary",
-
         "avatar_url": "https://cdn.discordapp.com/icons/1216098761193820290/1253b917bd8437b234452b8640f3c822.png?size=4096",
-        "github_id": 143959812,
+
+        "github": {
+            "username": "unnecessarymb",
+            "id": 143959812
+        },
 
         "titles": ["scripter", "utilcreator", "lore"],
-        "socials": ["https://github.com/unnecessarymb", "https://www.curseforge.com/members/unnecessary"]
+        "socials": ["https://www.curseforge.com/members/unnecessary"]
     },
     {
         "name": "Wolfieboy09",
-
         "avatar_url": "https://cdn.discordapp.com/avatars/972269221872533524/a63ba24d2af774c4eaef3a425ae14767.png?size=512",
-        "github_id": 105564186,
+
+        "github": {
+            "username": "wolfieboy09",
+            "id": 105564186
+        },
 
         "titles": ["scripter"],
-        "socials": ["https://github.com/wolfieboy09", "https://www.curseforge.com/members/wolfieboy09", "https://modrinth.com/user/Wolfieboy09"]
+        "socials": ["https://www.curseforge.com/members/wolfieboy09", "https://modrinth.com/user/Wolfieboy09"]
     },
     {
         "name": "ZeldaLord",
 
-        "github_id": 83875893,
+        "github": {
+            "username": "ZeldaLord1",
+            "id": 83875893
+        },
 
         "titles": ["questwriter", "scripter"],
-        "socials": ["https://github.com/ZeldaLord1", "https://www.youtube.com/channel/UCHkKqiJqKVF89hLAcx9VNqQ", "https://www.reddit.com/user/ZeldaLord_/"]
+        "socials": ["https://www.youtube.com/channel/UCHkKqiJqKVF89hLAcx9VNqQ", "https://www.reddit.com/user/ZeldaLord_/"]
     },
     {
         "name": "Tizu",
 
-        "github_id": 60812901,
+        "github": {
+            "username": "tizu69",
+            "id": 60812901
+        },
 
         "titles": ["webdev", "frontendconsult"],
-        "socials": ["https://tizudev.vercel.app", "https://github.com/tizu69"]
+        "socials": ["https://tizudev.vercel.app"]
     }
 ]

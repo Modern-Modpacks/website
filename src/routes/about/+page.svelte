@@ -6,7 +6,7 @@
     import { _, locale, locales } from "svelte-i18n";
     import type { Member, Pin, Translator } from "$lib/scripts/interfaces";
     import { onMount } from "svelte";
-    import { getMemberAvatar } from "$lib/scripts/utils";
+    import { getContributorAvatar } from "$lib/scripts/utils";
     import { tweened, type Tweened } from "svelte/motion";
     import { sineIn, sineOut } from "svelte/easing";
     import { activatedPin, mobile, reducedMotion } from "$lib/scripts/stores";
@@ -16,6 +16,7 @@
     import consts from "$lib/scripts/consts";
     import VanillaTilt from "vanilla-tilt";
     import { inview } from "svelte-inview";
+    import TesterHex from "$lib/components/TesterHex.svelte";
 
     // Members and translators, served just as typescript likes it
     let members : Member[] = membersJson
@@ -86,6 +87,8 @@
         $mapShouldPlay = v==null
     })
 
+    let hexesHovered : boolean = false // Whether the tester section's hex animation is hovered
+
     let discordButton : HTMLElement // The "join the discord" button
     let showJoinAnim : boolean = false // Whether to show the animations in the "join us" section (triggered on inview)
 
@@ -110,7 +113,7 @@
     <div class="absolute w-full h-[95vh] -z-10 overflow-hidden [&>span]:flex [&>span]:flex-wrap">
         <Marquee baseAnimDur={10000 * members.length} animMin={0} bind:animMax={wallScrollHeight} vertical={true}>
             {#each [...Array(8 * (wallRowCount ?? 0)).keys()] as i}
-                <img src="{getMemberAvatar(members[i % members.length])}" alt="" class="w-[12.5vw]">
+                <img src="{getContributorAvatar(members[i % members.length])}" alt="" class="w-[12.5vw]">
             {/each}
         </Marquee>
     </div>
@@ -171,7 +174,7 @@
                             href="https://github.com/{translator.github.username}" target="_blank" rel="noopener noreferrer" title="GitHub ({translator.github.username})"
                             class="group flex items-center gap-4{+i > 0 && !(+i % 6) ? " desktop:mt-4" : ""} [&_*]:origin-top-left [&_*]:duration-300 duration-500" style="transform: translateY({sidebarScrolled * +!$mobile * -34}rem);"
                         >
-                            <img src="{translator.avatar_url ?? `https://avatars.githubusercontent.com/u/${translator.github.id}?v=4`}" alt="avatar" class="w-[4.5rem] mobile:w-16{onCurrentPage ? " motion-safe:group-hover:desktop:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
+                            <img src="{getContributorAvatar(translator)}" alt="avatar" class="w-[4.5rem] mobile:w-16{onCurrentPage ? " motion-safe:group-hover:desktop:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
                             <span>
                                 <h3 class="font-bold mobile:text-lg{onCurrentPage ? " motion-safe:group-hover:desktop:text-4xl" : ""}">{translator.name}</h3>
                                 <p class="text-base mobile:text-sm{onCurrentPage ? " motion-safe:group-hover:desktop:text-lg" : ""} font-semibold text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>
@@ -193,11 +196,16 @@
 
     <p class="absolute right-0 bottom-0 text-sm bg-black bg-opacity-75 px-2 py-0.5">© <a href="https://www.planetminecraft.com/project/earth-1-750-1-19" class="underline">{$_("ui.mapcredit")}</a></p>
 </div>
-<div class="w-full py-8 flex bg-secondary-dark">
-    <div class="w-full">
-        
+<div class="w-full flex mobile:flex-col bg-secondary-dark">
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div class="group relative w-full mobile:h-[60vh] flex overflow-hidden" on:mouseenter={() => {hexesHovered=true}} on:mouseleave={() => {hexesHovered=false}}>
+        {#each [...Array($mobile ? 3 : 5).keys()] as col}
+            {#each [...Array(col%2 ? ($mobile ? 3 : 5) - +(col==3) : ($mobile ? 3 : 4) - +(col==4)).keys()] as row}
+                <TesterHex col={col} row={row} bind:parentHovered={hexesHovered} />
+            {/each}
+        {/each}
     </div>
-    <div class="mr-10 min-w-fit flex flex-col gap-5 [&>*]:text-center">
+    <div class="mr-10 mobile:ml-10 py-8 min-w-fit flex flex-col gap-5 [&>*]:text-center">
         <h2>{$_("about.testers.heading")}</h2>
         <p>{@html $_("about.testers.desc")}</p>
     </div>
@@ -233,7 +241,7 @@
     <div class="w-full">
         
     </div>
-    <div class="mr-10 min-w-fit flex flex-col gap-5 [&>*]:text-center">
+    <div class="mr-10 mobile:ml-10 min-w-fit flex flex-col gap-5 [&>*]:text-center">
         <h2>{$_("about.mission.heading")}</h2>
         <p>{@html $_("about.mission.desc")}</p>
     </div>

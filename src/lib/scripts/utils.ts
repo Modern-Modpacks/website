@@ -1,6 +1,4 @@
-import { get } from "svelte/store"
-import type { Coordinates, Member } from "./interfaces"
-import { scrollY } from "./stores"
+import type { Contributor, Coordinates } from "./interfaces"
 import consts from "./consts"
 
 export const randomChoice = (elements: any[]) => elements[Math.floor(Math.random()*elements.length)] // Randomly select an element from the array, probably the most redefined function on planet earth
@@ -18,7 +16,7 @@ export const getWebsiteIcon = (url : string): string | null => { // Get an icon 
     }
     return null
 }
-export const getMemberAvatar = (member : Member): string => member.avatar_url ?? `https://avatars.githubusercontent.com/u/${member.github_id}?v=4` // Get the avatar of a member
+export const getContributorAvatar = (c : Contributor): string => c.avatar_url ?? `https://avatars.githubusercontent.com/u/${c.github.id}?v=4` // Get the avatar of a contributor
 
 export const toggleScroll = (enable : boolean) => { // Toggle the ability to scroll the page vertically
     let container : HTMLElement | null = document.querySelector("#container")

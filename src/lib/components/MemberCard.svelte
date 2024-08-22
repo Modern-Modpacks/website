@@ -2,14 +2,17 @@
     import members from "$lib/json/members.json5"
     import consts from "$lib/scripts/consts";
     import type { Member } from "$lib/scripts/interfaces";
-    import { getMemberAvatar, getWebsiteIcon } from "$lib/scripts/utils";
+    import { getContributorAvatar, getWebsiteIcon } from "$lib/scripts/utils";
     import { _ } from "svelte-i18n";
     import Tag from "./Tag.svelte"
     import { Globe } from "lucide-svelte";
 
     export let memberId : number
+
     let member : Member
     $: member = members[memberId]
+    let socials : string[]
+    $: socials = ["https://github.com/"+member.github.username, ...(member.socials ?? [])].sort((a, b) => getWebsiteIcon(a) ? 0 : -1)
 
     // Filtered colors for tags
     const removeColors : string[] = [
@@ -26,7 +29,7 @@
 </script>
 
 <span class="w-[25rem] mobile:w-[100vw] mobile:h-[90vh] flex flex-col mobile:items-center mobile:justify-center gap-4">
-    <img src="{getMemberAvatar(member)}" alt="avatar" class="h-72 w-72 mobile:h-52 mobile:w-52 rounded-3xl bg-primary-dark">
+    <img src="{getContributorAvatar(member)}" alt="avatar" class="h-72 w-72 mobile:h-52 mobile:w-52 rounded-3xl bg-primary-dark">
     <h2 class="w-fit">{member.name}</h2>
     <span class="flex flex-wrap mobile:justify-center gap-2.5 [&>p]:w-fit">
         {#each Object.entries(member.titles ?? []) as [i, title]}
@@ -34,18 +37,16 @@
             <Tag text="{$_("ui.titles."+title)}" color="mm-{color}"/>
         {/each}
     </span>
-    {#if member.socials}
-        <span class="flex gap-2.5">
-            {#each member.socials as social}
-            {@const icon = getWebsiteIcon(social)}
-                <a href="{social}" target="_blank" rel="noopener noreferrer">
-                    {#if icon}
-                        <img src="{icon}" alt="website icon" class="h-10 brightness-0 invert duration-200 motion-safe:hover:desktop:opacity-40">
-                    {:else}
-                        <Globe size="40" class="duration-200 motion-safe:hover:desktop:opacity-40"/>
-                    {/if}
-                </a>
-            {/each}
-        </span>
-    {/if}
+    <span class="flex gap-2.5">
+        {#each socials as social}
+        {@const icon = getWebsiteIcon(social)}
+            <a href="{social}" target="_blank" rel="noopener noreferrer">
+                {#if icon}
+                    <img src="{icon}" alt="website icon" class="h-10 brightness-0 invert duration-200 motion-safe:hover:desktop:opacity-40">
+                {:else}
+                    <Globe size="40" class="duration-200 motion-safe:hover:desktop:opacity-40"/>
+                {/if}
+            </a>
+        {/each}
+    </span>
 </span>
