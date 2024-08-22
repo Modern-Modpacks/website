@@ -198,14 +198,25 @@
             <b>Our language repertoire</b> and the list of projects available in those languages are ever-growing, and you can help these processes by joining us!"
         },
         "testers": {
-            "heading": "",
-            "desc": ""
+            "heading": "How we maintain quality",
+            "desc": "One word - <b>Testing. Lots of testing.</b> And while we, of course, do test our packs while developing them, <b>it is almost impossible</b> to catch every single bug. And when it comes to balance, it's very hard to tell, without any bias, what works as intended and what needs to be changed.\n\n\
+            <b>This is where our testers come in.</b> Testers are another separate group of volunteers, just like members and translators, whose job is to <b>play our mods and modpacks in their raw states</b> and report back to us if something doesn't work as expected.\n\n\
+            <b>Fine-tuning</b> is usually the most tedious and time-consuming part of modpack development; things like - <b>how much energy should a recipe require, how long should it be, what items and in what quantity should it take, etc;</b> all are parts of this process.\n\n\
+            <b>Testers</b> help us smooth all of this out and, by proxy, <b>speed up the process of pack development</b>. With their feedback, we can <b>quickly fine-tune</b> every unbalanced part of the pack, instead of wasting time trying to find every wrongly tuned bit ourselves."
         },
         "joinus": {
             "heading": "Join us",
             "desc": "<b>Want to become</b> a member, a translator, or a tester? <b>Join the team!</b> We are always in need of more manpower and will be happy to see you develop a better future for modded minecraft along with us.\n\n\
             We are currently looking for: <b>KubeJS programmers</b>, <b>pixel-artists</b>, <b>soundtrack composers</b>, <b>quest/lore writers</b>, <b>web developers</b>, and of course, <b>testers</b> and <b>translators.</b>\n\n\
             <b>Have any of those skills?</b> Or any other skills you think would be beneficial to what we are doing? <b>Join our Discord</b> and contact the current owner through DMs to get potentially invited as a contributor and see how you can help at the moment!"
+        },
+        "mission": {
+            "heading": "Our mission",
+            "desc": "<b>Modern Modpacks</b> is built on top of a few core principles. <b>We stray away from them occasionally,</b> but as a general rule of thumb, we like to adhere by these points to maintain a general direction in which we guide our projects:\n\n\
+            <b>Quality Over Quantity</b> - This might come as a surprise, since the entire foundation of this organization is to eventually make 16 modpacks, which would suggest they should all be done in a hurry. <b>But \"The Journey To 16 Modpacks\" is mostly just a marketing gimmick,</b> and we would never put out something unless we think it's in its best state. <b>We develop modpacks as if they were games</b> and whenever posed with a dilemma, we ask ourselves how a game developer might tackle it.\n\n\
+            <b>Community Project</b> - As said previously, MM strives to be a fully democratic organization, where each member has equal right to suggest ideas and vote on ideas of others, and the role of the owner is purely superficial and shall swap hands semi-frequently. <b>This principle, albeit, in a lesser sense</b> also applies to non-members. We are always looking for feedback, and <b>you</b> can provide us with it!\n\n\
+            <b>Version-Indifference</b> and <b>Post-Versionism</b> - We believe that, due to the recent developments in mods that allow packdevs to modify basically anything in the game through scripting, one's choice of the Minecraft version they choose to develop on <b>does not matter.</b>\n\n\
+            <b>Currently, our version of preference is 1.16.5,</b> which according to some, may be considered outdated. However, we don't really think about it that way; instead, we decide not to switch because most of our infrastructure was built for 1.16 during the days it was most people's first version pick; and we think it's not worth our time to keep updating to the latest versions, when we can focus on what truly matters - <b>good modpacks.</b>"
         }
     }
 }

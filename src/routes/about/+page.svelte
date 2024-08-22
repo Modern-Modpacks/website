@@ -193,12 +193,21 @@
 
     <p class="absolute right-0 bottom-0 text-sm bg-black bg-opacity-75 px-2 py-0.5">© <a href="https://www.planetminecraft.com/project/earth-1-750-1-19" class="underline">{$_("ui.mapcredit")}</a></p>
 </div>
+<div class="w-full py-8 flex bg-secondary-dark">
+    <div class="w-full">
+        
+    </div>
+    <div class="mr-10 min-w-fit flex flex-col gap-5 [&>*]:text-center">
+        <h2>{$_("about.testers.heading")}</h2>
+        <p>{@html $_("about.testers.desc")}</p>
+    </div>
+</div>
 <div class="w-full py-8 flex mobile:flex-col-reverse items-center justify-between">
-    <div class="w-fit ml-10 mobile:mr-10 flex flex-col items-center [&>*]:text-center">
+    <div class="w-fit ml-10 mobile:mr-10 flex flex-col gap-5 items-center [&>*]:text-center">
         <h2>{$_("about.joinus.heading")}</h2>
         <p>{@html $_("about.joinus.desc")}</p>
         
-        <span class="mt-9 mobile:mt-8 rounded-full duration-1000 motion-safe:desktop:hover:-translate-y-2">
+        <span class="mt-3 mobile:mt-2 rounded-full duration-1000 motion-safe:desktop:hover:-translate-y-2">
             <a
                 href="{consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer"
                 class="py-4 px-6 flex items-center gap-3 bg-[#5865f2] shadow-xl shadow-transparent rounded-full ease-in-out [transition:box-shadow_1s] motion-safe:desktop:hover:shadow-[#5865f233]"
@@ -218,5 +227,14 @@
         <User class="absolute h-48 w-48 mobile:w-24 mobile:h-24 motion-safe:opacity-0 motion-reduce:translate-y-16{showJoinAnim ? " animate-join-main" : ""}" />
 
         <p class="absolute -bottom-28 right-[15vw] h-24 w-24 flex justify-center items-center text-6xl font-bold bg-mm-red rounded-full select-none mobile:opacity-0 motion-safe:[scale:0%] motion-safe:animate-delay-[650ms]{showJoinAnim ? " animate-join-plusone" : ""}">+1</p>
+    </div>
+</div>
+<div class="w-full py-8 flex bg-secondary-dark">
+    <div class="w-full">
+        
+    </div>
+    <div class="mr-10 min-w-fit flex flex-col gap-5 [&>*]:text-center">
+        <h2>{$_("about.mission.heading")}</h2>
+        <p>{@html $_("about.mission.desc")}</p>
     </div>
 </div>
