@@ -7,6 +7,7 @@
     import ModpackPopup from "./ModpackPopup.svelte"
     import { _ } from "svelte-i18n"
     import BreathingIcon from "./BreathingIcon.svelte";
+    import { calculateElementCenter } from "$lib/scripts/utils";
 
     export let index : number
     export let parentHover : boolean
@@ -26,9 +27,9 @@
 
     // Mouse follow animation shenanigans
     let transformX : number
-    $: transformX = ($mousePos.x - (element?.getBoundingClientRect().left + (element?.getBoundingClientRect().width / 2))) * mouseMoveMul * +(parentHover && !$popupOpenedBy)
+    $: transformX = ($mousePos.x - calculateElementCenter(element).x) * mouseMoveMul * +(parentHover && !$popupOpenedBy)
     let transformY : number
-    $: transformY = ($mousePos.y - (element?.getBoundingClientRect().top + (element?.getBoundingClientRect().height / 2) + $scrollY)) * mouseMoveMul * +(parentHover && !$popupOpenedBy)
+    $: transformY = ($mousePos.y - calculateElementCenter(element).y) * mouseMoveMul * +(parentHover && !$popupOpenedBy)
 
     const mouseMoveMul = .05
 </script>

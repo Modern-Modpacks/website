@@ -4,9 +4,9 @@
     import translatorsJson from "$lib/json/translators.json5" 
     import MemberCard from "$lib/components/MemberCard.svelte";
     import { _, locale, locales } from "svelte-i18n";
-    import type { Member, Pin, Translator } from "$lib/scripts/interfaces";
+    import type { Coordinates, Member, Pin, Translator } from "$lib/scripts/interfaces";
     import { onMount } from "svelte";
-    import { getContributorAvatar } from "$lib/scripts/utils";
+    import { calculateElementCenter, getContributorAvatar } from "$lib/scripts/utils";
     import { tweened, type Tweened } from "svelte/motion";
     import { sineIn, sineOut } from "svelte/easing";
     import { activatedPin, mobile, reducedMotion } from "$lib/scripts/stores";
@@ -17,6 +17,7 @@
     import VanillaTilt from "vanilla-tilt";
     import { inview } from "svelte-inview";
     import TesterHex from "$lib/components/TesterHex.svelte";
+    import Saos from "saos";
 
     // Members and translators, served just as typescript likes it
     let members : Member[] = membersJson
@@ -89,25 +90,74 @@
 
     let hexesHovered : boolean = false // Whether the tester section's hex animation is hovered
 
-    let discordButton : HTMLElement // The "join the discord" button
+    let discordButton : HTMLElement | null // The "join the discord" button
     let showJoinAnim : boolean = false // Whether to show the animations in the "join us" section (triggered on inview)
 
+    let compass : HTMLElement | null // The compass texture
+    let compassCenter : Coordinates // The coordinates of the compass' center
+    const compasssTextureDur = 53 // The duration it takes for compass to update the rotation
+    let compassTexture : Tweened<number> = tweened(0, {duration: compasssTextureDur}) // The spun texture for the compass
+    let compassUnfocused : boolean = false // Whether the window is focused and the compass should follow mouse
+    let compassUnfocusedTimeout : number | null = null // The timeout used for unfocus anim
+
     onMount(() => {
-        setTimeout(() => {if ($reducedMotion) showJoinAnim = true}, 1)
+        setTimeout(() => {if ($reducedMotion) {showJoinAnim = true; compassUnfocused = false}}, 1)
 
         // Recalculate wall on mount and resize
         recalculateWall()
         window.addEventListener("resize", recalculateWall)
-
         startCardCycles() // Start member card animation
 
         // Enable discord button tilt
-        if (!$reducedMotion && !$mobile) VanillaTilt.init(discordButton, {
+        if (!$reducedMotion && !$mobile) VanillaTilt.init(discordButton!, {
             reverse: true,
             speed: 1000
         })
+
+        // Calculate compass center on mount and resize
+        compassCenter = calculateElementCenter(compass!)
+        window.addEventListener("resize", () => {compassCenter = calculateElementCenter(compass!)})
+        document.addEventListener("mousemove", e => { // Calculate rotation for the correct compass texture
+            if ($reducedMotion || $mobile) return
+
+            let newTexture = Math.round((Math.atan2(e.pageY - compassCenter.y, e.pageX - compassCenter.x) / (2*Math.PI)) * 31) - 7
+
+            // Rotation shitfuckery
+            if (newTexture == -22 || newTexture == 8) compassTexture.set(newTexture, {duration: 0})
+            else $compassTexture = newTexture
+        })
+        // Focus and unfocus anims
+        window.addEventListener("blur", e => {
+            if ($reducedMotion || $mobile) return
+
+            let duration = Math.abs($compassTexture) * compasssTextureDur
+            compassTexture.set(0, {duration: duration})
+
+            compassUnfocusedTimeout = setTimeout(() => {compassUnfocused = true}, duration)
+        })
+        window.addEventListener("focus", e => {
+            if ($reducedMotion || $mobile) return
+
+            if (compassUnfocusedTimeout!=null) clearTimeout(compassUnfocusedTimeout)
+            compassUnfocused = false
+        })
     })
 </script>
+
+<style>
+    @keyframes -global-showup {
+        from {
+            transform-origin: bottom;
+
+            scale: 0%;
+            opacity: 0;
+        }
+        to {
+            scale: 100%;
+            opacity: 1;
+        }
+    }
+</style>
 
 <div class="desktop:h-[95vh]">
     <div class="absolute w-full h-[95vh] -z-10 overflow-hidden [&>span]:flex [&>span]:flex-wrap">
@@ -237,9 +287,14 @@
         <p class="absolute -bottom-28 right-[15vw] h-24 w-24 flex justify-center items-center text-6xl font-bold bg-mm-red rounded-full select-none mobile:opacity-0 motion-safe:[scale:0%] motion-safe:animate-delay-[650ms]{showJoinAnim ? " animate-join-plusone" : ""}">+1</p>
     </div>
 </div>
-<div class="w-full py-8 flex bg-secondary-dark">
-    <div class="w-full">
-        
+<div class="w-full py-8 flex mobile:flex-col bg-secondary-dark">
+    <div class="w-full desktop:ml-10 mobile:mb-6 flex items-center mobile:justify-center">
+        <Saos animation={$reducedMotion || $mobile ? "" : `showup .75s ease-out backwards`} once={true}>
+            <img 
+                src="{compassUnfocused ? "https://minecraft.wiki/images/Compass_JE3_BE3.gif" : `https://raw.githubusercontent.com/misode/mcmeta/1.19.2-assets/assets/minecraft/textures/item/compass_${((31 + Math.round($compassTexture)) % 31).toString().padStart(2, "0")}.png`}"
+                alt="compass" class="origin-bottom rendering-pixelated aspect-square w-[40vw] h-[40vw] mobile:h-64 mobile:w-64 min-w-[40vw] min-h-[40vw] mobile:min-h-64 mobile:min-w-64" bind:this={compass}
+            >
+        </Saos>
     </div>
     <div class="mr-10 mobile:ml-10 min-w-fit flex flex-col gap-5 [&>*]:text-center">
         <h2>{$_("about.mission.heading")}</h2>

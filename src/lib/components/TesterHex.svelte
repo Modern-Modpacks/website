@@ -26,8 +26,8 @@
 
     // Offset animation
     let showHex : boolean = true
-    const minSec : number = 20000
-    const maxSec : number = 25000
+    const minSec : number = 5000
+    const maxSec : number = 35000
     let setRotationTimeout = () => {
         if ($reducedMotion) return
         setTimeout(rotationTimeout, (Math.random() * (maxSec - minSec)) + minSec)

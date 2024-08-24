@@ -8,6 +8,13 @@ export const getDistance = (point1: Coordinates, point2: Coordinates): number =>
 
     return Math.sqrt((distX ** 2) + (distY ** 2))
 }
+export const calculateElementCenter = (el : HTMLElement | undefined): Coordinates => { // Get the center of the element on the page
+    if (!el) return {x: 0, y: 0}
+    return {
+        x: window.scrollX + el.getBoundingClientRect().left! + (el.getBoundingClientRect().width! / 2),
+        y: window.scrollY + el.getBoundingClientRect().top! + (el.getBoundingClientRect().height! / 2)
+    }
+}
 
 export const getWebsiteIcon = (url : string): string | null => { // Get an icon of a website based on its url
     if (!url) return null
