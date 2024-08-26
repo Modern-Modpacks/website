@@ -109,7 +109,7 @@
                 <div class="w-[36rem]{$upsideDownLocale ? " [&>*]:text-right" : ""}">
                     <h2 class="mobile:text-2xl">{modpack.name}</h2>
                     <h4 class="w-[50ch] mobile:w-[45ch] mobile:text-xs">{$_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`)}</h4>
-                    <p class="mt-6 mobile:mt-4 w-[50ch] mobile:w-[45ch] text-lg mobile:text-xs" style="overflow_y: hidden">{@html $_(`modpacks.${modpack.abbr?.toLowerCase()}.longdesc`)}</p>
+                    <p class="mt-6 mobile:mt-4 w-[50ch] mobile:w-[45ch] text-lg mobile:text-xs" style="overflow_y: auto">{@html $_(`modpacks.${modpack.abbr?.toLowerCase()}.longdesc`)}</p>
                 </div>
 
                 <div class="h-full w-full flex flex-col">
