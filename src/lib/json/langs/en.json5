@@ -68,12 +68,13 @@
             "tech": "Tech",
             "magic": "Magic",
             "exploration": "Exploration",
+            "kitchensink": "Kitchen Sink",
             "rpg": "RPG",
 
             "lore": "Lore",
             "automation": "Automation",
             "space": "Space",
-            "gt": "GregTech"
+            "gt": "GregTech",
         },
         "titles": {
             "founder": "Founder",
@@ -134,7 +135,13 @@
             <b>Optionally become a master magician using Thaumcraft.</b> Start your apricaltural empire and become the richest human alive using Forestry Bees. Venture into the depths of the void.\n\n\
             <b>Mine entire planets</b> and even <b>galaxies</b> using Galactical Miners. Send space missions using your Astro Mining Stations.\n\n\
             Always remember the most important phrase: <b>Grow the Factory.</b>"
-        }
+        },
+        "qp": {
+            "shortdesc": "A unique take on kitchen-sink style modpacks, mainly focused on the multiplayer experience",
+            "longdesc": "<b>Quanpack</b> flips the concept of a kitchen-sink on its head, making it differ from the sea of other packs in the same genre.\n\n\
+            <b>This modpack</b> features some of the most recognized mods such as <b>Thaumcraft, Botania, Nature's Aura, Embers, Blood Magic</b> and <b>Roots</b>. It also includes some of the lesser known projects that are <b>as quality if not more</b> than the mods described previously.\n\n\
+            <b>If you like kitchen-sinks,</b> this pack is for you. <b>The abundance</b> of content in it will never let you feel bored, <b>especially if you are playing with others!</b>"
+       }
     },
     "sideprojects": {
         "website": "The very website you are on right now is open-source, check it out on GitHub!",
