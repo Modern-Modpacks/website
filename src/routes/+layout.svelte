@@ -9,7 +9,7 @@
     import { page } from "$app/stores"
     import { flatten, unflatten } from "flat"
     import Footer from "$lib/components/Footer.svelte"
-    import { getContributorAvatar, toggleScroll } from "$lib/scripts/utils";
+    import { getContributorAvatar, navigateCleanup, toggleScroll } from "$lib/scripts/utils";
     import membersJson from "$lib/json/members.json5"
     import translatorsJson from "$lib/json/translators.json5"
     import testersJson from "$lib/json/testers.json5"
@@ -114,12 +114,7 @@
             flipElements.forEach(c => {document.body.classList.remove(`[&_${c}]:[rotate:180deg]`)})
         })
     })
-    afterNavigate(() => { // Cleanup stores and unlock page
-        $popupOpenedBy = null
-        $contextMenuOpenedBy = null
-
-        toggleScroll(true)
-    })
+    afterNavigate(navigateCleanup)
 </script>
 
 <style>

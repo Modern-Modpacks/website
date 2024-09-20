@@ -95,7 +95,7 @@ export interface BlogPost { // Used for info about blogposts
         subtitle: string,
         tag: number
     },
-    ghdata: {
+    ghdata?: {
         author: Contributor,
 
         created: {

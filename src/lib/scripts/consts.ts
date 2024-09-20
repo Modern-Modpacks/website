@@ -1,6 +1,7 @@
 const consts = {
     REPO: "Modern-Modpacks/website", // The github repo where the website's source is hosted on
     BLOG_BRANCH: "blogposts", // The branch on REPO where raw blogpost .md files are hosted
+    GITHUB_KEY: "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", // GitHub API key for higher rate limit (WARNING: DO NOT PUT A KEY HERE IF IT HAS ANY PERMISSIONS ENABLED)
 
     COLORS: [ // MM's brand colors' names
         "red",

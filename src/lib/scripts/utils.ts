@@ -1,5 +1,6 @@
 import type { Contributor, Coordinates } from "./interfaces"
 import consts from "./consts"
+import { contextMenuOpenedBy, openedBlogPost, popupOpenedBy } from "./stores"
 
 export const randomChoice = (elements: any[]) => elements[Math.floor(Math.random()*elements.length)] // Randomly select an element from the array, probably the most redefined function on planet earth
 export const getDistance = (point1: Coordinates, point2: Coordinates): number => { // Get distance between two pixels on screen, used for the mouse follow effect in the modpacks section
@@ -24,7 +25,21 @@ export const getWebsiteIcon = (url : string): string | null => { // Get an icon 
     return null
 }
 export const getContributorAvatar = (c : Contributor): string => c.avatar_url ?? `https://avatars.githubusercontent.com/u/${c.github.id}?v=4` // Get the avatar of a contributor
+export const sendGithubApiRequest = async (endpoint: string): Promise<Response> => { // Send a request to the gh api, use the key if rate limited
+    let req = await fetch("https://api.github.com/"+endpoint)
+    
+    if (req.status==403) {
+        return await fetch("https://api.github.com/" + endpoint, {
+            headers: {
+                Authorization: "Bearer " + consts.GITHUB_KEY
+            }
+        })
+    }
 
+    return req
+}
+
+export const removeHash = () => history.pushState("", document.title, window.location.pathname + window.location.search) // Removes the hash from the url without refresh
 export const toggleScroll = (enable : boolean) => { // Toggle the ability to scroll the page vertically
     let container : HTMLElement | null = document.querySelector("#container")
     if (!container) return
@@ -39,4 +54,20 @@ export const toggleScroll = (enable : boolean) => { // Toggle the ability to scr
     document.body.classList.toggle("touch-none")
     container.classList.toggle("overflow-y-hidden")
     container.classList.toggle("touch-none")
+}
+export const navigateCleanup = () => { // Cleanup stores and unlock page after navigation
+    popupOpenedBy.set(null)
+    contextMenuOpenedBy.set(null)
+    closeBlogpost()
+
+    toggleScroll(true)
+}
+
+export const openBlogpost = (id: string) => { // Open a blogpost on the blog page
+    openedBlogPost.set(id)
+    window.location.hash = id
+}
+export const closeBlogpost = () => { // Close a blogpost
+    openedBlogPost.set(null)
+    removeHash()
 }

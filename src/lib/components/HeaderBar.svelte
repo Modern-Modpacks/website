@@ -8,6 +8,7 @@
     import { locale, _ } from "svelte-i18n"
     import Basic from "svelte-toggles/src/Basic"
     import MobileSideBar from "./MobileSideBar.svelte";
+    import { navigateCleanup, removeHash } from "$lib/scripts/utils";
 
     // const settingsOpenByDefault : boolean = true // DEBUG, don't turn on in prod
     const settingsOpenByDefault : boolean = false
@@ -59,7 +60,10 @@
         <span class="flex items-center mr-4 gap-10">
             {#each consts.PAGES as button}
             {@const currentPage = $page.url.pathname=="/"+button.link}
-                <a href={currentPage ? "javascript:void(0)" : "/"+button.link} class="group relative h-full flex items-center">
+                <a href={currentPage ? "javascript:void(0)" : "/"+button.link} class="group relative h-full flex items-center" on:click={currentPage ? () => {
+                    removeHash()
+                    navigateCleanup()
+                } : null}>
                     <p class="
                         {currentPage ? "font-bold scale-[120%]" : "font-semibold opacity-80"}
                         text-base duration-100 animate-ease-out animate-alternate hover:text-{button.color} hover:scale-[120%]
