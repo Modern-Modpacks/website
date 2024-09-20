@@ -1,4 +1,7 @@
 const consts = {
+    REPO: "Modern-Modpacks/website", // The github repo where the website's source is hosted on
+    BLOG_BRANCH: "blogposts", // The branch on REPO where raw blogpost .md files are hosted
+
     COLORS: [ // MM's brand colors' names
         "red",
         "orange",

@@ -1,3 +1,4 @@
+import type { Moment } from "moment"
 import type { Tweened } from "svelte/motion"
 
 export interface Coordinates { // Used for keeping track of the mouse
@@ -75,3 +76,35 @@ export interface Translator extends Contributor { // Used for translators in tra
     title?: string,
 }
 export interface Tester extends Contributor {} // Used for testers in testers.json5
+
+export interface GitHubFile { // Used for getting blogpost files from github
+    mode: string,
+    path: string,
+    sha: string,
+    size: number,
+    type: string
+}
+export interface BlogPost { // Used for info about blogposts
+    content: string,
+    sourcelink: string,
+    thumbnail: string,
+    views: number,
+
+    metadata: {
+        title: string,
+        subtitle: string,
+        tag: number
+    },
+    ghdata: {
+        author: Contributor,
+
+        created: {
+            time: Moment,
+            url: string
+        },
+        edited: {
+            time: Moment,
+            url: string
+        }
+    }
+}

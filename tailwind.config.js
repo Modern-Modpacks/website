@@ -83,6 +83,30 @@ export default {
                 transform: "translateY(20%)"
             }
         },
+        appear: {
+          from: {
+              opacity: "0"
+          },
+          to: {
+              opacity: "1"
+          }
+        },
+        comeup: {
+          from: {
+              transform: "translateY(10%)"
+          },
+          to: {
+              transform: "translateY(0%)"
+          }
+        },
+        spin: {
+          from: {
+              transform: "rotate(0deg)"
+          },
+          to: {
+              transform: "rotate(360deg)"
+          }
+        },
 
         "join-main": {
           from: {
@@ -113,6 +137,8 @@ export default {
       },
       animation: {
         float: "float 2s alternate infinite ease-in-out",
+        loader: "appear 1s forwards ease-out, spin .5s infinite linear",
+        comeup: "appear .5s ease-out, comeup .5s ease-out",
 
         "join-main": "join-main 650ms forwards ease-out",
         "join-gap": "join-gap 650ms forwards ease-out",

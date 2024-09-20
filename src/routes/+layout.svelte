@@ -9,7 +9,11 @@
     import { page } from "$app/stores"
     import { flatten, unflatten } from "flat"
     import Footer from "$lib/components/Footer.svelte"
-    import { toggleScroll } from "$lib/scripts/utils";
+    import { getContributorAvatar, toggleScroll } from "$lib/scripts/utils";
+    import membersJson from "$lib/json/members.json5"
+    import translatorsJson from "$lib/json/translators.json5"
+    import testersJson from "$lib/json/testers.json5"
+    import type { Contributor, Member } from "$lib/scripts/interfaces";
 
     // Update variables that check for media queries
     let updateMedia = () => {
@@ -71,6 +75,29 @@
         // Update queries
         updateMedia()
         window.addEventListener("resize", updateMedia)
+
+        // Preload all of the required images
+        let preloadImgs = [
+            // Map
+            "https://static.planetminecraft.com/files/image/minecraft/project/2023/513/16677278-image_xl.webp",
+            "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/Icons/Other/pin.png"
+        ]
+        // Website icons
+        Object.values(consts.WEBSITE_ICONS).forEach(i => {preloadImgs.push(i)})
+        // Contrib avatars
+        let contributors : Contributor[] = [...membersJson, ...Object.values(translatorsJson).flat(), ...testersJson]
+        contributors.forEach(c => preloadImgs.push(getContributorAvatar(c)))
+        // Translator flags
+        Object.keys(translatorsJson).forEach(l => {preloadImgs.push(`https://flagcdn.com/256x192/${l}.png`)})
+        // Compass in about us
+        for(let i = 0; i < 32; i++) {
+            preloadImgs.push(`https://raw.githubusercontent.com/misode/mcmeta/1.19.2-assets/assets/minecraft/textures/item/compass_${i.toString().padStart(2, "0")}.png`)
+        }
+        preloadImgs.forEach(i => {
+            let img = document.createElement("img")
+            img.src = i
+            document.getElementById("imagecache")?.append(img)
+        })
 
         // Funni upside down locale easter egg
         locale.subscribe(v => {
@@ -168,4 +195,6 @@
     <HeaderBar />
     <slot />
     <Footer />
+
+    <div id="imagecache" class="hidden" />
 </div>

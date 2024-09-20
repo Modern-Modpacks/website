@@ -5,7 +5,7 @@
     import { memeLocales, mobile, scrollY, settingsOpened, sortedLocales, storedLocale } from "$lib/scripts/stores"
     import { Menu, SettingsIcon } from "lucide-svelte"
     import { onMount } from "svelte"
-    import { locales, locale, _ } from "svelte-i18n"
+    import { locale, _ } from "svelte-i18n"
     import Basic from "svelte-toggles/src/Basic"
     import MobileSideBar from "./MobileSideBar.svelte";
 
@@ -51,7 +51,7 @@
 
 {#if !$mobile}
     <div class="fixed overflow-y-hidden z-50 w-[90%] bg-header-dark backdrop-blur-sm shadow-2xl shadow-black h-16 flex justify-between px-2 left-[50%] translate-x-[-50%]{["/", "/projects"].includes($page.url.pathname) && !$scrollY ? " translate-y-[-100%] shadow-none " : " "}motion-safe:duration-150 rounded-b-2xl" style="view-transition-name: _;" id="header">
-        <a class="group flex items-center h-full" href="{base}">
+        <a class="group flex items-center h-full" href="/{base}">
             <img src={consts.LOGO_URL} alt="logo" class="rounded-2xl p-2 duration-100 motion-safe:group-hover:rounded-[1.35rem]">
             <b>Modern Modpacks</b>
         </a>
@@ -59,7 +59,7 @@
         <span class="flex items-center mr-4 gap-10">
             {#each consts.PAGES as button}
             {@const currentPage = $page.url.pathname=="/"+button.link}
-                <a href={currentPage ? "javascript:void(0)" : button.link} class="group relative h-full flex items-center">
+                <a href={currentPage ? "javascript:void(0)" : "/"+button.link} class="group relative h-full flex items-center">
                     <p class="
                         {currentPage ? "font-bold scale-[120%]" : "font-semibold opacity-80"}
                         text-base duration-100 animate-ease-out animate-alternate hover:text-{button.color} hover:scale-[120%]
