@@ -118,6 +118,12 @@
         "construction": "Under construction",
         "discord": "Join the Discord",
 
+        "login": "Log in with GitHub",
+        "logout": "Log out",
+        "no_profile": "You are currently <b>not logged in.</b>",
+        "profile": "You are currently logged in as",
+        "ratelimit": "<b>Uh oh, looks like you've refreshed our blog too much, and are now being rate limited by GitHub!</b><br><br>We use a GitHub repository to store blogpost files. Consider <a href=\"{link}\">reading them there directly</a>, or authenticating using a GitHub account:",
+
         "mapcredit": "Map by Gl0W1E"
     },
 

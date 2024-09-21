@@ -4,6 +4,7 @@
     import { blogPosts, expectedBlogPostsLength } from "$lib/scripts/stores";
     import { closeBlogpost, sendGithubApiRequest } from "$lib/scripts/utils";
     import moment from "moment";
+    import { slide } from "svelte/transition";
 
     export let id : string
     export let branchHash : string
@@ -16,8 +17,10 @@
         if (blogpost?.ghdata) return
 
         let commits : any[] = await (
-            await sendGithubApiRequest(`repos/${consts.REPO}/commits?sha=${branchHash}&path=${id}.md`)
-        ).json()
+            await sendGithubApiRequest(`repos/${consts.REPO}/commits?sha=${branchHash}&path=${id}.md`, false)
+        )?.json()
+        if (!commits) return
+        
         let firstCommit = commits.at(-1)
         let lastCommit = commits[0]
 
@@ -48,7 +51,9 @@
         {#await fetchGhData()}
             <div class="h-[100vh]" />
         {:then}
-            {JSON.stringify(blogpost)}
+            <div>
+                {JSON.stringify(blogpost)}
+            </div>
         {/await}
     {:else}
         {@const _ = closeBlogpost()}

@@ -1,6 +1,7 @@
 import type { Contributor, Coordinates } from "./interfaces"
 import consts from "./consts"
-import { contextMenuOpenedBy, openedBlogPost, popupOpenedBy } from "./stores"
+import { contextMenuOpenedBy, ghApiKey, githubRateLimited, openedBlogPost, popupOpenedBy } from "./stores"
+import { get } from "svelte/store"
 
 export const randomChoice = (elements: any[]) => elements[Math.floor(Math.random()*elements.length)] // Randomly select an element from the array, probably the most redefined function on planet earth
 export const getDistance = (point1: Coordinates, point2: Coordinates): number => { // Get distance between two pixels on screen, used for the mouse follow effect in the modpacks section
@@ -25,18 +26,28 @@ export const getWebsiteIcon = (url : string): string | null => { // Get an icon 
     return null
 }
 export const getContributorAvatar = (c : Contributor): string => c.avatar_url ?? `https://avatars.githubusercontent.com/u/${c.github.id}?v=4` // Get the avatar of a contributor
-export const sendGithubApiRequest = async (endpoint: string): Promise<Response> => { // Send a request to the gh api, use the key if rate limited
-    let req = await fetch("https://api.github.com/"+endpoint)
+export const sendGithubApiRequest = async (endpoint: string, forceAuth: boolean): Promise<Response | null> => { // Send a request to the gh api, use the key if rate limited
+    let apiKey = get(ghApiKey)
+
+    let req : Response | null = null
+    if (!forceAuth) req = await fetch("https://api.github.com/"+endpoint)
     
-    if (req.status==403) {
+    if (req && req.status==200) return req
+    if (forceAuth || req!.status==403) {
+        if (req && req.status==403 && !apiKey) {
+            githubRateLimited.set(true)
+            return null
+        }
+
         return await fetch("https://api.github.com/" + endpoint, {
             headers: {
-                Authorization: "Bearer " + consts.GITHUB_KEY
+                Authorization: "Bearer " + apiKey
             }
         })
     }
 
-    return req
+    if (req) console.error(await req.text())
+    return null
 }
 
 export const removeHash = () => history.pushState("", document.title, window.location.pathname + window.location.search) // Removes the hash from the url without refresh

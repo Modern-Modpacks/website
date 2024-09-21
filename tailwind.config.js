@@ -24,7 +24,7 @@ const mmColors = {
   "hm-gray": "#373a3e"
 }
 let mmSafelist = []
-Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "text-"+c, "[&>p]:text-"+c, "hover:text-"+c)})
+Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "text-"+c, "[&>p]:text-"+c, "group-hover:text-"+c)})
 
 const textElements = ["h1", "h2", "h3", "h4", "li", "p", "b"]
 let udSafelist = []
@@ -65,6 +65,7 @@ export default {
 
       "primary-dark": "#1c1c1c",
       "secondary-dark": "#0c0c0c",
+      "tertiary-dark": "#4c4c4c",
       "header-dark": "#33333388",
       "footer-dark": "#070707",
       "text-dark": "#ffffff",

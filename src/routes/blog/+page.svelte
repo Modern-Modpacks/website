@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts";
     import type { BlogPost, GitHubFile } from "$lib/scripts/interfaces";
-    import { blogPosts, expectedBlogPostsLength, openedBlogPost } from "$lib/scripts/stores";
+    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, openedBlogPost } from "$lib/scripts/stores";
     import { parse as parseYaml } from "yaml";
     import { LoaderCircle } from "lucide-svelte";
     import { _ } from "svelte-i18n";
@@ -10,8 +10,14 @@
     import { onMount } from "svelte";
     import BlogpostOpened from "$lib/components/BlogpostOpened.svelte";
     import { openBlogpost, sendGithubApiRequest } from "$lib/scripts/utils";
+    import GithubLoginBar from "$lib/components/GithubLoginBar.svelte";
+    import { page } from "$app/stores";
+    import { PUBLIC_CLIENT_SECRET, PUBLIC_GH_LOGIN_URL, PUBLIC_CLIENT_ID } from "$env/static/public";
+    import TriangleAlert from "lucide-svelte/icons/triangle-alert";
+    import Github from "lucide-svelte/icons/github";
     
-    let branchHash : string
+    let branchHash : string | null
+    let finishedAuth : boolean = false
 
     // Get blogposts on github on first load
     let getBlogPosts = async () => {
@@ -21,16 +27,18 @@
         // Get the branch hash for getting github data later
         branchHash = (
             await (
-                await sendGithubApiRequest(`repos/${consts.REPO}/git/refs/heads/${consts.BLOG_BRANCH}`)
-            ).json()
+                await sendGithubApiRequest(`repos/${consts.REPO}/git/refs/heads/${consts.BLOG_BRANCH}`, false)
+            )?.json()
         ).object.sha
+        if (!branchHash) return
 
         // Get all of the files on the blogposts branch
-        let files : GitHubFile[] = (
+        let files : GitHubFile[] | null = (
             await (
-                await sendGithubApiRequest(`repos/${consts.REPO}/git/trees/${consts.BLOG_BRANCH}?recursive=1`)
-            ).json()
+                await sendGithubApiRequest(`repos/${consts.REPO}/git/trees/${consts.BLOG_BRANCH}?recursive=1`, false)
+            )?.json()
         ).tree
+        if (!files) return
         let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")) // Filter by markdown files
         $expectedBlogPostsLength = mdFiles.length // Set the expected number of blogposts
 
@@ -63,28 +71,69 @@
             $blogPosts![path] = blogpost // Add the post to the blogpost list
         })
     }
+    // Auth with github
+    let exchangeGithubCode = async () => {
+        let ghCodes = $page.url.searchParams.getAll("code")
+        if (!ghCodes) return
+        let ghCode = ghCodes.at(-1)
+
+        let req = await fetch(PUBLIC_CLIENT_SECRET ? `${PUBLIC_GH_LOGIN_URL}?client_id=${PUBLIC_CLIENT_ID}&client_secret=${PUBLIC_CLIENT_SECRET}&code=${ghCode}` : PUBLIC_GH_LOGIN_URL+"/"+ghCode, {
+            method: PUBLIC_CLIENT_SECRET ? "POST" : "GET",
+            headers: {'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'}
+        })
+        if (req.status!=200) {
+            history.replaceState({}, "", "/blog")
+            console.error(await req.text())
+            return
+        }
+
+        let key = (await req.json())[PUBLIC_CLIENT_SECRET ? "access_token" : "token"]
+        $ghApiKey = key
+
+        finishedAuth = true
+        history.pushState({}, "", "/blog")
+    }
     onMount(async () => {
+        await exchangeGithubCode()
+        
         await getBlogPosts()
         if (window.location.hash) openBlogpost(window.location.hash.replace(/^#/, ""))
     })
 </script>
 
 <main>
-    {#if !$openedBlogPost}
+    {#if $githubRateLimited}
+        <div class="flex justify-center items-center z-10 w-[100vw] h-[100vh]">
+            <div class="flex flex-col items-center w-80 p-8 box-content motion-safe:animate-comeup bg-header-dark rounded-2xl">
+                <TriangleAlert class="w-80 h-80" />
+                <p class="text-2xl text-center [&>a]:underline">{@html $_("ui.ratelimit", {values: {link: `https://github.com/${consts.REPO}/tree/${consts.BLOG_BRANCH}`}})}</p>
+                <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_CLIENT_ID}&redirect_uri={$page.url}" class="flex items-center gap-2 w-fit mt-8 p-2 rounded-xl bg-text-dark bg-opacity-25 shadow-[#00000055] shadow-xl duration-200 motion-safe:hover:shadow-[#000000aa] motion-safe:hover:-translate-y-2">
+                    <Github class="h-8 w-8" />
+                    <p class="text-3xl">{$_("ui.login")}</p>
+                </a>
+            </div>
+        </div>
+    {:else if !$openedBlogPost}
         <div>
-            {#if !Object.keys($blogPosts ?? {}).length}
+            {#if Object.keys($blogPosts ?? {}).length < $expectedBlogPostsLength || ($page.url.searchParams.get("code") && !finishedAuth)}
                 <div class="w-[100vw] h-[100vh] flex justify-center items-center">
                     <LoaderCircle class="w-28 h-28 opacity-0 animate-loader animate-delay-[2.5s]" />
                 </div>
             {:else}
-                <div class="min-h-[100vh] py-20">
-                    <div class="grid justify-center">
+                <div class="min-h-[100vh] py-20 flex justify-center">
+                    <div class="w-[56rem] flex flex-col gap-6">
                         <BigBlogpost id={Object.keys($blogPosts ?? {})[0]} />
+                        <span class="flex justify-between mb-8">
+                            <p class="w-[26.5rem] h-[22rem] bg-mm-red">test</p>
+                            <p class="w-[26.5rem] h-[22rem] bg-mm-blue">test</p>
+                        </span>
+
+                        <GithubLoginBar />
                     </div>
                 </div>
             {/if}
         </div>
     {:else}
-        <BlogpostOpened id={$openedBlogPost} branchHash={branchHash}/>
+        <BlogpostOpened id={$openedBlogPost} branchHash={branchHash ?? ""}/>
     {/if}
 </main>

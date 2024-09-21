@@ -65,9 +65,9 @@
                     navigateCleanup()
                 } : null}>
                     <p class="
-                        {currentPage ? "font-bold scale-[120%]" : "font-semibold opacity-80"}
-                        text-base duration-100 animate-ease-out animate-alternate hover:text-{button.color} hover:scale-[120%]
-                    ">{$_("ui.navbar."+button.title)}</p>
+                        {currentPage ? "font-bold scale-[125%]" : "font-semibold opacity-80"}
+                        text-base animate-ease-out animate-alternate group-hover:text-{button.color} group-hover:scale-[125%]
+                    " style="transition: transform 100ms;">{$_("ui.navbar."+button.title)}</p>
                     <div class="absolute bg-{button.color} w-full h-1.5 -bottom-2 group-hover:bottom-0 duration-100" />
                 </a>
             {/each}
