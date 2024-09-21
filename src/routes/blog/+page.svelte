@@ -68,13 +68,23 @@
                 views: 0,
                 metadata: parseYaml(metadataLines.join("\n"))
             }
-            $blogPosts![path] = blogpost // Add the post to the blogpost list
+
+            // Add new blogpost to the blogPosts object copy
+            let blogPostsCopy = {...$blogPosts!}
+            blogPostsCopy[path] = blogpost
+
+            // Sort blogposts alphabetically by id and re-assign
+            let sortedBlogPosts : {[key: string]: BlogPost} = {}
+            Object.keys(blogPostsCopy).toSorted().forEach(k => {
+                sortedBlogPosts[k] = blogPostsCopy[k]
+            })
+            $blogPosts = sortedBlogPosts
         })
     }
     // Auth with github
     let exchangeGithubCode = async () => {
         let ghCodes = $page.url.searchParams.getAll("code")
-        if (!ghCodes) return
+        if (!ghCodes.length) return
         let ghCode = ghCodes.at(-1)
 
         let req = await fetch(PUBLIC_CLIENT_SECRET ? `${PUBLIC_GH_LOGIN_URL}?client_id=${PUBLIC_CLIENT_ID}&client_secret=${PUBLIC_CLIENT_SECRET}&code=${ghCode}` : PUBLIC_GH_LOGIN_URL+"/"+ghCode, {
