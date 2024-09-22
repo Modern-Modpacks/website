@@ -139,7 +139,7 @@ export default {
       animation: {
         float: "float 2s alternate infinite ease-in-out",
         loader: "appear 1s forwards ease-out, spin .5s infinite linear",
-        comeup: "appear .5s ease-out, comeup .5s ease-out",
+        comeup: "appear .5s ease-out forwards, comeup .5s ease-out",
 
         "join-main": "join-main 650ms forwards ease-out",
         "join-gap": "join-gap 650ms forwards ease-out",

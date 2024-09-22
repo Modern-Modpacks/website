@@ -2,31 +2,33 @@
     import type { BlogPost } from "$lib/scripts/interfaces";
     import { blogPosts, visitedBlog } from "$lib/scripts/stores";
     import { openBlogpost } from "$lib/scripts/utils";
-    import { onMount } from "svelte";
     import removeMd from "remove-markdown";
     import BlogpostTag from "./BlogpostTag.svelte";
+    import { _ } from "svelte-i18n";
+    import consts from "$lib/scripts/consts";
 
-    export let id : string
+    export let id : string | null
+    export let delay : number = 0
     
-    let blogpost : BlogPost
-    $: blogpost = $blogPosts![id]
-
-    onMount(() => {
-        setTimeout(() => {$visitedBlog = true}, 1000)
-    })
+    let blogpost : BlogPost | null
+    $: blogpost = id ? $blogPosts![id] : null
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="{$visitedBlog ? "" : " animate-comeup "}h-fit bg-header-dark rounded-2xl cursor-pointer" on:click={() => {openBlogpost(id)}}>
+<div class="{$visitedBlog ? "" : " opacity-0 animate-comeup "}h-fit bg-header-dark rounded-3xl {blogpost ? "cursor-pointer" : "cursor-not-allowed"}" style="animation-delay: {delay}ms;" on:click={id ? () => {openBlogpost(id)} : null}>
     <!-- 8:3 ratio -->
-    <img src="{blogpost.thumbnail}" alt="thumbnail" class="w-full h-[24rem] object-cover rendering-crisp-edges rounded-3xl shadow-[#00000077] shadow-2xl duration-300 hover:scale-[102.5%]">
+    <span class="relative block pt-[37.5%]">
+        <img src="{blogpost ? blogpost.thumbnail : consts.MISSING_BLOGPOST_THUMBNAIL}" alt="thumbnail" class="absolute w-full left-0 top-0 object-cover rendering-crisp-edges rounded-3xl shadow-[#00000077] shadow-2xl duration-300{blogpost ? " hover:scale-[102.5%]" : ""}">
+    </span>
     <div class="flex flex-col p-4 mt-1">
         <span class="flex">
-            <h2>{blogpost.metadata.title}&nbsp</h2>
-            <h2 class="opacity-35">{blogpost.metadata.subtitle}</h2>
+            <h2>{blogpost ? blogpost.metadata.title : $_("ui.missingblogpost")}&nbsp</h2>
+            <h2 class="opacity-35">{blogpost ? blogpost.metadata.subtitle : $_("ui.missingblogpostsub")}</h2>
         </span>
-        <BlogpostTag tagIndex={blogpost.metadata.tag} />
-        <p class="h-[2ch] max-w-full mt-1 text-lg overflow-hidden whitespace-nowrap text-ellipsis">{removeMd(blogpost.content)}</p>
+        {#if blogpost}
+            <BlogpostTag tagIndex={blogpost.metadata.tag} />
+        {/if}
+        <p class="h-[2.25ch] max-w-full mt-1 text-lg overflow-hidden whitespace-nowrap text-ellipsis">{blogpost ? removeMd(blogpost.content) : $_("ui.missingblogpostdesc")}</p>
     </div>
 </div>

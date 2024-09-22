@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts";
     import type { BlogPost, GitHubFile } from "$lib/scripts/interfaces";
-    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, openedBlogPost } from "$lib/scripts/stores";
+    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, openedBlogPost, visitedBlog } from "$lib/scripts/stores";
     import { parse as parseYaml } from "yaml";
     import { LoaderCircle } from "lucide-svelte";
     import { _ } from "svelte-i18n";
@@ -9,7 +9,7 @@
     import BigBlogpost from "$lib/components/BigBlogpost.svelte";
     import { onMount } from "svelte";
     import BlogpostOpened from "$lib/components/BlogpostOpened.svelte";
-    import { openBlogpost, sendGithubApiRequest } from "$lib/scripts/utils";
+    import { openBlogpost, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
     import GithubLoginBar from "$lib/components/GithubLoginBar.svelte";
     import { page } from "$app/stores";
     import { PUBLIC_CLIENT_SECRET, PUBLIC_GH_LOGIN_URL, PUBLIC_CLIENT_ID } from "$env/static/public";
@@ -104,10 +104,13 @@
         history.pushState({}, "", "/blog")
     }
     onMount(async () => {
+        if (!$visitedBlog) setTimeout(() => {toggleScroll(false)}, 1)
+
         await exchangeGithubCode()
-        
         await getBlogPosts()
         if (window.location.hash) openBlogpost(window.location.hash.replace(/^#/, ""))
+
+        setTimeout(() => {toggleScroll(true); $visitedBlog = true}, 1500 * +(!window.location.hash))
     })
 </script>
 
@@ -131,11 +134,11 @@
                 </div>
             {:else}
                 <div class="min-h-[100vh] py-20 flex justify-center">
-                    <div class="w-[56rem] flex flex-col gap-8">
+                    <div class="w-[56rem] mobile:w-[75%] flex flex-col gap-16">
                         <BigBlogpost id={Object.keys($blogPosts ?? {})[0]} />
-                        <span class="flex justify-between mb-8">
-                            <p class="w-[26.5rem] h-[22rem] bg-mm-red">test</p>
-                            <p class="w-[26.5rem] h-[22rem] bg-mm-blue">test</p>
+                        <span class="flex justify-between w-full mb-8 [&>div]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
+                            <BigBlogpost id={Object.keys($blogPosts ?? {})[1]} delay={500} />
+                            <BigBlogpost id={Object.keys($blogPosts ?? {})[2]} delay={750} />
                         </span>
 
                         <GithubLoginBar />

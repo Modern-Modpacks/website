@@ -7,7 +7,6 @@
     // tagIndexTest = 0 // Do not enable in prod
 
     let tagList : string[] = $json("ui.blogtags") as any
-    console.log(tagList)
 </script>
 
 <span class="flex items-center gap-2">
