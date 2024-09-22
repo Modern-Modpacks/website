@@ -131,7 +131,7 @@
                 </div>
             {:else}
                 <div class="min-h-[100vh] py-20 flex justify-center">
-                    <div class="w-[56rem] flex flex-col gap-6">
+                    <div class="w-[56rem] flex flex-col gap-8">
                         <BigBlogpost id={Object.keys($blogPosts ?? {})[0]} />
                         <span class="flex justify-between mb-8">
                             <p class="w-[26.5rem] h-[22rem] bg-mm-red">test</p>

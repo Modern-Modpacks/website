@@ -102,6 +102,24 @@
             "chief_translator": "Chief translator",
             "ex_translator": "Ex-translator"
         },
+        "blogtags": [
+            "Opinion",
+            "Exposé",
+            "Behind The Scenes",
+            "Announcement",
+            "Off-topic",
+            "Guest-written",
+            "Timeline",
+            "Response",
+            "Experiment",
+            "Update",
+            "Supplement",
+            "Tl;dr",
+            "Temporary",
+            "-",
+            "-",
+            "Miscellaneous"
+        ],
 
         "ram": {
             "title": "RAM Requirements",

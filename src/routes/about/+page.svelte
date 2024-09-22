@@ -94,7 +94,7 @@
     let showJoinAnim : boolean = false // Whether to show the animations in the "join us" section (triggered on inview)
 
     let compass : HTMLElement | null // The compass texture
-    let compassCenter : Coordinates // The coordinates of the compass' center
+    let compassCenter : Coordinates | null // The coordinates of the compass' center
     const compasssTextureDur = 53 // The duration it takes for compass to update the rotation
     let compassTexture : Tweened<number> = tweened(0, {duration: compasssTextureDur}) // The spun texture for the compass
     let compassUnfocused : boolean = false // Whether the window is focused and the compass should follow mouse
@@ -114,11 +114,10 @@
             speed: 1000
         })
 
-        // Calculate compass center on mount and resize
-        compassCenter = calculateElementCenter(compass!)
+        // Calculate compass center on resize
         window.addEventListener("resize", () => {compassCenter = calculateElementCenter(compass!)})
         document.addEventListener("mousemove", e => { // Calculate rotation for the correct compass texture
-            if ($reducedMotion || $mobile) return
+            if ($reducedMotion || $mobile || !compassCenter) return
 
             let newTexture = Math.round((Math.atan2(e.pageY - compassCenter.y, e.pageX - compassCenter.x) / (2*Math.PI)) * 31) - 7
 
@@ -291,8 +290,11 @@
     <div class="w-full desktop:ml-10 mobile:mb-6 flex items-center mobile:justify-center">
         <Saos animation={$reducedMotion || $mobile ? "" : `showup .75s ease-out backwards`} once={true}>
             <img 
-                src="{compassUnfocused ? "https://minecraft.wiki/images/Compass_JE3_BE3.gif" : `https://raw.githubusercontent.com/misode/mcmeta/1.19.2-assets/assets/minecraft/textures/item/compass_${((31 + Math.round($compassTexture)) % 31).toString().padStart(2, "0")}.png`}"
+                src="{compassUnfocused || !compassCenter ? "https://minecraft.wiki/images/Compass_JE3_BE3.gif" : `https://raw.githubusercontent.com/misode/mcmeta/1.19.2-assets/assets/minecraft/textures/item/compass_${((31 + Math.round($compassTexture)) % 31).toString().padStart(2, "0")}.png`}"
                 alt="compass" class="origin-bottom rendering-pixelated aspect-square w-[40vw] h-[40vw] mobile:h-64 mobile:w-64 min-w-[40vw] min-h-[40vw] mobile:min-h-64 mobile:min-w-64" bind:this={compass}
+                use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {
+                    setTimeout(() => {compassCenter = calculateElementCenter(compass ?? undefined)}, 750)
+                }}
             >
         </Saos>
     </div>

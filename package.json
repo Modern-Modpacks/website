@@ -36,6 +36,7 @@
 	"dependencies": {
 		"flat": "^6.0.1",
 		"moment": "^2.30.1",
+		"remove-markdown": "^0.5.5",
 		"svelte-i18n": "^4.0.0",
 		"svelte-inview": "^4.0.2",
 		"svelte-portal": "^2.2.1",
