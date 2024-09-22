@@ -1,7 +1,7 @@
 <script lang="ts">
     import HeaderBar from "$lib/components/HeaderBar.svelte"
     import "../app.css"
-    import { contextMenuOpenedBy, memeLocales, mobile, mousePos, popupOpenedBy, reducedMotion, scrollY, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores"
+    import { memeLocales, mobile, mousePos, reducedMotion, scrollY, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores"
     import { _, addMessages, getLocaleFromNavigator, init, locales, locale } from "svelte-i18n"
     import consts from "$lib/scripts/consts"
     import { afterNavigate, onNavigate } from "$app/navigation"
@@ -9,11 +9,11 @@
     import { page } from "$app/stores"
     import { flatten, unflatten } from "flat"
     import Footer from "$lib/components/Footer.svelte"
-    import { getContributorAvatar, navigateCleanup, toggleScroll } from "$lib/scripts/utils";
+    import { getContributorAvatar, navigateCleanup } from "$lib/scripts/utils";
     import membersJson from "$lib/json/members.json5"
     import translatorsJson from "$lib/json/translators.json5"
     import testersJson from "$lib/json/testers.json5"
-    import type { Contributor, Member } from "$lib/scripts/interfaces";
+    import type { Contributor } from "$lib/scripts/interfaces";
 
     // Update variables that check for media queries
     let updateMedia = () => {
@@ -58,6 +58,7 @@
         })
     })
 
+    let firstLoad : boolean = true
     onMount(() => {
         // Store locales (sorted, regular and meme)
         $sortedLocales = $locales.sort((a, _) => a=="en" ? -1 : 0)
@@ -113,8 +114,11 @@
             $upsideDownLocale = false
             flipElements.forEach(c => {document.body.classList.remove(`[&_${c}]:[rotate:180deg]`)})
         })
+        setTimeout(() => {firstLoad = false}, 1)
     })
-    afterNavigate(navigateCleanup)
+    afterNavigate(() => {
+        if (!firstLoad) navigateCleanup()
+    })
 </script>
 
 <style>

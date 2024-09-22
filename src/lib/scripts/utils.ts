@@ -50,7 +50,9 @@ export const sendGithubApiRequest = async (endpoint: string, forceAuth: boolean)
     return null
 }
 
-export const removeHash = () => history.pushState("", document.title, window.location.pathname + window.location.search) // Removes the hash from the url without refresh
+export const removeHash = () => history.replaceState("", document.title, window.location.pathname + window.location.search) // Removes the hash from the url without refresh
+export const removeParams = () => history.replaceState("", document.title, window.location.pathname + window.location.hash) // Removes the params from the url without refresh
+
 export const toggleScroll = (enable : boolean) => { // Toggle the ability to scroll the page vertically
     let container : HTMLElement | null = document.querySelector("#container")
     if (!container) return

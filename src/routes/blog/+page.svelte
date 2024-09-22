@@ -8,7 +8,7 @@
     import BigBlogpost from "$lib/components/BigBlogpost.svelte";
     import { onMount } from "svelte";
     import BlogpostOpened from "$lib/components/BlogpostOpened.svelte";
-    import { openBlogpost, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
+    import { openBlogpost, removeParams, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
     import GithubLoginBar from "$lib/components/GithubLoginBar.svelte";
     import { page } from "$app/stores";
     import { PUBLIC_CLIENT_SECRET, PUBLIC_GH_LOGIN_URL, PUBLIC_CLIENT_ID } from "$env/static/public";
@@ -113,7 +113,7 @@
             headers: {'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'}
         })
         if (req.status!=200) {
-            history.replaceState({}, "", "/blog")
+            removeParams()
             console.error(await req.text())
             return
         }
@@ -122,7 +122,7 @@
         $ghApiKey = key
 
         finishedAuth = true
-        history.pushState({}, "", "/blog")
+        removeParams()
     }
     onMount(async () => {
         if (!$visitedBlog) setTimeout(() => {scrollTo(0, 0); toggleScroll(false)}, 1)

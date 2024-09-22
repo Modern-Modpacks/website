@@ -26,7 +26,7 @@
         if ($popupOpenedBy==null) {
             $popupOpenedBy = modpack
             pullAmount = startPull // Reset mobile pull
-            window.location.hash = modpack.abbr?.toLowerCase()! // Set location hash
+            window.location.hash = modpack.abbr?.toUpperCase()! // Set location hash
         }
         else {
             $popupOpenedBy = null
