@@ -104,7 +104,7 @@
         history.pushState({}, "", "/blog")
     }
     onMount(async () => {
-        if (!$visitedBlog) setTimeout(() => {toggleScroll(false)}, 1)
+        if (!$visitedBlog) setTimeout(() => {scrollTo(0, 0); toggleScroll(false)}, 1)
 
         await exchangeGithubCode()
         await getBlogPosts()
@@ -134,7 +134,7 @@
                 </div>
             {:else}
                 <div class="min-h-[100vh] py-20 flex justify-center">
-                    <div class="w-[56rem] mobile:w-[75%] flex flex-col gap-16">
+                    <div class="w-[56rem] mobile:w-[75%] flex flex-col gap-[4.5rem]">
                         <BigBlogpost id={Object.keys($blogPosts ?? {})[0]} />
                         <span class="flex justify-between w-full mb-8 [&>div]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
                             <BigBlogpost id={Object.keys($blogPosts ?? {})[1]} delay={500} />
