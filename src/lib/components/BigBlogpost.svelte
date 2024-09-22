@@ -19,10 +19,10 @@
 <div class="{$visitedBlog ? "" : " opacity-0 animate-comeup "}h-fit bg-header-dark rounded-3xl {blogpost ? "cursor-pointer" : "cursor-not-allowed"}" style="animation-delay: {delay}ms;" on:click={id ? () => {openBlogpost(id)} : null}>
     <!-- 8:3 ratio -->
     <span class="relative block pt-[37.5%]">
-        <img src="{blogpost ? blogpost.thumbnail : consts.MISSING_BLOGPOST_THUMBNAIL}" alt="thumbnail" class="absolute w-full left-0 top-0 object-cover rendering-crisp-edges rounded-3xl shadow-[#00000077] shadow-2xl duration-300{blogpost ? " hover:scale-[102.5%]" : ""}">
+        <img src="{blogpost ? blogpost.thumbnail : consts.MISSING_BLOGPOST_THUMBNAIL}" alt="thumbnail" class="absolute w-full left-0 top-0 object-cover rounded-3xl shadow-[#00000077] shadow-2xl duration-300{blogpost ? " hover:scale-[102.5%]" : ""}">
     </span>
     <div class="flex flex-col p-4 mt-1">
-        <span class="flex">
+        <span class="[&>h2]:inline-block [&>h2]:w-fit">
             <h2>{blogpost ? blogpost.metadata.title : $_("ui.missingblogpost")}&nbsp</h2>
             <h2 class="opacity-35">{blogpost ? blogpost.metadata.subtitle : $_("ui.missingblogpostsub")}</h2>
         </span>

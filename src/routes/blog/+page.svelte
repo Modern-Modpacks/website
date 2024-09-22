@@ -1,11 +1,10 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts";
-    import type { BlogPost, GitHubFile } from "$lib/scripts/interfaces";
-    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, openedBlogPost, visitedBlog } from "$lib/scripts/stores";
+    import type { BlogPost, BlogPostWithID, GitHubFile } from "$lib/scripts/interfaces";
+    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, openedBlogPost, postsByTag, visitedBlog } from "$lib/scripts/stores";
     import { parse as parseYaml } from "yaml";
     import { LoaderCircle } from "lucide-svelte";
     import { _ } from "svelte-i18n";
-    import moment from "moment";
     import BigBlogpost from "$lib/components/BigBlogpost.svelte";
     import { onMount } from "svelte";
     import BlogpostOpened from "$lib/components/BlogpostOpened.svelte";
@@ -15,9 +14,31 @@
     import { PUBLIC_CLIENT_SECRET, PUBLIC_GH_LOGIN_URL, PUBLIC_CLIENT_ID } from "$env/static/public";
     import TriangleAlert from "lucide-svelte/icons/triangle-alert";
     import Github from "lucide-svelte/icons/github";
+    import Search from "lucide-svelte/icons/search";
+    import BlogpostTag from "$lib/components/BlogpostTag.svelte";
+    import X from "lucide-svelte/icons/x";
+    import { fade } from "svelte/transition";
+    import Blogpost from "$lib/components/Blogpost.svelte";
+    import { flip } from "svelte/animate";
+    import Fuse from "fuse.js"
     
     let branchHash : string | null
     let finishedAuth : boolean = false
+
+    let searchBar : HTMLInputElement | null
+    let searchQuery : string | null
+    let selectedTag : number | null
+    let loadAllPosts : boolean = false
+
+    let filteredBlogposts : string[] = []
+    $: filteredBlogposts = Object.keys((selectedTag!=null ? $postsByTag[selectedTag] : $blogPosts) ?? {})
+    let filteredBlogpostObjects : BlogPostWithID[] = []
+    $: filteredBlogpostObjects = $blogPosts ? filteredBlogposts.map(id => {return {...$blogPosts![id], id: id}}) : []
+    let searchedBlogposts : string[] = []
+    $: searchedBlogposts = new Fuse(filteredBlogpostObjects, {
+        keys: ["id", "content", "metadata.title", "metadata.subtitle"],
+        minMatchCharLength: 2
+    }).search(searchQuery ?? "").map(p => p.item.id)
 
     // Get blogposts on github on first load
     let getBlogPosts = async () => {
@@ -39,7 +60,7 @@
             )?.json()
         ).tree
         if (!files) return
-        let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")) // Filter by markdown files
+        let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")).toSorted().reverse() // Filter by markdown files
         $expectedBlogPostsLength = mdFiles.length // Set the expected number of blogposts
 
         // For each of the markdown files
@@ -60,7 +81,7 @@
             metadataLines.splice(0, 1)
             content = contentAndMetadata.join("```")
 
-            // Compile all of the data (except ghdata, which is fetched when a blogpost is clicked)
+            // Compile all of the data (except ghdata, which is fetched when a blogpost is clicked), and add to blogPosts and postsByTag
             let blogpost : BlogPost = {
                 content: content,
                 sourcelink: sourcelink,
@@ -68,17 +89,17 @@
                 views: 0,
                 metadata: parseYaml(metadataLines.join("\n"))
             }
+            $blogPosts![path] = blogpost
+            $postsByTag[blogpost.metadata.tag][path] = blogpost
 
-            // Add new blogpost to the blogPosts object copy
-            let blogPostsCopy = {...$blogPosts!}
-            blogPostsCopy[path] = blogpost
-
-            // Sort blogposts alphabetically by id and re-assign
-            let sortedBlogPosts : {[key: string]: BlogPost} = {}
-            Object.keys(blogPostsCopy).toSorted().forEach(k => {
-                sortedBlogPosts[k] = blogPostsCopy[k]
-            })
-            $blogPosts = sortedBlogPosts
+            // For testing purposes, do not enable in prod
+            // for (let i = 1; i < 16; i++) {
+            //     let blogpost2 : BlogPost = JSON.parse(JSON.stringify(blogpost))
+            //     blogpost2.metadata.tag = i
+            //     blogpost2.metadata.title = "amogu"
+            //     $blogPosts![path+"-test"+i] = blogpost2
+            //     $postsByTag[blogpost2.metadata.tag][path+"-test"+i] = blogpost2
+            // }
         })
     }
     // Auth with github
@@ -111,6 +132,7 @@
         if (window.location.hash) openBlogpost(window.location.hash.replace(/^#/, ""))
 
         setTimeout(() => {toggleScroll(true); $visitedBlog = true}, 1500 * +(!window.location.hash))
+        setInterval(() => {searchQuery = searchBar?.value ?? ""}, 500)
     })
 </script>
 
@@ -136,12 +158,50 @@
                 <div class="min-h-[100vh] py-20 flex justify-center">
                     <div class="w-[56rem] mobile:w-[75%] flex flex-col gap-[4.5rem]">
                         <BigBlogpost id={Object.keys($blogPosts ?? {})[0]} />
-                        <span class="flex justify-between w-full mb-8 [&>div]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
+                        <span class="flex justify-between w-full [&>div]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
                             <BigBlogpost id={Object.keys($blogPosts ?? {})[1]} delay={500} />
                             <BigBlogpost id={Object.keys($blogPosts ?? {})[2]} delay={750} />
                         </span>
 
                         <GithubLoginBar />
+
+                        <div>
+                            <span class="flex items-center w-full h-16 px-6 rounded-full bg-secondary-dark shadow-[#000000aa] shadow-2xl">
+                                <input type="text" autocomplete="off" placeholder="{$_("ui.search")}" bind:this={searchBar} class="h-full w-full text-2xl bg-transparent placeholder:font-semibold focus:outline-none" on:input={() => {loadAllPosts = false}}>
+                                <Search class="h-8 w-8 pl-6 box-content" />
+                            </span>
+                            <div class="flex gap-4 mt-6">
+                                <span class="w-[45%] h-fit p-4 bg-secondary-dark rounded-xl">
+                                    <span class="flex justify-between">
+                                        <h2 class="text-2xl ml-1">{$_("ui.tagstitle")}</h2>
+                                        {#if selectedTag!=null}
+                                            <button transition:fade={{duration: 150}} on:click={() => {selectedTag = null}}>
+                                                <X />
+                                            </button>
+                                        {/if}
+                                    </span>
+                                    {#each [...Array(16).keys()].filter(i => $_("ui.blogtags")[i]!="-") as i}
+                                        <button class="flex justify-between w-full pl-1 pr-2 duration-200 hover:scale-105 hover:bg-header-dark{selectedTag==i ? " scale-105 bg-header-dark" : ""}" on:click={() => {selectedTag = selectedTag==i ? null : i}}>
+                                            <BlogpostTag tagIndex={i} />
+                                            <p>{Object.keys($postsByTag[i]).length}</p>
+                                        </button>
+                                    {/each}
+                                </span>
+                                <div class="flex flex-col gap-6 w-full">
+                                    {#each searchQuery ? searchedBlogposts : filteredBlogposts.slice(0, loadAllPosts ? undefined : 5) as id (id)}
+                                        <span animate:flip={{duration: 200, delay: 100}} transition:fade={{duration: 200, delay: 100}}>
+                                            <Blogpost id={id} />
+                                        </span>
+                                    {/each}
+
+                                    <button class="group hidden{!searchQuery && filteredBlogposts.length>5 && !loadAllPosts ? " !flex" : ""} items-center [&>div]:h-0.5 [&>div]:w-full [&>div]:bg-text-dark" on:click={() => {loadAllPosts = true}}>
+                                        <div />
+                                        <b class="text-2xl w-full duration-200 group-hover:scale-125 group-hover:w-[150%]">Load all posts</b>
+                                        <div />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             {/if}

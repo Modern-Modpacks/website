@@ -17,6 +17,7 @@ popupOpenedBy.subscribe(v => {popupOpenedByPartner.set(v!=null && "icon" in v)})
 export let contextMenuOpenedBy = writable<number | null>(null) // Whether the mod context menu is opened and by who
 export let activatedPin = writable<Pin | null>(null) // The lang code of the activated map pin
 export let blogPosts = writable<{[key: string]: BlogPost} | null>(null) // Cached blogposts
+export let postsByTag = writable<{[key: string]: BlogPost}[]>(Array.from({length: 16}, () => {return {}})) // Blogposts sorted by tags
 export let expectedBlogPostsLength = writable<number>(1) // Excpected length of the blogPosts list, calculated before all of the data is fetched
 export let visitedBlog = writable<boolean>(false) // Whether the blog has been visited
 export let githubRateLimited = writable<boolean>(false) // Whether the user is being rate limited by github api

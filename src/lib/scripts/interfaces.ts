@@ -108,3 +108,6 @@ export interface BlogPost { // Used for info about blogposts
         }
     }
 }
+export interface BlogPostWithID extends BlogPost { // For blogpost searching
+    id: string
+}
