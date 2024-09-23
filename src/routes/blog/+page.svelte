@@ -11,7 +11,7 @@
     import { openBlogpost, removeParams, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
     import GithubLoginBar from "$lib/components/GithubLoginBar.svelte";
     import { page } from "$app/stores";
-    import { PUBLIC_CLIENT_SECRET, PUBLIC_GH_LOGIN_URL, PUBLIC_CLIENT_ID } from "$env/static/public";
+    import { PUBLIC_CLIENT_SECRET, PUBLIC_CLIENT_ID, PUBLIC_PROD } from "$env/static/public";
     import TriangleAlert from "lucide-svelte/icons/triangle-alert";
     import Github from "lucide-svelte/icons/github";
     import Search from "lucide-svelte/icons/search";
@@ -119,8 +119,8 @@
         if (!ghCodes.length) return
         let ghCode = ghCodes.at(-1)
 
-        let req = await fetch(PUBLIC_CLIENT_SECRET ? `${PUBLIC_GH_LOGIN_URL}?client_id=${PUBLIC_CLIENT_ID}&client_secret=${PUBLIC_CLIENT_SECRET}&code=${ghCode}` : PUBLIC_GH_LOGIN_URL+"/"+ghCode, {
-            method: PUBLIC_CLIENT_SECRET ? "POST" : "GET",
+        let req = await fetch(PUBLIC_PROD ? `/api/exchangeGithubCode?code=${ghCode}` : `https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token?client_id=${PUBLIC_CLIENT_ID}&client_secret=${PUBLIC_CLIENT_SECRET}&code=${ghCode}`, {
+            method: "POST",
             headers: {'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'}
         })
         if (req.status!=200) {
@@ -129,7 +129,7 @@
             return
         }
 
-        let key = (await req.json())[PUBLIC_CLIENT_SECRET ? "access_token" : "token"]
+        let key = (await req.json())["access_token"]
         $ghApiKey = key
 
         finishedAuth = true
