@@ -84,11 +84,23 @@ export interface GitHubFile { // Used for getting blogpost files from github
     size: number,
     type: string
 }
+export interface Comment { // Used for comments on blogposts
+    content: string,
+    author: Contributor,
+    timestamp: Moment
+}
+export interface Commit { // Used for commits on blogposts
+    time: Moment,
+    author: Contributor,
+    url: string
+}
 export interface BlogPost { // Used for info about blogposts
     content: string,
     sourcelink: string,
     thumbnail: string,
+
     views: number,
+    comments: Comment[]
 
     metadata: {
         title: string,
@@ -96,16 +108,8 @@ export interface BlogPost { // Used for info about blogposts
         tag: number
     },
     ghdata?: {
-        author: Contributor,
-
-        created: {
-            time: Moment,
-            url: string
-        },
-        edited: {
-            time: Moment,
-            url: string
-        }
+        created: Commit,
+        edited?: Commit
     }
 }
 export interface BlogPostWithID extends BlogPost { // For blogpost searching

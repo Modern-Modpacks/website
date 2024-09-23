@@ -144,6 +144,12 @@
         "loadallposts": "Load all posts",
         "ratelimit": "<b>Uh oh, looks like you've refreshed our blog too much, and are now being rate limited by GitHub!</b><br><br>We use a GitHub repository to store blogpost files. Consider <a href=\"{link}\">reading them there directly</a>, or authenticating using a GitHub account:",
 
+        "views": "Views",
+        "comments": "Comments",
+        "writtenby": "Written by",
+        "editedby": "Last edited by",
+        "timeon": "on",
+
         "missingblogpost": "No more",
         "missingblogpostsub": "blogposts available!",
         "missingblogpostdesc": "Comeback later, and something might appear!",

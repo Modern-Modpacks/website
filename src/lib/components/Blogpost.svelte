@@ -17,7 +17,7 @@
 <div class="flex items-center gap-4 w-full h-[9rem] bg-header-dark rounded-3xl cursor-pointer" title="{blogpost.metadata.title} {blogpost.metadata.subtitle}" on:click={id ? () => {openBlogpost(id)} : null}>
     <img src="{blogpost.thumbnail}" alt="thumbnail" class="h-full min-w-[17rem] object-cover rounded-3xl shadow-[#00000077] shadow-2xl duration-300 hover:scale-105">
     <div class="py-2">
-        <span class="[&>b]:block [&>b]:w-72 [&>b]:overflow-hidden [&>b]:whitespace-nowrap [&>b]:text-ellipsis [&>b]:text-xl">
+        <span class="[&>b]:block [&>b]:w-fit [&>b]:overflow-hidden [&>b]:whitespace-nowrap [&>b]:text-ellipsis [&>b]:text-xl">
             <b>{blogpost.metadata.title}</b>
             <b class="opacity-35">{blogpost.metadata.subtitle}</b>
         </span>

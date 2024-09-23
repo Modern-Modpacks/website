@@ -83,4 +83,6 @@ export const openBlogpost = (id: string) => { // Open a blogpost on the blog pag
 export const closeBlogpost = () => { // Close a blogpost
     openedBlogPost.set(null)
     removeHash()
+
+    setTimeout(() => {scrollTo(0, 0)}, 300)
 }

@@ -29,6 +29,6 @@
         {#if blogpost}
             <BlogpostTag tagIndex={blogpost.metadata.tag} />
         {/if}
-        <p class="h-[2.25ch] max-w-full mt-1 text-lg overflow-hidden whitespace-nowrap text-ellipsis">{blogpost ? removeMd(blogpost.content) : $_("ui.missingblogpostdesc")}</p>
+        <p class="h-[2.25ch] max-w-full w-fit mt-1 text-lg overflow-hidden whitespace-nowrap text-ellipsis">{blogpost ? removeMd(blogpost.content) : $_("ui.missingblogpostdesc")}</p>
     </div>
 </div>

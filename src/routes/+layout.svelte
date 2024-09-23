@@ -14,6 +14,7 @@
     import translatorsJson from "$lib/json/translators.json5"
     import testersJson from "$lib/json/testers.json5"
     import type { Contributor } from "$lib/scripts/interfaces";
+    import moment from "moment";
 
     // Update variables that check for media queries
     let updateMedia = () => {
@@ -45,6 +46,8 @@
     )
     // When the locale is changed in local storage, hot reload it
     storedLocale.subscribe(v => {if (v) $locale = v})
+    // Change moment.js locale
+    locale.subscribe(l => {moment.locale(l ?? "en")})
 
     // Init view transitions, awesome
     onNavigate(navigation => {

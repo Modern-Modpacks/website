@@ -17,10 +17,12 @@
     import Search from "lucide-svelte/icons/search";
     import BlogpostTag from "$lib/components/BlogpostTag.svelte";
     import X from "lucide-svelte/icons/x";
-    import { fade } from "svelte/transition";
+    import { fade, fly, slide } from "svelte/transition";
     import Blogpost from "$lib/components/Blogpost.svelte";
     import { flip } from "svelte/animate";
     import Fuse from "fuse.js"
+    import { sineIn, sineInOut, sineOut } from "svelte/easing";
+    import { nameToEmoji } from "gemoji";
     
     let branchHash : string | null
     let finishedAuth : boolean = false
@@ -69,8 +71,7 @@
 
             // Get the basic data
             let rawUrl = `https://raw.githubusercontent.com/${consts.REPO}/${consts.BLOG_BRANCH}/${path}` // Get the url of the raw files
-            let sourcelink = rawUrl+".md" // Get the url of the raw markdown file specifically
-            let content = await (await fetch(sourcelink)).text() // Get the content of the raw markdown file
+            let content = await (await fetch(rawUrl+".md")).text() // Get the content of the raw markdown file
 
             // If the markdown file doesn't have metadata, skip it
             if (!content.startsWith("```")) return
@@ -81,12 +82,22 @@
             metadataLines.splice(0, 1)
             content = contentAndMetadata.join("```")
 
+            // Render emojis in content
+            let emoteMatches = [...new Set(content.match(/:\w+:/g))]
+            emoteMatches?.forEach(m => {
+                let name = m.replaceAll(":", "")
+                if (Object.keys(nameToEmoji).includes(name)) content = content.replaceAll(m, nameToEmoji[name])
+            })
+
             // Compile all of the data (except ghdata, which is fetched when a blogpost is clicked), and add to blogPosts and postsByTag
             let blogpost : BlogPost = {
                 content: content,
-                sourcelink: sourcelink,
+                sourcelink: `https://github.com/${consts.REPO}/blob/${consts.BLOG_BRANCH}/${path}.md`,
                 thumbnail: rawUrl+".png",
+
                 views: 0,
+                comments: [],
+
                 metadata: parseYaml(metadataLines.join("\n"))
             }
             $blogPosts![path] = blogpost
@@ -142,20 +153,20 @@
             <div class="flex flex-col items-center w-80 p-8 box-content motion-safe:animate-comeup bg-header-dark rounded-2xl">
                 <TriangleAlert class="w-80 h-80" />
                 <p class="text-2xl text-center [&>a]:underline">{@html $_("ui.ratelimit", {values: {link: `https://github.com/${consts.REPO}/tree/${consts.BLOG_BRANCH}`}})}</p>
-                <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_CLIENT_ID}&redirect_uri={$page.url}" class="flex items-center gap-2 w-fit mt-8 p-2 rounded-xl bg-text-dark bg-opacity-25 shadow-[#00000055] shadow-xl duration-200 motion-safe:hover:shadow-[#000000aa] motion-safe:hover:-translate-y-2">
+                <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_CLIENT_ID}&redirect_uri={window.location}" class="flex items-center gap-2 w-fit mt-8 p-2 rounded-xl bg-text-dark bg-opacity-25 shadow-[#00000055] shadow-xl duration-200 motion-safe:hover:shadow-[#000000aa] motion-safe:hover:-translate-y-2">
                     <Github class="h-8 w-8" />
                     <p class="text-3xl">{$_("ui.login")}</p>
                 </a>
             </div>
         </div>
     {:else if !$openedBlogPost}
-        <div>
+        <div in:fly={{x: -window.screenX, easing: sineOut, duration: 300, delay: 300}} out:fly={{x: -window.screenX, easing: sineIn, duration: 300}}>
             {#if Object.keys($blogPosts ?? {}).length < $expectedBlogPostsLength || ($page.url.searchParams.get("code") && !finishedAuth)}
                 <div class="w-[100vw] h-[100vh] flex justify-center items-center">
                     <LoaderCircle class="w-28 h-28 opacity-0 animate-loader animate-delay-[2.5s]" />
                 </div>
             {:else}
-                <div class="min-h-[100vh] py-20 flex justify-center">
+                <div class="py-20 flex justify-center">
                     <div class="w-[56rem] mobile:w-[75%] flex flex-col gap-[4.5rem]">
                         <BigBlogpost id={Object.keys($blogPosts ?? {})[0]} />
                         <span class="flex justify-between w-full [&>div]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">

@@ -1,3 +1,7 @@
+import hljs from "highlight.js";
+import { Marked } from "marked"
+import { markedHighlight } from "marked-highlight"
+
 const consts = {
     REPO: "Modern-Modpacks/website", // The github repo where the website's source is hosted on
     BLOG_BRANCH: "blogposts", // The branch on REPO where raw blogpost .md files are hosted
@@ -50,6 +54,15 @@ const consts = {
         {link: "blog", title: "blog", color: "mm-lime"},
         {link: "https://status.modernmodpacks.site", title: "status", color: "mm-lightblue"}
     ],
+    MARKDOWN_PARSER: new Marked( // Marked instance used for parsing blogposts (with highlight.js support)
+        markedHighlight({
+            langPrefix: 'hljs language-',
+            highlight: (code, lang, info) => {
+                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                return hljs.highlight(code, { language }).value;
+            }
+        })
+    ),
 
     SOCIALS: { // Links to various socials of MM
         curseforge: {

@@ -10,6 +10,6 @@
 </script>
 
 <span class="flex items-center gap-2">
-    <div class="h-5 w-5 bg-mm-{consts.COLORS[tagIndexTest ?? tagIndex]}" />
+    <div class="!h-5 !w-5 bg-mm-{consts.COLORS[tagIndexTest ?? tagIndex]}" />
     <p class="font-semibold">{tagList[tagIndexTest ?? tagIndex]}</p>
 </span>
