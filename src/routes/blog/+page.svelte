@@ -182,7 +182,7 @@
                                     <span class="flex justify-between">
                                         <h2 class="text-2xl ml-1">{$_("ui.tagstitle")}</h2>
                                         {#if selectedTag!=null}
-                                            <button transition:fade={{duration: 150}} on:click={() => {selectedTag = null}}>
+                                            <button transition:fade={{duration: 150}} class="duration-200 motion-safe:hover:rotate-90" on:click={() => {selectedTag = null}}>
                                                 <X />
                                             </button>
                                         {/if}
