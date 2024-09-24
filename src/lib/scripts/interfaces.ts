@@ -99,8 +99,8 @@ export interface BlogPost { // Used for info about blogposts
     sourcelink: string,
     thumbnail: string,
 
-    views: number,
-    comments: Comment[]
+    views?: number,
+    comments?: Comment[]
 
     metadata: {
         title: string,

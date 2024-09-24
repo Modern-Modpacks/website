@@ -62,8 +62,22 @@
             } : undefined
         }
     }
+    // Fetch blogpost views and comments
+    let fetchSocialData = async () => {
+        blogpost!.views = +(await (await fetch("/api/blogViews?id="+id)).text())
+        blogpost!.comments = []
+    }
+    // Fetch gh and social data
+    let fetchExtraData = async () => {
+        await fetchGhData()
+        await fetchSocialData()
+    }
 
-    onMount(() => {
+    onMount(async () => {
+        await fetch("/api/blogViews?id="+id, {
+            method: "POST"
+        })
+
         setTimeout(() => {scrollTo(0, 0)}, 300)
     })
 </script>
@@ -72,7 +86,7 @@
     {#if Object.keys($blogPosts ?? {}).length == $expectedBlogPostsLength}
         <!-- svelte-ignore empty-block -->
         {#if blogpost}
-            {#await fetchGhData() then}
+            {#await fetchExtraData() then}
                 <div>
                     <img src="{blogpost.thumbnail}" alt="thumbnail" class="w-full h-[37.5vw] object-cover">
                     <button class="group absolute top-20 left-8 h-12 w-12 p-2 box-content bg-header-dark rounded-full" on:click={closeBlogpost}>

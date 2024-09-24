@@ -95,9 +95,6 @@
                 sourcelink: `https://github.com/${consts.REPO}/blob/${consts.BLOG_BRANCH}/${path}.md`,
                 thumbnail: rawUrl+".png",
 
-                views: 0,
-                comments: [],
-
                 metadata: parseYaml(metadataLines.join("\n"))
             }
             $blogPosts![path] = blogpost
@@ -127,8 +124,6 @@
             console.error(await req.text())
             return
         }
-
-        // console.log(await req.text())
 
         let key = (await req.json())["access_token"]
         $ghApiKey = key
