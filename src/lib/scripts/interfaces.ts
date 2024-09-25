@@ -86,8 +86,9 @@ export interface GitHubFile { // Used for getting blogpost files from github
 }
 export interface Comment { // Used for comments on blogposts
     content: string,
-    author: Contributor,
-    timestamp: Moment
+    timestamp: string,
+    
+    author: Contributor
 }
 export interface Commit { // Used for commits on blogposts
     time: Moment,

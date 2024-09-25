@@ -26,9 +26,7 @@ export const getWebsiteIcon = (url : string): string | null => { // Get an icon 
     return null
 }
 export const getContributorAvatar = (c : Contributor): string => c.avatar_url ?? `https://avatars.githubusercontent.com/u/${c.github.id}?v=4` // Get the avatar of a contributor
-export const sendGithubApiRequest = async (endpoint: string, forceAuth: boolean): Promise<Response | null> => { // Send a request to the gh api, use the key if rate limited
-    let apiKey = get(ghApiKey)
-
+export const sendGithubApiRequestWithSetKey = async (endpoint: string, forceAuth: boolean, apiKey: string | null): Promise<Response | null> => { // Send a request to the gh api, using a set key
     let req : Response | null = null
     if (!forceAuth) req = await fetch("https://api.github.com/"+endpoint)
     
@@ -49,6 +47,7 @@ export const sendGithubApiRequest = async (endpoint: string, forceAuth: boolean)
     if (req) console.error(await req.text())
     return null
 }
+export const sendGithubApiRequest = async (endpoint: string, forceAuth: boolean): Promise<Response | null> => sendGithubApiRequestWithSetKey(endpoint, forceAuth, get(ghApiKey)) // Call sendGithubApiRequestWithSetKey, but get key from store
 
 export const removeHash = () => history.replaceState("", document.title, window.location.pathname + window.location.search) // Removes the hash from the url without refresh
 export const removeParams = () => history.replaceState("", document.title, window.location.pathname + window.location.hash) // Removes the params from the url without refresh

@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts";
     import type { BlogPost } from "$lib/scripts/interfaces";
-    import { blogPosts, expectedBlogPostsLength, visitedBlog } from "$lib/scripts/stores";
+    import { blogPosts, expectedBlogPostsLength, ghApiKey, visitedBlog } from "$lib/scripts/stores";
     import { closeBlogpost, getContributorAvatar, sendGithubApiRequest } from "$lib/scripts/utils";
     import { ArrowLeft } from "lucide-svelte";
     import Eye from "lucide-svelte/icons/eye";
@@ -15,9 +15,15 @@
     import BlogpostTag from "./BlogpostTag.svelte";
     import { animateScroll } from "svelte-scrollto-element";
     import hljs from "highlight.js";
+    import { json } from "@sveltejs/kit";
+    import CornerDownLeft from "lucide-svelte/icons/corner-down-left";
+    import LogIn from "lucide-svelte/icons/log-in";
+    import { PUBLIC_CLIENT_ID } from "$env/static/public";
 
     export let id : string
     export let branchHash : string
+
+    let charLimit = 1000
 
     let commentsElement : HTMLElement | null
     let blogpost : BlogPost | null
@@ -65,7 +71,7 @@
     // Fetch blogpost views and comments
     let fetchSocialData = async () => {
         blogpost!.views = +(await (await fetch("/api/blogViews?id="+id)).text())
-        blogpost!.comments = []
+        blogpost!.comments = await (await fetch("/api/blogComments?id="+id)).json()
     }
     // Fetch gh and social data
     let fetchExtraData = async () => {
@@ -73,11 +79,19 @@
         await fetchSocialData()
     }
 
+    let ghUserData : any | null
+    let comment : string = ""
+
     onMount(async () => {
         await fetch("/api/blogViews?id="+id, {
             method: "POST"
         })
 
+        if ($ghApiKey) {
+            let ghUserDataReq = await sendGithubApiRequest("user", true)
+            if (ghUserDataReq) ghUserData = await ghUserDataReq.json()
+        }
+        
         setTimeout(() => {scrollTo(0, 0)}, 300)
     })
 </script>
@@ -127,7 +141,7 @@
                                 </span>
                                 <button title="{$_("ui.comments")}" on:click={() => {animateScroll.scrollTo({element: commentsElement ?? undefined, duration: 1000})}}>
                                     <MessageSquare class="w-10 h-10" />
-                                    <b>{blogpost.comments.length}</b>
+                                    <b>{blogpost.comments?.length}</b>
                                 </button>
                                 <a class="!w-full col-span-2 flex justify-center items-center !gap-2" href="{blogpost.sourcelink}" target="_blank" rel="noopener noreferrer">
                                     <img src="{consts.WEBSITE_ICONS.github}" alt="GitHub logo" class="invert">
@@ -149,7 +163,51 @@
                             {@html consts.MARKDOWN_PARSER.parse(blogpost.content)}
                         </div>
 
-                        <div bind:this={commentsElement}>
+                        <div class="flex flex-col gap-12 py-16 px-96" bind:this={commentsElement}>
+                            <span class="relative flex items-center gap-2 w-full h-64 pt-2 pb-4 pr-4 {ghUserData ? "pl-2" : "pl-6"} rounded-xl bg-secondary-dark shadow-[#000000aa] shadow-2xl">
+                                {#if ghUserData}
+                                    <img src="{ghUserData.avatar_url}" alt="User avatar" class="w-16 h-16 p-2 self-start rounded-full">
+                                {/if}
+                                <textarea
+                                    autocomplete="off" maxlength="{charLimit}" placeholder="{ghUserData ? `${$_("ui.leavecomment")} ${ghUserData.login}` : $_("ui.commentdisabled")}" 
+                                    disabled={!ghUserData} bind:value={comment} 
+                                    class="h-full {ghUserData ? "w-[90%] pr-14" : "w-[95%]"} pt-4 text-2xl resize-none [&::-webkit-scrollbar]:hidden bg-transparent{!ghUserData ? " cursor-not-allowed" : ""} placeholder:font-semibold focus:outline-none"
+                                />
+                                {#if ghUserData}
+                                    <p class="absolute top-4 right-4 text-2xl opacity-35">
+                                        {comment.length}/{charLimit}
+                                    </p>
+                                    <button class="group w-12 h-12 aspect-square p-2 self-end bg-text-dark rounded-full" on:click={async () => {
+                                        await fetch(`/api/blogComments?id=${id}&token=${$ghApiKey}`, {
+                                            method: "POST",
+                                            body: comment
+                                        })
+                                        comment = ""
+                                        await fetchSocialData()
+                                    }}>
+                                        <CornerDownLeft color="#000000" class="w-full h-full motion-safe:animate-barrelroll motion-safe:group-hover:animate-doa" />
+                                    </button>
+                                {:else}
+                                    <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_CLIENT_ID}&redirect_uri={window.location}" class="group w-12 h-12 aspect-square p-2 self-end bg-text-dark rounded-full">
+                                        <LogIn color="#000000" class="w-full h-full motion-safe:-translate-x-1 duration-200 group-hover:translate-x-0" />
+                                    </a>
+                                {/if}
+                            </span>
+                            
+                            <div class="flex flex-col gap-8 px-16">
+                                {#each blogpost.comments?.toReversed() ?? [] as c}
+                                    <span class="block w-full h-fit p-4 rounded-xl bg-secondary-dark">
+                                        <span class="flex items-center gap-2 [&>b]:text-xl">
+                                            <img src="{getContributorAvatar(c.author)}" alt="User avatar" class="w-16 h-16 p-2 self-start rounded-full">
+                                            <b>{c.author.name}</b>
+                                            <b class="opacity-35">{$_("ui.commentedon")} {moment(c.timestamp).format("lll")}</b>
+                                        </span>
+                                        <p class="max-w-full ml-[4.5rem] mr-4 pb-4 break-words">
+                                            {c.content}
+                                        </p>
+                                    </span>
+                                {/each}
+                            </div>
                         </div>
                     </div>
                 </div>

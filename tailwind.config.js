@@ -109,6 +109,23 @@ export default {
           }
         },
 
+        doA: {
+          from: {
+              transform: "rotate(0deg)"
+          },
+          to: {
+              transform: "rotate(180deg)"
+          }
+        },
+        barrelRoll: {
+          from: {
+              transform: "rotate(180deg)"
+          },
+          to: {
+              transform: "rotate(360deg)"
+          }
+        },
+
         "join-main": {
           from: {
               transform: "translateY(10rem)",
@@ -140,6 +157,9 @@ export default {
         float: "float 2s alternate infinite ease-in-out",
         loader: "appear 1s forwards ease-out, spin .5s infinite linear",
         comeup: "appear .5s ease-out forwards, comeup .5s ease-out",
+
+        doa: "doA 200ms forwards",
+        barrelroll: "barrelRoll 200ms forwards",
 
         "join-main": "join-main 650ms forwards ease-out",
         "join-gap": "join-gap 650ms forwards ease-out",

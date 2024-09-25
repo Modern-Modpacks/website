@@ -6,6 +6,8 @@ const consts = {
     REPO: "Modern-Modpacks/website", // The github repo where the website's source is hosted on
     BLOG_BRANCH: "blogposts", // The branch on REPO where raw blogpost .md files are hosted
     MISSING_BLOGPOST_THUMBNAIL: "https://raw.githubusercontent.com/Modern-Modpacks/website/refs/heads/blogposts/noblogpost.png", // A link to what should be shown isntead of the thumbnail if the blogpost is not found
+    // WORD_BLOCKLIST: "https://gist.githubusercontent.com/Gcat101/b8ae78d19252e8f7b7225a377e0a0f81/raw/badwords.txt", // A link to a text file containing regexes for all words that need to be blocked
+    WORD_BLOCKLIST: "https://gist.githubusercontent.com/Gcat101/b8ae78d19252e8f7b7225a377e0a0f81/raw/494d11ba2aa4b1e574902c5bc26effd0569b1b7a/badwords.txt",
 
     COLORS: [ // MM's brand colors' names
         "red",

@@ -146,9 +146,12 @@
 
         "views": "Views",
         "comments": "Comments",
+        "leavecomment": "Leave a comment as",
+        "commentdisabled": "Login to leave a comment",
         "writtenby": "Written by",
         "editedby": "Last edited by",
         "timeon": "on",
+        "commentedon": "commented on",
 
         "missingblogpost": "No more",
         "missingblogpostsub": "blogposts available!",
