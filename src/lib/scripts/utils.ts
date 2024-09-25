@@ -70,7 +70,7 @@ export const toggleScroll = (enable : boolean) => { // Toggle the ability to scr
 export const navigateCleanup = () => { // Cleanup stores and unlock page after navigation
     popupOpenedBy.set(null)
     contextMenuOpenedBy.set(null)
-    closeBlogpost()
+    closeBlogpost(false)
 
     toggleScroll(true)
 }
@@ -79,9 +79,10 @@ export const openBlogpost = (id: string) => { // Open a blogpost on the blog pag
     openedBlogPost.set(id)
     window.location.hash = id
 }
-export const closeBlogpost = () => { // Close a blogpost
+export const closeBlogpost = (scrollToTop: boolean) => { // Close a blogpost
     openedBlogPost.set(null)
     removeHash()
+    document.title = "Modern Modpacks"
 
-    setTimeout(() => {scrollTo(0, 0)}, 300)
+    if (scrollToTop) setTimeout(() => {scrollTo(0, 0)}, 300)
 }

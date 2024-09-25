@@ -93,6 +93,10 @@
     })
 </script>
 
+<svelte:head>
+    <title>{blogpost?.metadata.title} {blogpost?.metadata.subtitle}</title>
+</svelte:head>
+
 <div class="min-h-[100vh]" in:fly={{x: window.screenX, easing: sineOut, duration: 300 * +$visitedBlog, delay: 300 * +$visitedBlog}} out:fly={{x: window.screenX, easing: sineIn, duration: 300}}>
     {#if Object.keys($blogPosts ?? {}).length == $expectedBlogPostsLength}
         <!-- svelte-ignore empty-block -->
@@ -100,7 +104,7 @@
             {#await fetchExtraData() then}
                 <div>
                     <img src="{blogpost.thumbnail}" alt="thumbnail" class="w-full h-[37.5vw] object-cover">
-                    <button class="group absolute top-20 left-8 h-12 w-12 p-2 box-content bg-header-dark rounded-full" on:click={closeBlogpost}>
+                    <button class="group absolute top-20 left-8 h-12 w-12 p-2 box-content bg-header-dark rounded-full" on:click={() => {closeBlogpost(true)}}>
                         <ArrowLeft class="w-full h-full translate-x-0.5 duration-200 group-hover:-translate-x-0.5" />
                     </button>
 
