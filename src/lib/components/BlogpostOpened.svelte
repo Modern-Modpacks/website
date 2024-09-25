@@ -6,16 +6,13 @@
     import { ArrowLeft } from "lucide-svelte";
     import Eye from "lucide-svelte/icons/eye";
     import MessageSquare from "lucide-svelte/icons/message-square";
-    import { marked } from "marked";
     import moment from "moment";
     import { onMount } from "svelte";
     import { _ } from "svelte-i18n";
-    import { sineIn, sineInOut, sineOut } from "svelte/easing";
-    import { fade, fly, slide } from "svelte/transition";
+    import { sineIn, sineOut } from "svelte/easing";
+    import { fly } from "svelte/transition";
     import BlogpostTag from "./BlogpostTag.svelte";
     import { animateScroll } from "svelte-scrollto-element";
-    import hljs from "highlight.js";
-    import { json } from "@sveltejs/kit";
     import CornerDownLeft from "lucide-svelte/icons/corner-down-left";
     import LogIn from "lucide-svelte/icons/log-in";
     import { PUBLIC_CLIENT_ID } from "$env/static/public";
