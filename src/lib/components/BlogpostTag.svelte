@@ -9,7 +9,7 @@
     let tagList : string[] = $json("ui.blogtags") as any
 </script>
 
-<span class="flex items-center gap-2">
+<span class="flex items-center gap-2 w-fit">
     <div class="!h-5 !w-5 bg-mm-{consts.COLORS[tagIndexTest ?? tagIndex]}" />
     <p class="font-semibold">{tagList[tagIndexTest ?? tagIndex]}</p>
 </span>

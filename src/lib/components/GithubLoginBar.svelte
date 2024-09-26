@@ -16,8 +16,8 @@
                     <p>{$_("ui.profile")} <b>{info.login}.</b></p>
 
                     <button class="group/button flex items-center gap-2 h-16 px-4 bg-text-dark rounded-full ml-auto" on:click={() => {$ghApiKey = null}}>
-                        <b class="text-selected-text-dark">{$_("ui.logout")}</b>
-                        <LogIn color="#000000" class="h-10 w-10 translate-x-0.5 rotate-180 duration-200 group-hover/button:-translate-x-0.5" />
+                        <b class="text-selected-text-dark mobile:hidden">{$_("ui.logout")}</b>
+                        <LogIn color="#000000" class="h-10 w-10 mobile:h-8 mobile:w-8 translate-x-0.5 rotate-180 duration-200 group-hover/button:-translate-x-0.5" />
                     </button>
                 {/await}
             {/await}
@@ -26,8 +26,8 @@
             <p>{@html $_("ui.no_profile")}</p>
             
             <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_GITHUB_CLIENT_ID}&redirect_uri={window.location}" class="group/button flex items-center gap-2 h-16 px-4 bg-text-dark rounded-full ml-auto">
-                <b class="text-selected-text-dark">{$_("ui.login")}</b>
-                <LogIn color="#000000" class="h-10 w-10 -translate-x-0.5 duration-200 group-hover/button:translate-x-0.5" />
+                <b class="text-selected-text-dark mobile:hidden">{$_("ui.login")}</b>
+                <LogIn color="#000000" class="h-10 w-10 mobile:h-8 mobile:w-8 -translate-x-0.5 duration-200 group-hover/button:translate-x-0.5" />
             </a>
         {/if}
     </span>

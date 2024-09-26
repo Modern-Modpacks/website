@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts";
     import type { BlogPost, BlogPostWithID, GitHubFile } from "$lib/scripts/interfaces";
-    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, openedBlogPost, postsByTag, visitedBlog } from "$lib/scripts/stores";
+    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, mobile, openedBlogPost, postsByTag, visitedBlog } from "$lib/scripts/stores";
     import { parse as parseYaml } from "yaml";
     import { LoaderCircle } from "lucide-svelte";
     import { _ } from "svelte-i18n";
@@ -23,6 +23,7 @@
     import Fuse from "fuse.js"
     import { sineIn, sineInOut, sineOut } from "svelte/easing";
     import { nameToEmoji } from "gemoji";
+    import ChevronDown from "lucide-svelte/icons/chevron-down";
     
     let branchHash : string | null
     let finishedAuth : boolean = false
@@ -30,6 +31,7 @@
     let searchBar : HTMLInputElement | null
     let searchQuery : string | null
     let selectedTag : number | null
+    let tagsHidden : boolean = false
     let loadAllPosts : boolean = false
 
     let filteredBlogposts : string[] = []
@@ -133,6 +135,7 @@
     }
     onMount(async () => {
         if (!$visitedBlog) setTimeout(() => {scrollTo(0, 0); toggleScroll(false)}, 1)
+        setTimeout(() => {tagsHidden = $mobile}, 1)
 
         await exchangeGithubCode()
         await getBlogPosts()
@@ -162,13 +165,15 @@
                     <LoaderCircle class="w-28 h-28 opacity-0 animate-loader animate-delay-[2.5s]" />
                 </div>
             {:else}
-                <div class="py-20 flex justify-center">
+                <div class="pt-20 desktop:pb-20 mobile:pb-10 flex justify-center">
                     <div class="w-[56rem] mobile:w-[75%] flex flex-col gap-[4.5rem]">
                         <BigBlogpost id={Object.keys($blogPosts ?? {})[0]} />
-                        <span class="flex justify-between w-full [&>div]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
-                            <BigBlogpost id={Object.keys($blogPosts ?? {})[1]} delay={500} />
-                            <BigBlogpost id={Object.keys($blogPosts ?? {})[2]} delay={750} />
-                        </span>
+                        {#if !$mobile}
+                            <span class="flex justify-between w-full [&>div]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
+                                <BigBlogpost id={Object.keys($blogPosts ?? {})[1]} delay={500} />
+                                <BigBlogpost id={Object.keys($blogPosts ?? {})[2]} delay={750} />
+                            </span>
+                        {/if}
 
                         <GithubLoginBar />
 
@@ -177,9 +182,9 @@
                                 <input type="text" autocomplete="off" placeholder="{$_("ui.search")}" bind:this={searchBar} class="h-full w-full text-2xl bg-transparent placeholder:font-semibold focus:outline-none" on:input={() => {loadAllPosts = false}}>
                                 <Search class="h-8 w-8 pl-6 box-content" />
                             </span>
-                            <div class="flex gap-4 mt-6">
-                                <span class="w-[45%] h-fit p-4 bg-secondary-dark rounded-xl">
-                                    <span class="flex justify-between">
+                            <div class="flex mobile:flex-col gap-4 mobile:gap-8 mt-6">
+                                <span class="w-[45%] mobile:w-full h-fit p-4 bg-secondary-dark rounded-xl">
+                                    <span class="flex justify-between duration-200{!tagsHidden ? " mobile:mb-2" : ""}">
                                         <h2 class="text-2xl ml-1">{$_("ui.tagstitle")}</h2>
                                         {#if selectedTag!=null}
                                             <button transition:fade={{duration: 150}} class="duration-200 motion-safe:hover:rotate-90" on:click={() => {selectedTag = null}}>
@@ -187,12 +192,21 @@
                                             </button>
                                         {/if}
                                     </span>
-                                    {#each [...Array(16).keys()].filter(i => $_("ui.blogtags")[i]!="-") as i}
-                                        <button class="flex justify-between w-full pl-1 pr-2 duration-200 hover:scale-105 hover:bg-header-dark{selectedTag==i ? " scale-105 bg-header-dark" : ""}" on:click={() => {selectedTag = selectedTag==i ? null : i}}>
-                                            <BlogpostTag tagIndex={i} />
-                                            <p>{Object.keys($postsByTag[i]).length}</p>
+                                    {#if !tagsHidden}
+                                        <div class="mobile:flex mobile:flex-col mobile:gap-1.5" transition:slide={{duration: 200}}>
+                                            {#each [...Array(16).keys()].filter(i => $_("ui.blogtags")[i]!="-") as i}
+                                                <button class="flex justify-between w-full pl-1 pr-2 duration-200 hover:desktop:scale-105 hover:desktop:bg-header-dark{selectedTag==i ? " mobile:py-1 desktop:scale-105 bg-header-dark" : ""}" on:click={() => {selectedTag = selectedTag==i ? null : i}}>
+                                                    <BlogpostTag tagIndex={i} />
+                                                    <p>{Object.keys($postsByTag[i]).length}</p>
+                                                </button>
+                                            {/each}
+                                        </div>
+                                    {/if}
+                                    {#if $mobile}
+                                        <button class="flex justify-center w-full" on:click={() => {tagsHidden = !tagsHidden}}>
+                                            <ChevronDown class="w-12 h-12 mt-2 duration-200{!tagsHidden ? " rotate-180" : ""}" />
                                         </button>
-                                    {/each}
+                                    {/if}
                                 </span>
                                 <div class="flex flex-col gap-6 w-full">
                                     {#each searchQuery ? searchedBlogposts : filteredBlogposts.slice(0, loadAllPosts ? undefined : 5) as id (id)}
