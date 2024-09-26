@@ -2,7 +2,7 @@
     import { base } from "$app/paths"
     import { page } from "$app/stores"
     import consts from "$lib/scripts/consts"
-    import { memeLocales, mobile, scrollY, settingsOpened, sortedLocales, storedLocale } from "$lib/scripts/stores"
+    import { memeLocales, mobile, reducedMotion, scrollY, settingsOpened, sortedLocales, storedLocale } from "$lib/scripts/stores"
     import { Menu, SettingsIcon } from "lucide-svelte"
     import { onMount } from "svelte"
     import { locale, _ } from "svelte-i18n"
@@ -59,16 +59,16 @@
 
         <span class="flex items-center mr-4 gap-10">
             {#each consts.PAGES as button}
-            {@const currentPage = $page.url.pathname=="/"+button.link}
-                <a href={currentPage ? "javascript:void(0)" : "/"+button.link} class="group relative h-full flex items-center" on:click={currentPage ? () => {
+            {@const currentPage = $page.url.pathname==button.link}
+                <a href={currentPage ? "javascript:void(0)" : button.link} class="group relative h-full flex items-center" on:click={currentPage ? () => {
                     removeHash()
                     navigateCleanup()
                 } : null}>
                     <p class="
                         {currentPage ? "font-bold scale-[125%]" : "font-semibold opacity-80"}
-                        text-base animate-ease-out animate-alternate group-hover:text-{button.color} group-hover:scale-[125%]
-                    " style="transition: transform 100ms;">{$_("ui.navbar."+button.title)}</p>
-                    <div class="absolute bg-{button.color} w-full h-1.5 -bottom-2 group-hover:bottom-0 duration-100" />
+                        text-base animate-ease-out animate-alternate group-hover:text-{button.color} motion-safe:group-hover:scale-[125%]
+                    " style="{$reducedMotion ? "" : "transition: transform 100ms;"}">{$_("ui.navbar."+button.title)}</p>
+                    <div class="absolute bg-{button.color} w-full h-1.5 -bottom-2 group-hover:bottom-0 motion-safe:duration-100" />
                 </a>
             {/each}
 

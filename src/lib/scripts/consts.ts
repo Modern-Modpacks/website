@@ -51,9 +51,9 @@ const consts = {
     },
 
     PAGES: [ // Pages on the website with corresponding colors
-        {link: "projects", title: "projects", color: "mm-red"},
-        {link: "about", title: "aboutus", color: "mm-yellow"},
-        {link: "blog", title: "blog", color: "mm-lime"},
+        {link: "/projects", title: "projects", color: "mm-red"},
+        {link: "/about", title: "aboutus", color: "mm-yellow"},
+        {link: "/blog", title: "blog", color: "mm-lime"},
         {link: "https://status.modernmodpacks.site", title: "status", color: "mm-lightblue"}
     ],
     MARKDOWN_PARSER: new Marked( // Marked instance used for parsing blogposts (with highlight.js support)

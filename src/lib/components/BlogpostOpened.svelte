@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts";
     import type { BlogPost } from "$lib/scripts/interfaces";
-    import { blogPosts, expectedBlogPostsLength, ghApiKey, mobile, visitedBlog } from "$lib/scripts/stores";
+    import { blogPosts, expectedBlogPostsLength, ghApiKey, mobile, reducedMotion, visitedBlog } from "$lib/scripts/stores";
     import { closeBlogpost, getContributorAvatar, sendGithubApiRequest } from "$lib/scripts/utils";
     import { ArrowLeft } from "lucide-svelte";
     import Eye from "lucide-svelte/icons/eye";
@@ -89,7 +89,7 @@
             if (ghUserDataReq) ghUserData = await ghUserDataReq.json()
         }
         
-        setTimeout(() => {scrollTo(0, 0)}, 300)
+        setTimeout(() => {scrollTo(0, 0)}, (299 * +!$reducedMotion)+1)
     })
 </script>
 
@@ -97,7 +97,7 @@
     <title>{blogpost?.metadata.title} {blogpost?.metadata.subtitle}</title>
 </svelte:head>
 
-<div in:fly={{x: window.screenX, easing: sineOut, duration: 300 * +$visitedBlog, delay: 300 * +$visitedBlog}} out:fly={{x: window.screenX, easing: sineIn, duration: 300}}>
+<div class="min-h-[100vh]" in:fly={{x: window.screenX, easing: sineOut, duration: 300 * +$visitedBlog * +!$reducedMotion, delay: 300 * +$visitedBlog * +!$reducedMotion}} out:fly={{x: window.screenX, easing: sineIn, duration: 300 * +!$reducedMotion}}>
     {#if Object.keys($blogPosts ?? {}).length == $expectedBlogPostsLength}
         <!-- svelte-ignore empty-block -->
         {#if blogpost}
@@ -144,7 +144,7 @@
                                 {#if !$mobile}
                                     <button title="{$_("ui.comments")}" on:click={() => {animateScroll.scrollTo({element: commentsElement ?? undefined, duration: 1000})}}>
                                         <MessageSquare class="w-10 h-10" />
-                                        <b class="!underline">{blogpost.comments?.length}</b>
+                                        <b>{blogpost.comments?.length}</b>
                                     </button>
                                     <a class="!w-full col-span-2 flex justify-center items-center !gap-2" href="{blogpost.sourcelink}" target="_blank" rel="noopener noreferrer">
                                         <img src="{consts.WEBSITE_ICONS.github}" alt="GitHub logo" class="invert">
@@ -176,7 +176,7 @@
                                 <textarea
                                     autocomplete="off" maxlength="{charLimit}" placeholder="{ghUserData ? `${$_("ui.leavecomment")} ${ghUserData.login}` : $_("ui.commentdisabled")}" 
                                     disabled={!ghUserData} bind:value={comment} 
-                                    class="h-full {ghUserData ? "w-[90%] mobile:w-[60%] desktop:mr-14" : "w-[95%]"} pt-4 mobile:pt-3 text-2xl mobile:text-base resize-none [&::-webkit-scrollbar]:hidden bg-transparent{!ghUserData ? " cursor-not-allowed" : ""} placeholder:font-semibold focus:outline-none"
+                                    class="h-full {ghUserData ? "w-[90%] mobile:w-[60%] desktop:mr-14" : "w-[95%] mobile:w-[80%]"} pt-4 mobile:pt-3 text-2xl mobile:text-base resize-none [&::-webkit-scrollbar]:hidden bg-transparent{!ghUserData ? " cursor-not-allowed" : ""} placeholder:font-semibold focus:outline-none"
                                 />
                                 {#if ghUserData}
                                     <p class="absolute desktop:top-4 desktop:right-4 mobile:bottom-2 mobile:left-2 text-2xl mobile:text-sm opacity-35">
@@ -206,7 +206,9 @@
                                     <span class="block w-full h-fit p-4 rounded-xl bg-secondary-dark">
                                         <span class="flex items-center gap-2 [&>b]:text-xl mobile:[&>b]:text-sm">
                                             <img src="{getContributorAvatar(c.author)}" alt="User avatar" class="w-16 h-16 mobile:w-8 mobile:h-8 desktop:p-2 self-start rounded-full">
-                                            <b>{c.author.name}</b>
+                                            <a href="https://github.com/{c.author.name}" title="GitHub ({c.author.name})">
+                                                <b>{c.author.name}</b>
+                                            </a>
                                             <b class="opacity-35">{$mobile ? "" : $_("ui.commentedon")+" "}{moment(c.timestamp).format("lll")}</b>
                                         </span>
                                         <p class="max-w-full ml-[4.5rem] mobile:ml-10 mr-4 mobile:mt-1 pb-4 mobile:pb-1 break-words">

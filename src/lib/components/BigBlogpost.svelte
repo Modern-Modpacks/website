@@ -16,10 +16,10 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="{$visitedBlog ? "" : " opacity-0 animate-comeup "}h-fit bg-header-dark rounded-3xl {blogpost ? "cursor-pointer" : "cursor-not-allowed"}" style="animation-delay: {delay}ms;" on:click={id ? () => {openBlogpost(id)} : null}>
+<div class="{$visitedBlog ? "" : " motion-safe:opacity-0 motion-safe:animate-comeup "}h-fit bg-header-dark rounded-3xl {blogpost ? "cursor-pointer" : "cursor-not-allowed"}" style="animation-delay: {delay}ms;" on:click={id ? () => {openBlogpost(id)} : null}>
     <!-- 8:3 ratio -->
     <span class="relative block pt-[37.5%]">
-        <img src="{blogpost ? blogpost.thumbnail : consts.MISSING_BLOGPOST_THUMBNAIL}" alt="thumbnail" class="absolute w-full left-0 top-0 object-cover rounded-3xl shadow-[#00000077] shadow-2xl duration-300{blogpost ? " hover:scale-[102.5%]" : ""}">
+        <img src="{blogpost ? blogpost.thumbnail : consts.MISSING_BLOGPOST_THUMBNAIL}" alt="thumbnail" class="absolute w-full left-0 top-0 object-cover rounded-3xl shadow-[#00000077] shadow-2xl duration-300{blogpost ? " motion-safe:hover:scale-[102.5%]" : ""}">
     </span>
     <div class="flex flex-col p-4 mt-1">
         <span class="mobile:mb-2 [&>h2]:inline-block [&>h2]:w-fit">

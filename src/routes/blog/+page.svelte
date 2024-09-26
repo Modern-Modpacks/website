@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts";
     import type { BlogPost, BlogPostWithID, GitHubFile } from "$lib/scripts/interfaces";
-    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, mobile, openedBlogPost, postsByTag, visitedBlog } from "$lib/scripts/stores";
+    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, mobile, openedBlogPost, postsByTag, reducedMotion, visitedBlog } from "$lib/scripts/stores";
     import { parse as parseYaml } from "yaml";
     import { LoaderCircle } from "lucide-svelte";
     import { _ } from "svelte-i18n";
@@ -134,7 +134,7 @@
         removeParams()
     }
     onMount(async () => {
-        if (!$visitedBlog) setTimeout(() => {scrollTo(0, 0); toggleScroll(false)}, 1)
+        if (!$visitedBlog) setTimeout(() => {scrollTo(0, 0); if (!$reducedMotion) toggleScroll(false)}, 1)
         setTimeout(() => {tagsHidden = $mobile}, 1)
 
         await exchangeGithubCode()
@@ -159,10 +159,10 @@
             </div>
         </div>
     {:else if !$openedBlogPost}
-        <div in:fly={{x: -window.screenX, easing: sineOut, duration: 300, delay: 300}} out:fly={{x: -window.screenX, easing: sineIn, duration: 300}}>
+        <div in:fly={{x: -window.screenX, easing: sineOut, duration: 300 * +!$reducedMotion, delay: 300 * +!$reducedMotion}} out:fly={{x: -window.screenX, easing: sineIn, duration: 300 * +!$reducedMotion}}>
             {#if Object.keys($blogPosts ?? {}).length < $expectedBlogPostsLength || ($page.url.searchParams.get("code") && !finishedAuth)}
                 <div class="w-[100vw] h-[100vh] flex justify-center items-center">
-                    <LoaderCircle class="w-28 h-28 opacity-0 animate-loader animate-delay-[2.5s]" />
+                    <LoaderCircle class="w-28 h-28 opacity-0 motion-safe:animate-loader animate-delay-[2.5s]" />
                 </div>
             {:else}
                 <div class="pt-20 desktop:pb-20 mobile:pb-10 flex justify-center">
@@ -187,15 +187,15 @@
                                     <span class="flex justify-between duration-200{!tagsHidden ? " mobile:mb-2" : ""}">
                                         <h2 class="text-2xl ml-1">{$_("ui.tagstitle")}</h2>
                                         {#if selectedTag!=null}
-                                            <button transition:fade={{duration: 150}} class="duration-200 motion-safe:hover:rotate-90" on:click={() => {selectedTag = null}}>
+                                            <button transition:fade={{duration: 150 * +!$reducedMotion}} class="duration-200 motion-safe:hover:rotate-90" on:click={() => {selectedTag = null}}>
                                                 <X />
                                             </button>
                                         {/if}
                                     </span>
                                     {#if !tagsHidden}
-                                        <div class="mobile:flex mobile:flex-col mobile:gap-1.5" transition:slide={{duration: 200}}>
+                                        <div class="mobile:flex mobile:flex-col mobile:gap-1.5" transition:slide={{duration: 200 * +!$reducedMotion}}>
                                             {#each [...Array(16).keys()].filter(i => $_("ui.blogtags")[i]!="-") as i}
-                                                <button class="flex justify-between w-full pl-1 pr-2 duration-200 hover:desktop:scale-105 hover:desktop:bg-header-dark{selectedTag==i ? " mobile:py-1 desktop:scale-105 bg-header-dark" : ""}" on:click={() => {selectedTag = selectedTag==i ? null : i}}>
+                                                <button class="flex justify-between w-full pl-1 pr-2 motion-safe:duration-200 motion-safe:hover:desktop:scale-105 hover:desktop:bg-header-dark{selectedTag==i ? " mobile:py-1 motion-safe:desktop:scale-105 bg-header-dark" : ""}" on:click={() => {selectedTag = selectedTag==i ? null : i}}>
                                                     <BlogpostTag tagIndex={i} />
                                                     <p>{Object.keys($postsByTag[i]).length}</p>
                                                 </button>
@@ -210,14 +210,14 @@
                                 </span>
                                 <div class="flex flex-col gap-6 w-full">
                                     {#each searchQuery ? searchedBlogposts : filteredBlogposts.slice(0, loadAllPosts ? undefined : 5) as id (id)}
-                                        <span animate:flip={{duration: 200, delay: 100}} transition:fade={{duration: 200, delay: 100}}>
+                                        <span animate:flip={{duration: 200 * +!$reducedMotion, delay: 100 * +!$reducedMotion}} transition:fade={{duration: 200 * +!$reducedMotion, delay: 100 * +!$reducedMotion}}>
                                             <Blogpost id={id} />
                                         </span>
                                     {/each}
 
-                                    <button class="group hidden{!searchQuery && filteredBlogposts.length>5 && !loadAllPosts ? " !flex" : ""} items-center [&>div]:h-0.5 [&>div]:w-full [&>div]:bg-text-dark" on:click={() => {loadAllPosts = true}}>
+                                    <button class="group hidden{!searchQuery && filteredBlogposts.length>5 && !loadAllPosts ? " !flex" : ""} items-center [&>div]:h-0.5 [&>div]:w-full mobile:[&>div]:w-[50%] [&>div]:bg-text-dark" on:click={() => {loadAllPosts = true}}>
                                         <div />
-                                        <b class="text-2xl w-full duration-200 group-hover:scale-125 group-hover:w-[150%]">Load all posts</b>
+                                        <b class="text-2xl w-full duration-200 motion-safe:desktop:group-hover:scale-125 motion-safe:desktop:group-hover:w-[150%]">Load all posts</b>
                                         <div />
                                     </button>
                                 </div>
