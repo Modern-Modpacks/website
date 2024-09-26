@@ -122,7 +122,7 @@
     <div class="w-[100vw] h-[100vh] mobile:h-[87.5vh] relative bg-black bg-opacity-50 flex mobile:flex-col mobile:[&>*]:text-center gap-10 mobile:gap-6 items-center justify-center" id="title">
         <div class="absolute w-full h-full -z-10 object-cover mobile:bg-center" style="background-image: url('{banner}');" id="bg" />
 
-        <img src="{consts.LOGO_URL}" class="w-64 h-64 mobile:w-52 mobile:h-52 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="logo">
+        <img src="{consts.LOGO_URL}" class="w-64 h-64 mobile:w-52 mobile:h-52 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="Modern Modpacks logo">
         <span class="w-[60%] mobile:w-full flex flex-col mobile:items-center gap-3">
             <h1 class="w-fit{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s; transition-delay: .5s;">Modern Modpacks</h1>
             <h3 class="w-fit{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s;  transition-delay: .75s;">{$randomSplash}</h3>
@@ -182,17 +182,17 @@
             </div>
             <div class="group z-10 mobile:flex mobile:flex-col mobile:items-center">
                 <BreathingIcon duration={2000} minScale={95} maxScale={100} class="duration-100 motion-safe:desktop:group-hover:!scale-100">
-                    <img src="{consts.HM_LOGO_URL}" alt="hellish mods logo" title="Hellish Mods" class="w-48 mobile:w-24 rendering-pixelated rounded-md">
+                    <img src="{consts.HM_LOGO_URL}" alt="Hellish Mods logo" title="Hellish Mods" class="w-48 mobile:w-24 rendering-pixelated rounded-md">
                 </BreathingIcon>
                 <div class="mt-5 mobile:mt-3 flex justify-center gap-5 mobile:gap-4 [&>span]:block [&>span]:w-10 mobile:[&>span]:w-8 [&>span]:h-10 mobile:[&>span]:h-8 [&>span]:duration-200 motion-safe:desktop:[&>span:hover]:!scale-[1.15] motion-safe:desktop:[&>span:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0 [&_img]:invert">
                     {#each Object.entries([
                         {link: "https://curseforge.com/members/hellishmods", title: "CurseForge"},
-                        {link: consts.SOCIALS.modrinth.url, title: "Modrinth"},
+                        {link: consts.SOCIALS.Modrinth.url, title: "Modrinth"},
                         {link: "https://github.com/Hellish-Mods", title: "GitHub"}
                     ]) as [i, social]}
                         <BreathingIcon duration={2000} minScale={80} maxScale={100} delay={500 * +i}>
                             <a href="{social.link}" target="_blank" rel="noopener noreferrer">
-                                <img src="{icons[social.title.toLowerCase()]}" alt="logo icon {social.title.toLowerCase()}" title="{social.title}">
+                                <img src="{icons[social.title]}" alt="{social.title} logo" title="{social.title}">
                             </a>
                         </BreathingIcon>
                     {/each}

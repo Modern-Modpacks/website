@@ -48,8 +48,8 @@
     let pullUp : boolean | null
 
     // Get the icons for download and source button depending on the url of the links
-    let downloadIcon : string | null = getWebsiteIcon(modpack.links?.download!)
-    let sourceIcon : string | null = getWebsiteIcon(modpack.links?.source!)
+    let downloadIcon : (string | null)[] = getWebsiteIcon(modpack.links?.download!)
+    let sourceIcon : (string | null)[] = getWebsiteIcon(modpack.links?.source!)
 
     onMount(() => {
         // Escape on escape, duh
@@ -105,8 +105,8 @@
             {:else}
                 <span class="h-1 w-40 bg-white absolute mx-auto mt-4 top-0 left-0 right-0 rounded-xl opacity-60" />
             {/if}
-            <img src="{modpack.banner}" alt="banner" class="w-full h-[35%] mobile:h-[20vh] object-cover rounded-t-xl">
-            <img src="{icon}" alt="icon" title="{modpack.name}" class="absolute w-24 h-24 mobile:w-20 mobile:h-20 top-[26%] left-[3%] mobile:top-16 mobile:left-5 rounded-xl mobile:rounded-lg">
+            <img src="{modpack.banner}" alt="{modpack.name} banner" class="w-full h-[35%] mobile:h-[20vh] object-cover rounded-t-xl">
+            <img src="{icon}" alt="{modpack.name} icon" title="{modpack.name}" class="absolute w-24 h-24 mobile:w-20 mobile:h-20 top-[26%] left-[3%] mobile:top-16 mobile:left-5 rounded-xl mobile:rounded-lg">
 
             <div class="p-7 mobile:p-5 pb-14 mt-4 mobile:mt-2 flex mobile:flex-col mobile:gap-6 desktop:h-[65%] box-border">
                 <div class="w-[36rem]{$upsideDownLocale ? " [&>*]:text-right" : ""}">
@@ -136,7 +136,7 @@
                     <div class="w-full">
                         {#if modpack.links?.download}
                             <a href="{modpack.links.download}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-4 bg-text-dark rounded-lg p-4 motion-safe:desktop:hover:scale-110 duration-200">
-                                {#if downloadIcon!=null}<img src="{downloadIcon}" alt="logo" class="brightness-0 w-[36px]">
+                                {#if downloadIcon[0]!=null}<img src="{downloadIcon[1]}" alt="{downloadIcon[0]} logo" class="brightness-0 w-[36px]">
                                 {:else}<Globe color="#000000" size="30" />{/if}
 
                                 <b class="text-lg text-secondary-dark">{$_($mobile ? "ui.view" : "ui.download")}</b>
@@ -145,7 +145,7 @@
 
                         {#if modpack.links?.source}
                             <a href="{modpack.links.source}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 mt-4 motion-safe:desktop:hover:scale-110 duration-200">
-                                {#if sourceIcon!=null}<img src="{sourceIcon}" alt="logo" class="brightness-0 invert w-[36px]">
+                                {#if sourceIcon[0]!=null}<img src="{sourceIcon[1]}" alt="{downloadIcon[0]} logo" class="brightness-0 invert w-[36px]">
                                 {:else}<Globe color="#000000" size="30" />{/if}
 
                                 <b class="text-lg">{$_("ui.source")}</b>
@@ -154,8 +154,8 @@
 
                         {#if (!modpack.links?.download && !modpack.links?.source)}
                             {#if !partner || partnerPack?.links?.discord}
-                                <a href="{partner ? partnerPack?.links?.discord : consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:desktop:scale-105 duration-200" title="{$_(partner ? "ui.wipbigdiscord" : "ui.wipbigmm")}">
-                                    <img src="{consts.WEBSITE_ICONS.discord}" alt="logo" class="brightness-0 invert w-[36px]">
+                                <a href="{partner ? partnerPack?.links?.discord : consts.SOCIALS.Discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:desktop:scale-105 duration-200" title="{$_(partner ? "ui.wipbigdiscord" : "ui.wipbigmm")}">
+                                    <img src="{consts.WEBSITE_ICONS.Discord}" alt="Discord logo" class="brightness-0 invert w-[36px]">
                                     <b class="text-lg">{$_("ui.wip")}</b>
                                 </a>
                             {:else}

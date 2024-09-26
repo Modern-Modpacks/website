@@ -103,7 +103,7 @@
         {#if blogpost}
             {#await fetchExtraData() then}
                 <div>
-                    <img src="{blogpost.thumbnail}" alt="thumbnail" class="w-full h-[37.5vw] object-cover">
+                    <img src="{blogpost.thumbnail}" alt='"{blogpost.metadata.title}" blogpost thumbnail' class="w-full h-[37.5vw] object-cover">
                     <button class="group absolute top-20 left-8 mobile:top-8 h-12 w-12 mobile:h-8 mobile:w-8 p-2 box-content bg-header-dark mobile:bg-secondary-dark mobile:bg-opacity-75 rounded-full" on:click={() => {closeBlogpost(true)}}>
                         <ArrowLeft class="w-full h-full destkop:translate-x-0.5 duration-200 desktop:group-hover:-translate-x-0.5" />
                     </button>
@@ -113,7 +113,7 @@
                             <span class="[&>a>*]:inline-block [&_*]:align-middle">
                                 <a href="{blogpost.ghdata?.created.url}" target="_blank" rel="noopener noreferrer">
                                     <p>{$_("ui.writtenby")}</p>
-                                    <img src="{blogpost.ghdata?.created.author ? getContributorAvatar(blogpost.ghdata?.created.author) : ""}" alt="author avatar" class="h-8 w-8 rounded-full">
+                                    <img src="{blogpost.ghdata?.created.author ? getContributorAvatar(blogpost.ghdata?.created.author) : ""}" alt="{blogpost.ghdata?.created.author.name}'s avatar" class="h-8 w-8 rounded-full">
                                     <p>{blogpost.ghdata?.created.author.name}</p>
                                     <p>{$_("ui.timeon")}</p>
                                     <p>{blogpost.ghdata?.created.time.format("LLL")}</p>
@@ -124,7 +124,7 @@
                                     
                                     <a href="{blogpost.ghdata.edited.url}" target="_blank" rel="noopener noreferrer" class="[&>p]:opacity-35">
                                         <p>{$_("ui.editedby")}</p>
-                                        <img src="{blogpost.ghdata.edited.author ? getContributorAvatar(blogpost.ghdata.edited.author) : ""}" alt="author avatar" class="h-8 w-8 rounded-full">
+                                        <img src="{blogpost.ghdata.edited.author ? getContributorAvatar(blogpost.ghdata.edited.author) : ""}" alt="{blogpost.ghdata?.edited.author.name}'s avatar" class="h-8 w-8 rounded-full">
                                         <p>{blogpost.ghdata.edited.author.name}</p>
                                         <p>{$_("ui.timeon")}</p>
                                         <p>{blogpost.ghdata.edited.time.format("LLL")}</p>
@@ -147,7 +147,7 @@
                                         <b>{blogpost.comments?.length}</b>
                                     </button>
                                     <a class="!w-full col-span-2 flex justify-center items-center !gap-2" href="{blogpost.sourcelink}" target="_blank" rel="noopener noreferrer">
-                                        <img src="{consts.WEBSITE_ICONS.github}" alt="GitHub logo" class="invert">
+                                        <img src="{consts.WEBSITE_ICONS.GitHub}" alt="GitHub logo" class="invert">
                                         <p>{$_("ui.source")}</p>
                                     </a>
                                 {/if}
@@ -171,7 +171,7 @@
                         <div class="flex flex-col gap-12 desktop:py-16 mobile:pt-12 mobile:pb-8 px-96 mobile:px-12" bind:this={commentsElement}>
                             <span class="relative flex items-center gap-2 w-full h-64 mobile:h-48 pt-2 pb-4 pr-4 {ghUserData ? "pl-2" : "pl-6"} rounded-xl bg-secondary-dark shadow-[#000000aa] shadow-2xl">
                                 {#if ghUserData}
-                                    <img src="{ghUserData.avatar_url}" alt="User avatar" class="w-16 h-16 mobile:w-12 mobile:h-12 p-2 self-start rounded-full">
+                                    <img src="{ghUserData.avatar_url}" alt="{ghUserData.login}'s avatar" class="w-16 h-16 mobile:w-12 mobile:h-12 p-2 self-start rounded-full">
                                 {/if}
                                 <textarea
                                     autocomplete="off" maxlength="{charLimit}" placeholder="{ghUserData ? `${$_("ui.leavecomment")} ${ghUserData.login}` : $_("ui.commentdisabled")}" 
@@ -205,7 +205,7 @@
                                 {#each blogpost.comments?.toReversed() ?? [] as c}
                                     <span class="block w-full h-fit p-4 rounded-xl bg-secondary-dark">
                                         <span class="flex items-center gap-2 [&>b]:text-xl mobile:[&>b]:text-sm">
-                                            <img src="{getContributorAvatar(c.author)}" alt="User avatar" class="w-16 h-16 mobile:w-8 mobile:h-8 desktop:p-2 self-start rounded-full">
+                                            <img src="{getContributorAvatar(c.author)}" alt="{c.author.name}'s avatar" class="w-16 h-16 mobile:w-8 mobile:h-8 desktop:p-2 self-start rounded-full">
                                             <a href="https://github.com/{c.author.name}" title="GitHub ({c.author.name})">
                                                 <b>{c.author.name}</b>
                                             </a>

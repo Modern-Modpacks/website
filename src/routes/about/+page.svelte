@@ -162,7 +162,8 @@
     <div class="absolute w-full h-[95vh] -z-10 overflow-hidden [&>span]:flex [&>span]:flex-wrap">
         <Marquee baseAnimDur={10000 * members.length} animMin={0} bind:animMax={wallScrollHeight} vertical={true}>
             {#each [...Array(8 * (wallRowCount ?? 0)).keys()] as i}
-                <img src="{getContributorAvatar(members[i % members.length])}" alt="" class="w-[12.5vw]">
+                {@const member = members[i % members.length]}
+                <img src="{getContributorAvatar(member)}" alt="{member.name}'s avatar" class="w-[12.5vw]">
             {/each}
         </Marquee>
     </div>
@@ -194,7 +195,7 @@
     <div class="absolute left-0 top-0 w-[42.5%] mobile:w-full h-full mobile:h-[400px] z-10 motion-safe:duration-300 ease-out {$activatedPin ? "desktop:backdrop-blur-xl mobile:bg-black mobile:bg-opacity-75" : "pointer-events-none"}">
         <div class="{mapSidebarShown ? "desktop:translate-x-0" : "desktop:translate-x-[-100%] mobile:opacity-0"} motion-safe:duration-500 ease-in-out h-full w-full p-6">
             <span class="flex items-center gap-4 w-fit">
-                <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="flag" class="w-20 mobile:w-14">
+                <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="{lastActivePin?.lang.toUpperCase()} flag" class="w-20 mobile:w-14">
                 <span>
                     <h3 class="font-bold mobile:text-lg">{$_("languages."+lastActivePin?.lang)}</h3>
                     {#if $locales.includes(lastActivePin?.lang ?? "") && $locale!=lastActivePin?.lang}<p class="text-base mobile:text-sm font-semibold text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>{/if}
@@ -223,7 +224,7 @@
                             href="https://github.com/{translator.github.username}" target="_blank" rel="noopener noreferrer" title="GitHub ({translator.github.username})"
                             class="group flex items-center gap-4{+i > 0 && !(+i % 6) ? " desktop:mt-4" : ""} [&_*]:origin-top-left [&_*]:duration-300 duration-500" style="transform: translateY({sidebarScrolled * +!$mobile * -34}rem);"
                         >
-                            <img src="{getContributorAvatar(translator)}" alt="avatar" class="w-[4.5rem] mobile:w-16{onCurrentPage ? " motion-safe:group-hover:desktop:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
+                            <img src="{getContributorAvatar(translator)}" alt="{translator.name}'s avatar" class="w-[4.5rem] mobile:w-16{onCurrentPage ? " motion-safe:group-hover:desktop:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
                             <span>
                                 <h3 class="font-bold mobile:text-lg{onCurrentPage ? " motion-safe:group-hover:desktop:text-4xl" : ""}">{translator.name}</h3>
                                 <p class="text-base mobile:text-sm{onCurrentPage ? " motion-safe:group-hover:desktop:text-lg" : ""} font-semibold text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>
@@ -266,11 +267,11 @@
         
         <span class="mt-3 mobile:mt-2 rounded-full duration-1000 motion-safe:desktop:hover:-translate-y-2">
             <a
-                href="{consts.SOCIALS.discord.url}" target="_blank" rel="noopener noreferrer"
+                href="{consts.SOCIALS.Discord.url}" target="_blank" rel="noopener noreferrer"
                 class="py-4 px-6 flex items-center gap-3 bg-[#5865f2] shadow-xl shadow-transparent rounded-full ease-in-out [transition:box-shadow_1s] motion-safe:desktop:hover:shadow-[#5865f233]"
                 bind:this={discordButton}
             >
-                <img src="{consts.WEBSITE_ICONS.discord}" alt="Discord logo" class="w-12 brightness-0 invert">
+                <img src="{consts.WEBSITE_ICONS.Discord}" alt="Discord logo" class="w-12 brightness-0 invert">
                 <p class="font-bold text-2xl">{$_("ui.discord")}</p>
             </a>
         </span>
@@ -291,7 +292,7 @@
         <Saos animation={$reducedMotion || $mobile ? "" : `showup .75s ease-out backwards`} once={true}>
             <img 
                 src="{compassUnfocused || !compassCenter ? "https://minecraft.wiki/images/Compass_JE3_BE3.gif" : `https://raw.githubusercontent.com/misode/mcmeta/1.19.2-assets/assets/minecraft/textures/item/compass_${((31 + Math.round($compassTexture)) % 31).toString().padStart(2, "0")}.png`}"
-                alt="compass" class="origin-bottom rendering-pixelated aspect-square w-[40vw] h-[40vw] mobile:h-64 mobile:w-64 min-w-[40vw] min-h-[40vw] mobile:min-h-64 mobile:min-w-64" bind:this={compass}
+                alt="{compassUnfocused || !compassCenter ? "Spinning compass" : `Compass in position ${(31 + Math.round($compassTexture)) % 31}`}" class="origin-bottom rendering-pixelated aspect-square w-[40vw] h-[40vw] mobile:h-64 mobile:w-64 min-w-[40vw] min-h-[40vw] mobile:min-h-64 mobile:min-w-64" bind:this={compass}
                 use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {
                     setTimeout(() => {compassCenter = calculateElementCenter(compass ?? undefined)}, 750)
                 }}

@@ -18,12 +18,12 @@ export const calculateElementCenter = (el : HTMLElement | undefined): Coordinate
     }
 }
 
-export const getWebsiteIcon = (url : string): string | null => { // Get an icon of a website based on its url
-    if (!url) return null
+export const getWebsiteIcon = (url : string): (string | null)[] => { // Get an icon of a website based on its url
+    if (!url) return [null, null]
     for (let [k, icon] of Object.entries(consts.WEBSITE_ICONS)) {
-        if (url.includes(k)) return icon
+        if (url.includes(k.toLowerCase())) return [k, icon]
     }
-    return null
+    return [null, null]
 }
 export const getContributorAvatar = (c : Contributor): string => c.avatar_url ?? `https://avatars.githubusercontent.com/u/${c.github.id}?v=4` // Get the avatar of a contributor
 export const sendGithubApiRequestWithSetKey = async (endpoint: string, forceAuth: boolean, apiKey: string | null): Promise<Response | null> => { // Send a request to the gh api, using a set key

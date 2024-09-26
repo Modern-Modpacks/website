@@ -73,5 +73,5 @@
         })
     }}
 >
-    <img id="mod" src="{mod?.icon_url}" alt="" class="shadow-black{$contextMenuOpenedBy==modNumber && !$mobile ? " motion-safe:!scale-[1.15] motion-safe:shadow-2xl" : ""}">
+    <img id="mod" src="{mod?.icon_url}" alt="{mod?.name} logo" class="shadow-black{$contextMenuOpenedBy==modNumber && !$mobile ? " motion-safe:!scale-[1.15] motion-safe:shadow-2xl" : ""}">
 </span>

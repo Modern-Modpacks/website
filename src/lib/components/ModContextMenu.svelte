@@ -68,7 +68,7 @@
                             <X size="28" />
                         </button>
 
-                        <img src="{mod?.icon_url}" alt="project logo" class="h-[30%] aspect-square">
+                        <img src="{mod?.icon_url}" alt="{mod?.name} logo" class="h-[30%] aspect-square">
                     {/if}
                     <p class="font-bold text-2xl mobile:text-xl{$upsideDownLocale ? " text-right" : ""}">{mod?.name}</p>
                     <p class="text-lg w-[20ch] my-2{$upsideDownLocale ? " text-right" : ""}">{mod?.summary}</p>

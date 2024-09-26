@@ -73,20 +73,20 @@
             bind:element={element}
         >
         <!-- $popupOpenedBy.abbr==modpack.abbr -->
-            <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/BG/{path}.png" alt="icon background">
+            <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/BG/{path}.png" alt="{consts.COLORS[index]} background">
             <!-- svelte-ignore a11y-mouse-events-have-key-events -->
             <img
                 class="scale-[102%] duration-200 absolute rendering-pixelated peer z-10{discovered ? ` motion-safe:desktop${thisPackOpened ? "" : ":hover"}:opacity-0` : ""}"
                 src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
                 style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/inverted/{index * +discovered}inverted.png');"
-                alt="icon foreground inverted"
+                alt="{modpack.name} icon inverted"
             >
             {#if discovered && !$reducedMotion}
                 <img
                     class="scale-[102%] duration-200 absolute rendering-pixelated peer opacity-0 desktop{thisPackOpened ? "" : ":peer-hover"}:opacity-100"
                     src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
                     style="--mask: url('https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/{path}_{modpack.abbr}.png');"
-                    alt="icon foreground"
+                    alt="{modpack.name} icon"
                 >
             {/if}
 

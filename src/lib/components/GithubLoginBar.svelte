@@ -12,7 +12,7 @@
         {#if $ghApiKey}
             {#await sendGithubApiRequest("user", true) then req}
                 {#await req?.json() then info}
-                    <img src="{info.avatar_url}" alt="user avatar" class="h-16 w-16 rounded-full">
+                    <img src="{info.avatar_url}" alt="{info.login}'s avatar" class="h-16 w-16 rounded-full">
                     <p>{$_("ui.profile")} <b>{info.login}.</b></p>
 
                     <button class="group/button flex items-center gap-2 h-16 px-4 bg-text-dark rounded-full ml-auto" on:click={() => {$ghApiKey = null}}>
