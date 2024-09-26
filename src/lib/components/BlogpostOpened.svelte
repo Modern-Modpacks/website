@@ -15,7 +15,7 @@
     import { animateScroll } from "svelte-scrollto-element";
     import CornerDownLeft from "lucide-svelte/icons/corner-down-left";
     import LogIn from "lucide-svelte/icons/log-in";
-    import { PUBLIC_CLIENT_ID } from "$env/static/public";
+    import { PUBLIC_GITHUB_CLIENT_ID } from "$env/static/public";
 
     export let id : string
     export let branchHash : string
@@ -189,7 +189,7 @@
                                         <CornerDownLeft color="#000000" class="w-full h-full motion-safe:animate-barrelroll motion-safe:group-hover:animate-doa" />
                                     </button>
                                 {:else}
-                                    <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_CLIENT_ID}&redirect_uri={window.location}" class="group w-12 h-12 aspect-square p-2 self-end bg-text-dark rounded-full">
+                                    <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_GITHUB_CLIENT_ID}&redirect_uri={window.location}" class="group w-12 h-12 aspect-square p-2 self-end bg-text-dark rounded-full">
                                         <LogIn color="#000000" class="w-full h-full motion-safe:-translate-x-1 duration-200 group-hover:translate-x-0" />
                                     </a>
                                 {/if}
@@ -214,7 +214,7 @@
                 </div>
             {/await}
         {:else}
-            {@const _ = closeBlogpost()}
+            {@const _ = closeBlogpost(true)}
         {/if}
     {/if}
 </div>

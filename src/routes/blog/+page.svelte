@@ -11,7 +11,7 @@
     import { openBlogpost, removeParams, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
     import GithubLoginBar from "$lib/components/GithubLoginBar.svelte";
     import { page } from "$app/stores";
-    import { PUBLIC_CLIENT_ID } from "$env/static/public";
+    import { PUBLIC_GITHUB_CLIENT_ID } from "$env/static/public";
     import TriangleAlert from "lucide-svelte/icons/triangle-alert";
     import Github from "lucide-svelte/icons/github";
     import Search from "lucide-svelte/icons/search";
@@ -149,7 +149,7 @@
             <div class="flex flex-col items-center w-80 p-8 box-content motion-safe:animate-comeup bg-header-dark rounded-2xl">
                 <TriangleAlert class="w-80 h-80" />
                 <p class="text-2xl text-center [&>a]:underline">{@html $_("ui.ratelimit", {values: {link: `https://github.com/${consts.REPO}/tree/${consts.BLOG_BRANCH}`}})}</p>
-                <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_CLIENT_ID}&redirect_uri={window.location}" class="flex items-center gap-2 w-fit mt-8 p-2 rounded-xl bg-text-dark bg-opacity-25 shadow-[#00000055] shadow-xl duration-200 motion-safe:hover:shadow-[#000000aa] motion-safe:hover:-translate-y-2">
+                <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_GITHUB_CLIENT_ID}&redirect_uri={window.location}" class="flex items-center gap-2 w-fit mt-8 p-2 rounded-xl bg-text-dark bg-opacity-25 shadow-[#00000055] shadow-xl duration-200 motion-safe:hover:shadow-[#000000aa] motion-safe:hover:-translate-y-2">
                     <Github class="h-8 w-8" />
                     <p class="text-3xl">{$_("ui.login")}</p>
                 </a>

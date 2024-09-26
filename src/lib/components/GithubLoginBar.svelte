@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { PUBLIC_CLIENT_ID } from "$env/static/public";
+    import { PUBLIC_GITHUB_CLIENT_ID } from "$env/static/public";
     import { ghApiKey } from "$lib/scripts/stores";
     import { sendGithubApiRequest } from "$lib/scripts/utils";
     import { LogIn, UserCircle } from "lucide-svelte";
@@ -25,7 +25,7 @@
             <UserCircle class="h-16 w-16" />
             <p>{@html $_("ui.no_profile")}</p>
             
-            <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_CLIENT_ID}&redirect_uri={window.location}" class="group/button flex items-center gap-2 h-16 px-4 bg-text-dark rounded-full ml-auto">
+            <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_GITHUB_CLIENT_ID}&redirect_uri={window.location}" class="group/button flex items-center gap-2 h-16 px-4 bg-text-dark rounded-full ml-auto">
                 <b class="text-selected-text-dark">{$_("ui.login")}</b>
                 <LogIn color="#000000" class="h-10 w-10 -translate-x-0.5 duration-200 group-hover/button:translate-x-0.5" />
             </a>

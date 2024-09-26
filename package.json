@@ -36,7 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"better-sqlite3": "^11.3.0",
+		"@supabase/supabase-js": "^2.45.4",
 		"flat": "^6.0.1",
 		"fuse.js": "^7.0.0",
 		"gemoji": "^8.1.0",

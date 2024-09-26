@@ -1,29 +1,24 @@
 import type { Comment } from "$lib/scripts/interfaces";
 import { sendGithubApiRequestWithSetKey } from "$lib/scripts/utils";
 import serverConsts from "$lib/server/serverConsts";
-import { addBlogpostToDB } from "$lib/server/serverUtils";
 import moment from "moment";
 import type { RequestHandler } from "./$types";
 import consts from "$lib/scripts/consts";
+import { addBlogpostToDB } from "$lib/server/serverUtils";
 
 // Get and add comments for blogposts using their ids
-const getComments = (id: string) : Comment[] => {
-    return (
-        (
-            JSON.parse(
-                (
-                    serverConsts.DB.prepare("SELECT comments FROM blogs WHERE id = ?").get([id]) as {comments: string}
-                ).comments
-            ) as Comment[]
-        ) ?? []
-    )
+const getComments = async (id: string) : Promise<Comment[]> => {
+    let comments = (await serverConsts.DB.from("blogs").select("comments").eq("id", id)).data
+
+    if (!comments) return []
+    return comments[0].comments
 }
 const badWordRegex = (await (await fetch(consts.WORD_BLOCKLIST)).text()).split("\n").filter(l => !!l)
-export const GET: RequestHandler = ({ url }) => {
+export const GET: RequestHandler = async ({ url }) => {
     let id = url.searchParams.get("id")
     if (!id) return new Response("-1", {status: 400})
 
-    return new Response(JSON.stringify(getComments(id)))
+    return new Response(JSON.stringify(await getComments(id)))
 }
 export const POST: RequestHandler = async ({ url, request }) => {
     let id = url.searchParams.get("id")
@@ -35,9 +30,9 @@ export const POST: RequestHandler = async ({ url, request }) => {
         if (new RegExp(regex).test(content)) return new Response("OK")
     }
     
-    addBlogpostToDB(id)
+    await addBlogpostToDB(id)
 
-    let comments = getComments(id)
+    let comments = await getComments(id)
     let author = await (await sendGithubApiRequestWithSetKey("user", true, token))?.json()
     comments.push({
         content: content,
@@ -52,6 +47,6 @@ export const POST: RequestHandler = async ({ url, request }) => {
         }
     })
 
-    serverConsts.DB.prepare("UPDATE blogs SET comments = ? WHERE id = ?").run([JSON.stringify(comments), id])
+    await serverConsts.DB.from("blogs").update({"comments": comments}).eq("id", id)
     return new Response("OK")
 }
