@@ -76,16 +76,17 @@
             "space": "Space",
             "gt": "GregTech",
         },
+        "chief": "Chief",
         "titles": {
             "founder": "Founder",
-            "ceo": "Current owner",
-            "cao": "Chief automation officer",
+            "owner": "Current owner",
 
             "hm": "HM member",
             "utilcreator": "Utility creator",
 
             "scripter": "KubeJS scripter",
             "multiblocker": "Multiblock expert",
+            "automater": "Automation officer",
 
             "pixelartist": "Pixel-artist",
 

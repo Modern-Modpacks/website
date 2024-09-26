@@ -34,7 +34,9 @@
     <span class="flex flex-wrap mobile:justify-center gap-2.5 [&>p]:w-fit">
         {#each Object.entries(member.titles ?? []) as [i, title]}
             {@const color = possibleColors[(+i * Math.floor(possibleColors.length / Math.min(member.titles?.length ?? 0, possibleColors.length))) % possibleColors.length]}
-            <Tag text="{$_("ui.titles."+title)}" color="mm-{color}"/>
+            {@const titleTranslate = title.startsWith("c_") ? $_("ui.chief") + " " + $_("ui.titles." + title.replace(/^c_/, "")).toLowerCase() : $_("ui.titles." + title)}
+
+            <Tag text="{titleTranslate}" color="mm-{color}"/>
         {/each}
     </span>
     <span class="flex gap-2.5">
