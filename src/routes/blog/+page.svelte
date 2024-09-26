@@ -148,7 +148,7 @@
 
 <main>
     {#if $githubRateLimited}
-        <div class="flex justify-center items-center z-10 w-[100vw] h-[100vh]">
+        <div class="flex justify-center items-center z-10 w-[100vw] h-[100vh] mobile:h-fit">
             <div class="flex flex-col items-center w-80 p-8 box-content motion-safe:animate-comeup bg-header-dark rounded-2xl">
                 <TriangleAlert class="w-80 h-80" />
                 <p class="text-2xl text-center [&>a]:underline">{@html $_("ui.ratelimit", {values: {link: `https://github.com/${consts.REPO}/tree/${consts.BLOG_BRANCH}`}})}</p>
