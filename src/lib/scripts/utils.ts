@@ -66,7 +66,7 @@ export const getBlogPosts = async () => {
         )?.json()
     ).tree
     if (!files) return
-    let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")).toSorted().reverse() // Filter by markdown files
+    let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")).sort().reverse() // Filter by markdown files
     expectedBlogPostsLength.set(mdFiles.length) // Set the expected number of blogposts
 
     // For each of the markdown files
