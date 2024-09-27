@@ -4,6 +4,7 @@ import { blogPosts, contextMenuOpenedBy, expectedBlogPostsLength, ghApiKey, gith
 import { get } from "svelte/store"
 import { nameToEmoji } from "gemoji"
 import { parse as parseYaml } from "yaml"
+import { browser } from "$app/environment"
 
 export const randomChoice = (elements: any[]) => elements[Math.floor(Math.random()*elements.length)] // Randomly select an element from the array, probably the most redefined function on planet earth
 export const getDistance = (point1: Coordinates, point2: Coordinates): number => { // Get distance between two pixels on screen, used for the mouse follow effect in the modpacks section
@@ -56,7 +57,7 @@ export const removeParams = () => history.replaceState("", document.title, windo
 
 // Get blogposts from github
 export const getBlogPosts = async () => {
-    if (get(blogPosts)) return // If already loaded, do not update
+    if (browser && get(blogPosts)) return // If already loaded and not on server, do not update
     blogPosts.set({})
 
     // Get all of the files on the blogposts branch
@@ -75,6 +76,8 @@ export const getBlogPosts = async () => {
 
         // Get the basic data
         let rawUrl = `https://raw.githubusercontent.com/${consts.REPO}/${consts.BLOG_BRANCH}/${path}` // Get the url of the raw files
+        console.log(rawUrl+".md")
+        console.log(await fetch(rawUrl+".md"))
         let content = await (await fetch(rawUrl+".md")).text() // Get the content of the raw markdown file
 
         // If the markdown file doesn't have metadata, skip it
@@ -107,6 +110,8 @@ export const getBlogPosts = async () => {
         let newPostsByTag = {...get(postsByTag)}
         newPostsByTag[blogpost.metadata.tag][path] = blogpost
         postsByTag.set(newPostsByTag)
+
+        console.log(newBlogposts)
 
         // For testing purposes, do not enable in prod
         // for (let i = 1; i < 16; i++) {
