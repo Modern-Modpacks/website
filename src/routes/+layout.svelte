@@ -1,7 +1,7 @@
 <script lang="ts">
     import HeaderBar from "$lib/components/HeaderBar.svelte"
     import "../app.css"
-    import { memeLocales, mobile, mousePos, reducedMotion, scrollY, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores"
+    import { lightMode, memeLocales, mobile, mousePos, reducedMotion, scrollY, sortedLocales, storedLocale, upsideDownLocale } from "$lib/scripts/stores"
     import { _, addMessages, getLocaleFromNavigator, init, locales, locale } from "svelte-i18n"
     import consts from "$lib/scripts/consts"
     import { afterNavigate, onNavigate } from "$app/navigation"
@@ -105,7 +105,7 @@
 
         // Funni upside down locale easter egg
         locale.subscribe(v => {
-            let flipElements = ["h1", "h2", "h3", "h4", "li", "p", "b"]
+            let flipElements = ["h1", "h2", "h3", "h4", "li", "p", "b", "textarea::placeholder"]
 
             if (v=="_upsidedown") {
                 $upsideDownLocale = true
@@ -117,6 +117,12 @@
             $upsideDownLocale = false
             flipElements.forEach(c => {document.body.classList.remove(`[&_${c}]:[rotate:180deg]`)})
         })
+        // Change body theme
+        lightMode.subscribe(l => {
+            document.body.classList.add(l ? "light" : "dark")
+            document.body.classList.remove(l ? "dark" : "light")
+        })
+
         setTimeout(() => {firstLoad = false}, 1)
     })
     afterNavigate(() => {
@@ -128,11 +134,20 @@
     :global(body)::-webkit-scrollbar {
         @apply scrollbar-hide
     }
-    :global(body) {
+    :global(body.dark) {
         @apply bg-primary-dark
+    }
+    :global(body.light) {
+        @apply bg-primary-light
     }
     :global(*) {
         @apply text-text-dark font-raleway
+    }
+    :global(body.dark *) {
+        @apply text-text-dark
+    }
+    :global(body.light *) {
+        @apply text-text-light
     }
     :global(h1) {
         @apply font-extrabold text-6xl mobile:text-5xl

@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts";
     import type { BlogPost, BlogPostWithID, GitHubFile } from "$lib/scripts/interfaces";
-    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, mobile, openedBlogPost, postsByTag, reducedMotion, visitedBlog } from "$lib/scripts/stores";
+    import { blogPosts, expectedBlogPostsLength, ghApiKey, githubRateLimited, lightMode, mobile, openedBlogPost, postsByTag, reducedMotion, visitedBlog } from "$lib/scripts/stores";
     import { parse as parseYaml } from "yaml";
     import { LoaderCircle } from "lucide-svelte";
     import { _ } from "svelte-i18n";
@@ -149,10 +149,10 @@
 <main>
     {#if $githubRateLimited}
         <div class="flex justify-center items-center z-10 w-[100vw] h-[100vh] mobile:h-fit">
-            <div class="flex flex-col items-center w-80 p-8 box-content motion-safe:animate-comeup bg-header-dark rounded-2xl">
+            <div class="flex flex-col items-center w-80 p-8 box-content motion-safe:animate-comeup {$lightMode ? "bg-header-light" : "bg-header-dark"} rounded-2xl">
                 <TriangleAlert class="w-80 h-80" />
                 <p class="text-2xl text-center [&>a]:underline">{@html $_("ui.ratelimit", {values: {link: `https://github.com/${consts.REPO}/tree/${consts.BLOG_BRANCH}`}})}</p>
-                <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_GITHUB_CLIENT_ID}&redirect_uri={window.location}" class="flex items-center gap-2 w-fit mt-8 p-2 rounded-xl bg-text-dark bg-opacity-25 shadow-[#00000055] shadow-xl duration-200 motion-safe:hover:shadow-[#000000aa] motion-safe:hover:-translate-y-2">
+                <a href="https://github.com/login/oauth/authorize?client_id={PUBLIC_GITHUB_CLIENT_ID}&redirect_uri={window.location}" class="flex items-center gap-2 w-fit mt-8 p-2 rounded-xl {$lightMode ? "bg-text-light" : "bg-text-dark"} bg-opacity-25 shadow-[#00000055] shadow-xl duration-200 motion-safe:hover:shadow-[#000000aa] motion-safe:hover:-translate-y-2">
                     <Github class="h-8 w-8" />
                     <p class="text-3xl">{$_("ui.login")}</p>
                 </a>
@@ -178,12 +178,12 @@
                         <GithubLoginBar />
 
                         <div>
-                            <span class="flex items-center w-full h-16 px-6 rounded-full bg-secondary-dark shadow-[#000000aa] shadow-2xl">
-                                <input type="text" autocomplete="off" placeholder="{$_("ui.search")}" bind:this={searchBar} class="h-full w-full text-2xl bg-transparent placeholder:font-semibold focus:outline-none" on:input={() => {loadAllPosts = false}}>
+                            <span class="flex items-center w-full h-16 px-6 rounded-full {$lightMode ? "bg-secondary-light" : "bg-secondary-dark"} shadow-[#000000aa] shadow-2xl">
+                                <input type="text" autocomplete="off" placeholder="{$_("ui.search")}" bind:this={searchBar} class="h-full w-full text-2xl bg-transparent placeholder:font-semibold {$lightMode ? "placeholder:text-text-light" : "placeholder:text-text-dark"} placeholder:opacity-35 focus:outline-none" on:input={() => {loadAllPosts = false}}>
                                 <Search class="h-8 w-8 pl-6 box-content" />
                             </span>
                             <div class="flex mobile:flex-col gap-4 mobile:gap-8 mt-6">
-                                <span class="w-[45%] mobile:w-full h-fit p-4 bg-secondary-dark rounded-xl">
+                                <span class="w-[45%] mobile:w-full h-fit p-4 {$lightMode ? "bg-secondary-light" : "bg-secondary-dark"} rounded-xl">
                                     <span class="flex justify-between duration-200{!tagsHidden ? " mobile:mb-2" : ""}">
                                         <h2 class="text-2xl ml-1">{$_("ui.tagstitle")}</h2>
                                         {#if selectedTag!=null}
@@ -195,7 +195,7 @@
                                     {#if !tagsHidden}
                                         <div class="mobile:flex mobile:flex-col mobile:gap-1.5" transition:slide={{duration: 200 * +!$reducedMotion}}>
                                             {#each [...Array(16).keys()].filter(i => $_("ui.blogtags")[i]!="-") as i}
-                                                <button class="flex justify-between w-full pl-1 pr-2 motion-safe:duration-200 motion-safe:hover:desktop:scale-105 hover:desktop:bg-header-dark{selectedTag==i ? " mobile:py-1 motion-safe:desktop:scale-105 bg-header-dark" : ""}" on:click={() => {selectedTag = selectedTag==i ? null : i}}>
+                                                <button class="flex justify-between w-full pl-1 pr-2 motion-safe:duration-200 motion-safe:hover:desktop:scale-105 hover:desktop:{$lightMode ? "bg-header-light" : "bg-header-dark"}{selectedTag==i ? ` mobile:py-1 motion-safe:desktop:scale-105 ${$lightMode ? "bg-header-light" : "bg-header-dark"}` : ""}" on:click={() => {selectedTag = selectedTag==i ? null : i}}>
                                                     <BlogpostTag tagIndex={i} />
                                                     <p>{Object.keys($postsByTag[i]).length}</p>
                                                 </button>
@@ -215,7 +215,7 @@
                                         </span>
                                     {/each}
 
-                                    <button class="group hidden{!searchQuery && filteredBlogposts.length>5 && !loadAllPosts ? " !flex" : ""} items-center [&>div]:h-0.5 [&>div]:w-full mobile:[&>div]:w-[50%] [&>div]:bg-text-dark" on:click={() => {loadAllPosts = true}}>
+                                    <button class="group hidden{!searchQuery && filteredBlogposts.length>5 && !loadAllPosts ? " !flex" : ""} items-center [&>div]:h-0.5 [&>div]:w-full mobile:[&>div]:w-[50%] {$lightMode ? "[&>div]:bg-text-light" : "[&>div]:bg-text-dark"}" on:click={() => {loadAllPosts = true}}>
                                         <div />
                                         <b class="text-2xl w-full duration-200 motion-safe:desktop:group-hover:scale-125 motion-safe:desktop:group-hover:w-[150%]">Load all posts</b>
                                         <div />

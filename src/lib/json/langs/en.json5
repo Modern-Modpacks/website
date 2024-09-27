@@ -44,7 +44,9 @@
             "title": "Settings",
 
             "language": "Language",
-            "darkmode": "Dark mode"
+            "darkmode": "Dark mode",
+
+            "darkmodewarning": "Warning: light mode may burn your eyes"
         },
         "footer": {
             "version": "Website version 2. Made with <a  href=\"https://kit.svelte.dev/\" target=\"_blank\" rel=\"noopener noreferrer\">SvelteKit</a>.",

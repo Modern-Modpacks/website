@@ -6,6 +6,7 @@ export let scrollY = writable<number>(0) // Scroll position of the page
 export let mousePos = writable<Coordinates>({x: 0, y: 0})
 export let reducedMotion = writable<boolean>(false)
 export let mobile = writable<boolean>(false)
+export let lightMode = localStorageWritable<boolean>("light", false)
 export let sortedLocales = writable<string[]>([])
 export let memeLocales = writable<string[]>([])
 export let upsideDownLocale = writable<boolean>(false)

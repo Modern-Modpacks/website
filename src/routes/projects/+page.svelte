@@ -1,7 +1,7 @@
 <script lang="ts">
     import { navigating, page } from "$app/stores"
     import consts, { icons } from "$lib/scripts/consts"
-    import { mobile, popupOpenedBy, popupOpenedByPartner, previousRandomBanner, randomSplash, reducedMotion, scrollY, upsideDownLocale } from "$lib/scripts/stores"
+    import { lightMode, mobile, popupOpenedBy, popupOpenedByPartner, previousRandomBanner, randomSplash, reducedMotion, scrollY, upsideDownLocale } from "$lib/scripts/stores"
     import { onMount } from "svelte"
     import { ChevronsDown } from "lucide-svelte"
     import { randomChoice, toggleScroll } from "$lib/scripts/utils"
@@ -124,14 +124,14 @@
 
         <img src="{consts.LOGO_URL}" class="w-64 h-64 mobile:w-52 mobile:h-52 rounded-xl opacity-0 translate-y-10 duration-[.5s]" alt="Modern Modpacks logo">
         <span class="w-[60%] mobile:w-full flex flex-col mobile:items-center gap-3">
-            <h1 class="w-fit{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s; transition-delay: .5s;">Modern Modpacks</h1>
-            <h3 class="w-fit{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s;  transition-delay: .75s;">{$randomSplash}</h3>
+            <h1 class="w-fit !text-white{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s; transition-delay: .5s;">Modern Modpacks</h1>
+            <h3 class="w-fit !text-white{!animPlayed ? (($upsideDownLocale ? " -" : " ") + "translate-y-10 opacity-0") : ""}" style="transition: opacity .5s, transform .5s;  transition-delay: .75s;">{$randomSplash}</h3>
             <SocialsBar header={true} />
         </span>
-        <ChevronsDown class="mobile:hidden absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow"/>
+        <ChevronsDown class="mobile:hidden absolute bottom-7 w-10 h-auto opacity-0 duration-[1s] delay-[2s] animate-float animate-duration-[5s]" id="arrow" color="#ffffff"/>
     </div>
 
-    <div class="pt-16 mobile:pt-8 pb-8 px-10 mobile:px-5 bg-primary-dark flex mobile:flex-col mobile:gap-8 justify-between items-center [&>*]:text-center">
+    <div class="pt-16 mobile:pt-8 pb-8 px-10 mobile:px-5 {$lightMode ? "bg-primary-light" : "bg-primary-dark"} flex mobile:flex-col mobile:gap-8 justify-between items-center [&>*]:text-center">
         <div 
             role="list" class="grid grid-cols-4 gap-[4vw] w-[40vw] h-[40vw] mobile:w-full mobile:h-full aspect-square group"
             on:mouseenter={() => {modpacksHovered = true}} on:mouseleave={() => {modpacksHovered = false}}
@@ -146,13 +146,13 @@
         </div>
     </div>
 
-    <div class="py-8 desktop:pl-10 motion-reduce:desktop:pr-10 bg-secondary-dark flex mobile:flex-col-reverse justify-between gap-10 mobile:relative mobile:z-30 mobile:[&>*]:text-center{$upsideDownLocale ? " desktop:[&>*]:text-right" : ""}">
+    <div class="py-8 desktop:pl-10 motion-reduce:desktop:pr-10 {$lightMode ? "bg-secondary-light" : "bg-secondary-dark"} flex mobile:flex-col-reverse justify-between gap-10 mobile:relative mobile:z-30 mobile:[&>*]:text-center{$upsideDownLocale ? " desktop:[&>*]:text-right" : ""}">
         <div>
             <h2>{@html $_("projects.partner.heading")}</h2>
             <p class="mt-3 max-w-full">{@html $_("projects.partner.desc")}</p>
         </div>
         <div
-            class="flex w-[50vw] [&>span]:flex [&>span]:items-center [&>span]:gap-6" 
+            class="flex w-[50vw] mobile:w-full [&>span]:flex [&>span]:items-center [&>span]:gap-6" 
             style="{!$reducedMotion ? "mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);" : ""}"
         >
             <Marquee baseAnimDur={2500 * ((partnerQueueLen ?? 0) - 6)} animMin={0} animMax={11.5 * ((partnerQueueLen ?? 0) - 6)} stopDur={600} bind:shouldPlay={shouldPartnerAnimPlay}>
@@ -163,9 +163,9 @@
         </div>
     </div>
 
-    <div class="bg-primary-dark desktop:pr-10 flex mobile:flex-col justify-between [&>*]:text-center">
+    <div class="{$lightMode ? "bg-primary-light" : "bg-primary-dark"} desktop:pr-10 flex mobile:flex-col justify-between [&>*]:text-center">
         <div class="min-w-[50%] mobile:min-w-full mobile:h-[50vh] relative flex flex-col justify-center items-center">
-            <div class="absolute desktop:w-[120vw] mobile:h-[100vh] mobile:w-full h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
+            <div class="absolute desktop:w-[120vw] mobile:h-[100vh] mobile:w-full h-full {$lightMode ? "bg-[radial-gradient(circle,_#a1a1a1_0%,_transparent_55%)]" : "bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)]"} flex justify-center items-center">
                 <div
                     role="list" class="h-full mobile:w-full w-[50%] relative overflow-hidden [&>button]:h-24 [&>button]:w-24 [&>button]:absolute [&>button]:cursor-pointer [&>button]:left-0 [&>button]:right-0 [&>button]:top-0 [&>button]:bottom-0 [&>button]:mx-auto [&>button]:my-auto [&_img]:rounded-md motion-safe:desktop:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
                     on:mouseenter={() => {spinAnimHovered = true; if (!$mobile) $shouldModsAnimPlay = false}} on:mouseleave={() => {spinAnimHovered = false; if (contextMenuAboutToBeClosed) $shouldModsAnimPlay = true}}
@@ -181,7 +181,7 @@
                 <BreathingIcon duration={2000} minScale={95} maxScale={100} class="duration-100 motion-safe:desktop:group-hover:!scale-100">
                     <img src="{consts.HM_LOGO_URL}" alt="Hellish Mods logo" title="Hellish Mods" class="w-48 mobile:w-24 rendering-pixelated rounded-md">
                 </BreathingIcon>
-                <div class="mt-5 mobile:mt-3 flex justify-center gap-5 mobile:gap-4 [&>span]:block [&>span]:w-10 mobile:[&>span]:w-8 [&>span]:h-10 mobile:[&>span]:h-8 [&>span]:duration-200 motion-safe:desktop:[&>span:hover]:!scale-[1.15] motion-safe:desktop:[&>span:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0 [&_img]:invert">
+                <div class="mt-5 mobile:mt-3 flex justify-center gap-5 mobile:gap-4 [&>span]:block [&>span]:w-10 mobile:[&>span]:w-8 [&>span]:h-10 mobile:[&>span]:h-8 [&>span]:duration-200 motion-safe:desktop:[&>span:hover]:!scale-[1.15] motion-safe:desktop:[&>span:not(:hover)]:group-hover:!scale-100 [&_img]:brightness-0{!$lightMode ? " [&_img]:invert" : ""}">
                     {#each Object.entries([
                         {link: "https://curseforge.com/members/hellishmods", title: "CurseForge"},
                         {link: consts.SOCIALS.Modrinth.url, title: "Modrinth"},
@@ -196,19 +196,19 @@
                 </div>
             </div>
         </div>
-        <div class="py-8 mobile:px-5 z-30 flex flex-col gap-5 items-center w-[50%] mobile:w-full pointer-events-none [&>*]:pointer-events-auto bg-gradient-to-l mobile:bg-gradient-to-t from-primary-dark from-90%">
+        <div class="py-8 mobile:px-5 z-30 flex flex-col gap-5 items-center w-[50%] mobile:w-full pointer-events-none [&>*]:pointer-events-auto bg-gradient-to-l mobile:bg-gradient-to-t {$lightMode ? "from-primary-light" : "from-primary-dark"} from-90%">
             <h2>{$_("projects.hellish.heading")}</h2>
             <p>{@html $_("projects.hellish.desc")}</p>
         </div>
     </div>
 
-    <div class="h-[65vh] mobile:h-fit bg-secondary-dark relative flex mobile:flex-col justify-center items-center [&>*]:text-center">
+    <div class="h-[65vh] mobile:h-fit {$lightMode ? "bg-secondary-light" : "bg-secondary-dark"} relative flex mobile:flex-col justify-center items-center [&>*]:text-center">
         {#if !$reducedMotion}
             <div 
                 class="
                     desktop:absolute w-full mobile:h-[40vh] h-full flex flex-col justify-evenly mobile:justify-between mobile:pt-8
                     [&>span]:flex [&>span]:gap-8
-                    [&_a]:h-[8.5vh] [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:bg-primary-dark [&_a]:rounded-xl
+                    [&_a]:h-[8.5vh] [&_a]:min-w-96 [&_a]:flex [&_a]:justify-center [&_a]:items-center {$lightMode ? "[&_a]:bg-primary-light" : "[&_a]:bg-primary-dark"} [&_a]:rounded-xl
                     [&_a]:duration-200 desktop:[&_a:hover]:scale-110
                     [&_p]:font-bold [&_p]:text-2xl
                 "
@@ -226,7 +226,7 @@
                 {/each}
             </div>
         {/if}
-        <div class="h-full w-full px-16 mobile:py-8 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center desktop:bg-[radial-gradient(circle,_#0c0c0c_10%,_transparent_65%)]">
+        <div class="h-full w-full px-16 mobile:py-8 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center {$lightMode ? "desktop:bg-[radial-gradient(circle,_#a1a1a1_10%,_transparent_65%)]" : "desktop:bg-[radial-gradient(circle,_#0c0c0c_10%,_transparent_65%)]"}">
             <h2>{$_("projects.ecosystem.heading")}</h2>
             <p>{@html $_("projects.ecosystem.desc")}</p>
         </div>

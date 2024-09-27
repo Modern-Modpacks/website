@@ -1,7 +1,7 @@
 <script lang="ts">
     import consts from "$lib/scripts/consts"
     import type { Modpack, PartnerModpack } from "$lib/scripts/interfaces"
-    import { mobile, popupOpenedBy, settingsOpened, upsideDownLocale } from "$lib/scripts/stores"
+    import { lightMode, mobile, popupOpenedBy, settingsOpened, upsideDownLocale } from "$lib/scripts/stores"
     import { getWebsiteIcon, removeHash, toggleScroll } from "$lib/scripts/utils";
     import { Globe, X } from "lucide-svelte"
     import { onMount } from "svelte"
@@ -70,7 +70,7 @@
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="{shown ? "opacity-100" : "invisible pointer-events-none desktop:opacity-0 mobile:!bg-transparent"} h-[100vh] w-[100vw] fixed top-0 left-0 flex items-center justify-center {!loading ? "motion-safe:duration-500" : ""} motion-safe:bg-black motion-safe:bg-opacity-50 z-40" on:click={toggle}>
         <div bind:this={popupContent}
-            class="bg-primary-dark shadow-black shadow-2xl desktop:rounded-xl mobile:rounded-t-xl h-[800px] w-[850px] mobile:h-fit mobile:w-[100vw] mobile:fixed mobile:pb-[1000px] {pull || loading ? "" : "motion-safe:duration-500"} {shown ? "scale-100" : "desktop:scale-75 mobile:top-[100%]"}"
+            class="{$lightMode ? "bg-primary-light" : "bg-primary-dark"} shadow-black shadow-2xl desktop:rounded-xl mobile:rounded-t-xl h-[800px] w-[850px] mobile:h-fit mobile:w-[100vw] mobile:fixed mobile:pb-[1000px] {pull || loading ? "" : "motion-safe:duration-500"} {shown ? "scale-100" : "desktop:scale-75 mobile:top-[100%]"}"
             style="{$mobile && shown ? `top: ${pullAmount}px;` : ""}"
             on:click={e => {e.stopPropagation()}} on:touchmove={e => {
                 if (!prevTouch) {
@@ -134,18 +134,18 @@
                     </div>
                     <div class="w-full">
                         {#if modpack.links?.download}
-                            <a href="{modpack.links.download}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-4 bg-text-dark rounded-lg p-4 motion-safe:desktop:hover:scale-110 duration-200">
-                                {#if downloadIcon[0]!=null}<img src="{downloadIcon[1]}" alt="{downloadIcon[0]} logo" class="brightness-0 w-[36px]">
-                                {:else}<Globe color="#000000" size="30" />{/if}
+                            <a href="{modpack.links.download}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-4 {$lightMode ? "bg-text-light" : "bg-text-dark"} rounded-lg p-4 motion-safe:desktop:hover:scale-110 duration-200">
+                                {#if downloadIcon[0]!=null}<img src="{downloadIcon[1]}" alt="{downloadIcon[0]} logo" class="brightness-0{$lightMode ? " invert" : ""} w-[36px]">
+                                {:else}<Globe color="{$lightMode ? "#ffffff" : "#000000"}" size="30" />{/if}
 
-                                <b class="text-lg text-secondary-dark">{$_($mobile ? "ui.view" : "ui.download")}</b>
+                                <b class="text-lg {$lightMode ? "!text-secondary-light" : "!text-secondary-dark"}">{$_($mobile ? "ui.view" : "ui.download")}</b>
                             </a>
                         {/if}
 
                         {#if modpack.links?.source}
                             <a href="{modpack.links.source}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 mt-4 motion-safe:desktop:hover:scale-110 duration-200">
-                                {#if sourceIcon[0]!=null}<img src="{sourceIcon[1]}" alt="{downloadIcon[0]} logo" class="brightness-0 invert w-[36px]">
-                                {:else}<Globe color="#000000" size="30" />{/if}
+                                {#if sourceIcon[0]!=null}<img src="{sourceIcon[1]}" alt="{downloadIcon[0]} logo" class="brightness-0${!$lightMode ? " invert" : ""} w-[36px]">
+                                {:else}<Globe color="{$lightMode ? "#ffffff" : "#000000"}" size="30" />{/if}
 
                                 <b class="text-lg">{$_("ui.source")}</b>
                             </a>
@@ -153,12 +153,12 @@
 
                         {#if (!modpack.links?.download && !modpack.links?.source)}
                             {#if !partner || partnerPack?.links?.discord}
-                                <a href="{partner ? partnerPack?.links?.discord : consts.SOCIALS.Discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:hover:desktop:scale-105 duration-200" title="{$_(partner ? "ui.wipbigdiscord" : "ui.wipbigmm")}">
-                                    <img src="{consts.WEBSITE_ICONS.Discord}" alt="Discord logo" class="brightness-0 invert w-[36px]">
+                                <a href="{partner ? partnerPack?.links?.discord : consts.SOCIALS.Discord.url}" target="_blank" rel="noopener noreferrer" class="flex gap-3 items-center justify-center {$lightMode ? "border-text-light" : "border-text-dark"} border-4 border-dashed rounded-lg p-4 motion-safe:hover:desktop:scale-105 duration-200" title="{$_(partner ? "ui.wipbigdiscord" : "ui.wipbigmm")}">
+                                    <img src="{consts.WEBSITE_ICONS.Discord}" alt="Discord logo" class="brightness-0{!$lightMode ? " invert" : ""} w-[36px]">
                                     <b class="text-lg">{$_("ui.wip")}</b>
                                 </a>
                             {:else}
-                                <div class="flex items-center justify-center border-text-dark border-4 border-dashed rounded-lg p-4 motion-safe:desktop:hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
+                                <div class="flex items-center justify-center {$lightMode ? "border-text-light" : "border-text-dark"} border-4 border-dashed rounded-lg p-4 motion-safe:desktop:hover:scale-105 duration-200 cursor-help" title="{$_("ui.wipbig")}">
                                     <b class="text-lg">{$_("ui.wip")}</b>
                                 </div>
                             {/if}

@@ -44,9 +44,6 @@ dependencies:
   svelte-scrollto-element:
     specifier: ^0.7.0
     version: 0.7.0(svelte@4.2.19)
-  svelte-toggles:
-    specifier: ^2.1.7
-    version: 2.1.7
   vanilla-tilt:
     specifier: ^1.8.1
     version: 1.8.1
@@ -989,10 +986,6 @@ packages:
     resolution: {integrity: sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
-
-  /animejs@3.2.2:
-    resolution: {integrity: sha512-Ao95qWLpDPXXM+WrmwcKbl6uNlC5tjnowlaRYtuVDHHoygjtIPfDUoK9NthrlZsQSKjZXlmji2TrBUAVbiH0LQ==}
-    dev: false
 
   /ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -2250,12 +2243,6 @@ packages:
       svelte: '3'
     dependencies:
       svelte: 4.2.19
-    dev: false
-
-  /svelte-toggles@2.1.7:
-    resolution: {integrity: sha512-tSi8Z64tYkb65svGLejjdwllUGScSNA2srz1v1g8TtRTfbHnQCf/eyW3bCIFZM5EhO2U7iKucSjiHvQ6sUQRSQ==}
-    dependencies:
-      animejs: 3.2.2
     dev: false
 
   /svelte@3.59.2:

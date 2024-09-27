@@ -2,13 +2,13 @@
     import { base } from "$app/paths"
     import { page } from "$app/stores"
     import consts from "$lib/scripts/consts"
-    import { memeLocales, mobile, reducedMotion, scrollY, settingsOpened, sortedLocales, storedLocale } from "$lib/scripts/stores"
+    import { lightMode, memeLocales, mobile, reducedMotion, scrollY, settingsOpened, sortedLocales, storedLocale } from "$lib/scripts/stores"
     import { Menu, SettingsIcon } from "lucide-svelte"
     import { onMount } from "svelte"
     import { locale, _ } from "svelte-i18n"
-    import Basic from "svelte-toggles/src/Basic"
     import MobileSideBar from "./MobileSideBar.svelte";
     import { navigateCleanup, removeHash } from "$lib/scripts/utils";
+    import ThemeToggle from "./ThemeToggle.svelte";
 
     // const settingsOpenByDefault : boolean = true // DEBUG, don't turn on in prod
     const settingsOpenByDefault : boolean = false
@@ -17,23 +17,7 @@
 
     // Toggle settings or just disable
     let toggleSettings = (disable : boolean) => {
-        let settingsClasses : DOMTokenList | undefined = document.getElementById("settings")?.classList
-        let settingsIconClasses : DOMTokenList | undefined = document.getElementById("settingsicon")?.classList
-
-        if (disable) {
-            settingsClasses?.add("opacity-0", "pointer-events-none")
-            settingsIconClasses?.remove("motion-safe:!-rotate-180", "motion-safe:group-hover:!-rotate-180")
-            
-            $settingsOpened = false
-            return
-        }
-
-        $settingsOpened = !$settingsOpened
-
-        settingsClasses?.toggle("opacity-0")
-        settingsClasses?.toggle("pointer-events-none")
-        settingsIconClasses?.toggle("motion-safe:!-rotate-180")
-        settingsIconClasses?.toggle("motion-safe:group-hover:!-rotate-180")
+        $settingsOpened = disable ? false : !$settingsOpened
     }
 
     onMount(() => {
@@ -51,7 +35,7 @@
 </script>
 
 {#if !$mobile}
-    <div class="fixed overflow-y-hidden z-50 w-[90%] bg-header-dark backdrop-blur-sm shadow-2xl shadow-black h-16 flex justify-between px-2 left-[50%] translate-x-[-50%]{["/", "/projects"].includes($page.url.pathname) && !$scrollY ? " translate-y-[-100%] shadow-none " : " "}motion-safe:duration-150 rounded-b-2xl" style="view-transition-name: _;" id="header">
+    <div class="fixed overflow-y-hidden z-50 w-[90%] {$lightMode ? "bg-header-light" : "bg-header-dark"} backdrop-blur-sm shadow-2xl shadow-black h-16 flex justify-between px-2 left-[50%] translate-x-[-50%]{["/", "/projects"].includes($page.url.pathname) && !$scrollY ? " translate-y-[-100%] shadow-none " : " "}motion-safe:duration-150 rounded-b-2xl" style="view-transition-name: _;" id="header">
         <a class="group flex items-center h-full" href="/{base}">
             <img src={consts.LOGO_URL} alt="Modern Modpacks logo" class="rounded-2xl p-2 duration-100 motion-safe:group-hover:rounded-[1.35rem]">
             <b>Modern Modpacks</b>
@@ -66,7 +50,7 @@
                 } : null}>
                     <p class="
                         {currentPage ? "font-bold scale-[125%]" : "font-semibold opacity-80"}
-                        text-base animate-ease-out animate-alternate group-hover:text-{button.color} motion-safe:group-hover:scale-[125%]
+                        text-base animate-ease-out animate-alternate {$lightMode ? "group-hover:font-bold" : `group-hover:!text-${button.color}`} motion-safe:group-hover:scale-[125%]
                     " style="{$reducedMotion ? "" : "transition: transform 100ms;"}">{$_("ui.navbar."+button.title)}</p>
                     <div class="absolute bg-{button.color} w-full h-1.5 -bottom-2 group-hover:bottom-0 motion-safe:duration-100" />
                 </a>
@@ -79,35 +63,33 @@
     </div>
 
     <div class="
-        fixed{settingsOpenByDefault ? " " : " opacity-0 pointer-events-none "}z-50 motion-safe:duration-150 top-20 right-20 w-56 p-5 shadow-2xl rounded-xl shadow-black bg-header-dark backdrop-blur-xl
+        fixed{settingsOpenByDefault || $settingsOpened ? " " : " opacity-0 pointer-events-none "}z-50 motion-safe:duration-150 top-20 right-20 w-56 p-5 shadow-2xl rounded-xl shadow-black {$lightMode ? "bg-header-light" : "bg-header-dark"} backdrop-blur-xl
         flex flex-col gap-2
         [&_p]:text-lg [&_p]:font-medium
     " id="settings">
-        <h3 class="font-bold">{$_("ui.settings.title")}</h3>
-        <p>{$_("ui.settings.language")}</p>
+        <h3 class="font-bold w-fit">{$_("ui.settings.title")}</h3>
+        <p class="w-fit">{$_("ui.settings.language")}</p>
         <div class="
             grid grid-cols-2 gap-2
             [&>button]:h-10 [&>button]:rounded-xl [&>button]:duration-150
         ">
             {#each $sortedLocales as l}
                 {@const name = $_("name", {locale: l})}
-                <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : "bg-black bg-opacity-20"}{name.length>8 ? " text-[0.8rem]" : ""}" on:click={() => {$storedLocale=l}}>{name}</button>
+                <button class="{$locale==l ? ($lightMode ? "bg-text-light !text-selected-text-light" : "bg-text-dark !text-selected-text-dark") : "bg-black bg-opacity-20"}{name.length>8 ? " text-[0.8rem]" : ""}" on:click={() => {$storedLocale=l}}>{name}</button>
             {/each}
             <hr class="col-span-2 my-2">
             {#each $memeLocales as l}
              {@const name = $_("name", {locale: l})}
-                <button class="{$locale==l ? "bg-text-dark text-selected-text-dark" : "bg-black bg-opacity-20"}{name.length>8 ? " text-[0.8rem]" : ""}{l=="_upsidedown" ? " rotate-180" : ""}" on:click={() => {$storedLocale=l}}>{name}</button>
+                <button class="{$locale==l ? ($lightMode ? "bg-text-light !text-selected-text-light" : "bg-text-dark !text-selected-text-dark") : "bg-black bg-opacity-20"}{name.length>8 ? " text-[0.8rem]" : ""}{l=="_upsidedown" ? " rotate-180" : ""}" on:click={() => {$storedLocale=l}}>{name}</button>
             {/each}
         </div>
-        <span class="flex items-center justify-between">
-            <p>{$_("ui.settings.darkmode")}</p>
-            <span class="rotate-180">
-                <Basic lightFill="#f1af15" darkFill="#7d7d73" />
-            </span>
+        <span class="flex items-center justify-between mt-2">
+            <p class="underline underline-offset-4 decoration-dotted" title="{$_("ui.settings.darkmodewarning")}">{$_("ui.settings.darkmode")}</p>
+            <ThemeToggle />
         </span>
     </div>
 {:else}
-    <button on:click={sidebar?.toggle} class="fixed top-6 right-6 z-50 cursor-pointer bg-secondary-dark bg-opacity-75 p-3 rounded-full duration-300 ease-out{["/", "/projects"].includes($page.url.pathname) && !$scrollY ? " translate-y-[-200%] shadow-none" : ""}">
+    <button on:click={sidebar?.toggle} class="fixed top-6 right-6 z-50 cursor-pointer {$lightMode ? "bg-secondary-light" : "bg-secondary-dark"} bg-opacity-75 p-3 rounded-full duration-300 ease-out{["/", "/projects"].includes($page.url.pathname) && !$scrollY ? " translate-y-[-200%] shadow-none" : ""}">
         <Menu size="28" />
     </button>
     <MobileSideBar bind:this={sidebar} />

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { BlogPost } from "$lib/scripts/interfaces";
-    import { blogPosts, visitedBlog } from "$lib/scripts/stores";
+    import { blogPosts, lightMode, visitedBlog } from "$lib/scripts/stores";
     import { openBlogpost } from "$lib/scripts/utils";
     import removeMd from "remove-markdown";
     import BlogpostTag from "./BlogpostTag.svelte";
@@ -14,7 +14,7 @@
     $: blogpost = id ? $blogPosts![id] : null
 </script>
 
-<button class="block {$visitedBlog ? "" : " motion-safe:opacity-0 motion-safe:animate-comeup "}h-fit bg-header-dark rounded-3xl {blogpost ? "cursor-pointer" : "cursor-not-allowed"}" style="animation-delay: {delay}ms;" on:click={id ? () => {openBlogpost(id)} : null}>
+<button class="block {$visitedBlog ? "" : " motion-safe:opacity-0 motion-safe:animate-comeup "}h-fit {$lightMode ? "bg-header-light" : "bg-header-dark"} rounded-3xl {blogpost ? "cursor-pointer" : "cursor-not-allowed"}" style="animation-delay: {delay}ms;" on:click={id ? () => {openBlogpost(id)} : null}>
     <!-- 8:3 ratio -->
     <span class="relative block pt-[37.5%]">
         <img src="{blogpost ? blogpost.thumbnail : consts.MISSING_BLOGPOST_THUMBNAIL}" alt="{blogpost ? '"'+blogpost.metadata.title+'"' : "Missing"} blogpost thumbnail" class="absolute w-full left-0 top-0 object-cover rounded-3xl shadow-[#00000077] shadow-2xl duration-300{blogpost ? " motion-safe:hover:scale-[102.5%]" : ""}">

@@ -9,7 +9,7 @@
     import { calculateElementCenter, getContributorAvatar } from "$lib/scripts/utils";
     import { tweened, type Tweened } from "svelte/motion";
     import { sineIn, sineOut } from "svelte/easing";
-    import { activatedPin, mobile, reducedMotion } from "$lib/scripts/stores";
+    import { activatedPin, lightMode, mobile, reducedMotion } from "$lib/scripts/stores";
     import TranslatorMap from "$lib/components/TranslatorMap.svelte";
     import { writable, type Writable } from "svelte/store";
     import { ChevronLeft, User } from "lucide-svelte";
@@ -168,7 +168,7 @@
         </Marquee>
     </div>
 
-    <div class="w-full h-full desktop:pl-16 desktop:pt-8 flex mobile:flex-col justify-evenly items-center desktop:bg-gradient-to-r mobile:bg-black mobile:bg-opacity-80 from-[#000000f0] from-15% via-transparent to-60% to-[#000000f0]">
+    <div class="w-full h-full desktop:pl-16 desktop:pt-8 flex mobile:flex-col justify-evenly items-center desktop:bg-gradient-to-r mobile:bg-black mobile:bg-opacity-80 {$lightMode ? "from-[#ffffffbe] to-[#ffffffbe]" : "from-[#000000f0] to-[#000000f0]"} from-15% via-transparent to-60%">
         <div class="w-full">
             <span role="list" class="block w-fit" on:mouseenter={() => {mouseOverCard = true}} on:mouseleave={() => {mouseOverCard = false; if (!cardAnimPlaying) startCardCycles()}}>
                 <span class="block w-fit" style="transform: translateX(-{$cardTransition}%);">
@@ -177,14 +177,14 @@
             </span>
         </div>
 
-        <div class="flex flex-col gap-5 items-center w-full mobile:bg-primary-dark mobile:px-10 mobile:py-8 [&>*]:text-center">
+        <div class="flex flex-col gap-5 items-center w-full {$lightMode ? "mobile:bg-primary-light" : "mobile:bg-primary-dark"} mobile:px-10 mobile:py-8 [&>*]:text-center">
             <h2>{$_("about.members.heading")}</h2>
             <p>{@html $_("about.members.desc")}</p>
         </div>
     </div>
 </div>
 <div class="relative w-full desktop:h-[670px] flex mobile:flex-col-reverse">
-    <div class="relative z-10 w-[60%] mobile:w-full h-full mobile:h-fit bg-gradient-to-r mobile:bg-gradient-to-t from-primary-dark from-70% mobile:from-[92.5%] mobile:z-20 pointer-events-none">
+    <div class="relative z-10 w-[60%] mobile:w-full h-full mobile:h-fit bg-gradient-to-r mobile:bg-gradient-to-t {$lightMode ? "from-primary-light" : "from-primary-dark"} from-70% mobile:from-[92.5%] mobile:z-20 pointer-events-none">
         <div class="flex flex-col gap-5 items-center justify-center w-fit h-full py-8 mobile:pt-[5.5rem] ml-10 mobile:mr-10 [&>*]:text-center pointer-events-auto">
             <h2>{$_("about.translators.heading")}</h2>
             <p>{@html $_("about.translators.desc")}</p>
@@ -196,7 +196,7 @@
                 <img src="https://flagcdn.com/256x192/{lastActivePin?.lang}.png" alt="{lastActivePin?.lang.toUpperCase()} flag" class="w-20 mobile:w-14">
                 <span>
                     <h3 class="font-bold mobile:text-lg">{$_("languages."+lastActivePin?.lang)}</h3>
-                    {#if $locales.includes(lastActivePin?.lang ?? "") && $locale!=lastActivePin?.lang}<p class="text-base mobile:text-sm font-semibold text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>{/if}
+                    {#if $locales.includes(lastActivePin?.lang ?? "") && $locale!=lastActivePin?.lang}<p class="text-base mobile:text-sm font-semibold !text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>{/if}
                 </span>
 
                 <button class="group absolute w-8 h-8 mobile:w-6 mobile:h-6 right-6 p-2 box-content bg-black bg-opacity-35 rounded-full cursor-pointer" on:click={() => {$activatedPin = null}}>
@@ -223,7 +223,7 @@
                             <img src="{getContributorAvatar(translator)}" alt="{translator.name}'s avatar" class="w-[4.5rem] mobile:w-16{onCurrentPage ? " motion-safe:group-hover:desktop:w-24" : ""}{translator.title=="ex" ? " saturate-0" : ""} rendering-crisp-edges rounded-xl">
                             <span>
                                 <h3 class="font-bold mobile:text-lg{onCurrentPage ? " motion-safe:group-hover:desktop:text-4xl" : ""}">{translator.name}</h3>
-                                <p class="text-base mobile:text-sm{onCurrentPage ? " motion-safe:group-hover:desktop:text-lg" : ""} font-semibold text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>
+                                <p class="text-base mobile:text-sm{onCurrentPage ? " motion-safe:group-hover:desktop:text-lg" : ""} font-semibold !text-mm-lightgray">{$_(`ui.titles.${translator.title ? translator.title+"_" : ""}translator`)}</p>
                             </span>
                         </a>
                     {/each}
@@ -242,7 +242,7 @@
 
     <p class="absolute right-0 bottom-0 text-sm bg-black bg-opacity-75 px-2 py-0.5">© <a href="https://www.planetminecraft.com/project/earth-1-750-1-19" class="underline">{$_("ui.mapcredit")}</a></p>
 </div>
-<div class="w-full flex mobile:flex-col bg-secondary-dark">
+<div class="w-full flex mobile:flex-col {$lightMode ? "bg-secondary-light" : "bg-secondary-dark"}">
     <div role="list" class="group relative w-full mobile:h-[60vh] flex overflow-hidden" on:mouseenter={() => {hexesHovered=true}} on:mouseleave={() => {hexesHovered=false}}>
         {#each [...Array($mobile ? 3 : 5).keys()] as col}
             {#each [...Array(col%2 ? ($mobile ? 3 : 5) - +(col==3) : ($mobile ? 3 : 4) - +(col==4)).keys()] as row}
@@ -267,7 +267,7 @@
                 bind:this={discordButton}
             >
                 <img src="{consts.WEBSITE_ICONS.Discord}" alt="Discord logo" class="w-12 brightness-0 invert">
-                <p class="font-bold text-2xl">{$_("ui.discord")}</p>
+                <p class="font-bold text-2xl !text-white">{$_("ui.discord")}</p>
             </a>
         </span>
     </div>
@@ -279,10 +279,10 @@
         </span>
         <User class="absolute h-48 w-48 mobile:w-24 mobile:h-24 motion-safe:opacity-0 motion-reduce:translate-y-16{showJoinAnim ? " animate-join-main" : ""}" />
 
-        <p class="absolute -bottom-28 right-[15vw] h-24 w-24 flex justify-center items-center text-6xl font-bold bg-mm-red rounded-full select-none mobile:opacity-0 motion-safe:[scale:0%] motion-safe:animate-delay-[650ms]{showJoinAnim ? " animate-join-plusone" : ""}">+1</p>
+        <p class="absolute -bottom-28 right-[15vw] h-24 w-24 flex justify-center items-center text-6xl font-bold bg-mm-red !text-white rounded-full select-none mobile:opacity-0 motion-safe:[scale:0%] motion-safe:animate-delay-[650ms]{showJoinAnim ? " animate-join-plusone" : ""}">+1</p>
     </div>
 </div>
-<div class="w-full py-8 flex mobile:flex-col bg-secondary-dark">
+<div class="w-full py-8 flex mobile:flex-col {$lightMode ? "bg-secondary-light" : "bg-secondary-dark"}">
     <div class="w-full desktop:ml-10 mobile:mb-6 flex items-center mobile:justify-center">
         <Saos animation={$reducedMotion || $mobile ? "" : `showup .75s ease-out backwards`} once={true}>
             <img 

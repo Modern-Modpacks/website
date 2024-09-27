@@ -24,9 +24,9 @@ const mmColors = {
   "hm-gray": "#373a3e"
 }
 let mmSafelist = []
-Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "text-"+c, "[&>p]:text-"+c, "group-hover:text-"+c)})
+Object.keys(mmColors).forEach(c => {mmSafelist.push("bg-"+c, "border-"+c, "text-"+c, "[&>p]:!text-"+c, "group-hover:!text-"+c)})
 
-const textElements = ["h1", "h2", "h3", "h4", "li", "p", "b"]
+const textElements = ["h1", "h2", "h3", "h4", "li", "p", "b", "textarea::placeholder"]
 let udSafelist = []
 textElements.forEach(e => {udSafelist.push(`[&_${e}]:[rotate:180deg]`)})
 
@@ -34,8 +34,7 @@ export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
   safelist: [
     "hover:font-bold", "hover:font-semibold",
-    "bg-white", "border-white",
-    "bg-text-dark", "text-selected-text-dark", "motion-safe:shadow-2xl",
+    "bg-text-dark", "text-selected-text-dark", "bg-text-light", "text-selected-text-light", "motion-safe:shadow-2xl",
     "motion-safe:desktop:hover:!scale-110", "motion-safe:desktop:hover:!scale-100",
     "motion-safe:desktop:opacity-0", "desktop:opacity-100", "motion-safe:desktop:hover:opacity-0", "desktop:peer-hover:opacity-100",
     "motion-safe:!scale-[1.15]", "hover:opacity-0",
@@ -65,11 +64,17 @@ export default {
 
       "primary-dark": "#1c1c1c",
       "secondary-dark": "#0c0c0c",
-      "tertiary-dark": "#4c4c4c",
       "header-dark": "#33333388",
       "footer-dark": "#070707",
       "text-dark": "#ffffff",
-      "selected-text-dark": "#000000"
+      "selected-text-dark": "#000000",
+
+      "primary-light": "#c1c1c1",
+      "secondary-light": "#a1a1a1",
+      "header-light": "#aaaaaa88",
+      "footer-light": "#eeeeee",
+      "text-light": "#000000",
+      "selected-text-light": "#ffffff"
     },
     fontFamily: {
       "raleway": ["Raleway", "monospace", "sans-serif"]

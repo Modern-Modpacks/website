@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Coordinates, Mod } from "$lib/scripts/interfaces";
-    import { contextMenuOpenedBy, mobile, reducedMotion, upsideDownLocale } from "$lib/scripts/stores"
+    import { contextMenuOpenedBy, lightMode, mobile, reducedMotion, upsideDownLocale } from "$lib/scripts/stores"
     import { X } from "lucide-svelte";
     import { onMount } from "svelte";
     import { _ } from "svelte-i18n";
@@ -60,7 +60,7 @@
     <Portal target="{$mobile ? "#contextmenucontainer" : "body"}">
         <div bind:this={contextmenu} id="{!$mobile ? "contextmenu" : ""}" class="absolute top-0 mobile:mt-[25vh] z-50 grid grid-rows-[0fr] shadow-black mobile:bg-gradient-to-b mobile:from-black mobile:bg-opacity-50 desktop:shadow-xl dekstop:rounded-xl" style="{!$mobile ? `transform: translate(${coords?.x}px, ${coords?.y}px); ` : ""}{!$reducedMotion ? "transition: grid-template-rows 200ms;" : ""}">
             <div class="overflow-hidden mobile:w-[100vw] mobile:flex mobile:justify-center">
-                <div id="{$mobile ? "contextmenu" : ""}" class="bg-header-dark mobile:bg-transparent desktop:backdrop-blur-lg p-2 desktop:rounded-xl w-fit mobile:h-[55vh] mobile:flex mobile:flex-col mobile:items-center mobile:justify-evenly">
+                <div id="{$mobile ? "contextmenu" : ""}" class="{$lightMode ? "bg-header-light" : "bg-header-dark"} mobile:bg-transparent desktop:backdrop-blur-lg p-2 desktop:rounded-xl w-fit mobile:h-[55vh] mobile:flex mobile:flex-col mobile:items-center mobile:justify-evenly">
                     {#if $mobile}
                         <button bind:this={cross} class="pointer-events-none opacity-0 absolute right-4 top-4 duration-200" on:click={() => {toggle(null, null, null)}}>
                             <X size="28" />

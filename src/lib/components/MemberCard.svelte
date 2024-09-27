@@ -6,6 +6,7 @@
     import { _ } from "svelte-i18n";
     import Tag from "./Tag.svelte"
     import { Globe } from "lucide-svelte";
+    import { lightMode } from "$lib/scripts/stores";
 
     export let memberId : number
 
@@ -29,7 +30,7 @@
 </script>
 
 <span class="w-[25rem] mobile:w-[100vw] mobile:h-[90vh] flex flex-col mobile:items-center mobile:justify-center gap-4">
-    <img src="{getContributorAvatar(member)}" alt="{member.name}'s avatar" class="h-72 w-72 mobile:h-52 mobile:w-52 rounded-3xl bg-primary-dark">
+    <img src="{getContributorAvatar(member)}" alt="{member.name}'s avatar" class="h-72 w-72 mobile:h-52 mobile:w-52 rounded-3xl {$lightMode ? "bg-primary-light" : "bg-primary-dark"}">
     <h2 class="w-fit">{member.name}</h2>
     <span class="flex flex-wrap mobile:justify-center gap-2.5 [&>p]:w-fit">
         {#each Object.entries(member.titles ?? []) as [i, title]}
@@ -44,7 +45,7 @@
         {@const icon = getWebsiteIcon(social)}
             <a href="{social}" target="_blank" rel="noopener noreferrer">
                 {#if icon[0]}
-                    <img src="{icon[1]}" alt="{icon[0]} icon" class="h-10 brightness-0 invert duration-200 motion-safe:hover:desktop:opacity-40">
+                    <img src="{icon[1]}" alt="{icon[0]} icon" class="h-10 brightness-0{!$lightMode ? " invert" : ""} duration-200 motion-safe:hover:desktop:opacity-40">
                 {:else}
                     <Globe size="40" class="duration-200 motion-safe:hover:desktop:opacity-40"/>
                 {/if}

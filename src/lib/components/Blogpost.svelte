@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { BlogPost } from "$lib/scripts/interfaces";
-    import { blogPosts } from "$lib/scripts/stores";
+    import { blogPosts, lightMode } from "$lib/scripts/stores";
     import { openBlogpost } from "$lib/scripts/utils";
     import removeMd from "remove-markdown";
     import BlogpostTag from "./BlogpostTag.svelte";
@@ -12,7 +12,7 @@
     $: blogpost = $blogPosts![id]
 </script>
 
-<button class="flex mobile:flex-col items-center desktop:gap-4 w-full h-[9rem] mobile:h-fit bg-header-dark rounded-3xl cursor-pointer" title="{blogpost.metadata.title} {blogpost.metadata.subtitle}" on:click={id ? () => {openBlogpost(id)} : null}>
+<button class="flex mobile:flex-col items-center desktop:gap-4 w-full h-[9rem] mobile:h-fit {$lightMode ? "bg-header-light" : "bg-header-dark"} rounded-3xl cursor-pointer" title="{blogpost.metadata.title} {blogpost.metadata.subtitle}" on:click={id ? () => {openBlogpost(id)} : null}>
     <img src="{blogpost.thumbnail}" alt='"{blogpost.metadata.title}" blogpost thumbnail' class="desktop:h-full desktop:min-w-[17rem] mobile:w-full mobile:h-[28vw] object-cover rounded-3xl shadow-[#00000077] shadow-2xl duration-300 motion-safe:hover:scale-105">
     <div class="py-2 mobile:py-4">
         <span class="mobile:block mobile:w-fit [&>b]:block [&>b]:w-fit [&>b]:overflow-hidden [&>b]:whitespace-nowrap [&>b]:text-ellipsis [&>b]:text-xl">
