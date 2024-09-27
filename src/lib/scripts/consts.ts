@@ -27,6 +27,24 @@ const consts = {
         "black",
         "brown"
     ],
+    HEX_COLORS: [ // MM's brand colors' hex values (copied from tailwind config)
+        "#8e2121",
+        "#e06101",
+        "#f1af15",
+        "#495b24",
+        "#5ea918",
+        "#2489c7",
+        "#157788",
+        "#2d2f8f",
+        "#64209c",
+        "#a9309f",
+        "#d5658f",
+        "#373a3e",
+        "#7d7d73",
+        "#cfd5d6",
+        "#080a0f",
+        "#603c20"
+    ],
     ADDITIONAL_BANNERS: [ // Additional banners for the projects page banner, excluding pack-specific banners
         "https://raw.githubusercontent.com/Modern-Modpacks/assets/main/animated_header.gif"
     ],

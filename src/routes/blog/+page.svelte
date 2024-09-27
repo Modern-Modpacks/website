@@ -8,7 +8,7 @@
     import BigBlogpost from "$lib/components/BigBlogpost.svelte";
     import { onMount } from "svelte";
     import BlogpostOpened from "$lib/components/BlogpostOpened.svelte";
-    import { openBlogpost, removeParams, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
+    import { getBlogPosts, openBlogpost, removeParams, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
     import GithubLoginBar from "$lib/components/GithubLoginBar.svelte";
     import { page } from "$app/stores";
     import { PUBLIC_GITHUB_CLIENT_ID } from "$env/static/public";
@@ -24,6 +24,7 @@
     import { sineIn, sineInOut, sineOut } from "svelte/easing";
     import { nameToEmoji } from "gemoji";
     import ChevronDown from "lucide-svelte/icons/chevron-down";
+    import { goto } from "$app/navigation";
     
     let branchHash : string | null
     let finishedAuth : boolean = false
@@ -45,10 +46,7 @@
     }).search(searchQuery ?? "").map(p => p.item.id)
 
     // Get blogposts on github on first load
-    let getBlogPosts = async () => {
-        if ($blogPosts) return // If already loaded, do not update
-        $blogPosts = {}
-
+    let getBlogPostsAndBranchHash = async () => {
         // Get the branch hash for getting github data later
         branchHash = (
             await (
@@ -57,60 +55,8 @@
         ).object.sha
         if (!branchHash) return
 
-        // Get all of the files on the blogposts branch
-        let files : GitHubFile[] | null = (
-            await (
-                await sendGithubApiRequest(`repos/${consts.REPO}/git/trees/${consts.BLOG_BRANCH}?recursive=1`, false)
-            )?.json()
-        ).tree
-        if (!files) return
-        let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")).toSorted().reverse() // Filter by markdown files
-        $expectedBlogPostsLength = mdFiles.length // Set the expected number of blogposts
-
-        // For each of the markdown files
-        mdFiles.forEach(async path => {
-            path = path.replace(".md", "") // Get the path without the extension 
-
-            // Get the basic data
-            let rawUrl = `https://raw.githubusercontent.com/${consts.REPO}/${consts.BLOG_BRANCH}/${path}` // Get the url of the raw files
-            let content = await (await fetch(rawUrl+".md")).text() // Get the content of the raw markdown file
-
-            // If the markdown file doesn't have metadata, skip it
-            if (!content.startsWith("```")) return
-
-            // Get metadata from the yaml embed at the top of the md file
-            let contentAndMetadata = content.split(/^```$/m)
-            let metadataLines = contentAndMetadata.splice(0, 1)[0].split("\n")
-            metadataLines.splice(0, 1)
-            content = contentAndMetadata.join("```")
-
-            // Render emojis in content
-            let emoteMatches = [...new Set(content.match(/:\w+:/g))]
-            emoteMatches?.forEach(m => {
-                let name = m.replaceAll(":", "")
-                if (Object.keys(nameToEmoji).includes(name)) content = content.replaceAll(m, nameToEmoji[name])
-            })
-
-            // Compile all of the data (except ghdata, which is fetched when a blogpost is clicked), and add to blogPosts and postsByTag
-            let blogpost : BlogPost = {
-                content: content,
-                sourcelink: `https://github.com/${consts.REPO}/blob/${consts.BLOG_BRANCH}/${path}.md`,
-                thumbnail: rawUrl+".png",
-
-                metadata: parseYaml(metadataLines.join("\n"))
-            }
-            $blogPosts![path] = blogpost
-            $postsByTag[blogpost.metadata.tag][path] = blogpost
-
-            // For testing purposes, do not enable in prod
-            // for (let i = 1; i < 16; i++) {
-            //     let blogpost2 : BlogPost = JSON.parse(JSON.stringify(blogpost))
-            //     blogpost2.metadata.tag = i
-            //     blogpost2.metadata.title = "amogu"
-            //     $blogPosts![path+"-test"+i] = blogpost2
-            //     $postsByTag[blogpost2.metadata.tag][path+"-test"+i] = blogpost2
-            // }
-        })
+        // Get blogpost data
+        await getBlogPosts()
     }
     // Auth with github
     let exchangeGithubCode = async () => {
@@ -138,8 +84,13 @@
         setTimeout(() => {tagsHidden = $mobile}, 1)
 
         await exchangeGithubCode()
-        await getBlogPosts()
+        await getBlogPostsAndBranchHash()
+
         if (window.location.hash) openBlogpost(window.location.hash.replace(/^#/, ""))
+        else if ($page.url.searchParams.get("id")) {
+            removeParams()
+            openBlogpost($page.url.searchParams.get("id")!)
+        }
 
         setTimeout(() => {toggleScroll(true); $visitedBlog = true}, 1500 * +(!window.location.hash))
         setInterval(() => {searchQuery = searchBar?.value ?? ""}, 500)

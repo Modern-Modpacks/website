@@ -6,6 +6,7 @@
     import { linear } from "svelte/easing"
     import { draw } from "svelte/transition"
     import SocialsBar from "./SocialsBar.svelte";
+    import consts from "$lib/scripts/consts";
 
     // Whether to show the MM logo svg
     let showMMIcon : boolean = false
@@ -36,7 +37,7 @@
 
         <h1 class="text-4xl mobile:text-2xl desktop:pb-4">Modern Modpacks</h1>
         <p>{@html $_("ui.footer.version")}</p>
-        <p>{@html $_("ui.footer.opensource")}</p>
+        <p>{@html $_("ui.footer.opensource", {values: {link: "https://github.com/"+consts.REPO}})}</p>
         <p class="!text-mm-gray">© Modern Modpacks, 2024</p>
     </div>
     {#if !$mobile}
