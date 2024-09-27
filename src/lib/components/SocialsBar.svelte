@@ -7,7 +7,6 @@
     const socials : {[key: string]: Social} = consts.SOCIALS // Socials, digested for TS
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <span class="{header ? "mt-2 " : "mobile:grid "}group flex gap-3 mobile:gap-4 w-fit mobile:grid-flow-col mobile:grid-rows-2">
     {#each Object.entries(Object.keys(
         Object.fromEntries(Object.entries(socials).filter(([_k, v]) => v.header || !header))

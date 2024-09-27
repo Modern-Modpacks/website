@@ -62,9 +62,9 @@
     })
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+
 <span
-    class="w-fit{$reducedMotion ? " overflow-x-scroll" : ""}"
+    role="list" class="w-fit{$reducedMotion ? " overflow-x-scroll" : ""}"
     style="transform: translate{vertical ? "Y" : "X"}({-$translate}rem);"
     on:mouseenter={() => {if ($reducedMotion || $mobile || animCount<2 || !stopDur) return; mouseOver = true; stopAnim(false)}} on:mouseleave={() => {mouseOver = false; if (!animPlaying) doAnim(false)}}
 >

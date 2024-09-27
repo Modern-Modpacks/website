@@ -43,7 +43,7 @@
         {#each socials as social}
         {@const icon = getWebsiteIcon(social)}
             <a href="{social}" target="_blank" rel="noopener noreferrer">
-                {#if icon}
+                {#if icon[0]}
                     <img src="{icon[1]}" alt="{icon[0]} icon" class="h-10 brightness-0 invert duration-200 motion-safe:hover:desktop:opacity-40">
                 {:else}
                     <Globe size="40" class="duration-200 motion-safe:hover:desktop:opacity-40"/>

@@ -51,7 +51,7 @@
                     }
                 }
             },
-            edited: commits.length > 0 ? {
+            edited: commits.length > 1 ? {
                 time: moment(lastCommit.commit.committer.date),
                 url: lastCommit.html_url,
 
@@ -99,7 +99,6 @@
 
 <div class="min-h-[100vh]" in:fly={{x: window.screenX, easing: sineOut, duration: 300 * +$visitedBlog * +!$reducedMotion, delay: 300 * +$visitedBlog * +!$reducedMotion}} out:fly={{x: window.screenX, easing: sineIn, duration: 300 * +!$reducedMotion}}>
     {#if Object.keys($blogPosts ?? {}).length == $expectedBlogPostsLength}
-        <!-- svelte-ignore empty-block -->
         {#if blogpost}
             {#await fetchExtraData() then}
                 <div>

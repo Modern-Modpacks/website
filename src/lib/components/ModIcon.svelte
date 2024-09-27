@@ -44,7 +44,7 @@
         if ($reducedMotion) return
 
         rotCount.set(get(rotCount)+1, {duration: thisDur, easing: easing})
-        timeout = setTimeout(() => {doABarrelRoll(duration, linear)}, thisDur)
+        timeout = setTimeout(() => {doABarrelRoll(duration, linear)}, thisDur) as any
     }
     shouldAnimPlay.subscribe(v => {
         if (v) {
@@ -61,9 +61,7 @@
     })
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<span
+<button
     style="transform: scale({($mobile ? 55 : 100) + (20 * layer)}%) rotate({rotAmount}deg) translate({radius}px) rotate({-rotAmount}deg); z-index: {40 * +($contextMenuOpenedBy==modNumber && !$mobile)}"
     title="{mod?.name}" on:click={e => {
         if ($mobile) $shouldAnimPlay = false
@@ -74,4 +72,4 @@
     }}
 >
     <img id="mod" src="{mod?.icon_url}" alt="{mod?.name} logo" class="shadow-black{$contextMenuOpenedBy==modNumber && !$mobile ? " motion-safe:!scale-[1.15] motion-safe:shadow-2xl" : ""}">
-</span>
+</button>

@@ -169,7 +169,7 @@
                     <div class="w-[56rem] mobile:w-[75%] flex flex-col gap-[4.5rem]">
                         <BigBlogpost id={Object.keys($blogPosts ?? {})[0]} />
                         {#if !$mobile}
-                            <span class="flex justify-between w-full [&>div]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
+                            <span class="flex justify-between w-full [&>button]:w-[26rem] [&_h2]:text-2xl [&_p]:text-base">
                                 <BigBlogpost id={Object.keys($blogPosts ?? {})[1]} delay={500} />
                                 <BigBlogpost id={Object.keys($blogPosts ?? {})[2]} delay={750} />
                             </span>

@@ -9,6 +9,6 @@
 </script>
 
 <ModpackPopup bind:toggle={popupToggle} modpack={modpack} icon={modpack.icon ?? ""} color="white" partner={true} firstOfType={firstOfType} />
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<img src="{modpack.icon}" class="h-40 w-40 rounded-xl {!$popupOpenedByPartner ? "motion-safe:desktop:hover:scale-110" : ""} duration-150 cursor-pointer" alt="{modpack.name} icon" title="{modpack.name}" on:click={popupToggle}>
+<button class="h-40 w-40" on:click={popupToggle}>
+    <img src="{modpack.icon}" class="h-full w-full rounded-xl {!$popupOpenedByPartner ? "motion-safe:desktop:hover:scale-110" : ""} duration-150 cursor-pointer" alt="{modpack.name} icon" title="{modpack.name}">
+</button>

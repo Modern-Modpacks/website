@@ -169,10 +169,8 @@
     </div>
 
     <div class="w-full h-full desktop:pl-16 desktop:pt-8 flex mobile:flex-col justify-evenly items-center desktop:bg-gradient-to-r mobile:bg-black mobile:bg-opacity-80 from-[#000000f0] from-15% via-transparent to-60% to-[#000000f0]">
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <div class="w-full">
-            <span class="block w-fit" on:mouseover={() => {mouseOverCard = true}} on:mouseleave={() => {mouseOverCard = false; if (!cardAnimPlaying) startCardCycles()}}>
+            <span role="list" class="block w-fit" on:mouseenter={() => {mouseOverCard = true}} on:mouseleave={() => {mouseOverCard = false; if (!cardAnimPlaying) startCardCycles()}}>
                 <span class="block w-fit" style="transform: translateX(-{$cardTransition}%);">
                     <MemberCard bind:memberId={memberId} />
                 </span>
@@ -201,11 +199,9 @@
                     {#if $locales.includes(lastActivePin?.lang ?? "") && $locale!=lastActivePin?.lang}<p class="text-base mobile:text-sm font-semibold text-mm-lightgray">{$_("name", {locale: lastActivePin?.lang})}</p>{/if}
                 </span>
 
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <span class="group absolute w-8 h-8 mobile:w-6 mobile:h-6 right-6 p-2 box-content bg-black bg-opacity-35 rounded-full cursor-pointer" on:click={() => {$activatedPin = null}}>
+                <button class="group absolute w-8 h-8 mobile:w-6 mobile:h-6 right-6 p-2 box-content bg-black bg-opacity-35 rounded-full cursor-pointer" on:click={() => {$activatedPin = null}}>
                     <ChevronLeft class="w-full h-full motion-safe:desktop:translate-x-0.5 {mapSidebarShown ? "motion-safe:group-hover:desktop:-translate-x-1" : "motion-safe:desktop:!-translate-x-1"} duration-200 ease-out" />
-                </span>
+                </button>
             </span>
             <div
                 class="overflow-hidden mobile:overflow-scroll h-[34rem] mobile:h-80 mobile:pb-10 mt-6 flex flex-col gap-4 mobile:gap-3 w-fit" style="-webkit-overflow-scrolling: touch;"
@@ -247,8 +243,7 @@
     <p class="absolute right-0 bottom-0 text-sm bg-black bg-opacity-75 px-2 py-0.5">© <a href="https://www.planetminecraft.com/project/earth-1-750-1-19" class="underline">{$_("ui.mapcredit")}</a></p>
 </div>
 <div class="w-full flex mobile:flex-col bg-secondary-dark">
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="group relative w-full mobile:h-[60vh] flex overflow-hidden" on:mouseenter={() => {hexesHovered=true}} on:mouseleave={() => {hexesHovered=false}}>
+    <div role="list" class="group relative w-full mobile:h-[60vh] flex overflow-hidden" on:mouseenter={() => {hexesHovered=true}} on:mouseleave={() => {hexesHovered=false}}>
         {#each [...Array($mobile ? 3 : 5).keys()] as col}
             {#each [...Array(col%2 ? ($mobile ? 3 : 5) - +(col==3) : ($mobile ? 3 : 4) - +(col==4)).keys()] as row}
                 <TesterHex col={col} row={row} bind:parentHovered={hexesHovered} />

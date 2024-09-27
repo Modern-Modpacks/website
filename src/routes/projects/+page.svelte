@@ -132,9 +132,8 @@
     </div>
 
     <div class="pt-16 mobile:pt-8 pb-8 px-10 mobile:px-5 bg-primary-dark flex mobile:flex-col mobile:gap-8 justify-between items-center [&>*]:text-center">
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div 
-            class="grid grid-cols-4 gap-[4vw] w-[40vw] h-[40vw] mobile:w-full mobile:h-full aspect-square group"
+            role="list" class="grid grid-cols-4 gap-[4vw] w-[40vw] h-[40vw] mobile:w-full mobile:h-full aspect-square group"
             on:mouseenter={() => {modpacksHovered = true}} on:mouseleave={() => {modpacksHovered = false}}
         >
             {#each [...Array(16).keys()] as i}
@@ -153,7 +152,7 @@
             <p class="mt-3 max-w-full">{@html $_("projects.partner.desc")}</p>
         </div>
         <div
-            class="flex [&>span]:flex [&>span]:items-center [&>span]:gap-6 [&>span]:w-[50vw]" 
+            class="flex w-[50vw] [&>span]:flex [&>span]:items-center [&>span]:gap-6" 
             style="{!$reducedMotion ? "mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent 100%);" : ""}"
         >
             <Marquee baseAnimDur={2500 * ((partnerQueueLen ?? 0) - 6)} animMin={0} animMax={11.5 * ((partnerQueueLen ?? 0) - 6)} stopDur={600} bind:shouldPlay={shouldPartnerAnimPlay}>
@@ -167,11 +166,9 @@
     <div class="bg-primary-dark desktop:pr-10 flex mobile:flex-col justify-between [&>*]:text-center">
         <div class="min-w-[50%] mobile:min-w-full mobile:h-[50vh] relative flex flex-col justify-center items-center">
             <div class="absolute desktop:w-[120vw] mobile:h-[100vh] mobile:w-full h-full bg-[radial-gradient(circle,_#0c0c0c_0%,_transparent_55%)] flex justify-center items-center">
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <!-- svelte-ignore a11y-mouse-events-have-key-events -->
                 <div
-                    class="h-full mobile:w-full w-[50%] relative overflow-hidden [&>span]:h-24 [&>span]:w-24 [&>span]:absolute [&>span]:cursor-pointer [&>span]:left-0 [&>span]:right-0 [&>span]:top-0 [&>span]:bottom-0 [&>span]:mx-auto [&>span]:my-auto [&_img]:rounded-md motion-safe:desktop:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
-                    on:mouseover={() => {spinAnimHovered = true; if (!$mobile) $shouldModsAnimPlay = false}} on:mouseleave={() => {spinAnimHovered = false; if (contextMenuAboutToBeClosed) $shouldModsAnimPlay = true}}
+                    role="list" class="h-full mobile:w-full w-[50%] relative overflow-hidden [&>button]:h-24 [&>button]:w-24 [&>button]:absolute [&>button]:cursor-pointer [&>button]:left-0 [&>button]:right-0 [&>button]:top-0 [&>button]:bottom-0 [&>button]:mx-auto [&>button]:my-auto [&_img]:rounded-md motion-safe:desktop:[&_img:hover]:!scale-[1.15] [&_img]:duration-200"
+                    on:mouseenter={() => {spinAnimHovered = true; if (!$mobile) $shouldModsAnimPlay = false}} on:mouseleave={() => {spinAnimHovered = false; if (contextMenuAboutToBeClosed) $shouldModsAnimPlay = true}}
                     use:inview={{unobserveOnEnter: true}} on:inview_enter={() => {$shouldModsAnimPlay = true}}
                 >
                     <ModContextMenu bind:this={modContextMenu} bind:aboutToClose={contextMenuAboutToBeClosed} bind:spinAnimHovered={spinAnimHovered} bind:shouldSpinAnimPlay={shouldModsAnimPlay} />

@@ -55,8 +55,6 @@
     })
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div bind:this={element} id="contextmenucontainer" class="pointer-events-none">
     <div bind:this={bg} class="opacity-0 motion-safe:duration-200 backdrop-blur-xl w-full h-full absolute z-20" />
     <Portal target="{$mobile ? "#contextmenucontainer" : "body"}">

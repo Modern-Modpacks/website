@@ -54,11 +54,9 @@
     <div class="w-0 h-0 absolute" style="mask-image: url(https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG/{path+"_"+modpack.abbr}.png);"/>
     <ModpackPopup bind:toggle={popupToggle} modpack={modpack} icon={`https://raw.githubusercontent.com/Modern-Modpacks/assets/main/Icons/1024px/${modpack.abbr}.png`} color={"mm-"+consts.COLORS[index]} partner={false} />
 {/if}
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <Saos animation={$reducedMotion ? "" : `appear .25s ${.1*(index%4)}s backwards`} once={true}>
-    <div
-        class="flex justify-center duration-200 aspect-square"
+    <button
+        class="flex justify-center w-full h-full duration-200 aspect-square"
         style="transform: translateX({transformX * +(!$reducedMotion && !$mobile)}px) translateY({transformY * +(!$reducedMotion && !$mobile)}px);"
         title="{discovered ? $_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`) : ""}"
         on:mouseenter={() => {parentHover=false}} on:mouseleave={() => {parentHover=true}}
@@ -72,9 +70,7 @@
             "
             bind:element={element}
         >
-        <!-- $popupOpenedBy.abbr==modpack.abbr -->
             <img src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/BG/{path}.png" alt="{consts.COLORS[index]} background">
-            <!-- svelte-ignore a11y-mouse-events-have-key-events -->
             <img
                 class="scale-[102%] duration-200 absolute rendering-pixelated peer z-10{discovered ? ` motion-safe:desktop${thisPackOpened ? "" : ":hover"}:opacity-0` : ""}"
                 src="https://raw.githubusercontent.com/Modern-Modpacks/assets/main/FG.png"
@@ -98,5 +94,5 @@
                 </h3>
             {/if}
         </BreathingIcon>
-    </div>
+    </button>
 </Saos>
