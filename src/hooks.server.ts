@@ -11,12 +11,12 @@ ghApiKey.set(PRIVATE_GITHUB_DEV_KEY)
 
 // Discord blogpost page embed
 export const handle: Handle = async ({ event, resolve }) => {
-    if (!(event.request.headers.get("user-agent") as string).includes("DiscordBot") || !event.url.pathname.startsWith("/blog") || !event.url.searchParams.get("id")) return await resolve(event)
+    if (!(event.request.headers.get("user-agent") as string).includes("Discordbot") || !event.url.pathname.startsWith("/blog") || !event.url.searchParams.get("id")) return await resolve(event)
 
     let id = event.url.searchParams.get("id")!
     await getBlogPosts()
 
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise(resolve => setTimeout(resolve, 2500))
     let post = get(blogPosts)![id]
     return new Response(`<!doctype html>
 <html lang="en">
