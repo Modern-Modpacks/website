@@ -19,14 +19,21 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (!Object.keys(get(blogPosts)!).includes(id)) return await resolve(event)
 
     let post = get(blogPosts)![id]
-    return new Response(`<!doctype html>
+    return new Response(
+`<!doctype html>
 <html lang="en">
 	<head>
+		<meta property="og:site_name" content="Modern Modpacks Blog" />
 		<meta property="og:title" content="${post.metadata.title} ${post.metadata.subtitle}" />
 		<meta property="og:description" content="${removeMd(post.content).replaceAll("\n", " ")}" />
 		<meta property="og:url" content="https://www.modernmodpacks.site/blog#${id}" />
-		<meta property="og:thumbnail" content="${post.thumbnail}" />
+		<meta property="og:image" content="${post.thumbnail}" />
 		<meta content="${consts.HEX_COLORS[post.metadata.tag].toUpperCase()}" data-react-helmet="true" name="theme-color" />
+		<meta name="twitter:card" content="summary_large_image">
 	</head>
-</html>`)
+</html>`, {
+	headers: {
+		"Content-Type": "text/html"
+	}
+})
 }

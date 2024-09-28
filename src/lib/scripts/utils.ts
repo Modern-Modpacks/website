@@ -76,8 +76,6 @@ export const getBlogPosts = async () => {
 
         // Get the basic data
         let rawUrl = `https://raw.githubusercontent.com/${consts.REPO}/${consts.BLOG_BRANCH}/${path}` // Get the url of the raw files
-        console.log(rawUrl+".md")
-        console.log(await fetch(rawUrl+".md"))
         let content = await (await fetch(rawUrl+".md")).text() // Get the content of the raw markdown file
 
         // If the markdown file doesn't have metadata, skip it
@@ -110,9 +108,7 @@ export const getBlogPosts = async () => {
         let newPostsByTag = {...get(postsByTag)}
         newPostsByTag[blogpost.metadata.tag][path] = blogpost
         postsByTag.set(newPostsByTag)
-
-        console.log(newBlogposts)
-
+        
         // For testing purposes, do not enable in prod
         // for (let i = 1; i < 16; i++) {
         //     let blogpost2 : BlogPost = JSON.parse(JSON.stringify(blogpost))
