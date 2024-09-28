@@ -16,7 +16,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     let id = event.url.searchParams.get("id")!
     await getBlogPosts()
     await new Promise(resolve => setTimeout(resolve, 2500))
-	if (!Object.keys(get(blogPosts)!).includes("id")) return await resolve(event)
+	if (!Object.keys(get(blogPosts)!).includes(id)) return await resolve(event)
 
     let post = get(blogPosts)![id]
     return new Response(`<!doctype html>
