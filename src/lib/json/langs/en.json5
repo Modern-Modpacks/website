@@ -2,6 +2,7 @@
     "name": "English",
 
     "splashes": [
+        "Making 1.16.5 expert modpacks circa 2022",
         "Minecraft, the way it wasn't meant to be",
         "Vazkii is a mod by neat!",
         "Greg is love, Greg is life!",
@@ -16,6 +17,9 @@
         "Compromises on the uncompromisable!",
         "Hellish and devilish!",
         "Minecraft Potato Edition",
+        "r/feedthememes approved!",
+        "Deez packs. Gottem",
+        "Shoutout to Pansmith!",
 
         "Asbestos free since 2023!",
         "Not sponsored!",
@@ -30,7 +34,33 @@
         "Games, unlimited games",
         "Find community!",
         "Credit the creators",
-        "Underpromise, overdeliver"
+        "Underpromise, overdeliver",
+        "50% modern, 50% modpack",
+        "Expect the excpected, unexpect the unexcpected",
+        "Also try Inscryption!",
+        "Google en passant",
+        "Nothing ever happens",
+        "Trans rights!",
+        "Blåhaj rights!",
+        "Now in color!",
+        "Now with sound!",
+        "The splash will be emailed to you in 2-3 business days",
+        "Human made!",
+        "Adopt json5!",
+        "Welcoming community!",
+        "You are now breathing manually",
+        "Democracy is awesome!",
+        "Prefers MIT!",
+        "Flamboyant!",
+        "Worldwide!",
+        "Free and open source!",
+        "/srs",
+        "Legal in at least 100 countries!",
+        "This splash will never be displayed... shit",
+        "Stay hydrated!",
+        "More than not enough!",
+        "Sleep well!",
+        "Take breaks!"
     ],
 
     "ui": {
@@ -167,7 +197,7 @@
         "fa": {
             "shortdesc": "The company sends you to an all important mission in a long abandoned part of the universe, can you make it out alive?",
             "longdesc": "<b>You wake up in a landing pod.</b> Your destination? Earth, Sector α.\n\n\
-            <b>You hear a voice talking to you through the radio,</b> it informs you that you've been selected by your employer to go here and collect materials that simply don't exist back home. As you start to regain consciousness and your memory becomes a bit more clear, the mechanical door opens to reveal a beatiful nightly sky.\n\n\
+            <b>A voice greets you through the radio.</b> The operator on the other end informs you that you've volunteered yourself into a mission, meant to collect and return resources exclusive to this particular part of the universe. As you start to regain consciousness, a mechanical door opens to reveal a beatiful nightly sky.\n\n\
             <b>Explore the universe,</b> collect and automate materials, find and connect with what's left of the flora and fauna, and find out what secrets this ancient sector holds."
         },
 
