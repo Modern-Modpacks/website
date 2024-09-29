@@ -42,10 +42,10 @@
     </div>
     {#if !$mobile}
         <div class="flex flex-col items-end [&>span]:absolute [&>span]:bottom-10">
-            <b class="text-2xl">Quick access</b>
+            <b class="text-2xl">{$_("ui.footer.quickaccess")}</b>
             <div class="h-[63%] flex flex-col justify-evenly items-end [&>a]:w-fit">
                 {#each [
-                    {url: "https://github.com/Modern-Modpacks/website/issues/new", lang: "report"},
+                    {url: `https://github.com/${consts.REPO}/issues/new`, lang: "report"},
                     {url: `https://raw.githubusercontent.com/${consts.REPO}/v2/attribs.md`, lang: "attributions"},
                     {url: "https://stackshare.io/modern-modpacks/mm-stack", lang: "stack"},
                     {url: "https://www.youtube.com/watch?v=EJxCw3lDYiQ", lang: "cats"}

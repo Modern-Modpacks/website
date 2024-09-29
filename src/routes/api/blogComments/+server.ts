@@ -18,7 +18,7 @@ export const GET: RequestHandler = async ({ url }) => {
     let id = url.searchParams.get("id")
     if (!id) return new Response("-1", {status: 400})
 
-    return new Response(JSON.stringify(await getComments(id)))
+    return new Response(JSON.stringify((await getComments(id)).filter(c => !consts.BLOG_BANLIST.includes(c.author.name.toLowerCase()))))
 }
 export const POST: RequestHandler = async ({ url, request }) => {
     let id = url.searchParams.get("id")
@@ -34,6 +34,8 @@ export const POST: RequestHandler = async ({ url, request }) => {
 
     let comments = await getComments(id)
     let author = await (await sendGithubApiRequestWithSetKey("user", true, token))?.json()
+    if (consts.BLOG_BANLIST.includes(author.login.toLowerCase())) return new Response("OK")
+
     comments.push({
         content: content,
         timestamp: moment().format(),

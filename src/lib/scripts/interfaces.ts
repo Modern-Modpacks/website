@@ -7,7 +7,6 @@ export interface Coordinates { // Used for keeping track of the mouse
 }
 export interface Social { // Used for socials in consts.ts
     url: string
-    title: string
     header: boolean
 }
 export interface Pin { // Used for pins on the translator map

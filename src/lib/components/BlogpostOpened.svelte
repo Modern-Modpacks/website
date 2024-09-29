@@ -136,7 +136,7 @@
                                 <h1 class="opacity-35">{blogpost.metadata.subtitle}</h1>
                             </span>
                             <BlogpostTag tagIndex={blogpost.metadata.tag} />
-                            <span class="absolute right-20 top-12 mobile:right-12 !grid grid-cols-2 mobile:grid-cols-1 gap-4 opacity-35 [&>*]:!flex [&>*]:items-center [&>*]:gap-1 [&_b]:text-2xl">
+                            <span class="absolute right-20 top-12 mobile:right-12 !grid grid-cols-2 mobile:grid-cols-1 gap-4 opacity-35 [&>*]:!flex [&>*]:items-center [&>*]:justify-center [&>*]:gap-1 [&>*]:!w-full [&_b]:text-2xl">
                                 <span title="{$_("ui.views")}">
                                     <Eye class="w-10 h-10 mobile:h-8 mobile:w-8" />
                                     <b class="mobile:text-base">{blogpost.views}</b>

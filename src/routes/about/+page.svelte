@@ -114,8 +114,9 @@
             speed: 1000
         })
 
-        // Calculate compass center on resize
+        // Calculate compass center on resize and locale change
         window.addEventListener("resize", () => {compassCenter = calculateElementCenter(compass!)})
+        locale.subscribe(_ => {compassCenter = calculateElementCenter(compass!)})
         document.addEventListener("mousemove", e => { // Calculate rotation for the correct compass texture
             if ($reducedMotion || $mobile || !compassCenter) return
 
@@ -132,7 +133,7 @@
             let duration = Math.abs($compassTexture) * compasssTextureDur
             compassTexture.set(0, {duration: duration})
 
-            compassUnfocusedTimeout = setTimeout(() => {compassUnfocused = true}, duration)
+            compassUnfocusedTimeout = setTimeout(() => {compassUnfocused = true}, duration) as any
         })
         window.addEventListener("focus", e => {
             if ($reducedMotion || $mobile) return

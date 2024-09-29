@@ -36,18 +36,13 @@
 
         addMessages(l.split("/").at(-1)?.replace(".json5", "")!, dictsWithNewlines)
     }
-    // Get locale and init svelte-i18n
-    let initLocale : string | undefined = $storedLocale ? $storedLocale : getLocaleFromNavigator()?.split("-").at(-1)?.toLowerCase()
+    // Get init svelte-i18n with english at first
     init(
         {
             fallbackLocale: "en",
-            initialLocale: $locales.includes(initLocale!) ? initLocale : "en"
+            initialLocale: "en"
         }
     )
-    // When the locale is changed in local storage, hot reload it
-    storedLocale.subscribe(v => {if (v) $locale = v})
-    // Change moment.js locale
-    locale.subscribe(l => {moment.locale(l ?? "en")})
 
     // Init view transitions, awesome
     onNavigate(navigation => {
@@ -123,7 +118,17 @@
             document.body.classList.remove(l ? "dark" : "light")
         })
 
-        setTimeout(() => {firstLoad = false}, 1)
+        setTimeout(() => {
+            // Setup acutal locale
+            let initLocale : string | undefined = $storedLocale ? $storedLocale : getLocaleFromNavigator()?.split("-").at(-1)?.toLowerCase()
+            $locale = $locales.includes(initLocale!) ? initLocale : "en"
+            // When the locale is changed in local storage, hot reload it
+            storedLocale.subscribe(v => {if (v) $locale = v})
+            // Change moment.js locale
+            locale.subscribe(l => {moment.locale(l ?? "en")})
+
+            firstLoad = false
+        }, 1)
     })
     afterNavigate(() => {
         if (!firstLoad) navigateCleanup()

@@ -93,14 +93,16 @@
                 arrowClasses?.add("hidden")
             }
             else {
-                $randomSplash = randomChoice($json("splashes") as any[])
-                $previousRandomBanner = banner!
+                setTimeout(() => {
+                    $randomSplash = randomChoice($json("splashes") as any[])
+                    $previousRandomBanner = banner!
 
-                // If appearance anim is playing, make the user wait a bit and enjoy the beauty
-                if (!$reducedMotion && !$mobile) {
-                    toggleScroll(false)
-                    setTimeout(() => {toggleScroll(true)}, 2500)
-                }
+                    // If appearance anim is playing, make the user wait a bit and enjoy the beauty
+                    if (!$reducedMotion && !$mobile) {
+                        toggleScroll(false)
+                        setTimeout(() => {toggleScroll(true)}, 2500)
+                    }
+                }, 1)
             }
 
             setTimeout(() => {removeOpacity(title?.children, shouldShowOpacityAnim)}, !shouldShowOpacityAnim ? 0 : 500) // Play the actual appearance anim
@@ -226,7 +228,7 @@
                 {/each}
             </div>
         {/if}
-        <div class="h-full w-full px-16 mobile:py-8 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center {$lightMode ? "desktop:bg-[radial-gradient(circle,_#a1a1a1_10%,_transparent_65%)]" : "desktop:bg-[radial-gradient(circle,_#0c0c0c_10%,_transparent_65%)]"}">
+        <div class="h-full w-full px-16 mobile:py-8 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-col gap-5 items-center justify-center {$lightMode ? "desktop:bg-[radial-gradient(circle,_#a1a1a1_10%,_transparent_65%)]" : "desktop:bg-[radial-gradient(circle,_#0c0c0c_20%,_transparent_75%)]"}">
             <h2>{$_("projects.ecosystem.heading")}</h2>
             <p>{@html $_("projects.ecosystem.desc")}</p>
         </div>

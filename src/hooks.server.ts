@@ -1,10 +1,9 @@
 import { PRIVATE_GITHUB_DEV_KEY } from "$env/static/private";
 import consts from "$lib/scripts/consts";
-import { blogPosts, ghApiKey } from "$lib/scripts/stores";
-import { getBlogPosts } from "$lib/scripts/utils";
+import { ghApiKey } from "$lib/scripts/stores";
+import { getBlogPost } from "$lib/scripts/utils";
 import type { Handle } from "@sveltejs/kit";
 import removeMd from "remove-markdown";
-import { get } from "svelte/store";
 
 // Set dev github key
 ghApiKey.set(PRIVATE_GITHUB_DEV_KEY)
@@ -14,11 +13,9 @@ export const handle: Handle = async ({ event, resolve }) => {
     if (!(event.request.headers.get("user-agent") as string).includes("Discordbot") || !event.url.pathname.startsWith("/blog") || !event.url.searchParams.get("id")) return await resolve(event)
 
     let id = event.url.searchParams.get("id")!
-    await getBlogPosts()
-    await new Promise(resolve => setTimeout(resolve, 2500))
-	if (!Object.keys(get(blogPosts)!).includes(id)) return await resolve(event)
+    let post = await getBlogPost(id)
+	if (!post) return await resolve(event)
 
-    let post = get(blogPosts)![id]
     return new Response(
 `<!doctype html>
 <html lang="en">

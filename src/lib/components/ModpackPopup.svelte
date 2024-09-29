@@ -110,8 +110,8 @@
             <div class="p-7 mobile:p-5 pb-14 mt-4 mobile:mt-2 flex mobile:flex-col mobile:gap-6 desktop:h-[65%] box-border">
                 <div class="w-[36rem]{$upsideDownLocale ? " [&>*]:text-right" : ""}">
                     <h2 class="mobile:text-2xl">{modpack.name}</h2>
-                    <h4 class="w-[50ch] mobile:w-[45ch] mobile:text-xs">{$_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`)}</h4>
-                    <p class="mt-6 mobile:mt-4 w-[50ch] mobile:w-[45ch] text-lg mobile:text-xs">{@html $_(`modpacks.${modpack.abbr?.toLowerCase()}.longdesc`)}</p>
+                    <h4 class="w-[45ch] mobile:w-[40ch] mobile:text-xs">{$_(`modpacks.${modpack.abbr?.toLowerCase()}.shortdesc`)}</h4>
+                    <p class="mt-3 mobile:mt-2 desktop:mr-8 w-[50ch] mobile:w-[45ch] text-lg mobile:text-xs [&>br]:block [&>br]:content-[''] [&>br]:h-2">{@html $_(`modpacks.${modpack.abbr?.toLowerCase()}.longdesc`)}</p>
                 </div>
 
                 <div class="h-full w-full flex flex-col">
@@ -119,7 +119,7 @@
                         {#if !$mobile}
                             <b class="text-xl mb-2">{$_("ui.tagstitle")}</b>
                         {/if}
-                        <div class="flex flex-wrap gap-2 justify-end mobile:justify-center mobile:mb-6">
+                        <div class="flex flex-wrap gap-2 justify-end desktop:max-w-52 mobile:justify-center mobile:mb-6">
                             {#each modpack.tags ?? [] as tag}
                                 <Tag color={color} text={$_("ui.tags."+tag)} />
                             {/each}
@@ -127,8 +127,8 @@
                         {#if !$mobile && modpack.ram}
                             <b class="text-xl mt-8 mb-2">{$_("ui.ram.title")}</b>
                             <ul class="flex flex-col items-end [&>li]:text-lg">
-                                <li>{$_("ui.ram.minimal")}: <b>{modpack.ram.minimal}</b></li>
-                                <li>{$_("ui.ram.recommended")}: <b>{modpack.ram.recommended}</b></li>
+                                <li>{$_("ui.ram.minimal")}: <b>{modpack.ram.minimal} GB</b></li>
+                                <li>{$_("ui.ram.recommended")}: <b>{modpack.ram.recommended} GB</b></li>
                             </ul>
                         {/if}
                     </div>

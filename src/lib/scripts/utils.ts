@@ -1,10 +1,9 @@
-import type { BlogPost, Contributor, Coordinates, GitHubFile } from "./interfaces"
+import type { BlogPost, Contributor, Coordinates } from "./interfaces"
 import consts from "./consts"
-import { blogPosts, contextMenuOpenedBy, expectedBlogPostsLength, ghApiKey, githubRateLimited, openedBlogPost, popupOpenedBy, postsByTag } from "./stores"
+import { contextMenuOpenedBy, ghApiKey, githubRateLimited, openedBlogPost, popupOpenedBy } from "./stores"
 import { get } from "svelte/store"
 import { nameToEmoji } from "gemoji"
 import { parse as parseYaml } from "yaml"
-import { browser } from "$app/environment"
 
 export const randomChoice = (elements: any[]) => elements[Math.floor(Math.random()*elements.length)] // Randomly select an element from the array, probably the most redefined function on planet earth
 export const getDistance = (point1: Coordinates, point2: Coordinates): number => { // Get distance between two pixels on screen, used for the mouse follow effect in the modpacks section
@@ -55,69 +54,37 @@ export const sendGithubApiRequest = async (endpoint: string, forceAuth: boolean)
 export const removeHash = () => history.replaceState("", document.title, window.location.pathname + window.location.search) // Removes the hash from the url without refresh
 export const removeParams = () => history.replaceState("", document.title, window.location.pathname + window.location.hash) // Removes the params from the url without refresh
 
-// Get blogposts from github
-export const getBlogPosts = async () => {
-    if (browser && get(blogPosts)) return // If already loaded and not on server, do not update
-    blogPosts.set({})
+// Get info about a blogpost
+export const getBlogPost = async (path: string) : Promise<BlogPost | null> => {
+    // Get the basic data
+    let rawUrl = `https://raw.githubusercontent.com/${consts.REPO}/${consts.BLOG_BRANCH}/${path}` // Get the url of the raw files
+    let content = await (await fetch(rawUrl+".md")).text() // Get the content of the raw markdown file
 
-    // Get all of the files on the blogposts branch
-    let files : GitHubFile[] | null = (
-        await (
-            await sendGithubApiRequest(`repos/${consts.REPO}/git/trees/${consts.BLOG_BRANCH}?recursive=1`, false)
-        )?.json()
-    ).tree
-    if (!files) return
-    let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")).sort().reverse() // Filter by markdown files
-    expectedBlogPostsLength.set(mdFiles.length) // Set the expected number of blogposts
+    // If the markdown file doesn't have metadata, return null
+    if (!content.startsWith("```")) return null
 
-    // For each of the markdown files
-    mdFiles.forEach(async path => {
-        path = path.replace(".md", "") // Get the path without the extension 
+    // Get metadata from the yaml embed at the top of the md file
+    let contentAndMetadata = content.split(/^```$/m)
+    let metadataLines = contentAndMetadata.splice(0, 1)[0].split("\n")
+    metadataLines.splice(0, 1)
+    content = contentAndMetadata.join("```")
 
-        // Get the basic data
-        let rawUrl = `https://raw.githubusercontent.com/${consts.REPO}/${consts.BLOG_BRANCH}/${path}` // Get the url of the raw files
-        let content = await (await fetch(rawUrl+".md")).text() // Get the content of the raw markdown file
-
-        // If the markdown file doesn't have metadata, skip it
-        if (!content.startsWith("```")) return
-
-        // Get metadata from the yaml embed at the top of the md file
-        let contentAndMetadata = content.split(/^```$/m)
-        let metadataLines = contentAndMetadata.splice(0, 1)[0].split("\n")
-        metadataLines.splice(0, 1)
-        content = contentAndMetadata.join("```")
-
-        // Render emojis in content
-        let emoteMatches = [...new Set(content.match(/:\w+:/g))]
-        emoteMatches?.forEach(m => {
-            let name = m.replaceAll(":", "")
-            if (Object.keys(nameToEmoji).includes(name)) content = content.replaceAll(m, nameToEmoji[name])
-        })
-
-        // Compile all of the data (except ghdata, which is fetched when a blogpost is clicked), and add to blogPosts and postsByTag
-        let blogpost : BlogPost = {
-            content: content,
-            sourcelink: `https://github.com/${consts.REPO}/blob/${consts.BLOG_BRANCH}/${path}.md`,
-            thumbnail: rawUrl+".png",
-
-            metadata: parseYaml(metadataLines.join("\n"))
-        }
-        let newBlogposts = {...get(blogPosts)}
-        newBlogposts[path] = blogpost
-        blogPosts.set(newBlogposts)
-        let newPostsByTag = {...get(postsByTag)}
-        newPostsByTag[blogpost.metadata.tag][path] = blogpost
-        postsByTag.set(newPostsByTag)
-        
-        // For testing purposes, do not enable in prod
-        // for (let i = 1; i < 16; i++) {
-        //     let blogpost2 : BlogPost = JSON.parse(JSON.stringify(blogpost))
-        //     blogpost2.metadata.tag = i
-        //     blogpost2.metadata.title = "amogu"
-        //     $blogPosts![path+"-test"+i] = blogpost2
-        //     $postsByTag[blogpost2.metadata.tag][path+"-test"+i] = blogpost2
-        // }
+    // Render emojis in content
+    let emoteMatches = [...new Set(content.match(/:\w+:/g))]
+    emoteMatches?.forEach(m => {
+        let name = m.replaceAll(":", "")
+        if (Object.keys(nameToEmoji).includes(name)) content = content.replaceAll(m, nameToEmoji[name])
     })
+
+    // Compile all of the data (except ghdata, which is fetched when a blogpost is clicked), and return
+    let blogpost : BlogPost = {
+        content: content,
+        sourcelink: `https://github.com/${consts.REPO}/blob/${consts.BLOG_BRANCH}/${path}.md`,
+        thumbnail: rawUrl+".png",
+
+        metadata: parseYaml(metadataLines.join("\n"))
+    }
+    return blogpost
 }
 
 export const toggleScroll = (enable : boolean) => { // Toggle the ability to scroll the page vertically

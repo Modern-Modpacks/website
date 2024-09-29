@@ -20,7 +20,7 @@
         <img src="{blogpost ? blogpost.thumbnail : consts.MISSING_BLOGPOST_THUMBNAIL}" alt="{blogpost ? '"'+blogpost.metadata.title+'"' : "Missing"} blogpost thumbnail" class="absolute w-full left-0 top-0 object-cover rounded-3xl shadow-[#00000077] shadow-2xl duration-300{blogpost ? " motion-safe:hover:scale-[102.5%]" : ""}">
     </span>
     <div class="flex flex-col p-4 mt-1">
-        <span class="w-fit mobile:mb-2 [&>h2]:inline-block [&>h2]:w-fit">
+        <span class="w-fit text-left mobile:mb-2 [&>h2]:inline-block [&>h2]:w-fit">
             <h2>{blogpost ? blogpost.metadata.title : $_("ui.missingblogpost")}&nbsp</h2>
             <h2 class="opacity-35">{blogpost ? blogpost.metadata.subtitle : $_("ui.missingblogpostsub")}</h2>
         </span>

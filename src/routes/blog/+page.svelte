@@ -8,7 +8,7 @@
     import BigBlogpost from "$lib/components/BigBlogpost.svelte";
     import { onMount } from "svelte";
     import BlogpostOpened from "$lib/components/BlogpostOpened.svelte";
-    import { getBlogPosts, openBlogpost, removeParams, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
+    import { getBlogPost, openBlogpost, removeParams, sendGithubApiRequest, toggleScroll } from "$lib/scripts/utils";
     import GithubLoginBar from "$lib/components/GithubLoginBar.svelte";
     import { page } from "$app/stores";
     import { PUBLIC_GITHUB_CLIENT_ID } from "$env/static/public";
@@ -46,7 +46,10 @@
     }).search(searchQuery ?? "").map(p => p.item.id)
 
     // Get blogposts on github on first load
-    let getBlogPostsAndBranchHash = async () => {
+    let getBlogPosts = async () => {
+        if ($blogPosts) return // If already loaded, do not update
+        $blogPosts = {}
+
         // Get the branch hash for getting github data later
         branchHash = (
             await (
@@ -55,8 +58,35 @@
         ).object.sha
         if (!branchHash) return
 
-        // Get blogpost data
-        await getBlogPosts()
+        // Get all of the files on the blogposts branch
+        let files : GitHubFile[] | null = (
+            await (
+                await sendGithubApiRequest(`repos/${consts.REPO}/git/trees/${consts.BLOG_BRANCH}?recursive=1`, false)
+            )?.json()
+        ).tree
+        if (!files) return
+        let mdFiles : string[] = files.map(f => f.path).filter(f => f.endsWith(".md")).toSorted().reverse() // Filter by markdown files
+        $expectedBlogPostsLength = mdFiles.length // Set the expected number of blogposts
+
+        // For each of the markdown files, get info and add to relevant stores
+        mdFiles.forEach(async path => {
+            path = path.replace(".md", "") // Get the path without the extension 
+
+            // Get and add blogpost if exists
+            let blogpost = await getBlogPost(path)
+            if (!blogpost) return
+            $blogPosts![path] = blogpost
+            $postsByTag[blogpost.metadata.tag][path] = blogpost
+
+            // For testing purposes, do not enable in prod
+            // for (let i = 1; i < 16; i++) {
+            //     let blogpost2 : BlogPost = JSON.parse(JSON.stringify(blogpost))
+            //     blogpost2.metadata.tag = i
+            //     blogpost2.metadata.title = "amogu"
+            //     $blogPosts![path+"-test"+i] = blogpost2
+            //     $postsByTag[blogpost2.metadata.tag][path+"-test"+i] = blogpost2
+            // }
+        })
     }
     // Auth with github
     let exchangeGithubCode = async () => {
@@ -84,7 +114,7 @@
         setTimeout(() => {tagsHidden = $mobile}, 1)
 
         await exchangeGithubCode()
-        await getBlogPostsAndBranchHash()
+        await getBlogPosts()
 
         if (window.location.hash) openBlogpost(window.location.hash.replace(/^#/, ""))
         else if ($page.url.searchParams.get("id")) {
@@ -146,7 +176,7 @@
                                     {#if !tagsHidden}
                                         <div class="mobile:flex mobile:flex-col mobile:gap-1.5" transition:slide={{duration: 200 * +!$reducedMotion}}>
                                             {#each [...Array(16).keys()].filter(i => $_("ui.blogtags")[i]!="-") as i}
-                                                <button class="flex justify-between w-full pl-1 pr-2 motion-safe:duration-200 motion-safe:hover:desktop:scale-105 hover:desktop:{$lightMode ? "bg-header-light" : "bg-header-dark"}{selectedTag==i ? ` mobile:py-1 motion-safe:desktop:scale-105 ${$lightMode ? "bg-header-light" : "bg-header-dark"}` : ""}" on:click={() => {selectedTag = selectedTag==i ? null : i}}>
+                                                <button class="flex justify-between w-full pl-1 pr-2 motion-safe:duration-200 motion-safe:hover:desktop:scale-105 {$lightMode ? "hover:desktop:bg-header-light" : "hover:desktop:bg-header-dark"}{selectedTag==i ? ` mobile:py-1 motion-safe:desktop:scale-105 ${$lightMode ? "bg-header-light" : "bg-header-dark"}` : ""}" on:click={() => {selectedTag = selectedTag==i ? null : i}}>
                                                     <BlogpostTag tagIndex={i} />
                                                     <p>{Object.keys($postsByTag[i]).length}</p>
                                                 </button>

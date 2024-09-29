@@ -6,7 +6,9 @@ const consts = {
     REPO: "Modern-Modpacks/website", // The github repo where the website's source is hosted on
     BLOG_BRANCH: "blogposts", // The branch on REPO where raw blogpost .md files are hosted
     MISSING_BLOGPOST_THUMBNAIL: "https://raw.githubusercontent.com/Modern-Modpacks/website/refs/heads/blogposts/noblogpost.png", // A link to what should be shown isntead of the thumbnail if the blogpost is not found
+
     WORD_BLOCKLIST: "https://gist.githubusercontent.com/Gcat101/b8ae78d19252e8f7b7225a377e0a0f81/raw/badwords.txt", // A link to a text file containing regexes for all words that need to be blocked
+    BLOG_BANLIST: [], // List of people banned from commenting on blogs 
 
     COLORS: [ // MM's brand colors' names
         "red",
@@ -86,52 +88,42 @@ const consts = {
     SOCIALS: { // Links to various socials of MM
         "CurseForge": {
             url: "https://curseforge.com/members/modernmodpacks",
-            title: "CurseForge",
             header: true
         },
         "Modrinth": {
             url: "https://modrinth.com/organization/modernmodpacks",
-            title: "Modrinth",
             header: false
         },
         "GitHub": {
             url: "https://github.com/Modern-Modpacks",
-            title: "GitHub",
             header: true
         },
         "GitBook": {
             url: "https://wiki.modernmodpacks.site",
-            title: "GitBook",
             header: true
         },
         "Discord": {
             url: "https://discord.modernmodpacks.site",
-            title: "Discord",
             header: true
         },
         "Reddit": {
             url: "https://reddit.com/r/modernmodpacks",
-            title: "Reddit",
             header: false,
         },
         "YouTube": {
             url: "https://www.youtube.com/@ModernModpacks",
-            title: "YouTube",
             header: true
         },
         "Mastodon": {
             url: "https://mastodon.social/@ModernModpacks",
-            title: "Mastodon",
             header: true
         },
         "Ko-fi": {
             url: "https://ko-fi.com/modernmodpacks",
-            title: "Ko-fi",
             header: true
         },
         "Email": {
             url: "mailto:info@modernmodpacks.site",
-            title: "Email",
             header: false
         }
     },
