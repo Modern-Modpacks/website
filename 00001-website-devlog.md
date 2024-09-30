@@ -93,7 +93,7 @@ At first I was reluctant to add them, they would require moderation and take up 
 
 For moderation, I figured if I just blocked enough words, it will do itself. Because of this, the filter is quite harsh (ex. you can't post links at all), but this should hopefully save me from the hastle of manual sorting. There is also a ban list for especially bad boys, which blocks all of their comments from being seen and stops them from sending new ones. Don't be a bad boy.
 
-The way translation is done was redone a couple of times, in the end it's quite logical and stable, so if you want to help with it, the file to translate is available [here](https://github.com/Modern-Modpacks/website/blob/v2/src/lib/json/langs/en.json5).
+The way translation is done was redone a couple of times, in the end it's quite logical and stable, so if you want to help with it, the file to translate is available [here](https://github.com/Modern-Modpacks/website/blob/v2/src/lib/json/langs/en.json5). Blogs are, however, do not have translations. I don't get paid enough for this shit and neither are any of you.
 
 And that's about it for design. I can also mention how I made the animation atop of the projects section, the light theme being implemented in a day, all different sorts of extra menus; but I don't think they are as entertaining as the other aspects I mentioned prior. ~~To be honest, those aspects weren't that entertaining, they were slightly amusing at best. God this post sucks.~~
 
