@@ -1,0 +1,297 @@
+{
+    "name": "Deutsch",
+
+    "splashes": [
+        // "Making 1.16.5 expert modpacks circa 2022",
+        "Minecraft ohne Minecraft",
+        // "Vazkii is a mod by neat!",
+        "Greg ist Liebe, Greg ist Leben!",
+        // "Woo! PGA!",
+        // "Check out supersymmetry!",
+        // "WeGoByASingleName",
+        // "Speedy modpacks for you!",
+        // "@zeldalord activate windows",
+        // "Do you take constructive criticism?",
+        // "Votes for the purple square!",
+        // "dinner time",
+        // "Compromises on the uncompromisable!",
+        // "Hellish and devilish!",
+        // "Minecraft Potato Edition",
+        // "r/feedthememes approved!",
+        // "Deez packs. Gottem",
+        // "Shoutout to Pansmith!",
+
+        // "Asbestos free since 2023!",
+        // "Not sponsored!",
+        // "This ain't your grandma's modpacks",
+        // "Obsessed with beets!",
+        // "Clinically insane (sometimes)!",
+        "Lass uns kochen",
+        "KubeJS > CraftTweaker",
+        // "5 minute in-and-out coding adventure!",
+        "skibidi gyatt ohio rizz",
+        // "Not enshittified!",
+        // "Games, unlimited games",
+        // "Find community!",
+        // "Credit the creators",
+        // "Underpromise, overdeliver",
+        "50% modern, 50% modpack",
+        // "Expect the excpected, unexpect the unexcpected",
+        // "Also try Inscryption!",
+        "Google en passant",
+        // "Nothing ever happens",
+        // "Trans rights!",
+        // "Blåhaj rights!",
+        "Sogar mit Farben!",
+        "Ton inklusive!",
+        // "The splash will be emailed to you in 2-3 business days",
+        // "Human made!",
+        // "Adopt json5!",
+        // "Welcoming community!",
+        "Du atmest jetzt manuell.",
+        // "Democracy is awesome!",
+        // "Prefers MIT!",
+        // "Flamboyant!",
+        // "Worldwide!",
+        // "Free and open source!",
+        "/srs",
+        // "Legal in at least 100 countries!",
+        // "This splash will never be displayed... shit",
+        // "Stay hydrated!",
+        // "More than not enough!",
+        "Geh schlafen.",
+        // "Take breaks!"
+    ],
+
+    "ui": {
+        "navbar": {
+            "projects": "Projekte",
+            "aboutus": "Über uns",
+            "blog": "Blog",
+            "status": "Status",
+        },
+        "settings": {
+            "title": "Einstellungen",
+
+            "language": "Sprache",
+            "darkmode": "Dunkelmodus",
+
+            "darkmodewarning": "Warnung: Der helle Modus könnte deine Augen verbrennen!",
+        },
+        "footer": {
+            "version": "Website v2. Gebaut mit <a href=\"https://kit.svelte.dev/\" target=\"_blank\" rel=\"noopener noreferrer\">SvelteKit</a>.",
+            "opensource": "Diese Webseite ist <a href=\"{link}\" target=\"_blank\" rel=\"noopener noreferrer\">open-source</a> und unter der <a href=\"https://github.com/Modern-Modpacks/website/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener noreferrer\">MIT-Lizenz</a> lizensiert.",
+
+            "quickaccess": "Schnellzugriff",
+            "links": {
+                "report": "Fehler melden",
+                "attributions": "Lizenzzuordnung",
+                "stack": "Unser Tech-Stack",
+                "cats": "Lustige Katzen",
+            },
+        },
+
+        "download": "Herunterladen",
+        "view": "Ansehen",
+        "source": "Quellcode",
+
+        "tagstitle": "Tags",
+        "tags": {
+            "tech": "Tech",
+            "magic": "Magie",
+            "exploration": "Erkundung",
+            "kitchensink": "Kitchen-sink",
+            "rpg": "RPG",
+
+            "lore": "Story",
+            "automation": "Automatisierung",
+            "space": "Weltall",
+            "gt": "GregTech",
+        },
+        "chief": "Chef",
+        "titles": {
+            "founder": "Gründer",
+            "owner": "CEO",
+
+            "hm": "HM-Mitglied",
+            "utilcreator": "Utility-Ersteller",
+
+            "scripter": "KubeJS-Skripter",
+            "multiblocker": "Multiblock-Experte",
+            "automater": "Automatisierungsbeauftragter",
+
+            "pixelartist": "Pixel-Künstler",
+
+            "questwriter": "Questautor",
+            "lore": "Story-Experte",
+
+            "webdev": "Webentwickler",
+            "webmaintainer": "Website-Wartung",
+
+            "frontendconsult": "Frontend-Berater",
+            "realismconsult": "Realismus-Berater",
+
+            "translator": "Übersetzer",
+            "chief_translator": "Chef-Übersetzer",
+            "ex_translator": "Ehemaliger Übersetzer",
+        },
+        "blogtags": [
+            "Meinung",
+            "Exposé",
+            "Hinter den Kulissen",
+            "Ankündigung",
+            "Off-topic",
+            "Von Gast geschrieben",
+            "Zeitplanung",
+            "Antwort",
+            "Experiment",
+            "Update",
+            "Ergänzung",
+            "TL;DR",
+            "Temporär",
+            "-",
+            "-",
+            "Diverses",
+        ],
+
+        "ram": {
+            "title": "Arbeitsspeicheranforderungen",
+            "minimal": "Minimal",
+            "recommended": "Empfohlen",
+        },
+
+        "openon": "In {name} öffnen",
+
+        "wip": "WIP!",
+        "wipbig": "In Arbeit!",
+        "wipbigmm": "In Arbeit! Klicke, um unserem Discord für Updates beizutreten.",
+        "wipbigdiscord": "In Arbeit! Klicke, um den Discord der Entwickler beizutreten.",
+        "construction": "Im Aufbau",
+        "discord": "Trete dem Discord bei!",
+
+        "login": "Mit GitHub anmelden",
+        "logout": "Abmelden",
+        "no_profile": "Du bist aktuell <b>nicht angemeldet</b>.",
+        "profile": "Als <b>{name}</b> angemeldet!",
+        "search": "Suche",
+        "loadallposts": "Alle Posts laden",
+        "ratelimit": "<b>Oh nein! Scheint, als hättest du zu oft unseren Blog neu geladen.</b><br><br>Wir nutzen GitHub um den Blog bereitzustellen - möchtest du <a href=\"{link}\">ihn auf GitHub lesen</a> oder dich mit GitHub anmelden?",
+
+        "views": "Ansichten",
+        "comments": "Kommentare",
+        "leavecomment": "Als {name} ein Kommentar hinterlassen",
+        "commentdisabled": "Melde dich an, um ein Kommentar zu hinterlassen",
+        "writtenby": "{author}, {time}",
+        "editedby": "Zuletzt von {author} bearbeitet ({time})",
+        "commentedon": "{time}",
+
+        "missingblogpost": "Keine weiteren Posts",
+        "missingblogpostsub": ":(",
+        "missingblogpostdesc": "Schau später noch einmal vorbei, okay?",
+
+        "mapcredit": "Karte von Gl0W1E",
+    },
+
+    "modpacks": {
+        "fa": {
+            "shortdesc": "Du wirst auf eine wichtige Mission in einem längst verlassenen Teil des Universums geschickt. Wirst du es lebend herausschaffen?",
+            "longdesc": "<b>Du erwachst in einer Landekapsel.</b> Dein Ziel? Die Erde, Sektor α.\n\n\
+            <b>Nach einer weniger sanften Landung begrüßt dich eine Stimme über Funk.</b> Der Operator am anderen Ende informiert dich, dass du dich freiwillig für eine Mission gemeldet hast, die darauf abzielt, Ressourcen zu sammeln und diese zurückzubringen, die es nur in diesem Teil des Universums gibt.\n\n\
+            <b>Als du langsam wieder zu Bewusstsein kommst,</b> öffnet sich eine mechanische Tür und offenbart einen wunderschönen nächtlichen Himmel.\n\n\
+            <b>Erkunde das Universum,</b> sammle und automatisiere Materialien, finde und verbinde dich mit dem, was von der Flora und Fauna übrig ist, und entdecke die Geheimnisse dieses uralten Sektors.",
+        },
+
+        "gtb": {
+            "shortdesc": "Ein GregTech Modpack, das sorgfältig so gestaltet wurde, dass es so komplex wie möglich ist, ohne das Spiel zu beeinträchtigen.",
+            "longdesc": "<b>GregTech Beyond integriert und kombiniert Mods wie</b> Gregtech, Nuclearcraft, Pneumaticraft, AE2, Thermal Foundation und viele mehr.\n\n\
+            <b>Optional kannst du ein Magier werden und Thaumcraft verwenden.</b> Gründe dein Imperium und werde der reichste Mensch der Welt, indem du Bienen züchtest. Wage dich in die Tiefen des Voids.\n\n\
+            <b>Schürfe ganze Planeten</b> und sogar <b>Galaxien</b> mit den Galactical Miners. Starte Weltraummissionen mit deinen Astro Mining Stations.\n\n\
+            Denke immer an den wichtigsten Satz: <b>Die Fabrik muss wachsen.</b>",
+        },
+
+        "qp": {
+            "shortdesc": "Ein einzigartiger Ansatz für Kitchen-Sink-Modpacks, der sich hauptsächlich auf das Multiplayer-Erlebnis konzentriert.",
+            "longdesc": "<b>Quanpack</b> dreht das Konzept eines Kitchen-Sink auf den Kopf und unterscheidet sich dadurch von der Masse der anderen Packs in diesem Genre.\n\n\
+            <b>Dieses Modpack</b> enthält einige der bekanntesten Mods, wie unter anderem: <b>Thaumcraft, Botania, Astral Sorcery, Nature's Aura, AbyssalCraft, Embers, Blood Magic</b> und <b>Roots</b>.\n\n\
+            <b>Es enthält auch einige der weniger bekannten Projekte,</b> die <b>von ebenso hoher, wenn nicht höherer Qualität sind</b> als die zuvor beschriebenen Mods.\n\n\
+            <b>Wenn du Kitchen-Sinks magst,</b> ist dieses Pack genau das Richtige für dich. <b>Die Fülle</b> an Inhalten wird dich niemals langweilen lassen, <b>vor allem nicht, wenn du mit anderen spielst!</b>",
+        },
+    },
+    "sideprojects": {
+        "website": "Die Webseite, auf welcher du dich gerade befindest, ist Open-Source - auf GitHub!",
+        "kjspkg": "Ein einfaches KubeJS Biblothekverwaltungstool in Python",
+        "kjspkglookup": "Ein Frontend für KJSPKG",
+        "missing": "Ein Discord-Bot, gebaut für Modern Modpacks.",
+        "trdne": "Ein prozeduraler Generator, der realistische Screenshots von unechten Rezepten erstellt",
+        "pissmc": "Ein Modloader für rd-132211",
+        "awesome": "Eine kuratierte Awesome-Liste mit nützlichen Tools für die Modpack-Entwicklung",
+    },
+    "languages": {
+        "ru": "Russisch",
+        "de": "Deutsch",
+        "tr": "Türkisch",
+        "fr": "Französisch",
+        "es": "Spanisch",
+        "cn": "Chinesisch (vereinfacht)",
+    },
+
+    "projects": {
+        "modpacks": {
+            "heading": "Wir entwickeln Minecraft-Modpacks für 1.16.5",
+            "desc": "\
+                <b>Das Wort \"Modpack\" wurde in letzter Zeit durch die überwältigende Menge an minderwertigem Schrott,</b> der täglich von Leuten ins Internet hochgeladen wird, die keine Ahnung haben, was sie tun, ziemlich verdorben. Die meisten von ihnen werfen einfach eine Menge Mods zusammen, ohne sich Gedanken über ihre Kompatibilität zu machen.\n\n\
+                <b>Wir hingegen möchten das ändern.</b> Wir lassen uns von Modpacks inspirieren, die den Spielern über längere Zeiträume hinweg wirklich Freude bereiten – solche Perlen wie <b>Divine Journey 1/2, Die Enigmatica-Serie, Nomifactory, Create Above and Beyond, GregTech: New Horizons</b> und andere Packs, die einfach Spaß machen, zu entdecken und zu spielen.\n\n\
+                <b>Kein \"Kitchen Sink\"-Blödsinn, Fortschrittsbasierte Modpacks sind der einzige Weg.</b> Es gibt nur so viel, was man tun kann, ohne das Fortschrittssystem des Spiels vollständig zu überarbeiten. <b>Wir leugnen nicht, dass Vanilla+ für einige Spaß machen kann, wenn es richtig gemacht ist,</b> aber die meisten von uns kamen zur Mod-Szene, weil wir von Vanilla gelangweilt waren, und wir glauben, dass man, wenn man von der unmodifizierten Erfahrung ausgebrannt ist, nichts suchen sollte, das sie nachahmt.\n\n\
+                <b>Wir gestalten unsere Modpacks, als wären es Spiele,</b> und träumen davon, 16 davon zu erstellen. Wir wissen, dass unser Ziel unrealistisch ist, und deshalb betrachten wir es als sekundär gegenüber dem <b>Bereitstellen von Qualitätserlebnissen</b> für dich und andere Mitglieder der Community, unabhängig von ihren Vorlieben oder Fähigkeiten. <b>Schnapp dir einfach ein Modpack und schau, ob es zu dir passt!</b>\
+            ",
+        },
+        "partner": {
+            "heading": "Nicht genug für dich?\nSchau dir die Packs unserer Partner an!",
+            "desc": "<b>Partner sind nicht mit Modern Modpacks verbunden,</b> aber wir vertrauen ihnen genug, um ihre Modpacks hier aufzulisten.\n<b>Möchtest du Partner werden?</b> Schick uns eine Nachicht auf Discord!",
+        },
+        "hellish": {
+            "heading": "Wir entwickeln auch Mods",
+            "desc": "\
+                <b>Unsere Tochterorganisation, Hellish Mods,</b> spezialisiert sich auf die Entwicklung von Mods für <b>Forge 1.16.5</b>; mit dem Hauptfokus auf nützliche Mods sowie Forks/Ports anderer Mods, die für diese spezielle Version eingestellt wurden oder <b>nie für 1.16 verfügbar waren.</b>\n\n\
+                <b>Da unser Hauptziel</b> immer noch die Erstellung von Modpacks ist, entwickeln wir in der Regel keine großen Inhaltsmods, es sei denn, wir wollen oder müssen, und erstellen nur <b>kleine Projekte,</b> um das Modpack, an dem wir gerade arbeiten, durch Funktionen zu ergänzen, die wir auf andere Weise nicht umsetzen können.\n\n\
+                <b>Unsere nützlichen Mods</b>, auch wenn sie aus der Notwendigkeit für Projekte entstehen, die noch nicht gemacht wurden, sind <b>nie hyper-spezifisch,</b> was sie auch für andere Modpack-Autoren oder einzelne Spieler nützlich macht.\n\n\
+                <b>Forks von Open-Source-Mods</b> werden ebenfalls aus denselben Gründen und mit denselben Absichten von uns erstellt. <b>Wenn wir ein Projekt forken,</b> fügen wir nicht nur die Dinge hinzu, die wir brauchen, sondern auch andere von der Community stark nachgefragte Features.\n\n\
+                <b>Ports helfen uns,</b> unsere bevorzugte Version am Leben zu erhalten, indem wir veraltete Mods für Versionen wie <b>1.12.2/1.7.10</b> modernisieren und Mods von neueren Versionen wie <b>1.18.2/1.20.1</b> zurückportieren.\n\n\
+                <b>Unsere Mods funktionieren am besten</b>, wenn sie in unseren Modpacks verwendet werden. Wenn du also als Spieler ausprobieren möchtest, was darin enthalten ist, empfehlen wir dir, eines der <b>Packs im Abschnitt oben herunterzuladen!</b>\
+            ",
+        },
+        "ecosystem": {
+            "heading": "Willkommen im Ökosystem",
+            "desc": "<b>Es endet nicht nur bei Mods!</b> Wir haben viele Projekte, die nicht Mods oder Modpacks sing. Darunter nützliche Entwicklungstools, lustige Websites, Discord-Bots und sogar <b>ein Modloader!</b> Interessiert?",
+        },
+    },
+    "about": {
+        "members": {
+            "heading": "Das Team",
+            "desc": "<b>Das sind wir!</b> Wir sind eine Gruppe von Freiwilligen, die ihre Fähigkeiten bereitstellen, um auf irgendeine Weise zu unseren Projekten beizutragen.\n\n\
+            <b>Modern Modpacks</b> strebt danach, eine demokratische Organisation zu sein, in der keine einzelne Person das Recht hat, die Richtung eines bestimmten Projekts zu bestimmen. <b>Beim Entwickeln von Modpacks verwenden wir eine umfassende Ideen-Pipeline,</b> wobei ein wesentlicher Teil davon ein Abstimmungsprozess ist.\n\n\
+            <b>Mitglieder sind auch frei,</b> zu wählen, an welchen Projekten sie beteiligt sein wollen oder eigene Projekte zu starten. <b>Für das wenige Geld, das wir bekommen,</b> wird jeder anteilig zu der Menge an Arbeit bezahlt, die sie in das Endprodukt gesteckt haben.\n\n\
+            <b>Wir versuchen, die Hierarchie so flach wie möglich zu halten.</b> Unser System basiert derzeit auf 3 Ebenen – <b>dem Eigentümer,</b> der bestimmt, an welchem Projekt gerade am meisten gearbeitet wird; <b>den Mitgliedern,</b> die sowohl als Freiwillige für die Projekte als auch als Moderatoren für unseren Discord-Server fungieren; und <b>den Testmitgliedern,</b> die nach einer gewissen Zeit befördert werden.\n\n\
+            <b>Die Trennung</b> dieser Rollen ist absichtlich sehr unbedeutend. Die Ebene, zu der jemand gehört, beeinflusst weder ihre Bezahlung noch ihren Einfluss innerhalb des Unternehmens.",
+        },
+        "translators": {
+            "heading": "Wir sind international",
+            "desc": "Bei <b>Modern Modpacks</b> sind wir stolz auf unsere Hingabe, unsere Mods und Modpacks so international wie möglich zu machen. Ein großer Teil davon ist <b>die Übersetzung in verschiedene Sprachen.</b>\n\n\
+            <b>Diese Karte</b> enthält eine Liste aller aktuellen Übersetzer, sortiert nach ihrer jeweiligen Sprache. <b>Einige von ihnen</b> sind auch Mitglieder von MM und leisten zusätzlich ehrenamtliche Arbeit. <b>Andere</b> sind nur neugierige externe Übersetzer, die nicht besonders daran interessiert sind, beizutreten, aber dennoch in irgendeiner Weise helfen wollen.",
+        },
+        "testers": {
+            "heading": "Wir sind Qualität",
+            "desc": "Ein Wort – <b>Testen. Viel Testen.</b> Und obwohl wir natürlich unsere Packs während der Entwicklung testen, <b>ist es fast unmöglich,</b> jeden einzelnen Fehler zu finden.\n\n\
+            <b>Hier kommen unsere Tester ins Spiel.</b> Tester sind eine separate Gruppe von Freiwilligen, deren Aufgabe es ist, <b>unsere Mods und Modpacks in ihrem Rohzustand zu spielen</b> und uns Rückmeldung zu geben.",
+        },
+        "joinus": {
+            "heading": "Tritt uns bei",
+            "desc": "<b>Möchtest du Mitglied, Übersetzer oder Tester werden?</b> <b>Tritt uns bei!</b> Wir sind immer auf der Suche nach mehr Unterstützung und freuen uns auf dich.",
+        },
+        "mission": {
+            "heading": "Unsere Mission",
+            "desc": "<b>Modern Modpacks</b> basiert auf einigen zentralen Prinzipien. <b>Wir weichen gelegentlich davon ab,</b> aber in der Regel halten wir uns an diese Punkte, um die Richtung unserer Projekte zu leiten.\n\n\
+            <b>Qualität vor Quantität</b> – Trotz unseres Ziels, 16 Modpacks zu erstellen, <b>setzen wir auf Qualität und geben nichts heraus, bevor es nicht perfekt ist.</b>",
+        },
+    },
+}
