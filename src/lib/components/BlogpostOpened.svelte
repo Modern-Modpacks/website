@@ -161,7 +161,7 @@
                             [&_*]:max-w-full [&_*]:[grid-column:2/3] [&_*]:h-fit
                             [&_h1]:text-5xl [&_h1]:pb-2 {$upsideDownLocale ? "[&_h1]:border-t-4" : "[&_h1]:border-b-4"} {$lightMode ? "[&_h1]:border-text-light" : "[&_h1]:border-text-dark"} [&_h2]:text-4xl [&_h2]:font-bold [&_h2]:pb-2 mobile:[&_h2]:mt-4 {$upsideDownLocale ? "[&_h2]:border-t-2" : "[&_h1]:border-b-2"} {$lightMode ? "[&_h2]:border-text-light" : "[&_h2]:border-text-dark"}
                             [&_h3]:text-3xl [&_h3]:font-bold mobile:[&_h3]:mt-4 [&_h4]:text-2xl [&_h4]:font-semibold mobile:[&_h4]:mt-4 [&_h5]:text-xl [&_h5]:font-semibold mobile:[&_h5]:mt-4 [&_p]:text-lg [&_a]:!text-mm-lightblue [&_a:hover]:underline
-                            [&_img]:rounded-lg mobile:[&_img]:rounded-2xl mobile:[&_img]:py-2
+                            [&_img]:rounded-lg mobile:[&_img]:w-full mobile:[&_img]:h-full mobile:[&_img]:rounded-2xl mobile:[&_img]:py-2
                             [&_ul]:list-disc [&_ul]:ml-8 [&_ol]:list-decimal [&_ol]:ml-8 [&_li]:list-inside
                             [&_blockquote]:flex [&_blockquote]:gap-2 mobile:[&_blockquote]:my-4 [&_blockquote]:before:content-[''] [&_blockquote]:before:block [&_blockquote]:before:w-2 {$lightMode ? "[&_blockquote]:before:bg-primary-light" : "[&_blockquote]:before:bg-primary-dark"}
                             [&_code]:bg-header-dark [&_code]:py-1.5 [&_code]:px-2.5 [&_code]:rounded-xl mobile:[&_code]:my-4 [&_code]:font-[monospace] [&_code_*]:font-[monospace]

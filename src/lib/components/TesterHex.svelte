@@ -66,7 +66,7 @@
     <span class="absolute w-48 h-48 mobile:w-32 mobile:h-32 duration-500{showHex ? "" : " opacity-0 pointer-events-none"}" style="top: {(col%2 ? ($mobile ? 0 : -11) : ($mobile ? -3 : -5)) + (row * ($mobile ? 8.5 : 12.5))}rem; left: {($mobile ? -3 : -5) + (col * ($mobile ? 8 : 10.5))}rem;">
         <BreathingIcon duration={2000} minScale={100} maxScale={105} delay={150 * count} class="peer duration-200 motion-safe:desktop:[&:not(:hover)]:group-hover:!scale-100 motion-safe:desktop:hover:!scale-[115%]" style="clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);">
             <a href="https://github.com/{tester.github.username}" target="_blank" rel="noopener noreferrer" title="GitHub ({tester.github.username})">
-                <img src="{getContributorAvatar(tester)}" alt="{tester.name}'s avatar">
+                <img src="{getContributorAvatar(tester)}" alt="{tester.name}'s avatar" class="w-full h-full">
             </a>
         </BreathingIcon>
     </span>
