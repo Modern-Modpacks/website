@@ -111,23 +111,25 @@
                     <div class="[&_a:hover>*]:underline [&_button:hover>*]:underline">
                         <div class="relative flex flex-col gap-2 px-20 mobile:px-12 pt-12 mobile:pt-8 pb-8 [&>span>*]:inline-block [&>span>*]:w-fit">
                             <span class="[&>a>*]:inline-block [&_*]:align-middle">
-                                <a href="{blogpost.ghdata?.created.url}" target="_blank" rel="noopener noreferrer">
-                                    <p>{$_("ui.writtenby")}</p>
-                                    <img src="{blogpost.ghdata?.created.author ? getContributorAvatar(blogpost.ghdata?.created.author) : ""}" alt="{blogpost.ghdata?.created.author.name}'s avatar" class="h-8 w-8 rounded-full">
-                                    <p>{blogpost.ghdata?.created.author.name}</p>
-                                    <p>{$_("ui.timeon")}</p>
-                                    <p>{blogpost.ghdata?.created.time.format("LLL")}</p>
+                                <a href="{blogpost.ghdata?.created.url}" target="_blank" rel="noopener noreferrer" class="[&>p>*]:inline-block">
+                                    <p>{@html $_("ui.writtenby", {values: {
+                                        author: `
+<img src="${blogpost.ghdata?.created.author ? getContributorAvatar(blogpost.ghdata?.created.author) : ""}" alt="${blogpost.ghdata?.created.author.name}'s avatar" class="h-8 w-8 rounded-full">
+<p>${blogpost.ghdata?.created.author.name}</p>`,
+                                        time: blogpost.ghdata?.created.time.format("LLL")
+                                    }})}</p>
                                 </a>
 
                                 {#if blogpost.ghdata?.edited}
                                     {#if !$mobile}<p>|</p>{/if}
                                     
-                                    <a href="{blogpost.ghdata.edited.url}" target="_blank" rel="noopener noreferrer" class="[&>p]:opacity-35">
-                                        <p>{$_("ui.editedby")}</p>
-                                        <img src="{blogpost.ghdata.edited.author ? getContributorAvatar(blogpost.ghdata.edited.author) : ""}" alt="{blogpost.ghdata?.edited.author.name}'s avatar" class="h-8 w-8 rounded-full">
-                                        <p>{blogpost.ghdata.edited.author.name}</p>
-                                        <p>{$_("ui.timeon")}</p>
-                                        <p>{blogpost.ghdata.edited.time.format("LLL")}</p>
+                                    <a href="{blogpost.ghdata.edited.url}" target="_blank" rel="noopener noreferrer" class="[&>p]:opacity-35 [&>p>*]:inline-block">
+                                        <p>{@html $_("ui.editedby", {values: {
+                                            author: `
+    <img src="${blogpost.ghdata?.edited.author ? getContributorAvatar(blogpost.ghdata?.edited.author) : ""}" alt="${blogpost.ghdata?.edited.author.name}'s avatar" class="h-8 w-8 rounded-full">
+    <p>${blogpost.ghdata?.edited.author.name}</p>`,
+                                            time: blogpost.ghdata?.edited.time.format("LLL")
+                                        }})}</p>
                                     </a>
                                 {/if}
                             </span>
@@ -209,7 +211,7 @@
                                             <a href="https://github.com/{c.author.name}" title="GitHub ({c.author.name})">
                                                 <b>{c.author.name}</b>
                                             </a>
-                                            <b class="opacity-35">{$mobile ? "" : $_("ui.commentedon")+" "}{moment(c.timestamp).format("lll")}</b>
+                                            <b class="opacity-35">{$mobile ? "" : $_("ui.commentedon", {values: {time: moment(c.timestamp).format("lll")}})}</b>
                                         </span>
                                         <p class="max-w-full ml-[4.5rem] mobile:ml-10 mr-4 mobile:mt-1 pb-4 mobile:pb-1 break-words">
                                             {c.content}

@@ -136,10 +136,9 @@
         "comments": "Комментарии",
         "leavecomment": "Оставить комментарий как {name}",
         "commentdisabled": "Войдите, чтобы оставить комментарий",
-        "writtenby": "Написано",
-        "editedby": "В последний раз изменено",
-        "timeon": "​",
-        "commentedon": "прокомментировали",
+        "writtenby": "Написано {author} {time}",
+        "editedby": "В последний раз изменено {author} {time}",
+        "commentedon": "прокомментировали {time}",
 
         "missingblogpost": "Больше блогпостов",
         "missingblogpostsub": "не найдено!",

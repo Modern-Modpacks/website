@@ -181,10 +181,9 @@
         "comments": "Comments",
         "leavecomment": "Leave a comment as {name}",
         "commentdisabled": "Login to leave a comment",
-        "writtenby": "Written by",
-        "editedby": "Last edited by",
-        "timeon": "on",
-        "commentedon": "commented on",
+        "writtenby": "Written by {author} on {time}",
+        "editedby": "Last edited by {author} on {time}",
+        "commentedon": "commented on {time}",
 
         "missingblogpost": "No more",
         "missingblogpostsub": "blogposts available!",
