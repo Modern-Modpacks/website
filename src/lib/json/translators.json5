@@ -11,9 +11,17 @@
         }
     ],
     "de": [
+	    {
+            "name": "Tizu",
+            "title": "chief",
+
+            "github": {
+                "username": "tizu69",
+                "id": 60812901
+            }
+        },
         {
             "name": "Rainbuu",
-            "title": "chief",
 
             "github": {
                 "username": "RealRainbuu",

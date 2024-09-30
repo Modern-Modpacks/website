@@ -68,6 +68,18 @@
         "socials": ["https://www.curseforge.com/members/wolfieboy09", "https://modrinth.com/user/Wolfieboy09"]
     },
     {
+        "name": "qwerty97475",
+        "avatar_url": "https://cdn.discordapp.com/avatars/1067218248552157306/26157f02b72130a8da263c3b95b2f456.png?size=512",
+
+        "github": {
+            "username": "Qwerty97475",
+            "id": 167593041
+        },
+
+        "titles": ["pixelartist"],
+        "socials": ["https://www.curseforge.com/members/qwerty97475"]
+    },
+    {
         "name": "ZeldaLord",
 
         "github": {
