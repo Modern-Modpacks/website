@@ -174,7 +174,7 @@
                                     <img src="{ghUserData.avatar_url}" alt="{ghUserData.login}'s avatar" class="w-16 h-16 mobile:w-12 mobile:h-12 p-2 self-start rounded-full">
                                 {/if}
                                 <textarea
-                                    autocomplete="off" maxlength="{charLimit}" placeholder="{ghUserData ? `${$_("ui.leavecomment")} ${ghUserData.login}` : $_("ui.commentdisabled")}" 
+                                    autocomplete="off" maxlength="{charLimit}" placeholder="{ghUserData ? $_("ui.leavecomment", {values: {name: ghUserData.login}}) : $_("ui.commentdisabled")}" 
                                     disabled={!ghUserData} bind:value={comment} 
                                     class="h-full {ghUserData ? "w-[90%] mobile:w-[60%] desktop:mr-14" : "w-[95%] mobile:w-[80%]"} pt-4 mobile:pt-3 text-2xl mobile:text-base resize-none [&::-webkit-scrollbar]:hidden bg-transparent{!ghUserData ? " cursor-not-allowed" : ""} placeholder:font-semibold {$lightMode ? "placeholder:text-text-light" : "placeholder:text-text-dark"} placeholder:opacity-35 focus:outline-none"
                                 />

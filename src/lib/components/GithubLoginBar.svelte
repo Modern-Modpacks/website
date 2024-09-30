@@ -13,7 +13,7 @@
             {#await sendGithubApiRequest("user", true) then req}
                 {#await req?.json() then info}
                     <img src="{info.avatar_url}" alt="{info.login}'s avatar" class="h-16 w-16 rounded-full">
-                    <p>{$_("ui.profile")} <b>{info.login}.</b></p>
+                    <p>{@html $_("ui.profile", {values: {name: info.login}})}</p>
 
                     <button class="group/button flex items-center gap-2 h-16 px-4 {$lightMode ? "bg-text-light" : "bg-text-dark"} rounded-full ml-auto" on:click={() => {$ghApiKey = null}}>
                         <b class="{$lightMode ? "!text-selected-text-light" : "!text-selected-text-dark"} mobile:hidden">{$_("ui.logout")}</b>
