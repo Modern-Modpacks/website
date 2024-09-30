@@ -79,7 +79,7 @@ Some effects were stolen from other places. Like the wall of contributors being 
 
 The blog was definetely the one I had the most fun time implementing. At first, it was supposed to be an entire separate website onto itself, but when I first had the of v2 pop up in my head, I have immediately decided it would be better for it to just be part of that instead. 
 
-Currently, the blog works using a system which fetches blogposts (which are stored in markdown files) from a specific `blogposts` branch on the website's github repo. Then, they are parsed and metadata (such as title and tag) is gotten from the little yaml codeblock at the top of the md file.
+Currently, the blog works using a system which fetches blogposts (which are stored in markdown files) from a specific `blogposts` branch on the website's github repo. Then, they are parsed, the thumbnail is gotten from a .png file named the same as the .md file (thumbnail style is inspired by [Maxim Katz's yt thumbnails](https://www.youtube.com/@Max_Katz/videos) lmao) and metadata (such as title and tag) is gotten from the little yaml codeblock at the top of the md file.
 
 <p align="center">
     <img src="https://i.imgur.com/ECZ9JPO.png">
