@@ -10,8 +10,8 @@ import { addBlogpostToDB } from "$lib/server/serverUtils";
 const getComments = async (id: string) : Promise<Comment[]> => {
     let comments = (await serverConsts.DB.from("blogs").select("comments").eq("id", id)).data
 
-    if (!comments) return []
-    return JSON.parse(comments[0].comments)
+    if (!comments?.length) return []
+    return comments[0].comments
 }
 const badWordRegex = (await (await fetch(consts.WORD_BLOCKLIST)).text()).split("\n").filter(l => !!l)
 export const GET: RequestHandler = async ({ url }) => {
