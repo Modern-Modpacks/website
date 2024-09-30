@@ -121,7 +121,7 @@
         setTimeout(() => {
             // Setup acutal locale
             let initLocale : string | undefined = $storedLocale ? $storedLocale : getLocaleFromNavigator()?.split("-").at(-1)?.toLowerCase()
-            $locale = $locales.includes(initLocale!) ? initLocale : "en"
+            if(initLocale) $locale = initLocale
             // When the locale is changed in local storage, hot reload it
             storedLocale.subscribe(v => {if (v) $locale = v})
             // Change moment.js locale
