@@ -7,7 +7,7 @@
             "id": 79367505
         },
 
-        "titles": ["founder", "owner", "scripter", "hm", "utilcreator", "webdev", "lore", "questwriter", "pixelartist"],
+        "titles": ["founder", "owner", "dep_all"],
         "socials": ["https://www.curseforge.com/members/g_cat", "https://modrinth.com/user/G_cat", "https://www.youtube.com/channel/UCOH7EaAnk1HJhbJNPRCVC2g", "https://lichess.org/@/G_cat101"]
     },
     // {
@@ -29,7 +29,7 @@
             "id": 110756250
         },
 
-        "titles": ["hm"],
+        "titles": ["dep_hm"],
         "socials": ["https://www.curseforge.com/members/potato__boy"]
     },
     {
@@ -40,19 +40,19 @@
             "id": 103685817
         },
 
-        "titles": ["c_automater", "scripter"],
+        "titles": ["c_automater", "dep_script"],
         "socials": ["https://glomdom.is-a.dev"]
     },
     {
         "name": "Wolfieboy09",
-        "avatar_url": "https://cdn.discordapp.com/avatars/972269221872533524/a63ba24d2af774c4eaef3a425ae14767.png?size=512",
+        "avatar_url": "https://cdn.discordapp.com/avatars/972269221872533524/13578118fca3184666127cce62970e55.png?size=512",
 
         "github": {
             "username": "wolfieboy09",
             "id": 105564186
         },
 
-        "titles": ["scripter"],
+        "titles": ["dep_script", "dep_lore"],
         "socials": ["https://www.curseforge.com/members/wolfieboy09", "https://modrinth.com/user/Wolfieboy09"]
     },
     {
@@ -64,7 +64,7 @@
             "id": 167593041
         },
 
-        "titles": ["pixelartist"],
+        "titles": ["dep_art"],
         "socials": ["https://www.curseforge.com/members/qwerty97475"]
     },
     {
@@ -75,8 +75,19 @@
             "id": 83875893
         },
 
-        "titles": ["questwriter", "scripter"],
+        "titles": ["dep_lore", "dep_script"],
         "socials": ["https://www.youtube.com/channel/UCHkKqiJqKVF89hLAcx9VNqQ", "https://www.reddit.com/user/ZeldaLord_/"]
+    },
+    {
+        "name": "sahih_international",
+
+        "github": {
+            "username": "CaliforniaDemise",
+            "id": 155631180
+        },
+
+        "titles": ["dep_hm"],
+        "socials": []
     },
     {
         "name": "tizu",
@@ -87,7 +98,18 @@
             "id": 60812901
         },
 
-        "titles": ["webdev", "frontendconsult"],
+        "titles": ["dep_util"],
         "socials": ["https://tizu.dev"]
+    },
+    {
+        "name": "RedstoneWizard08",
+
+        "github": {
+            "username": "RedstoneWizard08",
+            "id": 94275204
+        },
+
+        "titles": ["dep_util"],
+        "socials": ["https://redstonewizard08.carrd.co/", "https://www.youtube.com/@RedstoneWizard08", "https://www.twitch.tv/redstonewizard08", "https://modrinth.com/user/RedstoneWizard08", "https://www.curseforge.com/members/redstonewizard_08/projects", "https://ko-fi.com/redstonewizard08"]
     }
 ]

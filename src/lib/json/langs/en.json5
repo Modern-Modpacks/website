@@ -111,25 +111,20 @@
         "chief": "Chief",
         "titles": {
             "founder": "Founder",
-            "owner": "Current owner",
+            "owner": "Current Owner",
 
-            "hm": "HM member",
-            "utilcreator": "Utility creator",
+            "dep_all": "All Departments. All Of Them",
+            "dep_script": "Script And Config Department",
+            "dep_art": "Graphics And Art Direction Department",
+            "dep_lore": "Lore And Questwriting Department",
+            "dep_hm": "Hellish Mods Department",
+            "dep_util": "Utility And Website Department",
 
-            "scripter": "KubeJS scripter",
-            "multiblocker": "Multiblock expert",
-            "automater": "Automation officer",
+            "multiblocker": "Multiblock Expert",
+            "automater": "Automation Officer",
 
-            "pixelartist": "Pixel-artist",
-
-            "questwriter": "Questwriter",
-            "lore": "Lore expert",
-
-            "webdev": "Web developer",
-            "webmaintainer": "Website maintainer",
-
-            "frontendconsult": "Front-end consultant",
-            "realismconsult": "Realism consultant",
+            "frontendconsult": "Front-end Consultant",
+            "realismconsult": "Realism Consultant",
 
             "translator": "Translator",
             "chief_translator": "Chief translator",
@@ -252,7 +247,7 @@
         "hellish": {
             "heading": "We also make mods",
             "desc": "\
-                <b>Our subsidiary organization, Hellish Mods,</b> specializes on making mods for <b>Forge 1.16.5;</b> with the main focus being on utility mods and forks/ports of other mods that have been discontinued for that specific version, or were <b>never on 1.16 in the first place.</b>\n\n\
+                <b>Our subsidiary organization/department, Hellish Mods,</b> specializes on making mods for <b>Forge 1.16.5;</b> with the main focus being on utility mods and forks/ports of other mods that have been discontinued for that specific version, or were <b>never on 1.16 in the first place.</b>\n\n\
                 <b>Since our main goal</b> is still to make modpacks, usually we don't make big content mods unless we decide we want/have to, and just <b>make small projects</b> to complement the modpack we are currently working on by adding features we cannot implement through other means.\n\n\
                 <b>Our utility mods</b>, while still being made out of the necessity for projects that haven't been made yet, are <b>never made to be hyper-specific</b>, which makes them useful for other modpack authors or individual players as well.\n\n\
                 <b>Forks of other open-source mods</b> are also usually made by us for the same reasons and with the same intentions. <b>When we fork a project,</b> we don't just add things specifically we need, we also add other features highly requested by the community.\n\n\
@@ -270,7 +265,7 @@
             "heading": "Meet the crew",
             "desc": "<b>This is us!</b> We are a group of volunteers, each providing their skills to, in some way, contribute and help our various endeavours reach their final goals.\n\n\
             <b>Modern Modpacks</b> strives to be a democratic organization, where no single person has the right to say in which direction a certain project should be headed in. <b>When developing modpacks, we use a comprehensive idea pipeline</b>, a major part of which includes a voting process.\n\n\
-            <b>Members are also free</b> to choose which projects they want to be involved in, or even start projects themselves. <b>For the little money we get,</b> everybody still gets paid proportionally to the amount of work they've put into getting the final product out.\n\n\
+            <b>Members are also free</b> to choose which projects they want to be involved in, or even start projects themselves; they can freely join and leave <b>various \"departments\"</b>, members of which usually specialize in one type of work. <b>Even though all of us are volunteers,</b> the little money we gets still get divided equally and everybody gets paid proportionally to the amount of work they've put into getting the final product out.\n\n\
             <b>We strive to make the member hierarchy</b> as small as possible. Currently, our system is built on top of 3 layers - <b>the owner,</b> who selects which project should worked on the most at the moment and the general direction that project should go in; <b>members,</b> which fulfill the roles of both volunteers for the projects and moderators for our Discord server; and <b>trial members,</b> that, after a certain amount of time working on different tasks, get promoted to actual members.\n\n\
             <b>The separation</b> between these roles is very insignificant on purpose. The only real purpose of it is moderation, where people from the higher layer moderate those who are below them. <b>The layer a person belongs to</b> does not affect their pay, influce inside the company, or any other critial factor."
         },

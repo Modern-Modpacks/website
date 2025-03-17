@@ -68,6 +68,7 @@ const consts = {
         "Mastodon": "https://www.svgrepo.com/show/330895/mastodon.svg",
         "Email": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMTIuNzEzbC0xMS45ODUtOS43MTNoMjMuOTcxbC0xMS45ODYgOS43MTN6bS01LjQyNS0xLjgyMmwtNi41NzUtNS4zMjl2MTIuNTAxbDYuNTc1LTcuMTcyem0xMC44NSAwbDYuNTc1IDcuMTcydi0xMi41MDFsLTYuNTc1IDUuMzI5em0tMS41NTcgMS4yNjFsLTMuODY4IDMuMTM1LTMuODY4LTMuMTM1LTguMTEgOC44NDhoMjMuOTU2bC04LjExLTguODQ4eiIvPjwvc3ZnPg==",
 
+        "Twitch": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMi4xNDkgMGwtMS42MTIgNC4xMTl2MTYuODM2aDUuNzMxdjMuMDQ1aDMuMjI0bDMuMDQ1LTMuMDQ1aDQuNjU3bDYuMjY5LTYuMjY5di0xNC42ODZoLTIxLjMxNHptMTkuMTY0IDEzLjYxMmwtMy41ODIgMy41ODJoLTUuNzMxbC0zLjA0NSAzLjA0NXYtMy4wNDVoLTQuODM2di0xNS4wNDVoMTcuMTk0djExLjQ2M3ptLTMuNTgyLTcuMzQzdjYuMjYyaC0yLjE0OXYtNi4yNjJoMi4xNDl6bS01LjczMSAwdjYuMjYyaC0yLjE0OXYtNi4yNjJoMi4xNDl6IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==",
         "linktr.ee": "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/linktree-white-icon.png",
         "Lichess": "https://raw.githubusercontent.com/gist/Gcat101/b0180a1c9cc1d2585eaa2c0bd15c6893/raw/3944a42cfa4940296bc13452f6ffbe1aa554217f/horse.svg"
     },
