@@ -105,7 +105,7 @@
                 <span class="h-1 w-40 bg-white absolute mx-auto mt-4 top-0 left-0 right-0 rounded-xl opacity-60" />
             {/if}
             <img src="{modpack.banner}" alt="{modpack.name} banner" class="w-full h-[35%] mobile:h-[20vh] object-cover rounded-t-xl">
-            <img src="{icon}" alt="{modpack.name} icon" title="{modpack.name}" class="absolute w-24 h-24 mobile:w-20 mobile:h-20 top-[26%] left-[3%] mobile:top-16 mobile:left-5 rounded-xl mobile:rounded-lg">
+            <img src="{icon}" alt="{modpack.name} icon" title="{modpack.name}" class="absolute w-24 h-24 bg-black bg-opacity-50 mobile:w-20 mobile:h-20 top-[26%] left-[3%] mobile:top-16 mobile:left-5 rounded-xl mobile:rounded-lg">
 
             <div class="p-7 mobile:p-5 pb-14 mt-4 mobile:mt-2 flex mobile:flex-col mobile:gap-6 desktop:h-[65%] box-border">
                 <div class="w-[36rem]{$upsideDownLocale ? " [&>*]:text-right" : ""}">
