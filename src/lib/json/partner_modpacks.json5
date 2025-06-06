@@ -41,5 +41,24 @@
         "links": {
             "download": "https://www.curseforge.com/minecraft/modpacks/quanpack"
         }
+    },
+    {
+        "name": "TREGGECK",
+        "abbr": "TGK",
+        
+        "icon": "https://media.forgecdn.net/avatars/1304/226/638848071684341554.png",
+        "banner": "https://i.imgur.com/a/5P96Byr.png",
+
+        "tags": [
+            "tech",
+            "automation"
+        ],
+        "ram": {
+            "minimal": 6,
+            "recommended": 8
+        },
+        "links": {
+            "download": "https://www.curseforge.com/minecraft/modpacks/treggeck"
+        }
     }
 ]

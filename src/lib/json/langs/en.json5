@@ -210,6 +210,12 @@
             <b>This modpack</b> features some of the most recognized mods, such as, but not limited to: <b>Thaumcraft, Botania, Astral Sorcery, Nature's Aura, AbyssalCraft, Embers, Blood Magic</b> and <b>Roots</b>.\n\n\
             <b>It also includes some of the lesser known projects</b> that are <b>as high quality if not more</b> than the mods described previously.\n\n\
             <b>If you like kitchen-sinks,</b> this pack is for you. <b>The abundance</b> of content in it will never let you feel bored, <b>especially if you are playing with others!</b>"
+       },
+        "tgk": {
+            "shortdesc": "A simple automation Tech Pack Focused on multiblocks.",
+            "longdesc": "<b>TREGGECK: WE HAVE GREGTECH AT HOME</b> is a pack focused on automation and processing chains.\n\n\
+            TREGGECK aims to mimic the feeling of gregtech packs such as gtnh or nomifactory, while not being centered around a preexisting tech mod, and rather using multiblocked2 to create various custom multiblocks.\n\n\
+            With <b>Various custom items to automate and over 30 custom mulitblocks to build</b>, TREGGECK aims to deliver a unique automation modpack experience.
        }
     },
     "sideprojects": {
