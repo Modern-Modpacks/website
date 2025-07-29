@@ -108,7 +108,7 @@
             "space": "Weltall",
             "gt": "GregTech",
         },
-        "chief": "Chef",
+        "chief": "Chef {title}",
         "titles": {
             "founder": "Gründer",
             "owner": "CEO",
@@ -269,7 +269,7 @@
         "members": {
             "heading": "Das Team",
             "desc": "<b>Das sind wir!</b> Wir sind eine Gruppe von Freiwilligen, die ihre Fähigkeiten bereitstellen, um auf irgendeine Weise zu unseren Projekten beizutragen.\n\n\
-            <b>Modern Modpacks</b> strebt danach, eine demokratische Organisation zu sein, in der keine einzelne Person das Recht hat, die Richtung eines bestimmten Projekts zu bestimmen. <b>Beim Entwickeln von Modpacks verwenden wir eine umfassende Ideen-Pipeline,</b> wobei ein wesentlicher Teil davon ein Abstimmungsprozess ist.\n\n\
+            <b>Modern Modpacks</b> strebt danach, eine demokratische Organisation zu sein, in der keine einzelne Person das Recht hat, die Richtung eines bestimmten Projekts zu bestimmen.\n\n\
             <b>Mitglieder sind auch frei,</b> zu wählen, an welchen Projekten sie beteiligt sein wollen oder eigene Projekte zu starten. <b>Für das wenige Geld, das wir bekommen,</b> wird jeder anteilig zu der Menge an Arbeit bezahlt, die sie in das Endprodukt gesteckt haben.\n\n\
             <b>Wir versuchen, die Hierarchie so flach wie möglich zu halten.</b> Unser System basiert derzeit auf 3 Ebenen – <b>dem Eigentümer,</b> der bestimmt, an welchem Projekt gerade am meisten gearbeitet wird; <b>den Mitgliedern,</b> die sowohl als Freiwillige für die Projekte als auch als Moderatoren für unseren Discord-Server fungieren; und <b>den Testmitgliedern,</b> die nach einer gewissen Zeit befördert werden.\n\n\
             <b>Die Trennung</b> dieser Rollen ist absichtlich sehr unbedeutend. Die Ebene, zu der jemand gehört, beeinflusst weder ihre Bezahlung noch ihren Einfluss innerhalb des Unternehmens.",

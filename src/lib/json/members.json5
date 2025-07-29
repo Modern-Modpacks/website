@@ -10,17 +10,17 @@
         "titles": ["founder", "owner", "dep_all"],
         "socials": ["https://www.curseforge.com/members/g_cat", "https://modrinth.com/user/G_cat", "https://www.youtube.com/channel/UCOH7EaAnk1HJhbJNPRCVC2g", "https://lichess.org/@/G_cat101"]
     },
-    // {
-    //     "name": "Rainbuu",
+    {
+        "name": "Rainbuu",
 
-    //     "github": {
-    //         "username": "RealRainbuu",
-    //         "id": 77862418
-    //     },
+        "github": {
+            "username": "RealRainbuu",
+            "id": 77862418
+        },
 
-    //     "titles": ["scripter", "hm", "multiblocker", "c_realismconsult"],
-    //     "socials": ["https://www.curseforge.com/members/rainbuu", "https://modrinth.com/user/RealRainbuu", "https://www.youtube.com/channel/UCUbKsgKCm1gKQDCOcrDTBGw"]
-    // },
+        "titles": ["dep_script", "dep_hm", "multiblocker", "c_realismconsult"],
+        "socials": ["https://www.curseforge.com/members/rainbuu", "https://modrinth.com/user/RealRainbuu", "https://www.youtube.com/channel/UCUbKsgKCm1gKQDCOcrDTBGw"]
+    },
     {
         "name": "Kasualix",
 
@@ -45,7 +45,6 @@
     },
     {
         "name": "Wolfieboy09",
-        "avatar_url": "https://cdn.discordapp.com/avatars/972269221872533524/13578118fca3184666127cce62970e55.png?size=512",
 
         "github": {
             "username": "wolfieboy09",
@@ -100,16 +99,16 @@
 
         "titles": ["dep_util"],
         "socials": ["https://tizu.dev"]
-    },
-    {
-        "name": "RedstoneWizard08",
-
-        "github": {
-            "username": "RedstoneWizard08",
-            "id": 94275204
-        },
-
-        "titles": ["dep_util"],
-        "socials": ["https://redstonewizard08.carrd.co/", "https://www.youtube.com/@RedstoneWizard08", "https://www.twitch.tv/redstonewizard08", "https://modrinth.com/user/RedstoneWizard08", "https://www.curseforge.com/members/redstonewizard_08/projects", "https://ko-fi.com/redstonewizard08"]
     }
+    // {
+    //     "name": "RedstoneWizard08",
+
+    //     "github": {
+    //         "username": "RedstoneWizard08",
+    //         "id": 94275204
+    //     },
+
+    //     "titles": ["dep_util"],
+    //     "socials": ["https://redstonewizard08.carrd.co/", "https://www.youtube.com/@RedstoneWizard08", "https://www.twitch.tv/redstonewizard08", "https://modrinth.com/user/RedstoneWizard08", "https://www.curseforge.com/members/redstonewizard_08/projects", "https://ko-fi.com/redstonewizard08"]
+    // }
 ]

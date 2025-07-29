@@ -108,7 +108,7 @@
             "space": "Space",
             "gt": "GregTech",
         },
-        "chief": "Chief",
+        "chief": "Chief {title}",
         "titles": {
             "founder": "Founder",
             "owner": "Current Owner",
@@ -270,7 +270,7 @@
         "members": {
             "heading": "Meet the crew",
             "desc": "<b>This is us!</b> We are a group of volunteers, each providing their skills to, in some way, contribute and help our various endeavours reach their final goals.\n\n\
-            <b>Modern Modpacks</b> strives to be a democratic organization, where no single person has the right to say in which direction a certain project should be headed in. <b>When developing modpacks, we use a comprehensive idea pipeline</b>, a major part of which includes a voting process.\n\n\
+            <b>Modern Modpacks</b> strives to be a democratic organization, where no single person has the right to say in which direction a certain project should be headed in.\n\n\
             <b>Members are also free</b> to choose which projects they want to be involved in, or even start projects themselves; they can freely join and leave <b>various \"departments\"</b>, members of which usually specialize in one type of work. <b>Even though all of us are volunteers,</b> the little money we gets still get divided equally and everybody gets paid proportionally to the amount of work they've put into getting the final product out.\n\n\
             <b>We strive to make the member hierarchy</b> as small as possible. Currently, our system is built on top of 3 layers - <b>the owner,</b> who selects which project should worked on the most at the moment and the general direction that project should go in; <b>members,</b> which fulfill the roles of both volunteers for the projects and moderators for our Discord server; and <b>trial members,</b> that, after a certain amount of time working on different tasks, get promoted to actual members.\n\n\
             <b>The separation</b> between these roles is very insignificant on purpose. The only real purpose of it is moderation, where people from the higher layer moderate those who are below them. <b>The layer a person belongs to</b> does not affect their pay, influce inside the company, or any other critial factor."
