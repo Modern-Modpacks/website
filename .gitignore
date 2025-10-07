@@ -3,6 +3,7 @@ node_modules
 /build
 /.svelte-kit
 /.vscode
+/.netlify
 /package
 /data
 .env
